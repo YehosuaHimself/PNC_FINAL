@@ -120,7 +120,15 @@ nav{
   padding:0 var(--g) clamp(60px,10vh,120px);
   position:relative;overflow:hidden;
   background:var(--cream);
+  background-image:url("https://images.unsplash.com/photo-1509440159596-0249088772ff?w=1600&q=80&fm=webp&fit=crop");
+  background-size:cover;background-position:center;
 }
+.hero::before{
+  content:'';position:absolute;inset:0;
+  background:rgba(248,244,236,0.82);
+  pointer-events:none;z-index:0;
+}
+.hero > *{position:relative;z-index:1}
 .hero-wm{
   position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
   pointer-events:none;user-select:none;overflow:hidden;
