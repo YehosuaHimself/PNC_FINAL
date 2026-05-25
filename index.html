@@ -403,15 +403,7 @@ a,button,[role=button],input,select,textarea,label{cursor:none!important}
   background-size:60px 60px;
   pointer-events:none;
 }
-.philosophy::before{
-  content:'II';
-  position:absolute;right:var(--g);top:50%;transform:translateY(-50%);
-  font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;
-  font-weight:900;font-size:clamp(120px,18vw,280px);
-  letter-spacing:-0.06em;line-height:1;
-  color:rgba(248,244,236,0.025);
-  pointer-events:none;user-select:none;z-index:1;
-}
+.philosophy::before{content:none}
 .philosophy-inner{
   max-width:var(--max);margin:0 auto;
   display:grid;grid-template-columns:1fr 1fr;gap:clamp(40px,6vw,100px);
