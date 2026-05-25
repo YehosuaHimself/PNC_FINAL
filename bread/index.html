@@ -140,8 +140,8 @@ a,button,[role=button],input,select,textarea,label{cursor:none!important}
 .hero::before{
   content:'';position:absolute;inset:0;
   background:
-    linear-gradient(to bottom, rgba(248,244,236,0.75) 0%, rgba(248,244,236,0.15) 40%, rgba(248,244,236,0.72) 75%, rgba(248,244,236,0.97) 100%),
-    linear-gradient(to right, rgba(248,244,236,0.97) 0%, rgba(248,244,236,0.92) 28%, rgba(248,244,236,0.50) 50%, rgba(248,244,236,0.0) 72%);
+    linear-gradient(to bottom, rgba(248,244,236,0.55) 0%, rgba(248,244,236,0.05) 35%, rgba(248,244,236,0.55) 72%, rgba(248,244,236,0.97) 100%),
+    linear-gradient(to right, rgba(248,244,236,0.97) 0%, rgba(248,244,236,0.88) 25%, rgba(248,244,236,0.30) 50%, rgba(248,244,236,0.0) 68%);
   pointer-events:none;z-index:0;
 }
 .hero > *{position:relative;z-index:1}
@@ -172,12 +172,15 @@ a,button,[role=button],input,select,textarea,label{cursor:none!important}
   font-weight:900;font-size:clamp(64px,10.5vw,168px);
   letter-spacing:-0.04em;line-height:0.86;color:var(--ink);
   margin-bottom:clamp(20px,3vh,36px);
+  overflow:visible;
+  padding-bottom:clamp(32px,4vh,52px);
 }
 .hero-headline span{
-  display:block;font-weight:200;font-size:clamp(11px,1.4vw,18px);
-  letter-spacing:0.32em;color:var(--cocoa-mu);
-  text-transform:uppercase;margin-top:28px;
+  display:block;font-weight:400;font-size:clamp(10px,1.1vw,14px);
+  letter-spacing:0.34em;color:var(--cocoa-lt);
+  text-transform:uppercase;margin-top:clamp(20px,2.5vh,32px);
   font-family:'Courier New',monospace;
+  line-height:1.6;
 }
 .hero-sub{
   font-size:clamp(15px,1.8vw,22px);
@@ -581,6 +584,12 @@ a,button,[role=button],input,select,textarea,label{cursor:none!important}
   border:1px solid rgba(248,244,236,0.1);
   background:rgba(248,244,236,0.04);
 }
+.sum-alt-primary{
+  border-color:rgba(248,244,236,0.22);
+  background:rgba(248,244,236,0.08);
+}
+.sum-alt-primary .sum-alt-time{color:rgba(248,244,236,0.9)}
+.sum-alt-primary .sum-alt-label{color:rgba(248,244,236,0.45)}
 .sum-alt-time{
   font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;
   font-weight:900;font-size:clamp(13px,1.3vw,17px);
@@ -1257,52 +1266,52 @@ a:focus-visible,button:focus-visible{
 
     <div class="sum-item">
       <span class="sum-label">Blend</span>
-      <span class="sum-val">60 seconds</span>
-      <span class="sum-desc">Pour in. Stir once.</span>
+      <span class="sum-val">60 seconds · 3 steps</span>
+      <span class="sum-desc">No measuring. No guesswork.</span>
       <div class="sum-steps">
         <div class="sum-step">
           <span class="sum-step-num">01</span>
           <div>
-            <div class="sum-step-title">Empty the bowl.</div>
-            <p class="sum-step-text">Open the sachet. Everything pre-weighed. Pour and go.</p>
+            <div class="sum-step-title">Open. Pour. Done.</div>
+            <p class="sum-step-text">One sachet — pre-weighed, pre-blended. Pour the contents into a bowl.</p>
           </div>
-          <span class="sum-step-meta">Prep</span>
+          <span class="sum-step-meta">5 sec</span>
         </div>
         <div class="sum-step">
           <span class="sum-step-num">02</span>
           <div>
-            <div class="sum-step-title">One sachet.</div>
-            <p class="sum-step-text">One sachet. One loaf. The ratio is fixed.</p>
+            <div class="sum-step-title">Add 400 ml water.</div>
+            <p class="sum-step-text">Room temperature. Stir until fully combined — about 60 seconds.</p>
           </div>
-          <span class="sum-step-meta">1 loaf</span>
+          <span class="sum-step-meta">400 ml</span>
         </div>
         <div class="sum-step">
           <span class="sum-step-num">03</span>
           <div>
-            <div class="sum-step-title">400 ml water.</div>
-            <p class="sum-step-text">Room temperature. Stir until combined.</p>
+            <div class="sum-step-title">Shape it.</div>
+            <p class="sum-step-text">No kneading. Press into a loaf tin or form by hand — the dough holds itself.</p>
           </div>
-          <span class="sum-step-meta">400 ml</span>
+          <span class="sum-step-meta">1 min</span>
         </div>
       </div>
     </div>
 
     <div class="sum-item">
       <span class="sum-label">Bake</span>
-      <span class="sum-val">77 min · 180°C · Loaf</span>
-      <span class="sum-desc">One temp. Walk away.</span>
+      <span class="sum-val">180°C · one temperature</span>
+      <span class="sum-desc">Walk away. It handles itself.</span>
       <div class="sum-alts">
+        <div class="sum-alt sum-alt-primary"><span class="sum-alt-time">77 min</span><span class="sum-alt-label">Loaf · Classic</span></div>
         <div class="sum-alt"><span class="sum-alt-time">33 min</span><span class="sum-alt-label">Pizza &amp; Pizzetta</span></div>
         <div class="sum-alt"><span class="sum-alt-time">22 min</span><span class="sum-alt-label">Flatbread</span></div>
-        <div class="sum-alt"><span class="sum-alt-time">7 min</span><span class="sum-alt-label">Pancakes</span></div>
+        <div class="sum-alt"><span class="sum-alt-time">7 min</span><span class="sum-alt-label">Pancakes · Stovetop</span></div>
       </div>
       <div class="sum-steps">
-        <div class="sum-step-spacer"></div>
         <div class="sum-step">
           <span class="sum-step-num">04</span>
           <div>
-            <div class="sum-step-title">Shape. Tin. Oven.</div>
-            <p class="sum-step-text">180°C for 77 minutes. No proving. No kneading.</p>
+            <div class="sum-step-title">Oven in. Timer set.</div>
+            <p class="sum-step-text">No proving time. No second rise. Just straight into the oven — 180°C, fan or static.</p>
           </div>
           <span class="sum-step-meta">77 min</span>
         </div>
@@ -1315,7 +1324,7 @@ a:focus-visible,button:focus-visible{
       <span class="sum-desc">Your table. Your bread.</span>
       <div class="sum-break-quote">
         <span class="sum-break-line">05 —<br>Done.<br>Yours.</span>
-        <p class="sum-break-body">Let it cool. Then break it. The best bread you've ever made — with three ingredients and one sachet. That's everything.</p>
+        <p class="sum-break-body">Rest 10 minutes out of the tin. Then break it open — dense crumb, clean crust, nothing hidden inside. The best bread you've made. Three ingredients. One sachet. That's everything.</p>
       </div>
     </div>
 
