@@ -574,13 +574,13 @@ a,button,[role=button],input,select,textarea,label{cursor:none!important}
 .why::before{
   content:'';position:absolute;inset:0;pointer-events:none;z-index:0;
   background-image:
-    linear-gradient(rgba(248,244,236,0.03) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(248,244,236,0.03) 1px, transparent 1px);
+    linear-gradient(rgba(248,244,236,0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(248,244,236,0.025) 1px, transparent 1px);
   background-size:80px 80px;
-  mask-image:linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.6) 20%, rgba(0,0,0,0.6) 80%, transparent 100%);
+  mask-image:linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.7) 15%, rgba(0,0,0,0.7) 85%, transparent 100%);
 }
 .why-inner{max-width:var(--max);margin:0 auto;position:relative;z-index:1}
-.why-header{margin-bottom:clamp(60px,8vw,100px)}
+.why-header{margin-bottom:clamp(64px,9vw,120px)}
 .why-eyebrow{
   font-family:'Courier New',monospace;font-size:10px;font-weight:600;
   letter-spacing:0.36em;text-transform:uppercase;color:var(--cocoa-mid);
@@ -588,34 +588,49 @@ a,button,[role=button],input,select,textarea,label{cursor:none!important}
 }
 .why-h2{
   font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;
-  font-weight:900;font-size:clamp(38px,5.5vw,82px);
-  letter-spacing:-0.03em;line-height:0.93;
-  color:rgba(248,244,236,0.9);margin-bottom:0;
+  font-weight:900;font-size:clamp(48px,7vw,110px);
+  letter-spacing:-0.04em;line-height:0.88;
+  color:rgba(248,244,236,0.92);margin-bottom:0;
 }
-.pillars{display:grid;grid-template-columns:repeat(2,1fr);gap:2px}
-@media(max-width:640px){.pillars{grid-template-columns:1fr}}
+/* Asymmetric layout: left col has 01+02 stacked, right col has 03+04 stacked
+   but left col is narrower with a large decorative numeral as anchor */
+.pillars{
+  display:grid;
+  grid-template-columns:1fr 1px 1fr;
+  gap:0;
+}
+@media(max-width:700px){.pillars{grid-template-columns:1fr}}
+.pillars-divider{background:rgba(248,244,236,0.05)}
+.pillar-col{display:flex;flex-direction:column}
 .pillar{
-  background:rgba(248,244,236,0.03);
-  border:1px solid rgba(248,244,236,0.07);
-  padding:clamp(40px,5vw,72px) clamp(28px,3.5vw,48px);
-  transition:background .2s,border-color .2s;
+  background:transparent;
+  border:none;
+  padding:clamp(36px,4.5vw,64px) clamp(0px,0vw,0px);
+  border-bottom:1px solid rgba(248,244,236,0.06);
+  transition:none;
+  position:relative;
 }
-.pillar:hover{background:rgba(248,244,236,0.055);border-color:rgba(248,244,236,0.12)}
+.pillar:last-child{border-bottom:none}
+.pillar-col:first-child .pillar{padding-right:clamp(40px,5vw,80px)}
+.pillar-col:last-child .pillar{padding-left:clamp(40px,5vw,80px)}
 .pillar-num{
-  font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;
-  font-weight:900;font-size:clamp(64px,9vw,140px);
-  letter-spacing:-0.05em;line-height:0.85;
-  color:rgba(248,244,236,0.07);margin-bottom:28px;
+  font-family:'Courier New',monospace;
+  font-weight:600;font-size:10px;
+  letter-spacing:0.3em;
+  color:rgba(248,244,236,0.2);
+  margin-bottom:clamp(20px,2.5vw,32px);
+  display:block;
 }
 .pillar-title{
   font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;
-  font-weight:900;font-size:clamp(18px,2.2vw,30px);
-  letter-spacing:-0.02em;line-height:1.1;
-  color:rgba(248,244,236,0.88);margin-bottom:16px;
+  font-weight:900;font-size:clamp(22px,3vw,44px);
+  letter-spacing:-0.03em;line-height:0.92;
+  color:rgba(248,244,236,0.92);margin-bottom:20px;
 }
 .pillar-text{
   font-size:clamp(13px,1.5vw,16px);
-  color:rgba(248,244,236,0.42);line-height:1.75;
+  color:rgba(248,244,236,0.40);line-height:1.78;
+  max-width:480px;
 }
 
 /* ── SUPPLY CHAIN ────────────────────────────────────────────────────────── */
@@ -975,8 +990,12 @@ footer::before{
   .ss-val{font-size:clamp(26px,7.5vw,40px)}
   .step{padding:24px 16px;gap:12px}
   .step-title{font-size:clamp(18px,5.5vw,28px)}
-  .pillar{padding:28px 20px}
-  .pillar-title{font-size:clamp(16px,5vw,22px)}
+  .pillars{grid-template-columns:1fr}
+  .pillars-divider{display:none}
+  .pillar-col:first-child .pillar{padding-right:0}
+  .pillar-col:last-child .pillar{padding-left:0}
+  .pillar{padding-top:28px;padding-bottom:28px}
+  .pillar-title{font-size:clamp(18px,5.5vw,28px)}
   .qty-grid{gap:1px;grid-template-columns:repeat(4,1fr)}
   .qty-card{padding:16px 10px}
   .qty-num{font-size:clamp(24px,7vw,40px)}
@@ -1381,25 +1400,30 @@ a:focus-visible,button:focus-visible{
       <h2 class="why-h2 reveal">G1 quality.<br>Zero friction.</h2>
     </div>
     <div class="pillars">
-      <div class="pillar reveal">
-        <div class="pillar-num" aria-hidden="true">01</div>
-        <div class="pillar-title">The world's best coffee. Pre-set.</div>
-        <p class="pillar-text">Kochere G1 is an 85+ SCA-rated single-origin bean. The grind, the dose, the distribution are calibrated at source. You do not learn a technique. You get the result.</p>
+      <div class="pillar-col">
+        <div class="pillar reveal">
+          <span class="pillar-num">01</span>
+          <div class="pillar-title">The world's best coffee. Pre-set.</div>
+          <p class="pillar-text">Kochere G1 is an 85+ SCA-rated single-origin bean. The grind, dose, and distribution are calibrated at source. You do not learn a technique. You get the result.</p>
+        </div>
+        <div class="pillar reveal">
+          <span class="pillar-num">02</span>
+          <div class="pillar-title">Immersion is the right method.</div>
+          <p class="pillar-text">Full immersion is the optimal extraction for Kochere G1's jasmine and bergamot aromatics. The pad format is not a convenience shortcut — it is the correct brewing method for this bean.</p>
+        </div>
       </div>
-      <div class="pillar reveal reveal-d1">
-        <div class="pillar-num" aria-hidden="true">02</div>
-        <div class="pillar-title">Immersion is the right method.</div>
-        <p class="pillar-text">Full immersion is the optimal extraction for Kochere G1's jasmine and bergamot aromatics. The pad format is not a convenience shortcut — it is the correct brewing method for this bean.</p>
-      </div>
-      <div class="pillar reveal">
-        <div class="pillar-num" aria-hidden="true">03</div>
-        <div class="pillar-title">Identical. Every single cup.</div>
-        <p class="pillar-text">No variable grind. No scale. No thermometer. No technique gap between you and a barista. The cup you make at home is the cup we designed. Clean, bright, consistent.</p>
-      </div>
-      <div class="pillar reveal reveal-d1">
-        <div class="pillar-num" aria-hidden="true">04</div>
-        <div class="pillar-title">Roasted to order. Shipped in 7.</div>
-        <p class="pillar-text">No warehouse. No sitting stock. Roasted when you order, packed the same day, at your door within 7 days. Specialty coffee at the peak of freshness — for €1 a cup.</p>
+      <div class="pillars-divider" aria-hidden="true"></div>
+      <div class="pillar-col">
+        <div class="pillar reveal">
+          <span class="pillar-num">03</span>
+          <div class="pillar-title">Identical. Every single cup.</div>
+          <p class="pillar-text">No variable grind. No scale. No thermometer. No technique gap between you and a barista. The cup you make at home is the cup we designed. Clean, bright, consistent.</p>
+        </div>
+        <div class="pillar reveal">
+          <span class="pillar-num">04</span>
+          <div class="pillar-title">Roasted to order. Shipped in 7.</div>
+          <p class="pillar-text">No warehouse. No sitting stock. Roasted when you order, packed the same day, at your door within 7 days. Specialty coffee at peak freshness — for €1 a cup.</p>
+        </div>
       </div>
     </div>
   </div>
