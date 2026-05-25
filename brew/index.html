@@ -536,8 +536,16 @@ a,button,[role=button],input,select,textarea,label{cursor:none!important}
 @media(max-width:600px){.step-meta{text-align:left}}
 
 /* ── WHY ────────────────────────────────────────────────────────── */
-.why{background:var(--dark)}
-.why-inner{max-width:var(--max);margin:0 auto}
+.why{background:var(--dark);position:relative;overflow:hidden}
+.why::before{
+  content:'';position:absolute;inset:0;pointer-events:none;z-index:0;
+  background-image:
+    linear-gradient(rgba(248,244,236,0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(248,244,236,0.03) 1px, transparent 1px);
+  background-size:80px 80px;
+  mask-image:linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.6) 20%, rgba(0,0,0,0.6) 80%, transparent 100%);
+}
+.why-inner{max-width:var(--max);margin:0 auto;position:relative;z-index:1}
 .why-header{margin-bottom:clamp(60px,8vw,100px)}
 .why-eyebrow{
   font-family:'Courier New',monospace;font-size:10px;font-weight:600;
@@ -553,27 +561,27 @@ a,button,[role=button],input,select,textarea,label{cursor:none!important}
 .pillars{display:grid;grid-template-columns:repeat(2,1fr);gap:2px}
 @media(max-width:640px){.pillars{grid-template-columns:1fr}}
 .pillar{
-  background:rgba(248,244,236,0.025);
-  border:1px solid rgba(248,244,236,0.04);
+  background:rgba(248,244,236,0.03);
+  border:1px solid rgba(248,244,236,0.07);
   padding:clamp(40px,5vw,72px) clamp(28px,3.5vw,48px);
-  transition:background .2s;
+  transition:background .2s,border-color .2s;
 }
-.pillar:hover{background:rgba(248,244,236,0.04)}
+.pillar:hover{background:rgba(248,244,236,0.055);border-color:rgba(248,244,236,0.12)}
 .pillar-num{
   font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;
   font-weight:900;font-size:clamp(64px,9vw,140px);
   letter-spacing:-0.05em;line-height:0.85;
-  color:rgba(248,244,236,0.04);margin-bottom:28px;
+  color:rgba(248,244,236,0.07);margin-bottom:28px;
 }
 .pillar-title{
   font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;
   font-weight:900;font-size:clamp(18px,2.2vw,30px);
   letter-spacing:-0.02em;line-height:1.1;
-  color:rgba(248,244,236,0.82);margin-bottom:16px;
+  color:rgba(248,244,236,0.88);margin-bottom:16px;
 }
 .pillar-text{
   font-size:clamp(13px,1.5vw,16px);
-  color:rgba(248,244,236,0.3);line-height:1.75;
+  color:rgba(248,244,236,0.42);line-height:1.75;
 }
 
 /* ── SUPPLY CHAIN ────────────────────────────────────────────────────────── */
@@ -1352,7 +1360,37 @@ a:focus-visible,button:focus-visible{
   </div>
 </section>
 
-<!-- WHY THIS FORMAT -->\n<section class="section why" data-dark>\n  <div class="why-inner">\n    <div class="why-header">\n      <span class="why-eyebrow reveal">— The Standard</span>\n      <h2 class="why-h2 reveal">G1 quality.<br>Zero friction.</h2>\n    </div>\n    <div class="pillars">\n      <div class="pillar reveal">\n        <div class="pillar-num" aria-hidden="true">01</div>\n        <div class="pillar-title">The world's best coffee. Pre-set.</div>\n        <p class="pillar-text">Kochere G1 is an 85+ SCA-rated single-origin bean. The grind, the dose, the distribution are calibrated at source. You do not learn a technique. You get the result.</p>\n      </div>\n      <div class="pillar reveal reveal-d1">\n        <div class="pillar-num" aria-hidden="true">02</div>\n        <div class="pillar-title">Immersion is the right method.</div>\n        <p class="pillar-text">Full immersion is the optimal extraction for Kochere G1's jasmine and bergamot aromatics. The pad format is not a convenience shortcut — it is the correct brewing method for this bean.</p>\n      </div>\n      <div class="pillar reveal">\n        <div class="pillar-num" aria-hidden="true">03</div>\n        <div class="pillar-title">Identical. Every single cup.</div>\n        <p class="pillar-text">No variable grind. No scale. No thermometer. No technique gap between you and a barista. The cup you make at home is the cup we designed. Clean, bright, consistent.</p>\n      </div>\n      <div class="pillar reveal reveal-d1">\n        <div class="pillar-num" aria-hidden="true">04</div>\n        <div class="pillar-title">Roasted to order. Shipped in 7.</div>\n        <p class="pillar-text">No warehouse. No sitting stock. Roasted when you order, packed the same day, at your door within 7 days. Specialty coffee at the peak of freshness — for €1 a cup.</p>\n      </div>\n    </div>\n  </div>\n</section>
+<!-- WHY THIS FORMAT -->
+<section class="section why" data-dark>
+  <div class="why-inner">
+    <div class="why-header">
+      <span class="why-eyebrow reveal">— The Standard</span>
+      <h2 class="why-h2 reveal">G1 quality.<br>Zero friction.</h2>
+    </div>
+    <div class="pillars">
+      <div class="pillar reveal">
+        <div class="pillar-num" aria-hidden="true">01</div>
+        <div class="pillar-title">The world's best coffee. Pre-set.</div>
+        <p class="pillar-text">Kochere G1 is an 85+ SCA-rated single-origin bean. The grind, the dose, the distribution are calibrated at source. You do not learn a technique. You get the result.</p>
+      </div>
+      <div class="pillar reveal reveal-d1">
+        <div class="pillar-num" aria-hidden="true">02</div>
+        <div class="pillar-title">Immersion is the right method.</div>
+        <p class="pillar-text">Full immersion is the optimal extraction for Kochere G1's jasmine and bergamot aromatics. The pad format is not a convenience shortcut — it is the correct brewing method for this bean.</p>
+      </div>
+      <div class="pillar reveal">
+        <div class="pillar-num" aria-hidden="true">03</div>
+        <div class="pillar-title">Identical. Every single cup.</div>
+        <p class="pillar-text">No variable grind. No scale. No thermometer. No technique gap between you and a barista. The cup you make at home is the cup we designed. Clean, bright, consistent.</p>
+      </div>
+      <div class="pillar reveal reveal-d1">
+        <div class="pillar-num" aria-hidden="true">04</div>
+        <div class="pillar-title">Roasted to order. Shipped in 7.</div>
+        <p class="pillar-text">No warehouse. No sitting stock. Roasted when you order, packed the same day, at your door within 7 days. Specialty coffee at the peak of freshness — for €1 a cup.</p>
+      </div>
+    </div>
+  </div>
+</section>
 
 <!-- SUPPLY CHAIN -->
 <section class="section chain">
