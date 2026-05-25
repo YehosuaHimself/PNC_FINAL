@@ -450,9 +450,9 @@ a,button,[role=button],input,select,textarea,label{cursor:none!important}
 /* ── FOOTER ─────────────────────────────────────────────────── */
 footer{
   background:var(--dark);color:rgba(248,244,236,0.4);
-  padding:clamp(40px,6vw,80px) var(--g);
-  display:flex;align-items:center;justify-content:space-between;
-  flex-wrap:wrap;gap:24px;
+  padding:clamp(40px,6vw,60px) var(--g) clamp(32px,5vw,52px);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:0;
   border-top:1px solid rgba(248,244,236,0.04);
   position:relative;overflow:hidden;
 }
@@ -471,7 +471,7 @@ footer::before{
   font-weight:900;font-size:12px;letter-spacing:0.32em;text-transform:uppercase;
   color:rgba(248,244,236,0.5);
 }
-.footer-links{display:flex;flex-wrap:wrap;gap:4px 0}
+.footer-links{display:flex;flex-wrap:wrap;gap:4px 0;justify-content:center;border-top:1px solid rgba(248,244,236,0.05);padding-top:20px;}
 .footer-link{
   font-family:'Courier New',monospace;font-size:10px;font-weight:600;
   letter-spacing:0.22em;text-transform:uppercase;
@@ -480,14 +480,13 @@ footer::before{
   transition:color .18s;
 }
 .footer-link:last-child{border-right:none}
-.footer-imprint{margin-left:auto;border-right:none;border-left:1px solid rgba(92,61,46,0.12)}
 .footer-link:hover{color:rgba(248,244,236,0.7)}
 .footer-copy{
   font-family:'Courier New',monospace;font-size:9px;font-weight:600;
   letter-spacing:0.22em;text-transform:uppercase;
   color:rgba(248,244,236,0.18);
-  width:100%;text-align:center;padding-top:16px;
-  border-top:1px solid rgba(248,244,236,0.04);
+  width:100%;text-align:center;
+  margin-bottom:20px;
 }
 
 
@@ -627,11 +626,11 @@ footer::before{
   .phil-text{font-size:14px}
 
   /* Footer */
-  footer{flex-direction:column;align-items:flex-start;gap:16px;padding:40px var(--g)}
-  .footer-links{flex-direction:column;gap:0;width:100%}
-  .footer-link{border-right:none;border-bottom:1px solid rgba(248,244,236,0.06);padding:10px 0;font-size:11px;letter-spacing:0.18em}
-  .footer-link:last-child{border-bottom:none}
-  .footer-copy{text-align:left;padding-top:20px;font-size:8px}
+  footer{flex-direction:column;align-items:center;gap:0;padding:40px var(--g) 32px}
+  .footer-links{flex-direction:row;flex-wrap:wrap;justify-content:center;gap:0;width:100%}
+  .footer-link{border-right:1px solid rgba(248,244,236,0.08);padding:6px 10px;font-size:9px;letter-spacing:0.16em}
+  .footer-link:last-child{border-right:none}
+  .footer-copy{text-align:center;margin-bottom:16px;font-size:8px}
 
   /* Ticker — slower on mobile, slightly taller */
   .ticker-inner{animation-duration:55s}
@@ -932,15 +931,15 @@ a:focus-visible,button:focus-visible{
 
 <!-- FOOTER -->
 <footer data-dark>
+  <p class="footer-copy">© MMXXVI PNC — PANEM NOSTRUM COTIDIANUM · ADVENTUS INCEPTUS EST.</p>
   <nav class="footer-links" aria-label="Footer navigation">
     <a href="/bread" class="footer-link">Bread</a>
     <a href="/brew" class="footer-link">Brew</a>
     <a href="/privacy.html" class="footer-link">Privacy</a>
     <a href="/terms.html" class="footer-link">Terms</a>
     <a href="/shipping.html" class="footer-link">Shipping</a>
+    <a href="/imprint.html" class="footer-link">Imprint</a>
   </nav>
-  <a href="/imprint.html" class="footer-link footer-imprint">Imprint</a>
-  <p class="footer-copy">© MMXXVI PNC — PANEM NOSTRUM COTIDIANUM · ADVENTUS INCEPTUS EST.</p>
 </footer>
 
 <!-- CURSOR SCRIPT -->
