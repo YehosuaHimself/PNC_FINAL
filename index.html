@@ -190,115 +190,117 @@ a,button,[role=button],input,select,textarea,label{cursor:none!important}
   font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;
 }
 .hero-products{
-  display:grid;grid-template-columns:1fr 1fr;gap:2px;
-  max-width:min(900px, 100%);
+  display:grid;grid-template-columns:1fr 1fr;gap:3px;
+  max-width:min(960px, 100%);
   margin-bottom:clamp(40px,6vh,72px);
 }
 @media(max-width:680px){.hero-products{grid-template-columns:1fr}}
 .hero-product{
-  padding:clamp(28px,3.5vw,48px);
-  border:1px solid var(--cocoa-fa);
+  padding:clamp(32px,4vw,56px);
+  border:1px solid rgba(92,61,46,0.12);
   display:flex;flex-direction:column;
   position:relative;overflow:hidden;
+  min-height:clamp(480px,55vh,680px);
   background:var(--cream-deep);
+  transition:border-color .3s;
 }
-/* Non-image cards hover */
-.hero-product:not(.hero-product--bread):not(.hero-product--brew):hover{
-  background:var(--cream);border-color:rgba(92,61,46,0.18);
-}
+.hero-product:hover{border-color:rgba(92,61,46,0.25)}
 .hero-product--bread{
   background-image:url("/img/bread-hero.webp");
-  background-size:cover;background-position:center 40%;
+  background-size:cover;background-position:center 35%;
 }
 .hero-product--bread::before{
   content:'';position:absolute;inset:0;
   background:linear-gradient(
-    160deg,
-    rgba(248,244,236,0.92) 0%,
-    rgba(248,244,236,0.80) 50%,
-    rgba(248,244,236,0.68) 100%
+    to top,
+    rgba(248,244,236,0.97) 0%,
+    rgba(248,244,236,0.88) 35%,
+    rgba(248,244,236,0.55) 65%,
+    rgba(248,244,236,0.18) 100%
   );
-  transition:opacity .4s cubic-bezier(.16,1,.3,1);
+  transition:opacity .5s cubic-bezier(.16,1,.3,1);
 }
-.hero-product--bread:hover::before{opacity:0.82}
+.hero-product--bread:hover::before{opacity:0.88}
 .hero-product--bread > *{position:relative;z-index:1}
 .hero-product--brew{
   background-image:url("/img/brew-hero.webp");
-  background-size:cover;background-position:center;
+  background-size:cover;background-position:center 30%;
 }
 .hero-product--brew::before{
   content:'';position:absolute;inset:0;
   background:linear-gradient(
-    160deg,
-    rgba(248,244,236,0.92) 0%,
-    rgba(248,244,236,0.80) 50%,
-    rgba(248,244,236,0.66) 100%
+    to top,
+    rgba(248,244,236,0.97) 0%,
+    rgba(248,244,236,0.88) 35%,
+    rgba(248,244,236,0.50) 65%,
+    rgba(248,244,236,0.12) 100%
   );
-  transition:opacity .4s cubic-bezier(.16,1,.3,1);
+  transition:opacity .5s cubic-bezier(.16,1,.3,1);
 }
-.hero-product--brew:hover::before{opacity:0.80}
+.hero-product--brew:hover::before{opacity:0.85}
 .hero-product--brew > *{position:relative;z-index:1}
 .hp-tag{
   font-family:'Courier New',monospace;font-size:9px;font-weight:600;
-  letter-spacing:0.34em;text-transform:uppercase;color:var(--cocoa);
-  margin-bottom:10px;display:block;
+  letter-spacing:0.34em;text-transform:uppercase;color:var(--cocoa-mu);
+  margin-bottom:clamp(120px,18vh,220px);display:block;
 }
 .hp-name{
   font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;
-  font-weight:900;font-size:clamp(36px,4.5vw,64px);
-  letter-spacing:-0.035em;line-height:0.9;color:var(--ink);
-  margin-bottom:10px;
+  font-weight:900;font-size:clamp(40px,5vw,72px);
+  letter-spacing:-0.04em;line-height:0.88;color:var(--ink);
+  margin-bottom:14px;
 }
 .hp-origin{
-  font-family:'Courier New',monospace;font-size:9px;font-weight:600;
+  font-family:'Courier New',monospace;font-size:8px;font-weight:600;
   letter-spacing:0.22em;text-transform:uppercase;color:var(--cocoa-mu);
-  margin-bottom:16px;line-height:1.7;
+  margin-bottom:20px;line-height:1.7;
   overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
 }
 .hp-desc{
-  font-size:13px;color:var(--cocoa-lt);line-height:1.7;
-  margin-bottom:24px;flex-grow:1;
+  font-size:clamp(13px,1.2vw,15px);color:var(--cocoa-lt);line-height:1.75;
+  margin-bottom:auto;padding-bottom:28px;
+  max-width:400px;
 }
 .hp-stats{
-  display:flex;gap:clamp(16px,2.5vw,32px);
+  display:flex;gap:clamp(20px,3vw,40px);
   margin-bottom:24px;
-  padding-top:20px;
-  border-top:1px solid var(--cocoa-fa);
+  padding-top:24px;
+  border-top:1px solid rgba(92,61,46,0.1);
 }
 .hp-stat-val{
   font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;
-  font-weight:900;font-size:clamp(20px,2.5vw,32px);
+  font-weight:900;font-size:clamp(22px,2.8vw,36px);
   letter-spacing:-0.03em;line-height:1;color:var(--ink);
   display:block;
 }
 .hp-stat-key{
   font-family:'Courier New',monospace;font-size:8px;font-weight:600;
-  letter-spacing:0.24em;text-transform:uppercase;color:var(--cocoa-mu);
-  margin-top:4px;display:block;
+  letter-spacing:0.22em;text-transform:uppercase;color:var(--cocoa-mu);
+  margin-top:5px;display:block;
 }
 .hp-footer{
   display:flex;align-items:center;justify-content:space-between;
   gap:12px;flex-wrap:wrap;
-  padding-top:20px;border-top:1px solid var(--cocoa-fa);
+  padding-top:20px;border-top:1px solid rgba(92,61,46,0.1);
 }
 .hp-price{
   font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;
-  font-weight:900;font-size:clamp(22px,2.8vw,36px);
-  letter-spacing:-0.02em;color:var(--ink);
+  font-weight:900;font-size:clamp(28px,3.2vw,44px);
+  letter-spacing:-0.03em;color:var(--ink);
 }
 .hp-price span{
-  font-family:'Courier New',monospace;font-size:9px;font-weight:600;
+  font-family:'Courier New',monospace;font-size:8px;font-weight:600;
   letter-spacing:0.24em;text-transform:uppercase;color:var(--cocoa-mu);
-  vertical-align:middle;margin-left:6px;
+  vertical-align:middle;margin-left:8px;
 }
 .hp-cta{
-  min-height:36px;display:inline-flex;align-items:center;
+  min-height:40px;display:inline-flex;align-items:center;
   font-family:'Courier New',monospace;font-size:9px;font-weight:600;
   letter-spacing:0.28em;text-transform:uppercase;color:var(--cocoa);
-  border-bottom:1px solid var(--cocoa-fa);padding-bottom:2px;
-  transition:color .18s,border-color .18s;white-space:nowrap;
+  border-bottom:1px solid rgba(92,61,46,0.2);padding-bottom:3px;
+  transition:color .2s,border-color .2s,letter-spacing .2s;white-space:nowrap;
 }
-.hp-cta:hover{color:var(--ink);border-color:var(--cocoa-mu)}
+.hp-cta:hover{color:var(--ink);border-color:var(--cocoa);letter-spacing:0.34em}
 .hero-scroll{
   position:absolute;right:var(--g);bottom:clamp(60px,10vh,100px);
   writing-mode:vertical-rl;
