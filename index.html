@@ -188,14 +188,14 @@ nav{
 }
 .hero-product--bread{
   background-image:url("/img/bread-hero.webp");
-  background-size:cover;background-position:center;
+  background-size:cover;background-position:center 40%;
 }
 .hero-product--bread::before{
   content:'';position:absolute;inset:0;
-  background:rgba(248,244,236,0.88);
-  transition:background .2s;
+  background:rgba(248,244,236,0.82);
+  transition:background .35s cubic-bezier(.16,1,.3,1);
 }
-.hero-product--bread:hover::before{background:rgba(248,244,236,0.80)}
+.hero-product--bread:hover::before{background:rgba(248,244,236,0.72)}
 .hero-product--bread > *{position:relative;z-index:1}
 .hero-product--brew{
   background-image:url("/img/brew-hero.webp");
@@ -203,10 +203,10 @@ nav{
 }
 .hero-product--brew::before{
   content:'';position:absolute;inset:0;
-  background:rgba(248,244,236,0.88);
-  transition:background .2s;
+  background:rgba(248,244,236,0.82);
+  transition:background .35s cubic-bezier(.16,1,.3,1);
 }
-.hero-product--brew:hover::before{background:rgba(248,244,236,0.80)}
+.hero-product--brew:hover::before{background:rgba(248,244,236,0.72)}
 .hero-product--brew > *{position:relative;z-index:1}
 .hp-tag{
   font-family:'Courier New',monospace;font-size:9px;font-weight:600;
