@@ -263,50 +263,168 @@ a,button,[role=button],input,select,textarea,label{cursor:none!important}
 }
 
 /* ── INGREDIENTS ─────────────────────────────────────────────────── */
-.ingredients{background:var(--cream-deep)}
-.ingredients-inner{max-width:var(--max);margin:0 auto}
+.ingredients{background:var(--ink);position:relative;overflow:hidden}
+.ingredients::after{
+  content:'';position:absolute;bottom:0;left:0;right:0;height:1px;
+  background:rgba(248,244,236,0.06);
+}
+.ingredients-inner{max-width:var(--max);margin:0 auto;position:relative;z-index:1}
 .ing-header{
   display:flex;align-items:flex-end;justify-content:space-between;
   gap:40px;flex-wrap:wrap;
-  margin-bottom:clamp(60px,8vw,100px);
+  padding-bottom:clamp(40px,6vw,72px);
+  border-bottom:1px solid rgba(248,244,236,0.06);
+  margin-bottom:0;
+}
+.ing-header-left{}
+.ing-header-eyebrow{
+  font-family:'Courier New',monospace;font-size:10px;font-weight:600;
+  letter-spacing:0.38em;text-transform:uppercase;
+  color:var(--cocoa-mid);display:block;margin-bottom:16px;
+}
+.ing-header-h2{
+  font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;
+  font-weight:900;font-size:clamp(42px,6vw,96px);
+  letter-spacing:-0.04em;line-height:0.88;
+  color:rgba(248,244,236,0.92);
 }
 .ing-decree{
   font-family:'Courier New',monospace;font-size:9px;font-weight:600;
-  letter-spacing:0.32em;text-transform:uppercase;color:var(--cocoa-mu);
-  max-width:300px;line-height:2;text-align:right;
+  letter-spacing:0.32em;text-transform:uppercase;
+  color:rgba(248,244,236,0.22);
+  max-width:260px;line-height:2.2;text-align:right;
 }
-.ing-cols{display:grid;grid-template-columns:repeat(3,1fr);gap:2px}
-@media(max-width:760px){.ing-cols{grid-template-columns:1fr}}
-.ing-col{
-  background:var(--cream);
-  padding:clamp(40px,5vw,72px) clamp(28px,3.5vw,48px);
-  border:1px solid var(--cocoa-fa);
+
+/* Row system */
+.ing-rows{display:flex;flex-direction:column}
+.ing-row{
+  display:grid;
+  grid-template-columns: clamp(52px,5vw,80px) 1fr clamp(180px,22vw,320px);
+  gap:0;
+  border-bottom:1px solid rgba(248,244,236,0.06);
   position:relative;overflow:hidden;
-  transition:background .2s;
+  cursor:default;
+  transition:background .35s cubic-bezier(.16,1,.3,1);
 }
-.ing-col:hover{background:rgba(248,244,236,0.7)}
-.ing-num{
+.ing-row::before{
+  content:'';position:absolute;left:0;top:0;bottom:0;width:0;
+  background:var(--cocoa);opacity:0.12;
+  transition:width .5s cubic-bezier(.16,1,.3,1);
+}
+.ing-row:hover::before{width:100%}
+.ing-row:hover{background:rgba(248,244,236,0.02)}
+
+/* Left axis — vertical number */
+.ing-axis{
+  border-right:1px solid rgba(248,244,236,0.06);
+  display:flex;align-items:flex-start;justify-content:center;
+  padding-top:clamp(32px,4vw,52px);
+}
+.ing-axis-num{
   font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;
-  font-weight:900;font-size:clamp(80px,11vw,160px);
-  letter-spacing:-0.05em;line-height:0.85;
-  color:rgba(92,61,46,0.05);
-  position:absolute;bottom:-8px;right:12px;
-  pointer-events:none;user-select:none;
+  font-weight:900;font-size:10px;letter-spacing:0.12em;
+  color:rgba(248,244,236,0.2);
+  writing-mode:vertical-rl;text-orientation:mixed;
+  transform:rotate(180deg);
+  user-select:none;
+}
+
+/* Center — main content */
+.ing-main{
+  padding:clamp(36px,5vw,72px) clamp(32px,4vw,60px);
+  display:flex;flex-direction:column;justify-content:space-between;
+  min-height:clamp(180px,20vw,280px);
+  position:relative;
+}
+.ing-tag{
+  font-family:'Courier New',monospace;font-size:9px;font-weight:600;
+  letter-spacing:0.34em;text-transform:uppercase;
+  color:rgba(248,244,236,0.28);margin-bottom:clamp(16px,2vw,28px);
+  display:flex;align-items:center;gap:16px;
+}
+.ing-tag::after{
+  content:'';display:block;height:1px;width:40px;
+  background:rgba(248,244,236,0.15);flex-shrink:0;
 }
 .ing-name{
   font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;
-  font-weight:900;font-size:clamp(28px,3.5vw,52px);
-  letter-spacing:-0.03em;line-height:0.9;
-  color:var(--ink);margin-bottom:12px;
+  font-weight:900;
+  font-size:clamp(44px,6.5vw,110px);
+  letter-spacing:-0.04em;line-height:0.88;
+  color:rgba(248,244,236,0.92);
+  transition:letter-spacing .4s cubic-bezier(.16,1,.3,1),color .35s;
 }
-.ing-origin{
-  font-family:'Courier New',monospace;font-size:9px;font-weight:600;
-  letter-spacing:0.28em;text-transform:uppercase;
-  color:var(--cocoa-mu);margin-bottom:20px;line-height:1.8;
+.ing-row:hover .ing-name{
+  letter-spacing:-0.02em;
+  color:rgba(248,244,236,1);
 }
 .ing-desc{
-  font-size:clamp(13px,1.5vw,16px);
-  color:var(--cocoa-lt);line-height:1.75;
+  font-size:clamp(12px,1.3vw,15px);
+  color:rgba(248,244,236,0.32);line-height:1.7;
+  max-width:520px;
+  margin-top:clamp(20px,2.5vw,32px);
+  transition:color .35s;
+}
+.ing-row:hover .ing-desc{color:rgba(248,244,236,0.48)}
+
+/* Right — provenance data panel */
+.ing-data{
+  border-left:1px solid rgba(248,244,236,0.06);
+  padding:clamp(28px,3.5vw,52px) clamp(24px,3vw,44px);
+  display:flex;flex-direction:column;justify-content:space-between;
+  gap:clamp(20px,2.5vw,32px);
+}
+.ing-coords{
+  font-family:'Courier New',monospace;font-size:9px;font-weight:600;
+  letter-spacing:0.22em;text-transform:uppercase;
+  color:rgba(248,244,236,0.2);line-height:2.2;
+}
+.ing-coords span{
+  display:block;color:rgba(248,244,236,0.12);font-size:8px;
+  letter-spacing:0.18em;margin-top:2px;
+}
+.ing-stat{
+  display:flex;flex-direction:column;gap:4px;
+}
+.ing-stat-val{
+  font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;
+  font-weight:900;font-size:clamp(18px,2.2vw,32px);
+  letter-spacing:-0.03em;color:rgba(248,244,236,0.65);
+  line-height:1;
+}
+.ing-stat-label{
+  font-family:'Courier New',monospace;font-size:8px;font-weight:600;
+  letter-spacing:0.28em;text-transform:uppercase;
+  color:rgba(248,244,236,0.18);
+}
+
+/* Provenance bar */
+.ing-bar-wrap{margin-top:auto}
+.ing-bar-label{
+  font-family:'Courier New',monospace;font-size:8px;font-weight:600;
+  letter-spacing:0.24em;text-transform:uppercase;
+  color:rgba(248,244,236,0.16);margin-bottom:8px;
+  display:flex;justify-content:space-between;
+}
+.ing-bar{
+  height:2px;background:rgba(248,244,236,0.07);
+  position:relative;overflow:hidden;
+}
+.ing-bar-fill{
+  position:absolute;left:0;top:0;bottom:0;
+  background:var(--cocoa-mid);opacity:0.7;
+  transform:scaleX(0);transform-origin:left;
+  transition:transform 1.2s cubic-bezier(.16,1,.3,1);
+}
+.ing-row.in-view .ing-bar-fill{transform:scaleX(1)}
+
+/* Mobile */
+@media(max-width:760px){
+  .ing-row{grid-template-columns:40px 1fr;grid-template-rows:auto auto}
+  .ing-data{grid-column:1/-1;border-left:none;border-top:1px solid rgba(248,244,236,0.06);
+    flex-direction:row;flex-wrap:wrap;gap:16px}
+  .ing-name{font-size:clamp(36px,11vw,60px)}
+  .ing-bar-wrap{display:none}
 }
 
 /* ── RITUAL ─────────────────────────────────────────────────── */
@@ -964,9 +1082,7 @@ footer nav,footer p,footer a{background:transparent!important;background-color:t
 
 /* ── BREAD — MOBILE SPECIFIC ─────────────────────────────────────── */
 @media(max-width:480px){
-  .ing-cols{gap:2px}
-  .ing-col{padding:28px 20px}
-  .ing-name{font-size:clamp(26px,7.5vw,40px)}
+  .ing-name{font-size:clamp(36px,10vw,56px)}
   .step{padding:24px 16px;gap:12px}
   .step-title{font-size:clamp(18px,5.5vw,28px)}
   .nutr-headline{font-size:clamp(44px,13vw,72px)}
@@ -1072,10 +1188,10 @@ a:focus-visible,button:focus-visible{
 
 /* Ingredient/origin/tasting items — consistent hover across all pages */
 @media(hover:hover){
-  .ing-col,.tasting-note,.pillar,.who-col{
+  .tasting-note,.pillar,.who-col{
     transition:background .2s,transform .2s cubic-bezier(.16,1,.3,1);
   }
-  .ing-col:hover,.tasting-note:hover,.pillar:hover,.who-col:hover{
+  .tasting-note:hover,.pillar:hover,.who-col:hover{
     transform:translateY(-2px);
   }
 }
@@ -1225,9 +1341,9 @@ a:focus-visible,button:focus-visible{
 <section class="section ingredients" id="ingredients">
   <div class="ingredients-inner">
     <div class="ing-header">
-      <div>
-        <span class="eyebrow reveal">— Three Ingredients</span>
-        <h2 class="h2 reveal">Nothing<br>else.</h2>
+      <div class="ing-header-left">
+        <span class="ing-header-eyebrow reveal">— Three Ingredients</span>
+        <h2 class="ing-header-h2 reveal">Nothing<br>else.</h2>
       </div>
       <div class="ing-decree reveal">
         Buckwheat Flour<br>
@@ -1236,25 +1352,90 @@ a:focus-visible,button:focus-visible{
         That is all.
       </div>
     </div>
-    <div class="ing-cols">
-      <div class="ing-col reveal">
-        <div class="ing-num" aria-hidden="true">01</div>
-        <div class="ing-name">Buckwheat<br>Flour</div>
-        <div class="ing-origin">Lausitz · Germany · Since 1772</div>
-        <p class="ing-desc">Buckwheat. Grown in the Lausitz. Milled in the Lausitz. A mill that has not stopped since 1772.</p>
+
+    <div class="ing-rows">
+
+      <div class="ing-row reveal">
+        <div class="ing-axis"><span class="ing-axis-num">01</span></div>
+        <div class="ing-main">
+          <div class="ing-tag">Buckwheat Flour</div>
+          <div class="ing-name">Lausitz.</div>
+          <p class="ing-desc">Grown in the Lausitz. Milled in the Lausitz. A mill that has not stopped since 1772 — the same stone wheels, the same grain, the same discipline. No substitutes. No blends.</p>
+        </div>
+        <div class="ing-data">
+          <div class="ing-coords">
+            51.5°N 14.0°E
+            <span>Lusatia · Germany</span>
+          </div>
+          <div class="ing-stat">
+            <div class="ing-stat-val">1772</div>
+            <div class="ing-stat-label">Mill est.</div>
+          </div>
+          <div class="ing-stat">
+            <div class="ing-stat-val">~850 km</div>
+            <div class="ing-stat-label">To your door</div>
+          </div>
+          <div class="ing-bar-wrap">
+            <div class="ing-bar-label"><span>Provenance</span><span>Direct</span></div>
+            <div class="ing-bar"><div class="ing-bar-fill" style="width:72%"></div></div>
+          </div>
+        </div>
       </div>
-      <div class="ing-col reveal reveal-d1">
-        <div class="ing-num" aria-hidden="true">02</div>
-        <div class="ing-name">Psyllium<br>Husk</div>
-        <div class="ing-origin">Gujarat · India · Direct Source</div>
-        <p class="ing-desc">Psyllium. From Gujarat — the only region in the world with the binding strength gluten-free bread actually requires. Certified. Direct. Unadulterated.</p>
+
+      <div class="ing-row reveal reveal-d1">
+        <div class="ing-axis"><span class="ing-axis-num">02</span></div>
+        <div class="ing-main">
+          <div class="ing-tag">Psyllium Husk</div>
+          <div class="ing-name">Gujarat.</div>
+          <p class="ing-desc">The only region in the world with the binding strength gluten-free bread actually requires. Certified. Direct. Unadulterated. Every other region produces an inferior crop — we checked.</p>
+        </div>
+        <div class="ing-data">
+          <div class="ing-coords">
+            22.3°N 72.1°E
+            <span>Gujarat · India</span>
+          </div>
+          <div class="ing-stat">
+            <div class="ing-stat-val">94%</div>
+            <div class="ing-stat-label">World supply</div>
+          </div>
+          <div class="ing-stat">
+            <div class="ing-stat-val">~6,200 km</div>
+            <div class="ing-stat-label">To your door</div>
+          </div>
+          <div class="ing-bar-wrap">
+            <div class="ing-bar-label"><span>Provenance</span><span>Certified</span></div>
+            <div class="ing-bar"><div class="ing-bar-fill" style="width:100%"></div></div>
+          </div>
+        </div>
       </div>
-      <div class="ing-col reveal reveal-d2">
-        <div class="ing-num" aria-hidden="true">03</div>
-        <div class="ing-name">Mountain Salt</div>
-        <div class="ing-origin">Altaussee · Austria · 250 Million Years</div>
-        <p class="ing-desc">Salt. 250 million years old. Hand-broken in the Salzkammergut. No additives. No treatment. Only time, stone, and restraint.</p>
+
+      <div class="ing-row reveal reveal-d2">
+        <div class="ing-axis"><span class="ing-axis-num">03</span></div>
+        <div class="ing-main">
+          <div class="ing-tag">Mountain Salt</div>
+          <div class="ing-name">Altaussee.</div>
+          <p class="ing-desc">250 million years old. Hand-broken in the Salzkammergut deep inside the Austrian Alps. No additives. No treatment. Only time, stone, and restraint — before bread existed, this salt did.</p>
+        </div>
+        <div class="ing-data">
+          <div class="ing-coords">
+            47.6°N 13.8°E
+            <span>Salzkammergut · Austria</span>
+          </div>
+          <div class="ing-stat">
+            <div class="ing-stat-val">250M yr</div>
+            <div class="ing-stat-label">Age of deposit</div>
+          </div>
+          <div class="ing-stat">
+            <div class="ing-stat-val">~620 km</div>
+            <div class="ing-stat-label">To your door</div>
+          </div>
+          <div class="ing-bar-wrap">
+            <div class="ing-bar-label"><span>Provenance</span><span>Hand-broken</span></div>
+            <div class="ing-bar"><div class="ing-bar-fill" style="width:58%"></div></div>
+          </div>
+        </div>
       </div>
+
     </div>
   </div>
 </section>
@@ -1801,6 +1982,12 @@ document.addEventListener('DOMContentLoaded',function(){
     entries.forEach(function(e){if(e.isIntersecting){e.target.classList.add('visible');obs.unobserve(e.target);}});
   },{threshold:0.08,rootMargin:'0px 0px -32px 0px'});
   document.querySelectorAll('.reveal').forEach(function(el){obs.observe(el);});
+
+  /* Ingredient row in-view for bar animations */
+  const rowObs=new IntersectionObserver(function(entries){
+    entries.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in-view');}});
+  },{threshold:0.25});
+  document.querySelectorAll('.ing-row').forEach(function(el){rowObs.observe(el);});
 })();
 </script>
 
