@@ -648,107 +648,154 @@ a,button,[role=button],input,select,textarea,label{cursor:none!important}
 .order{background:var(--dark);position:relative;overflow:hidden}
 .order::before{
   content:'';position:absolute;inset:0;
-  background-image:linear-gradient(rgba(248,244,236,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(248,244,236,0.03) 1px,transparent 1px);
-  background-size:60px 60px;
-  -webkit-mask-image:linear-gradient(to bottom,transparent 0%,rgba(0,0,0,0.5) 40%,rgba(0,0,0,1) 100%);
-  mask-image:linear-gradient(to bottom,transparent 0%,rgba(0,0,0,0.5) 40%,rgba(0,0,0,1) 100%);
+  background-image:linear-gradient(rgba(248,244,236,0.025) 1px,transparent 1px),linear-gradient(90deg,rgba(248,244,236,0.025) 1px,transparent 1px);
+  background-size:80px 80px;
+  mask-image:linear-gradient(to bottom,transparent 0%,rgba(0,0,0,0.5) 25%,rgba(0,0,0,0.7) 75%,transparent 100%);
+  -webkit-mask-image:linear-gradient(to bottom,transparent 0%,rgba(0,0,0,0.5) 25%,rgba(0,0,0,0.7) 75%,transparent 100%);
   pointer-events:none;z-index:0;
 }
-.order-inner{position:relative;z-index:1}
-.order-inner{max-width:var(--max);margin:0 auto;display:flex;flex-direction:column;align-items:center;text-align:center}
-.order-eyebrow{align-self:flex-start;text-align:left}
-.order-h2{align-self:flex-start;text-align:left}
+.order-inner{
+  position:relative;z-index:1;
+  max-width:var(--max);margin:0 auto;
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  grid-template-rows:auto auto auto;
+  gap:0 clamp(48px,6vw,100px);
+  align-items:start;
+}
+.order-left{
+  grid-column:1;
+  grid-row:1 / 4;
+  display:flex;flex-direction:column;
+  border-right:1px solid rgba(248,244,236,0.06);
+  padding-right:clamp(48px,6vw,100px);
+}
+.order-right{
+  grid-column:2;
+  grid-row:1 / 4;
+  display:flex;flex-direction:column;
+  padding-top:clamp(4px,0.5vw,8px);
+}
 .order-eyebrow{
   font-family:'Courier New',monospace;font-size:10px;font-weight:600;
   letter-spacing:0.36em;text-transform:uppercase;color:var(--cocoa-mid);
-  display:block;margin-bottom:20px;
+  display:block;margin-bottom:24px;
 }
 .order-h2{
   font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;
-  font-weight:900;font-size:clamp(48px,7vw,110px);
-  letter-spacing:-0.04em;line-height:0.88;
-  color:rgba(248,244,236,0.9);
-  margin-bottom:clamp(48px,6vh,80px);
+  font-weight:900;font-size:clamp(64px,9vw,140px);
+  letter-spacing:-0.04em;line-height:0.86;
+  color:rgba(248,244,236,0.92);
+  margin-bottom:clamp(12px,2vw,20px);
 }
-.qty-grid{
-  display:grid;grid-template-columns:repeat(2,1fr);gap:2px;
-  max-width:640px;
+.order-sub{
+  font-family:'Courier New',monospace;font-size:9px;font-weight:600;
+  letter-spacing:0.28em;text-transform:uppercase;
+  color:rgba(248,244,236,0.28);
   margin-bottom:clamp(40px,5vw,64px);
+  line-height:1.9;
+}
+/* Quantity strip — 4 tiles in a horizontal row */
+.qty-grid{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:1px;
+  background:rgba(248,244,236,0.06);
+  border:1px solid rgba(248,244,236,0.06);
+  margin-bottom:clamp(32px,4vw,52px);
 }
 .qty-card{
-  background:rgba(248,244,236,0.04);
-  border:2px solid rgba(248,244,236,0.04);
-  padding:clamp(24px,3vw,40px) clamp(16px,2vw,28px);
+  background:var(--dark);
+  padding:clamp(20px,2.5vw,32px) clamp(12px,1.5vw,20px);
   transition:background .18s,border-color .18s;
-  position:relative;overflow:hidden;
+  position:relative;overflow:hidden;cursor:none;
+  display:flex;flex-direction:column;align-items:flex-start;
 }
-.qty-card:hover{background:rgba(248,244,236,0.07);border-color:rgba(248,244,236,0.1)}
-.qty-card.selected{background:rgba(92,61,46,0.18);border-color:var(--cocoa-mid)}
+.qty-card:hover{background:rgba(248,244,236,0.05)}
+.qty-card.selected{background:rgba(92,61,46,0.22)}
+.qty-card.selected::after{
+  content:'';position:absolute;bottom:0;left:0;right:0;height:2px;
+  background:var(--cocoa-mid);
+}
 .qty-tag{
-  font-family:'Courier New',monospace;font-size:8px;font-weight:600;
+  font-family:'Courier New',monospace;font-size:7px;font-weight:600;
   letter-spacing:0.3em;text-transform:uppercase;
-  color:rgba(248,244,236,0.25);margin-bottom:12px;display:block;
+  color:rgba(248,244,236,0.22);margin-bottom:10px;display:block;
 }
 .qty-num{
   font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;
-  font-weight:900;font-size:clamp(36px,5vw,72px);
-  letter-spacing:-0.04em;line-height:0.9;
-  color:rgba(248,244,236,0.85);display:block;margin-bottom:6px;
+  font-weight:900;font-size:clamp(28px,3.5vw,52px);
+  letter-spacing:-0.04em;line-height:0.88;
+  color:rgba(248,244,236,0.88);display:block;margin-bottom:8px;
 }
 .qty-price{
   font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;
-  font-weight:700;font-size:clamp(16px,2vw,24px);
-  letter-spacing:-0.02em;
-  color:rgba(248,244,236,0.55);
+  font-weight:700;font-size:clamp(12px,1.4vw,18px);
+  letter-spacing:-0.01em;
+  color:rgba(248,244,236,0.42);
 }
-.qty-per{
-  font-family:'Courier New',monospace;font-size:8px;font-weight:600;
-  letter-spacing:0.26em;text-transform:uppercase;
-  color:rgba(248,244,236,0.22);margin-top:6px;display:block;
+.qty-per{display:none}
+/* Value callout under the grid */
+.order-value{
+  font-family:'Courier New',monospace;font-size:9px;font-weight:600;
+  letter-spacing:0.24em;text-transform:uppercase;
+  color:rgba(248,244,236,0.22);
+  line-height:1.9;
+  margin-bottom:0;
 }
-.order-form{max-width:640px;width:100%;text-align:left}
-.form-row{margin-bottom:12px}
+/* Right col — form */
+.order-form{width:100%;text-align:left}
+.form-row{margin-bottom:10px}
 .form-row label{
   font-family:'Courier New',monospace;font-size:9px;font-weight:600;
   letter-spacing:0.28em;text-transform:uppercase;
-  color:rgba(248,244,236,0.3);display:block;margin-bottom:6px;
+  color:rgba(248,244,236,0.28);display:block;margin-bottom:6px;
 }
 .form-row input,.form-row select{
-  width:100%;background:rgba(248,244,236,0.05);
-  border:1px solid rgba(248,244,236,0.1);
+  width:100%;background:rgba(248,244,236,0.04);
+  border:1px solid rgba(248,244,236,0.08);
   color:rgba(248,244,236,0.85);
   font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;
   font-size:14px;padding:14px 16px;
-  outline:none;transition:border-color .18s;
-  -webkit-appearance:none;appearance:none;
+  outline:none;transition:border-color .2s,background .2s;
+  -webkit-appearance:none;appearance:none;border-radius:0;
 }
 .form-row input:focus,.form-row select:focus{
-  border-color:rgba(92,61,46,0.5);
+  border-color:rgba(92,61,46,0.55);background:rgba(248,244,236,0.07);
 }
-.form-row select option{background:var(--dark);color:var(--cream)}
+.form-row input::placeholder{color:rgba(248,244,236,0.2)}
+.form-row select option{background:#1a0f0a;color:var(--cream)}
 .form-note{
-  font-family:'Courier New',monospace;font-size:9px;font-weight:600;
+  font-family:'Courier New',monospace;font-size:8px;font-weight:600;
   letter-spacing:0.22em;text-transform:uppercase;
-  color:rgba(248,244,236,0.2);margin-bottom:24px;line-height:1.8;
+  color:rgba(248,244,236,0.18);margin-bottom:20px;line-height:2;
 }
 .btn-order{
   font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;
-  font-weight:700;font-size:11px;letter-spacing:0.22em;text-transform:uppercase;
-  background:var(--cocoa);color:var(--cream);
-  padding:18px 40px;border:none;min-height:52px;
-  display:inline-block;transition:background .18s;width:100%;
-  text-align:center;
+  font-weight:900;font-size:11px;letter-spacing:0.24em;text-transform:uppercase;
+  background:rgba(92,61,46,0.9);color:rgba(248,244,236,0.95);
+  padding:20px 40px;border:none;min-height:56px;
+  display:block;width:100%;text-align:center;
+  transition:background .18s;cursor:none;
+  border:1px solid rgba(92,61,46,0.6);
 }
 .btn-order:hover{background:var(--cocoa-mid)}
-.btn-order:disabled{opacity:0.5}
+.btn-order:disabled{opacity:0.4}
 #order-msg{
-  margin-top:16px;
+  margin-top:14px;
   font-family:'Courier New',monospace;font-size:9px;font-weight:600;
   letter-spacing:0.22em;text-transform:uppercase;
-  min-height:20px;line-height:1.8;
+  min-height:18px;line-height:1.8;
 }
 #order-msg.ok{color:var(--cocoa-mid)}
 #order-msg.err{color:#C0533A}
+/* Order responsive */
+@media(max-width:800px){
+  .order-inner{grid-template-columns:1fr;gap:clamp(40px,6vw,60px) 0}
+  .order-left{grid-column:1;grid-row:1;border-right:none;padding-right:0;border-bottom:1px solid rgba(248,244,236,0.06);padding-bottom:clamp(40px,6vw,60px)}
+  .order-right{grid-column:1;grid-row:2}
+  .qty-grid{grid-template-columns:repeat(4,1fr)}
+}
 
 /* ── FOOTER ────────────────────────────────────────────────────────── */
 footer{
@@ -957,10 +1004,10 @@ footer::before{
   .chain-step{padding:24px 0;gap:12px}
   .chain-steps{max-width:100%}
   .cs-title{font-size:clamp(16px,5vw,22px)}
-  .qty-grid{gap:2px}
-  .qty-card{padding:20px 16px}
-  .qty-num{font-size:clamp(32px,9vw,48px)}
-  .order-h2{font-size:clamp(44px,13vw,72px)}
+  .qty-grid{gap:1px;grid-template-columns:repeat(4,1fr)}
+  .qty-card{padding:16px 10px}
+  .qty-num{font-size:clamp(24px,7vw,40px)}
+  .order-h2{font-size:clamp(56px,14vw,90px)}
 }
 
 /* ── CRAFT REFINEMENTS ──────────────────────────────────────────────── */
@@ -1440,47 +1487,50 @@ a:focus-visible,button:focus-visible{
 <!-- ORDER -->
 <section class="section order" data-dark id="order">
   <div class="order-inner">
-    <span class="order-eyebrow reveal">— Order Now</span>
-    <h2 class="order-h2 reveal">€ 1<br>per cup.</h2>
-    <div class="qty-grid" id="qty-grid">
-      <div class="qty-card reveal" data-qty="7" data-sku="brew-7" data-price="7.00">
-        <span class="qty-tag">Starter</span>
-        <span class="qty-num">7</span>
-        <div class="qty-price">€7.00</div>
-        <span class="qty-per">€1.00 per pad</span>
+    <!-- LEFT: editorial + qty selector -->
+    <div class="order-left">
+      <span class="order-eyebrow reveal">— Kochere G1 · Ethiopia</span>
+      <h2 class="order-h2 reveal">€1<br>per<br>cup.</h2>
+      <p class="order-sub reveal">85+ SCA · G1 SPECIALTY · SINGLE ORIGIN<br>ROASTED TO ORDER · SHIPS IN 3–5 DAYS</p>
+      <div class="qty-grid" id="qty-grid">
+        <div class="qty-card reveal" data-qty="7" data-sku="brew-7" data-price="7.00">
+          <span class="qty-tag">Starter</span>
+          <span class="qty-num">7</span>
+          <div class="qty-price">€7</div>
+        </div>
+        <div class="qty-card reveal reveal-d1" data-qty="30" data-sku="brew-30" data-price="30.00">
+          <span class="qty-tag">Monthly</span>
+          <span class="qty-num">30</span>
+          <div class="qty-price">€30</div>
+        </div>
+        <div class="qty-card reveal reveal-d2" data-qty="60" data-sku="brew-60" data-price="60.00">
+          <span class="qty-tag">Two Months</span>
+          <span class="qty-num">60</span>
+          <div class="qty-price">€60</div>
+        </div>
+        <div class="qty-card reveal reveal-d3" data-qty="90" data-sku="brew-90" data-price="90.00">
+          <span class="qty-tag">Quarter</span>
+          <span class="qty-num">90</span>
+          <div class="qty-price">€90</div>
+        </div>
       </div>
-      <div class="qty-card reveal reveal-d1" data-qty="30" data-sku="brew-30" data-price="30.00">
-        <span class="qty-tag">Monthly</span>
-        <span class="qty-num">30</span>
-        <div class="qty-price">€30.00</div>
-        <span class="qty-per">€1.00 per pad</span>
-      </div>
-      <div class="qty-card reveal reveal-d2" data-qty="60" data-sku="brew-60" data-price="60.00">
-        <span class="qty-tag">Two Months</span>
-        <span class="qty-num">60</span>
-        <div class="qty-price">€60.00</div>
-        <span class="qty-per">€1.00 per pad</span>
-      </div>
-      <div class="qty-card reveal reveal-d3" data-qty="90" data-sku="brew-90" data-price="90.00">
-        <span class="qty-tag">Quarter</span>
-        <span class="qty-num">90</span>
-        <div class="qty-price">€90.00</div>
-        <span class="qty-per">€1.00 per pad</span>
-      </div>
+      <p class="order-value reveal">One price. No subscription.<br>No minimum. Order once or always.</p>
     </div>
-    <div class="order-form">
-      <p class="form-note reveal">Ships in 3–5 business days · Worldwide · Roasted to order</p>
-      <div class="form-row reveal">
-        <label for="brew-name">Full Name</label>
-        <input type="text" id="brew-name" name="name" placeholder="Your name" autocomplete="name">
-      </div>
-      <div class="form-row reveal">
-        <label for="brew-email">Email Address</label>
-        <input type="email" id="brew-email" name="email" placeholder="your@email.com" autocomplete="email">
-      </div>
-      <div class="form-row reveal">
-        <label for="brew-country">Country</label>
-        <select id="brew-country" name="country">
+    <!-- RIGHT: form -->
+    <div class="order-right">
+      <div class="order-form">
+        <p class="form-note reveal">Worldwide shipping · Roasted to order</p>
+        <div class="form-row reveal">
+          <label for="brew-name">Full Name</label>
+          <input type="text" id="brew-name" name="name" placeholder="Your name" autocomplete="name">
+        </div>
+        <div class="form-row reveal">
+          <label for="brew-email">Email Address</label>
+          <input type="email" id="brew-email" name="email" placeholder="your@email.com" autocomplete="email">
+        </div>
+        <div class="form-row reveal">
+          <label for="brew-country">Country</label>
+          <select id="brew-country" name="country">
 <option value="">Select country…</option>
 <optgroup label="— German-speaking">
 <option>Germany</option>
@@ -1607,9 +1657,10 @@ a:focus-visible,button:focus-visible{
 <option>Angola</option>
 </optgroup>
 </select>
+        </div>
+        <button class="btn-order reveal" id="brew-submit">Place Order</button>
+        <div id="order-msg" role="alert" aria-live="polite"></div>
       </div>
-      <button class="btn-order reveal" id="brew-submit">Get Brew</button>
-      <div id="order-msg" role="alert" aria-live="polite"></div>
     </div>
   </div>
 </section>
