@@ -93,13 +93,15 @@ nav{
   display:flex;
 }
 .nav-link{
-  font-family:'Courier New',monospace;font-size:11px;font-weight:600;
+  font-family:'Courier New',monospace;font-size:10px;font-weight:700;
   letter-spacing:0.26em;text-transform:uppercase;
-  color:var(--cocoa);opacity:0.85;padding:8px 16px;
-  border-bottom:1px solid transparent;transition:color .2s,border-color .2s,opacity .2s;
+  color:var(--cream);background:var(--ink);
+  padding:6px 14px;margin:0 2px;
+  border-bottom:none;transition:background .18s,color .18s;
+  opacity:1;
 }
-.nav-link:hover{color:var(--cocoa);opacity:1}
-.nav-link.active{color:var(--cocoa);opacity:1;border-bottom-color:var(--cocoa)}
+.nav-link:hover{background:var(--cocoa);color:var(--cream)}
+.nav-link.active{background:var(--cocoa);color:var(--cream)}
 .nav-cta{
   font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;
   font-weight:700;font-size:10px;letter-spacing:0.22em;text-transform:uppercase;
@@ -135,23 +137,21 @@ nav{
   animation:fadeUp .9s cubic-bezier(.16,1,.3,1) .1s both;
 }
 .hero-eyebrow{
-  font-family:'Courier New',monospace;font-size:10px;font-weight:600;
-  letter-spacing:0.38em;text-transform:uppercase;color:var(--cocoa);
+  font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;
+  font-weight:900;font-size:clamp(18px,2.8vw,38px);
+  letter-spacing:-0.01em;text-transform:uppercase;
+  color:var(--ink);opacity:0.18;
+  line-height:1;
 }
 .hero-bottom{animation:fadeUp .9s cubic-bezier(.16,1,.3,1) .2s both;max-width:var(--max)}
 .hero-headline{
   font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;
-  font-weight:900;font-size:clamp(52px,9.5vw,152px);
-  letter-spacing:-0.035em;line-height:0.9;color:var(--cream);
+  font-weight:900;font-size:clamp(72px,13.5vw,210px);
+  letter-spacing:-0.04em;line-height:0.88;color:var(--ink);
   margin-bottom:clamp(20px,3vh,40px);
 }
 .hero-headline-inner{
-  display:inline;
-  background:var(--ink);
-  color:var(--cream);
-  -webkit-box-decoration-break:clone;
-  box-decoration-break:clone;
-  padding:0 0.14em;
+  display:block;
 }
 .hero-headline span{
   display:block;font-weight:200;font-size:clamp(18px,2.8vw,42px);
@@ -778,7 +778,7 @@ a:focus-visible,button:focus-visible{
   </div>
   <div class="hero-bottom">
     <h1 class="hero-headline">
-      <span class="hero-headline-inner">THE FINEST<br>BREAD &amp;<br>COFFEE.</span>
+      THE FINEST<br>BREAD &amp;<br>COFFEE.
       <span>In the simplest form imaginable.</span>
     </h1>
     <p class="hero-sub">"Simply the best for all."</p>
