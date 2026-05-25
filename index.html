@@ -148,47 +148,76 @@ nav{
   margin-bottom:clamp(28px,4vh,48px);
 }
 .hero-products{
-  display:grid;grid-template-columns:1fr 1fr;gap:2px;max-width:760px;
+  display:grid;grid-template-columns:1fr 1fr;gap:2px;
+  max-width:900px;
   margin-bottom:clamp(40px,6vh,72px);
 }
-@media(max-width:600px){.hero-products{grid-template-columns:1fr}}
+@media(max-width:680px){.hero-products{grid-template-columns:1fr}}
 .hero-product{
-  background:var(--cream-deep);padding:clamp(24px,3vw,36px);
+  background:var(--cream-deep);
+  padding:clamp(28px,3.5vw,48px);
   border:1px solid var(--cocoa-fa);
   transition:background .2s,border-color .2s;
+  display:flex;flex-direction:column;
 }
 .hero-product:hover{background:var(--cream);border-color:rgba(92,61,46,0.18)}
 .hp-tag{
   font-family:'Courier New',monospace;font-size:9px;font-weight:600;
   letter-spacing:0.34em;text-transform:uppercase;color:var(--cocoa);
-  margin-bottom:12px;display:block;
+  margin-bottom:10px;display:block;
 }
 .hp-name{
   font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;
-  font-weight:900;font-size:clamp(28px,3.5vw,44px);
-  letter-spacing:-0.03em;line-height:0.95;color:var(--ink);
+  font-weight:900;font-size:clamp(36px,4.5vw,64px);
+  letter-spacing:-0.035em;line-height:0.9;color:var(--ink);
   margin-bottom:10px;
 }
-.hp-meta{
+.hp-origin{
   font-family:'Courier New',monospace;font-size:9px;font-weight:600;
   letter-spacing:0.22em;text-transform:uppercase;color:var(--cocoa-mu);
-  margin-bottom:18px;line-height:1.6;
+  margin-bottom:16px;line-height:1.7;
+}
+.hp-desc{
+  font-size:13px;color:var(--cocoa-lt);line-height:1.7;
+  margin-bottom:24px;flex-grow:1;
+}
+.hp-stats{
+  display:flex;gap:clamp(16px,2.5vw,32px);
+  margin-bottom:24px;
+  padding-top:20px;
+  border-top:1px solid var(--cocoa-fa);
+}
+.hp-stat-val{
+  font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;
+  font-weight:900;font-size:clamp(20px,2.5vw,32px);
+  letter-spacing:-0.03em;line-height:1;color:var(--ink);
+  display:block;
+}
+.hp-stat-key{
+  font-family:'Courier New',monospace;font-size:8px;font-weight:600;
+  letter-spacing:0.24em;text-transform:uppercase;color:var(--cocoa-mu);
+  margin-top:4px;display:block;
+}
+.hp-footer{
+  display:flex;align-items:center;justify-content:space-between;
+  gap:12px;flex-wrap:wrap;
+  padding-top:20px;border-top:1px solid var(--cocoa-fa);
 }
 .hp-price{
   font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;
-  font-weight:900;font-size:clamp(20px,2.5vw,32px);
-  letter-spacing:-0.02em;color:var(--ink);margin-bottom:16px;
+  font-weight:900;font-size:clamp(22px,2.8vw,36px);
+  letter-spacing:-0.02em;color:var(--ink);
 }
 .hp-price span{
   font-family:'Courier New',monospace;font-size:9px;font-weight:600;
-  letter-spacing:0.26em;text-transform:uppercase;color:var(--cocoa-mu);
-  font-weight:400;vertical-align:middle;margin-left:6px;
+  letter-spacing:0.24em;text-transform:uppercase;color:var(--cocoa-mu);
+  vertical-align:middle;margin-left:6px;
 }
 .hp-cta{
   font-family:'Courier New',monospace;font-size:9px;font-weight:600;
   letter-spacing:0.28em;text-transform:uppercase;color:var(--cocoa);
   border-bottom:1px solid var(--cocoa-fa);padding-bottom:2px;
-  transition:color .18s,border-color .18s;display:inline-block;
+  transition:color .18s,border-color .18s;display:inline-block;white-space:nowrap;
 }
 .hp-cta:hover{color:var(--ink);border-color:var(--cocoa-mu)}
 .hero-scroll{
@@ -239,67 +268,11 @@ nav{
   max-width:560px;line-height:1.65;
 }
 
-/* ── ESSENTIALS ─────────────────────────────────────────────────── */
-.essentials{background:var(--cream)}
-.essentials-header{
-  display:flex;align-items:flex-end;justify-content:space-between;
-  gap:40px;flex-wrap:wrap;
-  margin-bottom:clamp(60px,8vw,100px);
-}
-.essentials-decree{
+/* ── WORLD-CLASS DECREE ─────────────────────────────────────────────────── */
+.hero-decree{
   font-family:'Courier New',monospace;font-size:9px;font-weight:600;
   letter-spacing:0.32em;text-transform:uppercase;color:var(--cocoa-mu);
-  max-width:320px;line-height:2;text-align:right;
-}
-.product-pair{
-  display:grid;grid-template-columns:1fr 1px 1fr;
-  background:var(--cocoa-fa);gap:1px;
-}
-@media(max-width:860px){.product-pair{grid-template-columns:1fr}}
-.pp-divider{background:var(--cocoa-fa)}
-.product-col{
-  background:var(--cream);padding:clamp(48px,6vw,88px) clamp(32px,4vw,64px);
-}
-.pc-num{
-  font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;
-  font-weight:900;font-size:clamp(80px,12vw,160px);
-  letter-spacing:-0.05em;line-height:0.85;
-  color:var(--cocoa-fa);margin-bottom:32px;
-}
-.pc-label{
-  font-family:'Courier New',monospace;font-size:9px;font-weight:600;
-  letter-spacing:0.34em;text-transform:uppercase;color:var(--cocoa);
-  display:block;margin-bottom:16px;
-}
-.pc-name{
-  font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;
-  font-weight:900;font-size:clamp(42px,5.5vw,80px);
-  letter-spacing:-0.035em;line-height:0.9;color:var(--ink);
-  margin-bottom:14px;
-}
-.pc-origin{
-  font-family:'Courier New',monospace;font-size:9px;font-weight:600;
-  letter-spacing:0.24em;text-transform:uppercase;color:var(--cocoa-mu);
-  margin-bottom:28px;line-height:1.8;
-}
-.pc-desc{
-  font-size:14px;color:var(--cocoa-lt);line-height:1.7;
-  max-width:380px;margin-bottom:36px;
-}
-.pc-stats{
-  display:flex;gap:clamp(20px,3vw,40px);margin-bottom:40px;
-}
-.pc-stat{}
-.pc-stat-val{
-  font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;
-  font-weight:900;font-size:clamp(24px,3vw,40px);
-  letter-spacing:-0.03em;line-height:1;color:var(--ink);
-  display:block;
-}
-.pc-stat-key{
-  font-family:'Courier New',monospace;font-size:8px;font-weight:600;
-  letter-spacing:0.26em;text-transform:uppercase;color:var(--cocoa-mu);
-  margin-top:4px;display:block;
+  line-height:2;margin-bottom:clamp(20px,3vh,32px);
 }
 .btn-primary{
   font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;
@@ -475,20 +448,37 @@ footer{
       <span>In the simplest form imaginable.</span>
     </h1>
     <p class="hero-sub">"Simply the best for all."</p>
+    <p class="hero-decree">The finest thing in its category. &nbsp;Stripped to its essence. &nbsp;Priced for everyone. &nbsp;— What we make.</p>
     <div class="hero-products">
       <a href="/bread" class="hero-product">
-        <span class="hp-tag">Daily</span>
-        <div class="hp-name">BREAD</div>
-        <div class="hp-meta">Buckwheat Flour · 3 Ingredients<br>Alps · Gluten-Free · Ships Weekly</div>
-        <div class="hp-price">€ 3 <span>/ loaf</span></div>
-        <span class="hp-cta">Explore Bread →</span>
+        <span class="hp-tag">Daily · Bread</span>
+        <div class="hp-name">DAILY<br>BREAD.</div>
+        <div class="hp-origin">Buckwheat · Alps · 3 Ingredients</div>
+        <p class="hp-desc">Buckwheat flour. Psyllium husk. Salt. Pre-weighed, pre-blended, delivered to your door. Bake for 70 minutes. That's everything.</p>
+        <div class="hp-stats">
+          <div><span class="hp-stat-val">3</span><span class="hp-stat-key">Ingredients</span></div>
+          <div><span class="hp-stat-val">5</span><span class="hp-stat-key">Loaves / Box</span></div>
+          <div><span class="hp-stat-val">€ 3</span><span class="hp-stat-key">Per Loaf</span></div>
+        </div>
+        <div class="hp-footer">
+          <div class="hp-price">€ 3 <span>/ loaf</span></div>
+          <span class="hp-cta">Explore Bread →</span>
+        </div>
       </a>
       <a href="/brew" class="hero-product">
-        <span class="hp-tag">Daily</span>
-        <div class="hp-name">BREW</div>
-        <div class="hp-meta">Yirgacheffe Kochere Coffee · 1 Sachet<br>Ethiopia · 2,100 m · Grade 1</div>
-        <div class="hp-price">€ 1 <span>/ cup</span></div>
-        <span class="hp-cta">Explore Brew →</span>
+        <span class="hp-tag">Daily · Brew</span>
+        <div class="hp-name">DAILY<br>BREW.</div>
+        <div class="hp-origin">Yirgacheffe · Kochere · Ethiopia · 2,100 m</div>
+        <p class="hp-desc">Pre-ground Kochere G1, sealed in a single kraft paper pad. Drop it in. Add hot water. Jasmine, bergamot, blueberry — in one cup.</p>
+        <div class="hp-stats">
+          <div><span class="hp-stat-val">G1</span><span class="hp-stat-key">Grade</span></div>
+          <div><span class="hp-stat-val">85+</span><span class="hp-stat-key">SCA Score</span></div>
+          <div><span class="hp-stat-val">€ 1</span><span class="hp-stat-key">Per Cup</span></div>
+        </div>
+        <div class="hp-footer">
+          <div class="hp-price">€ 1 <span>/ cup</span></div>
+          <span class="hp-cta">Explore Brew →</span>
+        </div>
       </a>
     </div>
   </div>
@@ -527,76 +517,6 @@ footer{
     <span class="ticker-item">·</span>
   </div>
 </div>
-
-<!-- ESSENTIALS -->
-<section class="section essentials">
-  <div class="inner">
-    <div class="essentials-header">
-      <div>
-        <span class="eyebrow reveal">— What We Make</span>
-        <h2 class="h2 reveal">World-Class<br>Essentials.</h2>
-      </div>
-      <div class="essentials-decree reveal">
-        The finest thing in its category.<br>
-        Stripped to its essence.<br>
-        Priced for everyone.
-      </div>
-    </div>
-    <div class="product-pair">
-      <div class="product-col reveal">
-        <div class="pc-num">01</div>
-        <span class="pc-label">Daily · Bread</span>
-        <div class="pc-name">DAILY<br>BREAD.</div>
-        <div class="pc-origin">Buckwheat · Alps · 3 Ingredients</div>
-        <p class="pc-desc">Buckwheat flour. Psyllium husk. Salt. Pre-weighed, pre-blended, delivered to your door. Bake for 70 minutes. That's everything.</p>
-        <div class="pc-stats">
-          <div class="pc-stat">
-            <span class="pc-stat-val">3</span>
-            <span class="pc-stat-key">Ingredients</span>
-          </div>
-          <div class="pc-stat">
-            <span class="pc-stat-val">5</span>
-            <span class="pc-stat-key">Loaves / Box</span>
-          </div>
-          <div class="pc-stat">
-            <span class="pc-stat-val">€ 3</span>
-            <span class="pc-stat-key">Per Loaf</span>
-          </div>
-        </div>
-        <div style="display:flex;gap:12px;flex-wrap:wrap">
-          <a href="/bread" class="btn-primary">Explore Bread</a>
-          <a href="/bread#order" class="btn-ghost">Order Now →</a>
-        </div>
-      </div>
-      <div class="pp-divider" aria-hidden="true"></div>
-      <div class="product-col reveal reveal-d1">
-        <div class="pc-num">02</div>
-        <span class="pc-label">Daily · Brew</span>
-        <div class="pc-name">DAILY<br>BREW.</div>
-        <div class="pc-origin">Yirgacheffe · Kochere · Ethiopia · 2,100 m</div>
-        <p class="pc-desc">Pre-ground Kochere G1, sealed in a single kraft paper pad. Drop it in. Add hot water. Jasmine, bergamot, blueberry — in one cup.</p>
-        <div class="pc-stats">
-          <div class="pc-stat">
-            <span class="pc-stat-val">G1</span>
-            <span class="pc-stat-key">Grade</span>
-          </div>
-          <div class="pc-stat">
-            <span class="pc-stat-val">85+</span>
-            <span class="pc-stat-key">SCA Score</span>
-          </div>
-          <div class="pc-stat">
-            <span class="pc-stat-val">€ 1</span>
-            <span class="pc-stat-key">Per Cup</span>
-          </div>
-        </div>
-        <div style="display:flex;gap:12px;flex-wrap:wrap">
-          <a href="/brew" class="btn-primary">Explore Brew</a>
-          <a href="/brew#order" class="btn-ghost">Order Now →</a>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
 
 <!-- PHILOSOPHY -->
 <section class="section philosophy" data-dark>
