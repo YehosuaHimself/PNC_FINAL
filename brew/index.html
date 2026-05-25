@@ -4,7 +4,13 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>PNC Brew — Kochere G1 · Yirgacheffe · Ethiopia</title>
-<meta name="description" content="Our Daily Brew. Kochere · Yirgacheffe · Ethiopia · 2,100 m · Grade 1. The world's finest coffee. One pad. One cup. Just add water.">
+<meta name="description" content="Our Daily Brew. Kochere G1 · Yirgacheffe · Ethiopia · 2,100 m. The world's finest coffee. One pad. One cup. Just add water.">
+<meta property="og:title" content="PNC Brew — Kochere G1 · Yirgacheffe · Ethiopia">
+<meta property="og:description" content="The world's finest coffee. One pad. One cup. Just add water. Jasmine, bergamot, blueberry — in one cup.">
+<meta property="og:url" content="https://pncbread.love/brew">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#180E08">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 32 32%22><rect width=%2232%22 height=%2232%22 fill=%22%232A1810%22/><text x=%2216%22 y=%2222%22 font-size=%2216%22 font-family=%22Helvetica Neue,Helvetica,Arial,sans-serif%22 font-weight=%22900%22 fill=%22%23F8F4EC%22 text-anchor=%22middle%22>P</text></svg>">
 <link rel="canonical" href="https://pncbread.love/brew">
 <script defer src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js" integrity="sha384-B2WBjDzEjJpYvhmi2UyEn7rektqkf5suS6sNoyyrf0EBAwBHdkiXxIlU0V5Ru2ed" crossorigin="anonymous"></script>
 <style>
@@ -784,7 +790,8 @@ footer{
   .hero-scroll{display:none}
 
   /* Hero — tighter on small screens */
-  .hero{padding-bottom:clamp(40px,8vh,80px)}
+  .hero{padding-bottom:clamp(40px,8vh,80px);padding-top:clamp(80px,14vh,120px)}
+  .hero-top{position:relative;top:auto;left:auto;margin-bottom:clamp(20px,4vh,36px);animation:none;opacity:1;transform:none}
   .hero-headline{font-size:clamp(44px,13vw,72px);line-height:0.88}
   .hero-headline span{font-size:clamp(15px,4vw,22px);margin-top:12px}
   .hero-sub{font-size:10px;margin-bottom:20px}
@@ -849,6 +856,54 @@ footer{
   .qty-num{font-size:clamp(32px,9vw,48px)}
   .order-h2{font-size:clamp(44px,13vw,72px)}
 }
+
+/* ── CRAFT REFINEMENTS ──────────────────────────────────────────────── */
+
+/* Smooth page entry — prevent flash of unstyled content */
+body{opacity:0;transition:opacity .35s ease}
+body.ready{opacity:1}
+
+/* Nav — subtle border appears on scroll */
+nav{transition:border-color .3s,box-shadow .3s}
+nav.scrolled{border-bottom-color:rgba(92,61,46,0.14);box-shadow:0 1px 24px rgba(42,24,16,0.06)}
+
+/* Hero product cards — equal height via flex */
+.hero-products{align-items:stretch}
+
+/* Ticker — pause on hover */
+.ticker:hover .ticker-inner{animation-play-state:paused}
+
+/* Reveal — stagger children automatically when parent is .reveal-group */
+.reveal-group .reveal:nth-child(1){transition-delay:0s}
+.reveal-group .reveal:nth-child(2){transition-delay:.08s}
+.reveal-group .reveal:nth-child(3){transition-delay:.16s}
+.reveal-group .reveal:nth-child(4){transition-delay:.24s}
+
+/* Selection color */
+::selection{background:var(--cocoa);color:var(--cream)}
+::-moz-selection{background:var(--cocoa);color:var(--cream)}
+
+/* Focus visible — keyboard nav accessibility */
+a:focus-visible,button:focus-visible{
+  outline:2px solid var(--cocoa);
+  outline-offset:3px;
+}
+
+/* Reduce motion */
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{
+    animation-duration:.01ms!important;
+    animation-iteration-count:1!important;
+    transition-duration:.01ms!important;
+  }
+  .lenis.lenis-smooth{scroll-behavior:auto!important}
+}
+
+/* Print — hide decorative elements */
+@media print{
+  #grain,#prog,#cur-dot,#cur-ring,nav,.ticker{display:none!important}
+  body{padding-top:0}
+}
 </style>
 </head>
 <body>
@@ -891,7 +946,7 @@ footer{
 </div>
 
 <!-- HERO -->
-<section class="hero" data-dark>
+<section class="hero" data-dark aria-label="Hero">
   <div class="hero-wm" aria-hidden="true">
     <div class="hero-wm-text">BREW</div>
   </div>
@@ -1399,6 +1454,21 @@ document.addEventListener('DOMContentLoaded',function(){
 })();
 </script>
 
+
+<script>
+/* Scroll-aware nav */
+document.addEventListener('DOMContentLoaded',function(){
+  document.body.classList.add('ready');
+  var nav=document.querySelector('nav');
+  if(!nav)return;
+  var last=0;
+  window.addEventListener('scroll',function(){
+    var y=window.scrollY||window.pageYOffset;
+    if(y>40){nav.classList.add('scrolled')}else{nav.classList.remove('scrolled')}
+    last=y;
+  },{passive:true});
+});
+</script>
 
 <!-- MOBILE NAV SCRIPT -->
 <script>
