@@ -521,87 +521,122 @@ a,button,[role=button],input,select,textarea,label{cursor:none!important}
 }
 
 /* ── RITUAL SUMMARY ─────────────────────────────────────────────────── */
-.summary{background:var(--cocoa)}
+.summary{background:var(--cocoa);position:relative;overflow:hidden}
+.summary::before{
+  content:'';position:absolute;inset:0;
+  background-image:
+    linear-gradient(rgba(248,244,236,0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(248,244,236,0.025) 1px, transparent 1px);
+  background-size:80px 80px;pointer-events:none;
+}
 .summary-inner{
-  max-width:var(--max);margin:0 auto;
-  display:grid;grid-template-columns:repeat(3,1fr);gap:2px;
-  align-items:start;
+  max-width:var(--max);margin:0 auto;position:relative;z-index:1;
+  display:grid;grid-template-columns:repeat(3,1fr);
+  align-items:stretch;
 }
 @media(max-width:760px){.summary-inner{grid-template-columns:1fr}}
 .sum-item{
-  padding:clamp(48px,6vw,80px) clamp(28px,3.5vw,48px);
-  border-right:1px solid rgba(248,244,236,0.1);
+  padding:clamp(52px,7vw,96px) clamp(28px,3.5vw,52px);
+  border-right:1px solid rgba(248,244,236,0.08);
+  display:flex;flex-direction:column;
 }
 .sum-item:last-child{border-right:none}
+/* Panel header */
 .sum-label{
   font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;
-  font-weight:900;font-size:clamp(52px,7vw,110px);
-  letter-spacing:-0.04em;line-height:0.86;
-  color:rgba(248,244,236,0.9);display:block;margin-bottom:16px;
+  font-weight:900;font-size:clamp(64px,8vw,120px);
+  letter-spacing:-0.04em;line-height:0.85;
+  color:rgba(248,244,236,0.92);display:block;margin-bottom:20px;
 }
 .sum-val{
-  font-family:'Courier New',monospace;font-size:clamp(13px,1.4vw,18px);
-  font-weight:700;letter-spacing:0.08em;
-  color:rgba(248,244,236,0.55);display:block;margin-bottom:10px;
+  font-family:'Courier New',monospace;font-size:clamp(11px,1.1vw,14px);
+  font-weight:700;letter-spacing:0.12em;text-transform:uppercase;
+  color:rgba(248,244,236,0.45);display:block;margin-bottom:8px;
 }
 .sum-desc{
-  font-family:'Courier New',monospace;font-size:8px;font-weight:600;
-  letter-spacing:0.24em;text-transform:uppercase;
-  color:rgba(248,244,236,0.3);line-height:1.9;
+  font-family:'Courier New',monospace;font-size:9px;font-weight:600;
+  letter-spacing:0.22em;text-transform:uppercase;
+  color:rgba(248,244,236,0.22);line-height:2;
 }
+/* Alt time badges */
 .sum-alts{
-  display:flex;flex-wrap:wrap;gap:2px;margin-top:14px;
-  border-top:1px solid rgba(248,244,236,0.07);padding-top:12px;
+  display:flex;flex-wrap:wrap;gap:2px;
+  margin-top:clamp(20px,2.5vw,32px);
 }
 .sum-alt{
-  display:flex;align-items:baseline;gap:7px;
-  padding:5px 12px;
-  border:1px solid rgba(248,244,236,0.07);
-  background:rgba(248,244,236,0.03);
+  display:flex;align-items:baseline;gap:8px;
+  padding:8px 14px;
+  border:1px solid rgba(248,244,236,0.1);
+  background:rgba(248,244,236,0.04);
 }
 .sum-alt-time{
   font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;
-  font-weight:900;font-size:clamp(12px,1.3vw,16px);
-  letter-spacing:-0.02em;color:rgba(248,244,236,0.6);white-space:nowrap;
+  font-weight:900;font-size:clamp(13px,1.3vw,17px);
+  letter-spacing:-0.02em;color:rgba(248,244,236,0.65);white-space:nowrap;
 }
 .sum-alt-label{
-  font-family:'Courier New',monospace;font-size:7px;font-weight:600;
-  letter-spacing:0.26em;text-transform:uppercase;
-  color:rgba(248,244,236,0.22);white-space:nowrap;
+  font-family:'Courier New',monospace;font-size:8px;font-weight:600;
+  letter-spacing:0.22em;text-transform:uppercase;
+  color:rgba(248,244,236,0.25);white-space:nowrap;
 }
-/* Embedded step rows inside each panel */
+/* Steps block */
 .sum-steps{
-  margin-top:clamp(28px,3.5vw,44px);
-  border-top:1px solid rgba(248,244,236,0.08);
-  display:flex;flex-direction:column;gap:2px;
+  margin-top:auto;
+  padding-top:clamp(28px,3.5vw,48px);
+  border-top:1px solid rgba(248,244,236,0.1);
+  display:flex;flex-direction:column;
 }
 .sum-step{
   display:grid;
-  grid-template-columns:clamp(32px,3vw,44px) 1fr;
-  gap:clamp(12px,1.5vw,20px);align-items:start;
-  padding:clamp(16px,2vw,24px) 0;
-  border-bottom:1px solid rgba(248,244,236,0.05);
+  grid-template-columns:36px 1fr auto;
+  gap:0 14px;align-items:start;
+  padding:clamp(14px,1.8vw,22px) 0;
+  border-bottom:1px solid rgba(248,244,236,0.06);
 }
 .sum-step:last-child{border-bottom:none}
 .sum-step > div{min-width:0}
 .sum-step-num{
   font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;
-  font-weight:900;font-size:11px;
-  letter-spacing:0.06em;color:rgba(248,244,236,0.2);
+  font-weight:900;font-size:10px;
+  letter-spacing:0.08em;color:rgba(248,244,236,0.3);
   padding-top:3px;display:block;
 }
 .sum-step-title{
   font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;
-  font-weight:700;font-size:clamp(13px,1.4vw,17px);
-  letter-spacing:-0.01em;line-height:1.1;
-  color:rgba(248,244,236,0.72);margin-bottom:5px;
+  font-weight:700;font-size:clamp(13px,1.3vw,16px);
+  letter-spacing:-0.01em;line-height:1.15;
+  color:rgba(248,244,236,0.8);margin-bottom:4px;
 }
 .sum-step-text{
-  font-size:clamp(11px,1.1vw,13px);
-  color:rgba(248,244,236,0.28);line-height:1.65;
+  font-size:clamp(10px,1vw,12px);
+  color:rgba(248,244,236,0.3);line-height:1.6;
 }
 .sum-step-meta{
-  display:none;
+  font-family:'Courier New',monospace;
+  font-size:8px;font-weight:600;letter-spacing:0.18em;
+  text-transform:uppercase;color:rgba(248,244,236,0.2);
+  white-space:nowrap;padding-top:3px;display:block;
+  text-align:right;
+}
+/* Break panel — quote treatment */
+.sum-break-quote{
+  margin-top:auto;
+  padding-top:clamp(28px,3.5vw,48px);
+  border-top:1px solid rgba(248,244,236,0.1);
+}
+.sum-break-line{
+  font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;
+  font-weight:900;font-size:clamp(22px,2.8vw,38px);
+  letter-spacing:-0.03em;line-height:1.1;
+  color:rgba(248,244,236,0.55);display:block;
+  margin-bottom:clamp(12px,1.5vw,20px);
+}
+.sum-break-body{
+  font-size:clamp(11px,1.1vw,13px);
+  color:rgba(248,244,236,0.28);line-height:1.7;max-width:280px;
+}
+.sum-step-spacer{
+  flex:1;
 }
 
 /* ── ORDER ─────────────────────────────────────────────────── */
@@ -920,7 +955,9 @@ footer nav,footer p,footer a{background:transparent!important;background-color:t
   .who-cols{gap:2px}
   .who-col{padding:28px 20px}
   .summary-inner{gap:0}
-  .sum-item{padding:32px 20px;border-right:none;border-bottom:1px solid rgba(248,244,236,0.1)}
+  .sum-item{padding:40px 24px;border-right:none;border-bottom:1px solid rgba(248,244,236,0.08)}
+  .sum-item:last-child{border-bottom:none}
+  .sum-break-quote{padding-top:32px}
   .sum-item:last-child{border-bottom:none}
   .order-form{gap:8px}
   .price-main{font-size:clamp(44px,13vw,72px)}
@@ -1212,25 +1249,25 @@ a:focus-visible,button:focus-visible{
           <span class="sum-step-num">01</span>
           <div>
             <div class="sum-step-title">Empty the bowl.</div>
-            <p class="sum-step-text">Open the sachet. Pour everything into a mixing bowl. The blend is already weighed and ready.</p>
+            <p class="sum-step-text">Open the sachet. Everything pre-weighed. Pour and go.</p>
           </div>
-          <span class="sum-step-meta">Prep · 60 sec</span>
+          <span class="sum-step-meta">Prep</span>
         </div>
         <div class="sum-step">
           <span class="sum-step-num">02</span>
           <div>
             <div class="sum-step-title">One sachet.</div>
-            <p class="sum-step-text">One sachet equals one loaf. No measuring, no guessing. The ratio is fixed.</p>
+            <p class="sum-step-text">One sachet. One loaf. The ratio is fixed.</p>
           </div>
-          <span class="sum-step-meta">Qty · 1 loaf</span>
+          <span class="sum-step-meta">1 loaf</span>
         </div>
         <div class="sum-step">
           <span class="sum-step-num">03</span>
           <div>
             <div class="sum-step-title">400 ml water.</div>
-            <p class="sum-step-text">Add 400 ml at room temperature. Stir until fully combined.</p>
+            <p class="sum-step-text">Room temperature. Stir until combined.</p>
           </div>
-          <span class="sum-step-meta">Water · 400 ml</span>
+          <span class="sum-step-meta">400 ml</span>
         </div>
       </div>
     </div>
@@ -1248,11 +1285,12 @@ a:focus-visible,button:focus-visible{
         <div class="sum-step">
           <span class="sum-step-num">04</span>
           <div>
-            <div class="sum-step-title">77 minutes. 180°C.</div>
-            <p class="sum-step-text">Shape. Place in a loaf tin. Bake at 180°C for 77 minutes. No proving. No kneading. Just heat and time.</p>
+            <div class="sum-step-title">Shape. Tin. Oven.</div>
+            <p class="sum-step-text">180°C for 77 minutes. No proving. No kneading.</p>
           </div>
-          <span class="sum-step-meta">77 min · 180°C</span>
+          <span class="sum-step-meta">77 min</span>
         </div>
+        <div class="sum-step-spacer"></div>
       </div>
     </div>
 
@@ -1260,15 +1298,9 @@ a:focus-visible,button:focus-visible{
       <span class="sum-label">Break</span>
       <span class="sum-val">yours</span>
       <span class="sum-desc">Your table. Your bread.</span>
-      <div class="sum-steps">
-        <div class="sum-step">
-          <span class="sum-step-num">05</span>
-          <div>
-            <div class="sum-step-title">Yours. Ready.</div>
-            <p class="sum-step-text">Let it cool, then break the best of bread.</p>
-          </div>
-          <span class="sum-step-meta">Your table</span>
-        </div>
+      <div class="sum-break-quote">
+        <span class="sum-break-line">05 —<br>Yours.<br>Ready.</span>
+        <p class="sum-break-body">Let it cool. Then break it. The best bread you've ever made — with three ingredients and one sachet. That's everything.</p>
       </div>
     </div>
 
