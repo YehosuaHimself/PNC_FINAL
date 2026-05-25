@@ -1546,6 +1546,9 @@ a:focus-visible,button:focus-visible{
   }
 
   function checkDark(x, y) {
+    // Nav is always cream — force dark cursor when hovering it
+    var navH = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--nav-h')) || 62;
+    if (y <= navH) return false;
     const sy = y + window.scrollY;
     for (var i = 0; i < darkZones.length; i++) {
       var z = darkZones[i];
