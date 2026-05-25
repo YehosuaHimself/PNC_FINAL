@@ -587,7 +587,10 @@ a,button,[role=button],input,select,textarea,label{cursor:none!important}
 .chain-header{margin-bottom:clamp(60px,8vw,100px);text-shadow:0 2px 20px rgba(248,244,236,0.7)}
 .chain-steps{display:flex;flex-direction:column;gap:0}
 .chain-step{
-  display:block;
+  display:grid;
+  grid-template-columns:clamp(48px,6vw,80px) 1fr;
+  gap:0 clamp(20px,3vw,40px);
+  align-items:start;
   padding:clamp(32px,4vw,52px) 0;
   border-bottom:1px solid var(--cocoa-fa);
   overflow:hidden;
@@ -595,9 +598,9 @@ a,button,[role=button],input,select,textarea,label{cursor:none!important}
 .chain-step:last-child{border-bottom:none}
 .cs-num{
   font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;
-  font-weight:900;font-size:clamp(16px,2vw,28px);
+  font-weight:900;font-size:clamp(14px,1.8vw,22px);
   letter-spacing:-0.02em;color:var(--cocoa-mu);
-  line-height:1;padding-top:4px;
+  line-height:1;padding-top:6px;
 }
 .cs-content{min-width:0;max-width:680px}
 .cs-title{
@@ -1133,7 +1136,7 @@ a:focus-visible,button:focus-visible{
       <div class="hs-pill hl">€ 1 Per Cup</div>
     </div>
     <div class="hero-cta-row">
-      <a href="#order" class="btn-light">Order Now →</a>
+      <a href="#order" class="btn-light">Get Brew →</a>
       <a href="#source" class="btn-ghost-dark">Our Source ↓</a>
     </div>
   </div>
@@ -1377,13 +1380,14 @@ a:focus-visible,button:focus-visible{
     </div>
     <div class="chain-steps">
       <div class="chain-step reveal">
+        <div class="cs-num">01</div>
         <div class="cs-content">
-          <div class="cs-title">AMG Coffee Export</div>
           <div class="cs-sub">Ethiopia · Direct Source</div>
           <p class="cs-text">Direct relationship with AMG Coffee Export, Ethiopia. Fully washed. Dried on raised beds. EUDR-compliant. Traceable to cooperative.</p>
         </div>
       </div>
       <div class="chain-step reveal">
+        <div class="cs-num">02</div>
         <div class="cs-content">
           <div class="cs-title">In-House · The Alp Mountains</div>
           <div class="cs-sub">Roastery · Small-Batch</div>
@@ -1391,6 +1395,7 @@ a:focus-visible,button:focus-visible{
         </div>
       </div>
       <div class="chain-step reveal">
+        <div class="cs-num">03</div>
         <div class="cs-content">
           <div class="cs-title">Single-Serve · Biodegradable</div>
           <div class="cs-sub">Packing · Kraft Paper · Nitrogen-Flushed</div>
@@ -1398,6 +1403,7 @@ a:focus-visible,button:focus-visible{
         </div>
       </div>
       <div class="chain-step reveal">
+        <div class="cs-num">04</div>
         <div class="cs-content">
           <div class="cs-title">Delivery · Rapid Global Shipping</div>
           <div class="cs-sub">Worldwide · Ships in 3–5 Days</div>
