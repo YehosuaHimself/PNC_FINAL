@@ -501,8 +501,27 @@ a,button,[role=button],input,select,textarea,label{cursor:none!important}
 }
 
 /* ── SUPPLY CHAIN ────────────────────────────────────────────────────────── */
-.chain{background:var(--cream)}
-.chain-inner{max-width:var(--max);margin:0 auto}
+.chain{
+  background:var(--cream);
+  position:relative;
+  background-image:url('../assets/ethiopia-highlands.webp');
+  background-size:cover;
+  background-position:center 40%;
+  background-attachment:scroll;
+}
+.chain::before{
+  content:'';
+  position:absolute;inset:0;
+  background:linear-gradient(
+    to bottom,
+    rgba(248,244,236,0.82) 0%,
+    rgba(248,244,236,0.72) 40%,
+    rgba(248,244,236,0.78) 100%
+  );
+  pointer-events:none;
+  z-index:0;
+}
+.chain-inner{max-width:var(--max);margin:0 auto;position:relative;z-index:1}
 .chain-header{margin-bottom:clamp(60px,8vw,100px)}
 .chain-steps{display:flex;flex-direction:column;gap:0}
 .chain-step{
