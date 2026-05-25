@@ -12,6 +12,8 @@
 <meta name="theme-color" content="#180E08">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 32 32%22><rect width=%2232%22 height=%2232%22 fill=%22%232A1810%22/><text x=%2216%22 y=%2222%22 font-size=%2216%22 font-family=%22Helvetica Neue,Helvetica,Arial,sans-serif%22 font-weight=%22900%22 fill=%22%23F8F4EC%22 text-anchor=%22middle%22>P</text></svg>">
 <link rel="canonical" href="https://pncbread.love/brew">
+<link rel="preconnect" href="https://checkout.stripe.com" crossorigin>
+<link rel="preconnect" href="https://ktigsrojpkvioamldvrp.supabase.co">
 <script defer src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js" integrity="sha384-B2WBjDzEjJpYvhmi2UyEn7rektqkf5suS6sNoyyrf0EBAwBHdkiXxIlU0V5Ru2ed" crossorigin="anonymous"></script>
 <style>
 /* ── RESET ────────────────────────────────────────────────────────── */
@@ -96,11 +98,11 @@ nav{
 .nav-link{
   font-family:'Courier New',monospace;font-size:11px;font-weight:600;
   letter-spacing:0.26em;text-transform:uppercase;
-  color:var(--cocoa-lt);padding:8px 16px;
+  color:var(--ink);opacity:0.45;padding:8px 16px;
   border-bottom:1px solid transparent;transition:color .2s,border-color .2s;
 }
-.nav-link:hover{color:var(--ink)}
-.nav-link.active{color:var(--ink);border-bottom-color:var(--ink)}
+.nav-link:hover{color:var(--ink);opacity:1}
+.nav-link.active{color:var(--ink);opacity:1;border-bottom-color:var(--ink)}
 .nav-cta{
   font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;
   font-weight:700;font-size:10px;letter-spacing:0.22em;text-transform:uppercase;
@@ -110,7 +112,7 @@ nav{
 .nav-cta:hover{background:var(--cocoa)}
 @media(max-width:720px){
   .nav-links{display:none}
-  .nav-cta{padding:9px 14px;font-size:9px}
+  .nav-cta{display:none}
 }
 
 /* ── HERO ────────────────────────────────────────────────────────── */
@@ -862,6 +864,9 @@ footer{
 /* Smooth page entry — prevent flash of unstyled content */
 body{opacity:0;transition:opacity .35s ease}
 body.ready{opacity:1}
+/* Fallback: if JS never fires, body becomes visible after 0.5s */
+@keyframes bodyShow{to{opacity:1}}
+body{animation:bodyShow 0s .5s both}
 
 /* Nav — subtle border appears on scroll */
 nav{transition:border-color .3s,box-shadow .3s}
@@ -1253,25 +1258,25 @@ a:focus-visible,button:focus-visible{
     <span class="order-eyebrow reveal">— Order Now</span>
     <h2 class="order-h2 reveal">From<br>€ 1<br>per cup.</h2>
     <div class="qty-grid" id="qty-grid">
-      <div class="qty-card selected reveal" data-qty="7" data-price="7.00">
+      <div class="qty-card selected reveal" data-qty="7" data-sku="brew-7" data-price="7.00">
         <span class="qty-tag">Starter</span>
         <span class="qty-num">7</span>
         <div class="qty-price">€7.00</div>
         <span class="qty-per">€1.00 per pad</span>
       </div>
-      <div class="qty-card reveal reveal-d1" data-qty="30" data-price="30.00">
+      <div class="qty-card reveal reveal-d1" data-qty="30" data-sku="brew-30" data-price="30.00">
         <span class="qty-tag">Monthly</span>
         <span class="qty-num">30</span>
         <div class="qty-price">€30.00</div>
         <span class="qty-per">€1.00 per pad</span>
       </div>
-      <div class="qty-card reveal reveal-d2" data-qty="60" data-price="60.00">
+      <div class="qty-card reveal reveal-d2" data-qty="60" data-sku="brew-60" data-price="60.00">
         <span class="qty-tag">Two Months</span>
         <span class="qty-num">60</span>
         <div class="qty-price">€60.00</div>
         <span class="qty-per">€1.00 per pad</span>
       </div>
-      <div class="qty-card reveal reveal-d3" data-qty="90" data-price="90.00">
+      <div class="qty-card reveal reveal-d3" data-qty="90" data-sku="brew-90" data-price="90.00">
         <span class="qty-tag">Quarter</span>
         <span class="qty-num">90</span>
         <div class="qty-price">€90.00</div>
@@ -1398,48 +1403,81 @@ document.addEventListener('DOMContentLoaded',function(){
 });
 </script>
 
-<!-- QTY SELECT -->
+<!-- ORDER — Stripe Checkout via Supabase edge function -->
 <script>
 (function(){
-  var selected=7;
-  document.getElementById('qty-grid').addEventListener('click',function(e){
-    var card=e.target.closest('.qty-card');
-    if(!card)return;
-    document.querySelectorAll('.qty-card').forEach(function(c){c.classList.remove('selected')});
-    card.classList.add('selected');
-    selected=parseInt(card.dataset.qty,10);
-  });
+  var SUPA_URL  = 'https://ktigsrojpkvioamldvrp.supabase.co';
+  var SUPA_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imt0aWdzcm9qcGt2aW9hbWxkdnJwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzc4OTUwMDksImV4cCI6MjA5MzQ3MTAwOX0.lRYGhJqn8AGQfVRmFNFNAj8H7iv7vMXKij8l8_YWmtA';
 
-  document.getElementById('brew-submit').addEventListener('click',function(){
-    var name=document.getElementById('brew-name').value.trim();
-    var email=document.getElementById('brew-email').value.trim();
-    var country=document.getElementById('brew-country').value;
-    var msg=document.getElementById('order-msg');
-    if(!name||!email||!country){
-      msg.className='err';msg.textContent='Please fill in all fields.';return;
-    }
-    var btn=document.getElementById('brew-submit');
-    btn.disabled=true;btn.textContent='Sending…';
-    fetch('https://ktigsrojpkvioamldvrp.supabase.co/functions/v1/preorder-brew',{
-      method:'POST',
-      headers:{'Content-Type':'application/json','apikey':'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imt0aWdzcm9qcGt2aW9hbWxkdnJwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzc4OTUwMDksImV4cCI6MjA5MzQ3MTAwOX0.lRYGhJqn8AGQfVRmFNFNAj8H7iv7vMXKij8l8_YWmtA','Authorization':'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imt0aWdzcm9qcGt2aW9hbWxkdnJwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzc4OTUwMDksImV4cCI6MjA5MzQ3MTAwOX0.lRYGhJqn8AGQfVRmFNFNAj8H7iv7vMXKij8l8_YWmtA'},
-      body:JSON.stringify({name:name,email:email,country:country,sku:selected,product:'brew'})
-    }).then(function(r){
-      if(r.ok){
-        msg.className='ok';
-        msg.textContent='Order received. We will be in touch.';
-        btn.textContent='Order Received';
-        document.getElementById('brew-name').value='';
-        document.getElementById('brew-email').value='';
-        document.getElementById('brew-country').value='';
-      } else {
-        return r.text().then(function(t){throw new Error(t)});
-      }
-    }).catch(function(){
-      msg.className='err';
-      msg.textContent='Something went wrong. Please try again.';
-      btn.disabled=false;btn.textContent='Pre-Order Now';
+  // Qty card selection
+  var selectedSku = 'brew-30';
+  var cards = document.querySelectorAll('.qty-card');
+  cards.forEach(function(card){
+    card.addEventListener('click', function(){
+      cards.forEach(function(c){c.classList.remove('selected')});
+      card.classList.add('selected');
+      selectedSku = card.dataset.sku || card.dataset.qty;
     });
+  });
+  // Set brew-30 as default
+  var def = document.querySelector('[data-sku="brew-30"],[data-qty="30"]');
+  if(def){ cards.forEach(function(c){c.classList.remove('selected')}); def.classList.add('selected'); selectedSku = def.dataset.sku || '30'; }
+
+  var btn     = document.getElementById('brew-submit');
+  var nameEl  = document.getElementById('brew-name');
+  var emailEl = document.getElementById('brew-email');
+  var cntryEl = document.getElementById('brew-country');
+  var msgEl   = document.getElementById('order-msg');
+  if(!btn) return;
+
+  function emailValid(e){return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(e)}
+  function setErr(msg){msgEl.className='err';msgEl.textContent=msg}
+  function clearMsg(){msgEl.className='';msgEl.textContent=''}
+
+  btn.addEventListener('click', async function(){
+    clearMsg();
+    var name    = nameEl.value.trim();
+    var email   = emailEl.value.trim().toLowerCase();
+    var country = cntryEl.value;
+
+    var ok = true;
+    if(name.length < 2){setErr('Please enter your name.');nameEl.focus();ok=false;}
+    if(ok && !emailValid(email)){setErr('Please enter a valid email address.');emailEl.focus();ok=false;}
+    if(ok && !country){setErr('Please select your country.');cntryEl.focus();ok=false;}
+    if(!ok) return;
+
+    var orig = btn.textContent;
+    var origW = btn.offsetWidth;
+    btn.style.minWidth = origW + 'px';
+    btn.disabled = true;
+    btn.textContent = 'Connecting…';
+
+    try {
+      var res = await fetch(SUPA_URL + '/functions/v1/preorder', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'apikey': SUPA_ANON,
+          'Authorization': 'Bearer ' + SUPA_ANON,
+        },
+        body: JSON.stringify({
+          email: email,
+          name: name,
+          sku: selectedSku,
+          country: country,
+          lang: 'en',
+        }),
+      });
+      var data = await res.json();
+      if(!res.ok || !data.url) throw new Error(data.error || 'no_checkout_url');
+      window.location.href = data.url;
+    } catch(err) {
+      console.error('brew checkout error:', err);
+      btn.disabled = false;
+      btn.textContent = orig;
+      btn.style.minWidth = '';
+      setErr('Something went wrong — please try again or email hello@pncbread.love');
+    }
   });
 })();
 </script>
