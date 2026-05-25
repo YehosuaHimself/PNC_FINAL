@@ -438,8 +438,16 @@ a,button,[role=button],input,select,textarea,label{cursor:none!important}
 }
 
 /* ── ORIGINS ─────────────────────────────────────────────────── */
-.origins{background:var(--ink)}
-.origins-inner{max-width:var(--max);margin:0 auto}
+.origins{background:var(--ink);position:relative;overflow:hidden}
+.origins::before{
+  content:'';position:absolute;inset:0;pointer-events:none;
+  background-image:
+    linear-gradient(rgba(248,244,236,0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(248,244,236,0.03) 1px, transparent 1px);
+  background-size:80px 80px;
+  mask-image:linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.6) 15%, rgba(0,0,0,0.6) 85%, transparent 100%);
+}
+.origins-inner{max-width:var(--max);margin:0 auto;position:relative;z-index:1}
 .origins-eyebrow{
   font-family:'Courier New',monospace;font-size:10px;font-weight:600;
   letter-spacing:0.36em;text-transform:uppercase;color:var(--cocoa-mid);
@@ -1397,7 +1405,7 @@ a:focus-visible,button:focus-visible{
       </div>
       <div class="who-col reveal reveal-d2">
         <span class="wc-icon" aria-hidden="true">All</span>
-        <div class="wc-title">All Others</div>
+        <div class="wc-title">Others</div>
         <p class="wc-text">Three ingredients. Priced at cost. Baked in 77 minutes. This is not a health product or a specialty item. It is bread. The best version of bread. For every table.</p>
       </div>
     </div>
