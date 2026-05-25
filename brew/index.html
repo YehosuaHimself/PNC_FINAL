@@ -404,14 +404,33 @@ a,button,[role=button],input,select,textarea,label{cursor:none!important}
 }
 
 /* ── SOURCE ────────────────────────────────────────────────────────── */
-.source{background:var(--ink);position:relative;overflow:hidden}
+.source{
+  background:var(--ink);
+  position:relative;overflow:hidden;
+  background-image:url('../assets/ethiopia-highlands.webp');
+  background-size:cover;
+  background-position:center 35%;
+}
 .source::before{
   content:'';position:absolute;inset:0;pointer-events:none;z-index:0;
+  background:
+    linear-gradient(
+      to right,
+      rgba(18,8,4,0.97) 0%,
+      rgba(18,8,4,0.92) 30%,
+      rgba(18,8,4,0.60) 58%,
+      rgba(18,8,4,0.12) 80%,
+      rgba(18,8,4,0.00) 100%
+    );
+}
+.source::after{
+  content:'';position:absolute;inset:0;pointer-events:none;z-index:0;
   background-image:
-    linear-gradient(rgba(248,244,236,0.03) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(248,244,236,0.03) 1px, transparent 1px);
+    linear-gradient(rgba(248,244,236,0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(248,244,236,0.025) 1px, transparent 1px);
   background-size:80px 80px;
-  mask-image:linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.5) 15%, rgba(0,0,0,0.5) 85%, transparent 100%);
+  mask-image:linear-gradient(to right, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.3) 50%, transparent 75%);
+  -webkit-mask-image:linear-gradient(to right, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.3) 50%, transparent 75%);
 }
 .source-inner{
   max-width:var(--max);margin:0 auto;position:relative;z-index:1;
@@ -420,20 +439,22 @@ a,button,[role=button],input,select,textarea,label{cursor:none!important}
   font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;
   font-weight:900;font-size:clamp(52px,8vw,130px);
   letter-spacing:-0.04em;line-height:0.88;
-  color:rgba(248,244,236,0.9);
+  color:rgba(248,244,236,0.92);
   margin-bottom:clamp(40px,5vh,72px);
+  max-width:65%;
 }
 .source-headline span{
-  display:block;font-weight:200;font-size:clamp(14px,1.8vw,24px);
-  letter-spacing:0.22em;color:rgba(248,244,236,0.28);
+  display:block;font-weight:200;font-size:clamp(12px,1.4vw,18px);
+  letter-spacing:0.26em;color:rgba(248,244,236,0.28);
   text-transform:uppercase;font-family:'Courier New',monospace;
-  margin-top:16px;
+  margin-top:20px;
 }
 .source-grid{
   display:grid;grid-template-columns:1fr 1px 1fr;gap:0;
-  border-top:1px solid rgba(248,244,236,0.06);
+  border-top:1px solid rgba(248,244,236,0.07);
+  max-width:65%;
 }
-@media(max-width:760px){.source-grid{grid-template-columns:1fr}}
+@media(max-width:760px){.source-grid{grid-template-columns:1fr;max-width:100%}}
 .source-divider{background:rgba(248,244,236,0.05)}
 .source-col{padding:clamp(48px,6vw,80px) 0}
 .source-col:first-child{padding-right:clamp(32px,4vw,64px)}
@@ -457,7 +478,8 @@ a,button,[role=button],input,select,textarea,label{cursor:none!important}
   display:flex;gap:clamp(28px,4vw,56px);flex-wrap:wrap;
   margin-top:clamp(48px,6vw,80px);
   padding-top:clamp(32px,4vw,48px);
-  border-top:1px solid rgba(248,244,236,0.06);
+  border-top:1px solid rgba(248,244,236,0.07);
+  max-width:65%;
 }
 .ss-val{
   font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;
@@ -597,63 +619,6 @@ a,button,[role=button],input,select,textarea,label{cursor:none!important}
 }
 
 /* ── SUPPLY CHAIN ────────────────────────────────────────────────────────── */
-.chain{
-  background:var(--cream);
-  position:relative;
-  background-image:url('../assets/ethiopia-highlands.webp');
-  background-size:cover;
-  background-position:center 40%;
-  background-attachment:scroll;
-}
-.chain::before{
-  content:'';
-  position:absolute;inset:0;
-  background:linear-gradient(
-    to right,
-    rgba(248,244,236,0.94) 0%,
-    rgba(248,244,236,0.85) 40%,
-    rgba(248,244,236,0.50) 70%,
-    rgba(248,244,236,0.15) 100%
-  );
-  pointer-events:none;
-  z-index:0;
-}
-.chain-inner{max-width:var(--max);margin:0 auto;position:relative;z-index:1}
-.chain-header{margin-bottom:clamp(60px,8vw,100px)}
-.chain-steps{display:flex;flex-direction:column;gap:0;max-width:72%}
-.chain-step{
-  display:grid;
-  grid-template-columns:clamp(48px,6vw,80px) 1fr;
-  gap:0 clamp(20px,3vw,40px);
-  align-items:start;
-  padding:clamp(32px,4vw,52px) 0;
-  border-bottom:1px solid rgba(42,24,16,0.1);
-  overflow:hidden;
-}
-.chain-step:last-child{border-bottom:none}
-.cs-num{
-  font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;
-  font-weight:900;font-size:clamp(11px,1.2vw,15px);
-  letter-spacing:0.06em;color:var(--cocoa-mu);
-  line-height:1;padding-top:8px;
-}
-.cs-content{min-width:0;max-width:640px}
-.cs-title{
-  font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;
-  font-weight:900;font-size:clamp(20px,2.4vw,36px);
-  letter-spacing:-0.03em;line-height:0.95;
-  color:var(--ink);margin-bottom:10px;
-}
-.cs-sub{
-  font-family:'Courier New',monospace;font-size:9px;font-weight:600;
-  letter-spacing:0.28em;text-transform:uppercase;
-  color:var(--cocoa-mu);margin-bottom:14px;
-}
-.cs-text{
-  font-size:clamp(13px,1.4vw,15px);
-  color:var(--cocoa-lt);line-height:1.75;
-  max-width:520px;
-}
 
 /* ── ORDER ────────────────────────────────────────────────────────── */
 .order{background:var(--dark);position:relative;overflow:hidden}
@@ -1012,9 +977,6 @@ footer::before{
   .step-title{font-size:clamp(18px,5.5vw,28px)}
   .pillar{padding:28px 20px}
   .pillar-title{font-size:clamp(16px,5vw,22px)}
-  .chain-step{padding:24px 0;gap:12px}
-  .chain-steps{max-width:100%}
-  .cs-title{font-size:clamp(16px,5vw,22px)}
   .qty-grid{gap:1px;grid-template-columns:repeat(4,1fr)}
   .qty-card{padding:16px 10px}
   .qty-num{font-size:clamp(24px,7vw,40px)}
@@ -1118,14 +1080,6 @@ a:focus-visible,button:focus-visible{
   }
 }
 
-/* Supply chain steps — left accent on hover */
-.chain-step{
-  transition:padding-left .2s cubic-bezier(.16,1,.3,1);
-  border-left:2px solid transparent;
-}
-@media(hover:hover){
-  .chain-step:hover{padding-left:12px;border-left-color:var(--cocoa-mid)}
-}
 
 /* Step items (ritual/brew method) — same treatment */
 .step{transition:background .2s,padding-left .2s}
@@ -1451,49 +1405,6 @@ a:focus-visible,button:focus-visible{
   </div>
 </section>
 
-<!-- SUPPLY CHAIN -->
-<section class="section chain">
-  <div class="chain-inner">
-    <div class="chain-header">
-      <span class="eyebrow reveal">— Supply Chain</span>
-      <h2 class="h2 reveal">Full<br>transparency.</h2>
-    </div>
-    <div class="chain-steps">
-      <div class="chain-step reveal">
-        <div class="cs-num">01</div>
-        <div class="cs-content">
-          <div class="cs-title">Kochere, Ethiopia.</div>
-          <div class="cs-sub">Direct Source · AMG Coffee Export · EUDR-Compliant</div>
-          <p class="cs-text">Direct relationship with AMG Coffee Export, Ethiopia. Fully washed. Dried on raised beds. Traceable to cooperative. Every batch certified.</p>
-        </div>
-      </div>
-      <div class="chain-step reveal">
-        <div class="cs-num">02</div>
-        <div class="cs-content">
-          <div class="cs-title">The Alp Mountains.</div>
-          <div class="cs-sub">In-House Roastery · Small-Batch · Light Roast</div>
-          <p class="cs-text">Roasted to first crack in small batches. 48hr rest before grinding. Every batch traceable, every date stamped. No blending. No compromise on freshness.</p>
-        </div>
-      </div>
-      <div class="chain-step reveal">
-        <div class="cs-num">03</div>
-        <div class="cs-content">
-          <div class="cs-title">Packed. Sealed. Dated.</div>
-          <div class="cs-sub">Kraft Paper · Nitrogen-Flushed · 10g Per Pad</div>
-          <p class="cs-text">Medium grind. Kraft paper. Nitrogen-flushed for peak freshness. Packed within 7 days of roast date. No plastic. No intermediary storage.</p>
-        </div>
-      </div>
-      <div class="chain-step reveal">
-        <div class="cs-num">04</div>
-        <div class="cs-content">
-          <div class="cs-title">At your door.</div>
-          <div class="cs-sub">Worldwide · Tracked · Ships in 3–5 Days</div>
-          <p class="cs-text">Direct to your door. No distributors. No markup. One price, every country. The time between roast and your first cup is as short as we can make it.</p>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
 
 <!-- ORDER -->
 <section class="section order" data-dark id="order">
