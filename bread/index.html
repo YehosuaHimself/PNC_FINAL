@@ -319,24 +319,32 @@ a,button,[role=button],input,select,textarea,label{cursor:none!important}
 }
 .steps{display:flex;flex-direction:column;gap:2px}
 .step{
-  display:block;position:relative;
+  display:grid;
+  grid-template-columns:clamp(48px,5vw,72px) 1fr clamp(100px,12vw,180px);
+  gap:clamp(24px,3.5vw,56px);align-items:start;
   background:rgba(248,244,236,0.025);
   border:1px solid rgba(248,244,236,0.04);
   padding:clamp(32px,4vw,56px) clamp(24px,3vw,40px);
   transition:background .2s;
 }
 .step:hover{background:rgba(248,244,236,0.04)}
+.step > div{min-width:0}
+@media(max-width:700px){
+  .step{grid-template-columns:clamp(36px,8vw,52px) 1fr;grid-template-rows:auto auto}
+  .step-meta{grid-column:2;margin-top:12px}
+}
 .step-num{
   font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;
-  font-weight:900;font-size:clamp(11px,1.2vw,15px);
-  letter-spacing:0.18em;color:rgba(248,244,236,0.28);
-  margin-bottom:clamp(10px,1.5vw,16px);display:block;
+  font-weight:900;font-size:clamp(13px,1.4vw,18px);
+  letter-spacing:0.04em;color:rgba(248,244,236,0.22);
+  line-height:1;padding-top:6px;
 }
 .step-meta{
-  position:absolute;top:clamp(32px,4vw,56px);right:clamp(24px,3vw,40px);
   font-family:'Courier New',monospace;font-size:8px;font-weight:600;
   letter-spacing:0.26em;text-transform:uppercase;
   color:rgba(248,244,236,0.28);text-align:right;
+  padding-top:6px;white-space:nowrap;
+  line-height:1.8;
 }
 .step-title{
   font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;
@@ -374,7 +382,7 @@ a,button,[role=button],input,select,textarea,label{cursor:none!important}
   color:rgba(248,244,236,0.25);
   white-space:nowrap;
 }
-@media(max-width:600px){.step-meta{display:none}}
+
 
 /* ── NUTRITION ─────────────────────────────────────────────────── */
 .nutrition{background:var(--cream)}
@@ -1161,32 +1169,32 @@ a:focus-visible,button:focus-visible{
     <h2 class="ritual-h2 reveal">Five steps<br>to bread.</h2>
     <div class="steps">
       <div class="step reveal">
+        <div class="step-num">01</div>
         <div>
-          <div class="step-num">01</div>
           <div class="step-title">Empty the bowl.</div>
           <p class="step-text">Open the sachet. Pour everything into a mixing bowl. The blend is already weighed and ready.</p>
         </div>
         <div class="step-meta">Prep<br>60 seconds</div>
       </div>
       <div class="step reveal">
+        <div class="step-num">02</div>
         <div>
-          <div class="step-num">02</div>
           <div class="step-title">One sachet.</div>
           <p class="step-text">One sachet equals one loaf. No measuring, no guessing. The ratio is fixed.</p>
         </div>
         <div class="step-meta">Quantity<br>One loaf</div>
       </div>
       <div class="step reveal">
+        <div class="step-num">03</div>
         <div>
-          <div class="step-num">03</div>
           <div class="step-title">400 ml water.</div>
           <p class="step-text">Add 400 ml of water at room temperature. Stir until fully combined.</p>
         </div>
         <div class="step-meta">Water<br>480 ml</div>
       </div>
       <div class="step reveal">
+        <div class="step-num">04</div>
         <div>
-          <div class="step-num">04</div>
           <div class="step-title">77 minutes. 180°C.</div>
           <p class="step-text">Shape. Place in a loaf tin. Bake at 180°C for 77 minutes. No proving. No kneading. Just heat and time.</p>
           <div class="step-alts">
@@ -1207,8 +1215,8 @@ a:focus-visible,button:focus-visible{
         <div class="step-meta">77 min · one temp</div>
       </div>
       <div class="step reveal">
+        <div class="step-num">05</div>
         <div>
-          <div class="step-num">05</div>
           <div class="step-title">Yours. Ready.</div>
           <p class="step-text">Let it cool, then break the best of bread.</p>
         </div>

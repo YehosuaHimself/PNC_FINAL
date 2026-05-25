@@ -486,21 +486,27 @@ a,button,[role=button],input,select,textarea,label{cursor:none!important}
 .method-header{margin-bottom:clamp(60px,8vw,100px)}
 .steps{display:flex;flex-direction:column;gap:2px}
 .step{
-  position:relative;
-  display:block;
+  display:grid;
+  grid-template-columns:clamp(48px,5vw,72px) 1fr clamp(100px,12vw,180px);
+  gap:clamp(24px,3.5vw,56px);align-items:start;
   background:rgba(245,240,230,0.88);
   backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
   padding:clamp(32px,4vw,56px) clamp(24px,3vw,40px);
   border:1px solid rgba(42,24,16,0.08);
   transition:background .2s;
 }
+.step > div{min-width:0}
 .step:hover{background:rgba(248,244,236,0.96)}
-.step-content{max-width:640px}
+.step-content{min-width:0}
+@media(max-width:700px){
+  .step{grid-template-columns:clamp(36px,8vw,52px) 1fr;grid-template-rows:auto auto}
+  .step-meta{grid-column:2;margin-top:10px}
+}
 .step-num{
   font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;
-  font-weight:900;font-size:clamp(11px,1.2vw,15px);
-  letter-spacing:0.18em;color:var(--cocoa-mu);
-  margin-bottom:clamp(10px,1.5vw,16px);display:block;
+  font-weight:900;font-size:clamp(13px,1.4vw,18px);
+  letter-spacing:0.04em;color:var(--cocoa-mu);
+  line-height:1;padding-top:6px;
 }
 .step-title{
   font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;
@@ -513,12 +519,12 @@ a,button,[role=button],input,select,textarea,label{cursor:none!important}
   color:var(--cocoa-lt);line-height:1.7;
 }
 .step-meta{
-  position:absolute;top:clamp(32px,4vw,56px);right:clamp(24px,3vw,40px);
   font-family:'Courier New',monospace;font-size:8px;font-weight:600;
   letter-spacing:0.26em;text-transform:uppercase;
   color:var(--cocoa-mu);text-align:right;
+  padding-top:6px;white-space:nowrap;line-height:1.8;
 }
-@media(max-width:600px){.step-meta{display:none}}
+@media(max-width:600px){.step-meta{text-align:left}}
 
 /* ── WHY ────────────────────────────────────────────────────────── */
 .why{background:var(--dark)}
@@ -1303,24 +1309,24 @@ a:focus-visible,button:focus-visible{
     </div>
     <div class="steps">
       <div class="step reveal">
+        <div class="step-num">01</div>
         <div class="step-content">
-          <span class="step-num">01</span>
           <div class="step-title">Drop it in.</div>
           <p class="step-text">Place the pad into your cup. The pad is self-contained — no filter, no equipment, nothing else required.</p>
         </div>
         <div class="step-meta">Cup Size<br>200–250 ml ideal</div>
       </div>
       <div class="step reveal">
+        <div class="step-num">02</div>
         <div class="step-content">
-          <span class="step-num">02</span>
           <div class="step-title">Add hot water.</div>
           <p class="step-text">Pour around 92–94°C directly over the pad. The bloom begins immediately — jasmine first.</p>
         </div>
         <div class="step-meta">Water Temp<br>92–94°C</div>
       </div>
       <div class="step reveal">
+        <div class="step-num">03</div>
         <div class="step-content">
-          <span class="step-num">03</span>
           <div class="step-title">Watch it bloom.</div>
           <p class="step-text">Leave the pad in. The flavour evolves as it steeps — floral first, then fruity, then a clean dark chocolate finish. Remove when it reaches your preferred strength.</p>
         </div>
