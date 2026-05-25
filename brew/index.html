@@ -314,27 +314,49 @@ a,button,[role=button],input,select,textarea,label{cursor:none!important}
 @media(max-width:960px){.product-inner{grid-template-columns:1fr}}
 .product-left{
   padding:clamp(80px,10vw,140px) clamp(60px,6vw,100px) clamp(80px,10vw,140px) clamp(60px,7vw,120px);
+  display:flex;flex-direction:column;justify-content:center;
 }
 .product-center{
   position:sticky;top:0;
   height:100vh;
   overflow:hidden;
   background:var(--cream-deep);
-  display:flex;align-items:center;justify-content:center;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
   border-left:1px solid rgba(42,24,16,0.08);
+  gap:0;
+  padding:clamp(48px,6vh,80px) clamp(40px,5vw,72px);
 }
 .product-bag-img{
   width:72%;
   height:auto;
+  flex-shrink:0;
   display:block;
   mix-blend-mode:multiply;
   filter:contrast(1.02);
 }
+.product-stats-right{
+  width:100%;
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:0;
+  margin-top:clamp(32px,4vh,52px);
+  border-top:1px solid rgba(42,24,16,0.08);
+  padding-top:clamp(28px,3.5vh,44px);
+}
+.product-stats-right .p-stat{
+  padding:clamp(12px,1.5vh,18px) clamp(12px,1.5vw,20px);
+  border-right:1px solid rgba(42,24,16,0.06);
+  border-bottom:1px solid rgba(42,24,16,0.06);
+}
+.product-stats-right .p-stat:nth-child(2n){border-right:none}
+.product-stats-right .p-stat:nth-child(3),
+.product-stats-right .p-stat:nth-child(4){border-bottom:none}
 @media(max-width:960px){
   .product-center{
-    position:relative;height:80vw;top:auto;
+    position:relative;height:auto;top:auto;
+    padding:clamp(32px,5vw,60px) clamp(24px,4vw,48px);
   }
   .product-bag-img{width:55%}
+  .product-stats-right{display:none}
 }
 .product-right{display:none}
 .product-name{
@@ -367,20 +389,18 @@ a,button,[role=button],input,select,textarea,label{cursor:none!important}
   font-weight:700;font-size:14px;letter-spacing:0.02em;
   color:var(--ink);
 }
-.product-stats{
-  display:flex;gap:clamp(20px,3vw,40px);flex-wrap:wrap;
-}
+.product-stats{display:none}
 .p-stat{}
 .p-stat-val{
   font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;
-  font-weight:900;font-size:clamp(32px,4vw,56px);
+  font-weight:900;font-size:clamp(24px,2.8vw,44px);
   letter-spacing:-0.04em;line-height:0.9;color:var(--ink);
   display:block;
 }
 .p-stat-key{
   font-family:'Courier New',monospace;font-size:8px;font-weight:600;
   letter-spacing:0.28em;text-transform:uppercase;color:var(--cocoa-mu);
-  margin-top:6px;display:block;
+  margin-top:5px;display:block;
 }
 
 /* ── SOURCE ────────────────────────────────────────────────────────── */
@@ -1160,18 +1180,22 @@ a:focus-visible,button:focus-visible{
     </div>
     <div class="tasting-grid">
       <div class="tasting-note reveal">
+        <div class="tn-num" aria-hidden="true">01</div>
         <div class="tn-name">Jasmine</div>
         <div class="tn-type">Floral<br>Delicate</div>
       </div>
       <div class="tasting-note reveal reveal-d1">
+        <div class="tn-num" aria-hidden="true">02</div>
         <div class="tn-name">Bergamot</div>
         <div class="tn-type">Citrus<br>Bright</div>
       </div>
       <div class="tasting-note reveal reveal-d2">
+        <div class="tn-num" aria-hidden="true">03</div>
         <div class="tn-name">Blueberry</div>
         <div class="tn-type">Fruity<br>Sweet</div>
       </div>
       <div class="tasting-note reveal reveal-d3">
+        <div class="tn-num" aria-hidden="true">04</div>
         <div class="tn-name">Dark<br>Chocolate</div>
         <div class="tn-type">Finish<br>Clean</div>
       </div>
@@ -1204,7 +1228,10 @@ a:focus-visible,button:focus-visible{
         <tr><td>Price</td><td>€1.00 Per Pad</td></tr>
         <tr><td>Shipping</td><td>Rapid Global</td></tr>
       </table>
-      <div class="product-stats reveal">
+    </div>
+    <div class="product-center">
+      <img class="product-bag-img" src="../assets/brew-pad-bag.webp" alt="PNC brew pad — biodegradable kraft paper sachet" width="800" height="533" loading="lazy">
+      <div class="product-stats-right reveal">
         <div class="p-stat">
           <span class="p-stat-val">G1</span>
           <span class="p-stat-key">Ethiopian Grade</span>
@@ -1222,9 +1249,6 @@ a:focus-visible,button:focus-visible{
           <span class="p-stat-key">Per Cup</span>
         </div>
       </div>
-    </div>
-    <div class="product-center">
-      <img class="product-bag-img" src="../assets/brew-pad-bag.webp" alt="PNC brew pad — biodegradable kraft paper sachet" width="800" height="533" loading="lazy">
     </div>
   </div>
 </section>
@@ -1315,18 +1339,22 @@ a:focus-visible,button:focus-visible{
     </div>
     <div class="pillars">
       <div class="pillar reveal">
+        <div class="pillar-num" aria-hidden="true">01</div>
         <div class="pillar-title">Zero extraction variables.</div>
         <p class="pillar-text">The grind, the dose, the distribution — all fixed at source. Every cup is identical. There is no technique to learn and nothing to calibrate.</p>
       </div>
       <div class="pillar reveal reveal-d1">
+        <div class="pillar-num" aria-hidden="true">02</div>
         <div class="pillar-title">Immersion unlocks this bean.</div>
         <p class="pillar-text">Kochere G1's complex aromatics are best extracted through full immersion. The pad format is not a compromise — it is the optimal method for this specific coffee.</p>
       </div>
       <div class="pillar reveal">
+        <div class="pillar-num" aria-hidden="true">03</div>
         <div class="pillar-title">No astringency. By design.</div>
         <p class="pillar-text">The kraft paper acts as a barrier against over-extraction. The result is a clean, bright cup without bitterness, regardless of how long the pad remains in the water.</p>
       </div>
       <div class="pillar reveal reveal-d1">
+        <div class="pillar-num" aria-hidden="true">04</div>
         <div class="pillar-title">Farm to cup in 7 days.</div>
         <p class="pillar-text">Roasted to order. Packed the same day. Shipped within 7 days of roast date. The gap between harvest and your cup is the shortest possible for a product of this quality.</p>
       </div>
