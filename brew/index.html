@@ -693,6 +693,67 @@ footer{
 .reveal-d1{transition-delay:.1s}
 .reveal-d2{transition-delay:.2s}
 .reveal-d3{transition-delay:.3s}
+
+/* ── MOBILE NAV ─────────────────────────────────────────────────── */
+.nav-hamburger{
+  display:none;
+  flex-direction:column;justify-content:center;align-items:center;
+  width:40px;height:40px;gap:5px;background:none;border:none;padding:4px;
+}
+.nav-hamburger span{
+  display:block;width:22px;height:1.5px;background:var(--ink);
+  transition:transform .3s cubic-bezier(.16,1,.3,1),opacity .2s;
+  transform-origin:center;
+}
+.nav-hamburger.open span:nth-child(1){transform:translateY(6.5px) rotate(45deg)}
+.nav-hamburger.open span:nth-child(2){opacity:0;transform:scaleX(0)}
+.nav-hamburger.open span:nth-child(3){transform:translateY(-6.5px) rotate(-45deg)}
+.nav-drawer{
+  position:fixed;top:var(--nav-h);left:0;right:0;
+  background:rgba(248,244,236,0.99);
+  backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
+  border-bottom:1px solid var(--cocoa-fa);
+  padding:clamp(24px,5vw,40px) var(--g);
+  display:flex;flex-direction:column;gap:2px;
+  transform:translateY(-8px);opacity:0;pointer-events:none;
+  transition:transform .35s cubic-bezier(.16,1,.3,1),opacity .25s;
+  z-index:199;
+}
+.nav-drawer.open{transform:translateY(0);opacity:1;pointer-events:auto}
+.nav-drawer-link{
+  font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;
+  font-weight:900;font-size:clamp(32px,8vw,52px);
+  letter-spacing:-0.03em;line-height:1;color:var(--ink);
+  padding:14px 0;border-bottom:1px solid var(--cocoa-fa);
+  transition:color .18s;display:block;
+}
+.nav-drawer-link:last-of-type{border-bottom:none}
+.nav-drawer-link:hover{color:var(--cocoa)}
+.nav-drawer-cta{
+  margin-top:20px;
+  font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;
+  font-weight:700;font-size:11px;letter-spacing:0.22em;text-transform:uppercase;
+  background:var(--ink);color:var(--cream);
+  padding:16px 28px;display:inline-block;
+  transition:background .18s;align-self:flex-start;
+}
+.nav-drawer-cta:hover{background:var(--cocoa)}
+@media(max-width:720px){
+  .nav-links{display:none}
+  .nav-hamburger{display:flex}
+  .nav-cta{display:none}
+}
+/* ── MOBILE GLOBAL ─────────────────────────────────────────────────── */
+@media(max-width:480px){
+  input,select,textarea{font-size:16px!important}
+  .hero-scroll{display:none}
+  .holy-title{letter-spacing:-0.05em}
+  footer{flex-direction:column;align-items:flex-start;gap:20px}
+  .footer-links{flex-direction:column;gap:0}
+  .footer-link{border-right:none;border-bottom:1px solid rgba(248,244,236,0.06);padding:8px 0}
+  .footer-link:last-child{border-bottom:none}
+  .phil-quote{font-size:clamp(26px,8vw,40px)}
+}
 </style>
 </head>
 <body>
@@ -715,7 +776,19 @@ footer{
     <a href="/PNC_FINAL/holyhundred/manifesto/final" class="nav-link">Holy Hundred</a>
   </div>
   <a href="/PNC_FINAL/brew#order" class="nav-cta">Order Now</a>
+  <button class="nav-hamburger" id="nav-hamburger" aria-label="Toggle navigation" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
 </nav>
+
+<!-- MOBILE NAV DRAWER -->
+<div class="nav-drawer" id="nav-drawer" aria-label="Mobile navigation">
+  <a href="/PNC_FINAL/" class="nav-drawer-link">Home</a>
+  <a href="/PNC_FINAL/bread" class="nav-drawer-link">Bread</a>
+  <a href="/PNC_FINAL/brew" class="nav-drawer-link">Brew</a>
+  <a href="/PNC_FINAL/holyhundred/manifesto/final" class="nav-drawer-link">Holy Hundred</a>
+  <a href="/PNC_FINAL/brew#order" class="nav-drawer-cta">Order Now</a>
+</div>
 
 <!-- HERO -->
 <section class="hero" data-dark>
@@ -1223,6 +1296,30 @@ document.addEventListener('DOMContentLoaded',function(){
     entries.forEach(function(e){if(e.isIntersecting){e.target.classList.add('visible');obs.unobserve(e.target);}});
   },{threshold:0.08,rootMargin:'0px 0px -32px 0px'});
   document.querySelectorAll('.reveal').forEach(function(el){obs.observe(el);});
+})();
+</script>
+
+
+<!-- MOBILE NAV SCRIPT -->
+<script>
+(function(){
+  var btn=document.getElementById('nav-hamburger');
+  var drawer=document.getElementById('nav-drawer');
+  if(!btn||!drawer)return;
+  btn.addEventListener('click',function(){
+    var open=drawer.classList.toggle('open');
+    btn.classList.toggle('open',open);
+    btn.setAttribute('aria-expanded',open);
+    document.body.style.overflow=open?'hidden':'';
+  });
+  drawer.querySelectorAll('a').forEach(function(a){
+    a.addEventListener('click',function(){
+      drawer.classList.remove('open');
+      btn.classList.remove('open');
+      btn.setAttribute('aria-expanded','false');
+      document.body.style.overflow='';
+    });
+  });
 })();
 </script>
 
