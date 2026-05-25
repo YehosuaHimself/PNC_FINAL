@@ -191,21 +191,26 @@ a,button,[role=button],input,select,textarea,label{cursor:none!important}
   font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;
 }
 .hero-products{
-  display:grid;grid-template-columns:1fr 1fr;gap:3px;
+  display:grid;grid-template-columns:1fr 1fr;gap:clamp(10px,1.5vw,18px);
   max-width:min(960px, 100%);
   margin-bottom:clamp(40px,6vh,72px);
+  padding:clamp(8px,1.2vw,14px);
+  background:rgba(92,61,46,0.07);
+  border:1px solid rgba(92,61,46,0.18);
+  border-radius:2px;
 }
 @media(max-width:680px){.hero-products{grid-template-columns:1fr}}
 .hero-product{
-  padding:clamp(32px,4vw,56px);
-  border:1px solid rgba(92,61,46,0.12);
+  padding:clamp(28px,3.5vw,48px);
+  border:1px solid rgba(92,61,46,0.16);
   display:flex;flex-direction:column;
   position:relative;overflow:hidden;
   min-height:clamp(480px,55vh,680px);
   background:var(--cream-deep);
-  transition:border-color .3s;
+  transition:border-color .3s, box-shadow .3s;
+  border-radius:1px;
 }
-.hero-product:hover{border-color:rgba(92,61,46,0.25)}
+.hero-product:hover{border-color:rgba(92,61,46,0.35);box-shadow:0 2px 24px rgba(92,61,46,0.08)}
 .hero-product--bread{
   background-image:url("/img/bread-hero.webp");
   background-size:cover;background-position:center 35%;
@@ -243,7 +248,11 @@ a,button,[role=button],input,select,textarea,label{cursor:none!important}
 .hp-tag{
   font-family:'Courier New',monospace;font-size:9px;font-weight:600;
   letter-spacing:0.34em;text-transform:uppercase;color:var(--cocoa-mu);
-  margin-bottom:clamp(120px,18vh,220px);display:block;
+  margin-bottom:0;display:block;
+}
+.hp-body{
+  flex:1;display:flex;flex-direction:column;justify-content:flex-end;
+  padding-top:clamp(80px,14vh,160px);
 }
 .hp-name{
   font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;
@@ -612,15 +621,14 @@ footer::before{
   .hero-headline span{font-size:clamp(13px,3.5vw,18px);margin-top:10px;font-style:italic}
   .hero-sub{font-size:10px;margin-bottom:16px;letter-spacing:0.3em}
   .hero-decree{font-size:13px;margin-bottom:28px;line-height:1.7}
-  .hero-products{max-width:100%;gap:3px;margin-bottom:0}
+  .hero-products{max-width:100%;gap:8px;margin-bottom:0;padding:6px}
 
   /* Product cards — full width, no horizontal scroll */
   .hero-product{
     padding:clamp(20px,5vw,28px);
     min-height:clamp(380px,70vw,480px);
-    justify-content:flex-end;
   }
-  .hp-tag{margin-bottom:6px}
+  .hp-body{padding-top:clamp(60px,12vw,100px)}
   .hp-name{font-size:clamp(34px,9.5vw,52px);margin-bottom:8px}
   .hp-origin{
     font-size:8px;letter-spacing:0.18em;margin-bottom:12px;
@@ -853,6 +861,7 @@ a:focus-visible,button:focus-visible{
     <div class="hero-products">
       <a href="/bread" class="hero-product hero-product--bread">
         <span class="hp-tag">Daily · Bread</span>
+        <div class="hp-body">
         <div class="hp-name">OUR DAILY<br>BREAD.</div>
         <div class="hp-origin">Buckwheat · Alps · 3 Ingredients</div>
         <p class="hp-desc">Buckwheat flour. Psyllium husk. Salt. Pre-weighed, pre-blended, delivered to your door. Bake for 77 minutes. That's everything.</p>
@@ -865,9 +874,11 @@ a:focus-visible,button:focus-visible{
           <div class="hp-price">€ 3 <span>/ loaf</span></div>
           <span class="hp-cta">Explore Bread →</span>
         </div>
+        </div><!-- /hp-body -->
       </a>
       <a href="/brew" class="hero-product hero-product--brew">
         <span class="hp-tag">Daily · Brew</span>
+        <div class="hp-body">
         <div class="hp-name">OUR DAILY<br>BREW.</div>
         <div class="hp-origin">Yirgacheffe · Kochere · Ethiopia · 2,100 m</div>
         <p class="hp-desc">Pre-ground Kochere G1, sealed in a single kraft paper pad. Drop it in. Add hot water. Jasmine, bergamot, blueberry — in one cup.</p>
@@ -880,6 +891,7 @@ a:focus-visible,button:focus-visible{
           <div class="hp-price">€ 1 <span>/ cup</span></div>
           <span class="hp-cta">Explore Brew →</span>
         </div>
+        </div><!-- /hp-body -->
       </a>
     </div>
   </div>
