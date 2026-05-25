@@ -131,7 +131,7 @@ nav{
 }
 @keyframes driftIn{from{opacity:0;transform:scale(1.04)}to{opacity:1;transform:scale(1)}}
 .hero-top{
-  position:absolute;top:calc(var(--nav-h) + clamp(16px,3vh,40px));left:var(--g);
+  position:absolute;top:calc(var(--nav-h) + clamp(20px,4vh,48px));left:var(--g);
   animation:fadeUp .9s cubic-bezier(.16,1,.3,1) .1s both;
 }
 .hero-eyebrow{
@@ -676,6 +676,25 @@ a:focus-visible,button:focus-visible{
 @media(max-width:720px){
   .nav-drawer-cta{width:100%;text-align:center;align-self:stretch}
 }
+
+/* ── SCREENSHOT FIXES ──────────────────────────────────────────────── */
+
+
+
+/* Fix 8: Order form — Connecting state button needs cocoa bg */
+.btn-order[disabled]{
+  background:var(--cocoa-mid);
+  opacity:1;
+}
+
+/* Fix 9: Who-col icon display tweak (images 8-9) — wc-icon too light */
+.wc-icon{color:rgba(92,61,46,0.15)}
+
+/* Fix 10: Source col padding on left side (brew image 16) */
+@media(max-width:760px){
+  .source-col:first-child{padding-right:0}
+  .source-col:last-child{padding-left:0}
+}
 </style>
 </head>
 <body>
@@ -830,7 +849,7 @@ a:focus-visible,button:focus-visible{
     </div>
     <div class="holy-right">
       <p class="holy-desc reveal">Read it. Sign it. Or argue with it. A public declaration of everything we believe — and everything we refuse to compromise on.</p>
-      <div style="display:flex;gap:12px;flex-wrap:wrap" class="reveal reveal-d1">
+      <div class="holy-cta-row reveal reveal-d1">
         <a href="/holyhundred/manifesto/final" class="btn-light">Read the Manifesto</a>
         <a href="/holyhundred/manifesto/final#board" class="btn-ghost btn-ghost-pale">See the Board →</a>
       </div>
