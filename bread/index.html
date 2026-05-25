@@ -337,14 +337,21 @@ a,button,[role=button],input,select,textarea,label{cursor:none!important}
   position:relative;
 }
 .ing-tag{
-  font-family:'Courier New',monospace;font-size:9px;font-weight:600;
-  letter-spacing:0.34em;text-transform:uppercase;
-  color:rgba(248,244,236,0.28);margin-bottom:clamp(16px,2vw,28px);
+  font-family:'Courier New',monospace;font-size:clamp(11px,1.2vw,15px);font-weight:600;
+  letter-spacing:0.28em;text-transform:uppercase;
+  color:rgba(248,244,236,0.55);margin-bottom:clamp(16px,2vw,28px);
   display:flex;align-items:center;gap:16px;
 }
 .ing-tag::after{
   content:'';display:block;height:1px;width:40px;
-  background:rgba(248,244,236,0.15);flex-shrink:0;
+  background:rgba(248,244,236,0.18);flex-shrink:0;
+}
+.ing-subregion{
+  display:block;font-family:'Courier New',monospace;
+  font-size:clamp(9px,0.9vw,11px);font-weight:600;
+  letter-spacing:0.26em;text-transform:uppercase;
+  color:rgba(248,244,236,0.24);
+  margin-top:10px;margin-bottom:clamp(16px,2vw,28px);
 }
 .ing-name{
   font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;
@@ -1347,8 +1354,8 @@ a:focus-visible,button:focus-visible{
       </div>
       <div class="ing-decree reveal">
         Buckwheat Flour<br>
+        Mountain Salt<br>
         Psyllium Husk<br>
-        Salt<br>
         That is all.
       </div>
     </div>
@@ -1359,7 +1366,8 @@ a:focus-visible,button:focus-visible{
         <div class="ing-axis"><span class="ing-axis-num">01</span></div>
         <div class="ing-main">
           <div class="ing-tag">Buckwheat Flour</div>
-          <div class="ing-name">Lausitz.</div>
+          <span class="ing-subregion">Lausitz · Lusatia</span>
+          <div class="ing-name">Germany.</div>
           <p class="ing-desc">Grown in the Lausitz. Milled in the Lausitz. A mill that has not stopped since 1772 — the same stone wheels, the same grain, the same discipline. No substitutes. No blends.</p>
         </div>
         <div class="ing-data">
@@ -1385,35 +1393,9 @@ a:focus-visible,button:focus-visible{
       <div class="ing-row reveal reveal-d1">
         <div class="ing-axis"><span class="ing-axis-num">02</span></div>
         <div class="ing-main">
-          <div class="ing-tag">Psyllium Husk</div>
-          <div class="ing-name">Gujarat.</div>
-          <p class="ing-desc">The only region in the world with the binding strength gluten-free bread actually requires. Certified. Direct. Unadulterated. Every other region produces an inferior crop — we checked.</p>
-        </div>
-        <div class="ing-data">
-          <div class="ing-coords">
-            22.3°N 72.1°E
-            <span>Gujarat · India</span>
-          </div>
-          <div class="ing-stat">
-            <div class="ing-stat-val">94%</div>
-            <div class="ing-stat-label">World supply</div>
-          </div>
-          <div class="ing-stat">
-            <div class="ing-stat-val">~6,200 km</div>
-            <div class="ing-stat-label">To your door</div>
-          </div>
-          <div class="ing-bar-wrap">
-            <div class="ing-bar-label"><span>Provenance</span><span>Certified</span></div>
-            <div class="ing-bar"><div class="ing-bar-fill" style="width:100%"></div></div>
-          </div>
-        </div>
-      </div>
-
-      <div class="ing-row reveal reveal-d2">
-        <div class="ing-axis"><span class="ing-axis-num">03</span></div>
-        <div class="ing-main">
           <div class="ing-tag">Mountain Salt</div>
-          <div class="ing-name">Altaussee.</div>
+          <span class="ing-subregion">Altaussee · Salzkammergut</span>
+          <div class="ing-name">Austria.</div>
           <p class="ing-desc">250 million years old. Hand-broken in the Salzkammergut deep inside the Austrian Alps. No additives. No treatment. Only time, stone, and restraint — before bread existed, this salt did.</p>
         </div>
         <div class="ing-data">
@@ -1432,6 +1414,34 @@ a:focus-visible,button:focus-visible{
           <div class="ing-bar-wrap">
             <div class="ing-bar-label"><span>Provenance</span><span>Hand-broken</span></div>
             <div class="ing-bar"><div class="ing-bar-fill" style="width:58%"></div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="ing-row reveal reveal-d2">
+        <div class="ing-axis"><span class="ing-axis-num">03</span></div>
+        <div class="ing-main">
+          <div class="ing-tag">Psyllium Husk</div>
+          <span class="ing-subregion">Gujarat · Direct Source</span>
+          <div class="ing-name">India.</div>
+          <p class="ing-desc">The only region in the world with the binding strength gluten-free bread actually requires. Certified. Direct. Unadulterated. Every other region produces an inferior crop — we checked.</p>
+        </div>
+        <div class="ing-data">
+          <div class="ing-coords">
+            22.3°N 72.1°E
+            <span>Gujarat · India</span>
+          </div>
+          <div class="ing-stat">
+            <div class="ing-stat-val">94%</div>
+            <div class="ing-stat-label">World supply</div>
+          </div>
+          <div class="ing-stat">
+            <div class="ing-stat-val">~6,200 km</div>
+            <div class="ing-stat-label">To your door</div>
+          </div>
+          <div class="ing-bar-wrap">
+            <div class="ing-bar-label"><span>Provenance</span><span>Certified</span></div>
+            <div class="ing-bar"><div class="ing-bar-fill" style="width:100%"></div></div>
           </div>
         </div>
       </div>
