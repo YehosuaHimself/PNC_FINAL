@@ -9,6 +9,9 @@
 <meta property="og:description" content="Buckwheat flour. Psyllium husk. Salt. Pre-weighed, pre-blended, delivered to your door. Bake for 77 minutes. That's everything.">
 <meta property="og:url" content="https://pncbread.love/bread">
 <meta property="og:type" content="website">
+<meta property="og:image" content="https://pncbread.love/img/bread-hero.webp">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://pncbread.love/img/bread-hero.webp">
 <meta name="theme-color" content="#F8F4EC">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 32 32%22><rect width=%2232%22 height=%2232%22 fill=%22%232A1810%22/><text x=%2216%22 y=%2222%22 font-size=%2216%22 font-family=%22Helvetica Neue,Helvetica,Arial,sans-serif%22 font-weight=%22900%22 fill=%22%23F8F4EC%22 text-anchor=%22middle%22>P</text></svg>">
 <link rel="canonical" href="https://pncbread.love/bread">
@@ -97,14 +100,14 @@ nav{
 .nav-link{
   font-family:'Courier New',monospace;font-size:10px;font-weight:700;
   letter-spacing:0.26em;text-transform:uppercase;
-  color:var(--cocoa);background:transparent;
+  color:var(--ink);background:transparent;
   padding:6px 14px;margin:0 2px;
   border:1px solid var(--cocoa-fa);
   transition:background .18s,color .18s,border-color .18s;
   opacity:1;
 }
 .nav-link:hover{background:var(--ink);color:var(--cream);border-color:transparent}
-.nav-link.active{background:var(--cocoa);color:var(--cream);border-color:transparent}
+.nav-link.active{background:var(--ink);color:var(--cream);border-color:transparent}
 .nav-cta{
   font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;
   font-weight:700;font-size:10px;letter-spacing:0.22em;text-transform:uppercase;
@@ -641,53 +644,7 @@ nav{
 #order-msg.ok{color:var(--cocoa-mid)}
 #order-msg.err{color:#C0533A}
 
-/* ── HOLY HUNDRED ─────────────────────────────────────────────────── */
-.holy{
-  background:var(--dark);
-  padding:clamp(100px,14vw,200px) var(--g);
-  position:relative;overflow:hidden;
-}
-.holy-bg{
-  position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
-  font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;
-  font-weight:900;font-size:clamp(80px,18vw,280px);
-  letter-spacing:-0.04em;line-height:1;white-space:nowrap;
-  color:rgba(248,244,236,0.025);pointer-events:none;user-select:none;
-}
-.holy-inner{
-  max-width:var(--max);margin:0 auto;
-  display:flex;justify-content:space-between;align-items:flex-end;
-  flex-wrap:wrap;gap:40px;position:relative;
-}
-.holy-pre{
-  font-family:'Courier New',monospace;font-size:10px;font-weight:600;
-  letter-spacing:0.38em;text-transform:uppercase;
-  color:var(--cocoa-mid);margin-bottom:24px;display:block;
-}
-.holy-title{
-  font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;
-  font-weight:900;font-size:clamp(56px,9vw,144px);
-  letter-spacing:-0.04em;line-height:0.88;
-  color:rgba(248,244,236,0.9);
-}
-.holy-title span{
-  display:block;font-weight:200;font-size:0.38em;
-  color:rgba(248,244,236,0.35);letter-spacing:0.04em;text-transform:uppercase;
-  font-family:'Courier New',monospace;margin-top:20px;line-height:1.6;
-}
-.holy-right{display:flex;flex-direction:column;align-items:flex-end;gap:20px}
-.holy-desc{
-  font-size:clamp(14px,1.6vw,17px);color:rgba(248,244,236,0.35);
-  line-height:1.7;max-width:340px;text-align:right;
-}
-.btn-light{
-  font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;
-  font-weight:700;font-size:10px;letter-spacing:0.22em;text-transform:uppercase;
-  background:rgba(248,244,236,0.9);color:var(--dark);
-  padding:14px 28px;transition:background .18s;
-  display:inline-block;min-height:44px;line-height:2;
-}
-.btn-light:hover{background:var(--cream)}
+
 
 /* ── FOOTER ─────────────────────────────────────────────────── */
 footer{
@@ -808,7 +765,6 @@ footer{
 @media(max-width:720px){
   :root{--nav-h:56px}
   .section{padding:clamp(60px,10vw,100px) var(--g)}
-  .holy{padding:clamp(72px,12vw,120px) var(--g)}
 }
 
 /* ── MOBILE (480px) ─────────────────────────────────────────────────── */
@@ -838,12 +794,6 @@ footer{
   .phil-quote{font-size:clamp(24px,7.5vw,38px);line-height:0.95}
   .phil-text{font-size:14px}
 
-  /* Holy Hundred */
-  .holy-title{font-size:clamp(44px,13vw,72px);letter-spacing:-0.05em}
-  .holy-inner{flex-direction:column;gap:28px}
-  .holy-right{align-items:flex-start}
-  .holy-desc{text-align:left;max-width:100%}
-
   /* Footer */
   footer{flex-direction:column;align-items:flex-start;gap:16px;padding:40px var(--g)}
   .footer-links{flex-direction:column;gap:0;width:100%}
@@ -862,7 +812,6 @@ footer{
 /* ── SMALL MOBILE (380px) ─────────────────────────────────────────────── */
 @media(max-width:380px){
   .hero-headline{font-size:clamp(38px,11.5vw,52px)}
-  .holy-title{font-size:clamp(38px,12vw,56px)}
   .hp-name{font-size:clamp(28px,8.5vw,40px)}
 }
 
@@ -952,7 +901,6 @@ a:focus-visible,button:focus-visible{
 .nav-drawer.open .nav-drawer-link:nth-child(1){transition-delay:.04s}
 .nav-drawer.open .nav-drawer-link:nth-child(2){transition-delay:.08s}
 .nav-drawer.open .nav-drawer-link:nth-child(3){transition-delay:.12s}
-.nav-drawer.open .nav-drawer-link:nth-child(4){transition-delay:.16s}
 .nav-drawer-link{
   opacity:0;transform:translateX(16px);
   transition:color .18s,padding-left .18s,opacity .3s cubic-bezier(.16,1,.3,1),transform .35s cubic-bezier(.16,1,.3,1);
@@ -961,9 +909,6 @@ a:focus-visible,button:focus-visible{
 
 /* Scroll progress — rounded cap */
 #prog{border-radius:0 1px 1px 0}
-
-/* Holy hundred — 100 watermark parallax via CSS (no JS needed) */
-.holy-bg{will-change:transform}
 
 /* Order form inputs — focus ring matches brand */
 .form-row input:focus,.form-row select:focus{
@@ -1045,7 +990,6 @@ a:focus-visible,button:focus-visible{
     <a href="/" class="nav-link">Home</a>
     <a href="/bread" class="nav-link active">Bread</a>
     <a href="/brew" class="nav-link">Brew</a>
-    <a href="/holyhundred/manifesto/final" class="nav-link">Holy Hundred</a>
   </div>
   <a href="/bread#order" class="nav-cta">Order Now</a>
   <button class="nav-hamburger" id="nav-hamburger" aria-label="Toggle navigation" aria-expanded="false">
@@ -1059,7 +1003,6 @@ a:focus-visible,button:focus-visible{
     <a href="/" class="nav-drawer-link">Home</a>
     <a href="/bread" class="nav-drawer-link">Bread</a>
     <a href="/brew" class="nav-drawer-link">Brew</a>
-    <a href="/holyhundred/manifesto/final" class="nav-drawer-link">Holy Hundred</a>
   </div>
   <div class="nav-drawer-bottom">
     <p class="nav-drawer-sub">Daily Bread · Buckwheat · Alps · 3 Ingredients · € 3 per loaf</p>
@@ -1373,11 +1316,11 @@ a:focus-visible,button:focus-visible{
           <p class="form-note reveal">All fields required · Secure · No account needed</p>
           <div class="form-row reveal">
             <label for="bread-name">Full Name</label>
-            <input type="text" id="bread-name" name="name" placeholder="Your name" autocomplete="name" autocomplete="name">
+            <input type="text" id="bread-name" name="name" placeholder="Your name" autocomplete="name">
           </div>
           <div class="form-row reveal">
             <label for="bread-email">Email Address</label>
-            <input type="email" id="bread-email" name="email" placeholder="your@email.com" autocomplete="email" autocomplete="email">
+            <input type="email" id="bread-email" name="email" placeholder="your@email.com" autocomplete="email">
           </div>
           <div class="form-row reveal">
             <label for="bread-qty">Quantity</label>
@@ -1525,25 +1468,6 @@ a:focus-visible,button:focus-visible{
 </section>
 
 <!-- HOLY HUNDRED -->
-<section class="holy" data-dark>
-  <div class="holy-bg" aria-hidden="true">100</div>
-  <div class="holy-inner">
-    <div class="holy-left">
-      <span class="holy-pre reveal">Holy Hundred</span>
-      <div class="holy-title reveal">
-        The<br>Manifesto.
-        <span>One hundred beliefs about bread,<br>coffee, and how things should be made.</span>
-      </div>
-    </div>
-    <div class="holy-right">
-      <p class="holy-desc reveal">Read it. Sign it. Or argue with it. A public declaration of everything we believe — and everything we refuse to compromise on.</p>
-      <div class="holy-cta-row reveal reveal-d1">
-        <a href="/holyhundred/manifesto/final" class="btn-light">Read the Manifesto</a>
-      </div>
-    </div>
-  </div>
-</section>
-
 <!-- FOOTER -->
 <footer data-dark>
   <nav class="footer-links" aria-label="Footer navigation">
@@ -1576,13 +1500,6 @@ a:focus-visible,button:focus-visible{
   let darkZones = [];
 
   function buildDarkZones() {
-    darkZones = Array.from(document.querySelectorAll('[data-dark]')).map(function(el) {
-      const r = el.getBoundingClientRect();
-      return { top: r.top + window.scrollY, bottom: r.bottom + window.scrollY, left: r.left, right: r.right };
-    });
-  }
-
-  function updateDarkZones() {
     darkZones = Array.from(document.querySelectorAll('[data-dark]')).map(function(el) {
       const r = el.getBoundingClientRect();
       return { top: r.top + window.scrollY, bottom: r.bottom + window.scrollY, left: r.left, right: r.right };
@@ -1648,8 +1565,8 @@ a:focus-visible,button:focus-visible{
   } else {
     buildDarkZones();
   }
-  window.addEventListener('scroll',  updateDarkZones, { passive: true });
-  window.addEventListener('resize',  updateDarkZones, { passive: true });
+  window.addEventListener('scroll',  buildDarkZones, { passive: true });
+  window.addEventListener('resize',  buildDarkZones, { passive: true });
 })();
 </script>
 
@@ -1758,11 +1675,9 @@ document.addEventListener('DOMContentLoaded',function(){
   document.body.classList.add('ready');
   var nav=document.querySelector('nav');
   if(!nav)return;
-  var last=0;
   window.addEventListener('scroll',function(){
     var y=window.scrollY||window.pageYOffset;
     if(y>40){nav.classList.add('scrolled')}else{nav.classList.remove('scrolled')}
-    last=y;
   },{passive:true});
 });
 </script>
