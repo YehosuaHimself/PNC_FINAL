@@ -133,11 +133,13 @@ a,button,[role=button],input,select,textarea,label{cursor:none!important}
   position:relative;overflow:hidden;
   background:var(--dark);
   background-image:url("/img/brew-hero.webp");
-  background-size:cover;background-position:center;
+  background-size:cover;background-position:62% center;
 }
 .hero::before{
   content:'';position:absolute;inset:0;
-  background:rgba(24,14,8,0.78);
+  background:
+    linear-gradient(to bottom, rgba(24,14,8,0.55) 0%, rgba(24,14,8,0.0) 35%),
+    linear-gradient(to right, rgba(24,14,8,0.97) 0%, rgba(24,14,8,0.90) 28%, rgba(24,14,8,0.45) 55%, rgba(24,14,8,0.10) 80%, rgba(24,14,8,0.0) 100%);
   pointer-events:none;z-index:0;
 }
 .hero > *{position:relative;z-index:1}
@@ -164,15 +166,15 @@ a,button,[role=button],input,select,textarea,label{cursor:none!important}
 .hero-bottom{animation:fadeUp .9s cubic-bezier(.16,1,.3,1) .2s both;max-width:var(--max)}
 .hero-headline{
   font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;
-  font-weight:900;font-size:clamp(56px,9.5vw,152px);
-  letter-spacing:-0.035em;line-height:0.88;
-  color:rgba(248,244,236,0.92);
+  font-weight:900;font-size:clamp(64px,10.5vw,168px);
+  letter-spacing:-0.04em;line-height:0.86;
+  color:rgba(248,244,236,0.94);
   margin-bottom:clamp(20px,3vh,36px);
 }
 .hero-headline span{
-  display:block;font-weight:200;font-size:clamp(14px,2vw,28px);
-  letter-spacing:0.18em;color:rgba(248,244,236,0.3);
-  text-transform:uppercase;margin-top:20px;
+  display:block;font-weight:200;font-size:clamp(11px,1.4vw,18px);
+  letter-spacing:0.32em;color:rgba(248,244,236,0.28);
+  text-transform:uppercase;margin-top:28px;
   font-family:'Courier New',monospace;
 }
 .hero-sub{
@@ -261,18 +263,18 @@ a,button,[role=button],input,select,textarea,label{cursor:none!important}
 .tasting-inner{max-width:var(--max);margin:0 auto}
 .tasting-header{margin-bottom:clamp(60px,8vw,100px)}
 .tasting-grid{
-  display:grid;grid-template-columns:repeat(4,1fr);gap:2px;
+  display:grid;grid-template-columns:repeat(4,1fr);gap:clamp(8px,1vw,12px);
 }
 @media(max-width:860px){.tasting-grid{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:480px){.tasting-grid{grid-template-columns:1fr}}
 .tasting-note{
   background:var(--cream-deep);
-  padding:clamp(36px,4vw,64px) clamp(24px,3vw,40px);
+  padding:clamp(40px,5vw,72px) clamp(28px,3vw,44px);
   border:1px solid var(--cocoa-fa);
-  transition:background .2s;
+  transition:background .2s,transform .2s;
   position:relative;overflow:hidden;
 }
-.tasting-note:hover{background:var(--cream)}
+.tasting-note:hover{background:var(--cream);transform:translateY(-2px)}
 .tn-num{
   font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;
   font-weight:900;font-size:clamp(60px,8vw,120px);
@@ -472,7 +474,7 @@ a,button,[role=button],input,select,textarea,label{cursor:none!important}
 }
 .sc-text{
   font-size:clamp(14px,1.6vw,17px);
-  color:rgba(248,244,236,0.38);line-height:1.75;
+  color:rgba(248,244,236,0.52);line-height:1.78;
 }
 .source-stats{
   display:flex;gap:clamp(28px,4vw,56px);flex-wrap:wrap;
@@ -1174,11 +1176,11 @@ a:focus-visible,button:focus-visible{
     <div class="hero-wm-text">BREW</div>
   </div>
   <div class="hero-top">
-    <div class="hero-eyebrow">Our Daily Brew</div>
+    <div class="hero-eyebrow">— Our Daily Brew · Kochere G1 · Ethiopia</div>
   </div>
   <div class="hero-bottom">
     <h1 class="hero-headline">
-      OUR<br>DAILY<br>BREW.
+      OUR DAILY<br>BREW.
       <span>Kochere · Yirgacheffe · Ethiopia · 2,100 m · Grade 1</span>
     </h1>
     <p class="hero-sub">The world's finest coffee. One pad. One cup. Just add water.</p>
@@ -1192,7 +1194,7 @@ a:focus-visible,button:focus-visible{
       <div class="hs-pill hl">€ 1 Per Cup</div>
     </div>
     <div class="hero-cta-row">
-      <a href="#order" class="btn-light">Get Brew →</a>
+      <a href="#order" class="btn-light">Order Now →</a>
       <a href="#source" class="btn-ghost-dark">Our Source ↓</a>
     </div>
   </div>
@@ -1324,13 +1326,13 @@ a:focus-visible,button:focus-visible{
     </div>
     <div class="source-grid">
       <div class="source-col">
-        <span class="sc-label">The Region</span>
-        <div class="sc-title reveal">Where it<br>comes from.</div>
+        <span class="sc-label">Origin</span>
+        <div class="sc-title reveal">Where it<br>grows.</div>
         <p class="sc-text reveal">Kochere is a woreda in the Gedeo zone of the Yirgacheffe region — one of the highest-altitude coffee-growing areas on Earth. At 2,100 metres, the slow ripening season produces a density of flavour that no lower-altitude bean can replicate. The jasmine and bergamot notes are not added. They are grown.</p>
       </div>
       <div class="source-divider" aria-hidden="true"></div>
       <div class="source-col">
-        <span class="sc-label">The Process</span>
+        <span class="sc-label">Craft</span>
         <div class="sc-title reveal">How it is<br>made.</div>
         <p class="sc-text reveal">Sourced directly through AMG Coffee Export, Ethiopia. Fully washed. Dried on raised beds. Traceable to the cooperative. EUDR-compliant. Roasted in small batches in the Alp Mountains — light roast, taken to first crack. Rested 48 hours. Ground to medium, sealed in kraft paper, nitrogen-flushed. Shipped within 7 days of roast date.</p>
       </div>
@@ -1396,33 +1398,33 @@ a:focus-visible,button:focus-visible{
 <section class="section why" data-dark>
   <div class="why-inner">
     <div class="why-header">
-      <span class="why-eyebrow reveal">— The Standard</span>
-      <h2 class="why-h2 reveal">G1 quality.<br>Zero friction.</h2>
+      <span class="why-eyebrow reveal">— Why This Format</span>
+      <h2 class="why-h2 reveal">The only cup<br>worth making.</h2>
     </div>
     <div class="pillars">
       <div class="pillar-col">
         <div class="pillar reveal">
           <span class="pillar-num">01</span>
-          <div class="pillar-title">The world's best coffee. Pre-set.</div>
-          <p class="pillar-text">Kochere G1 is an 85+ SCA-rated single-origin bean. The grind, dose, and distribution are calibrated at source. You do not learn a technique. You get the result.</p>
+          <div class="pillar-title">85+ SCA. No exceptions.</div>
+          <p class="pillar-text">Kochere G1 is one of the highest-rated single-origin beans on Earth. The grind weight, dose, and distribution are calibrated at source. You skip the technique. You get the result.</p>
         </div>
         <div class="pillar reveal">
           <span class="pillar-num">02</span>
-          <div class="pillar-title">Immersion is the right method.</div>
-          <p class="pillar-text">Full immersion is the optimal extraction for Kochere G1's jasmine and bergamot aromatics. The pad format is not a convenience shortcut — it is the correct brewing method for this bean.</p>
+          <div class="pillar-title">Immersion is correct for this bean.</div>
+          <p class="pillar-text">Full immersion extraction is the optimal method for Kochere G1's jasmine and bergamot aromatics. The pad format is not a shortcut — it is the brewing method this bean was designed for.</p>
         </div>
       </div>
       <div class="pillars-divider" aria-hidden="true"></div>
       <div class="pillar-col">
         <div class="pillar reveal">
           <span class="pillar-num">03</span>
-          <div class="pillar-title">Identical. Every single cup.</div>
-          <p class="pillar-text">No variable grind. No scale. No thermometer. No technique gap between you and a barista. The cup you make at home is the cup we designed. Clean, bright, consistent.</p>
+          <div class="pillar-title">Identical. Every single time.</div>
+          <p class="pillar-text">No variable grind. No scale. No thermometer. No gap between you and a trained barista. The cup you make at home is the cup we designed. Bright, clean, repeatable.</p>
         </div>
         <div class="pillar reveal">
           <span class="pillar-num">04</span>
-          <div class="pillar-title">Roasted to order. Shipped in 7.</div>
-          <p class="pillar-text">No warehouse. No sitting stock. Roasted when you order, packed the same day, at your door within 7 days. Specialty coffee at peak freshness — for €1 a cup.</p>
+          <div class="pillar-title">Roasted when you order. At your door in 7.</div>
+          <p class="pillar-text">No warehouse. No sitting stock. No stale beans. Roasted the day you order, packed the same afternoon. Specialty coffee at peak freshness — for €1 a cup, anywhere in the world.</p>
         </div>
       </div>
     </div>
@@ -1435,9 +1437,9 @@ a:focus-visible,button:focus-visible{
   <div class="order-inner">
     <!-- LEFT: editorial + qty selector -->
     <div class="order-left">
-      <span class="order-eyebrow reveal">— Kochere G1 · Ethiopia</span>
+      <span class="order-eyebrow reveal">— Place Your Order</span>
       <h2 class="order-h2 reveal">€1<br>per<br>cup.</h2>
-      <p class="order-sub reveal">85+ SCA · G1 SPECIALTY · SINGLE ORIGIN<br>ROASTED TO ORDER · SHIPS IN 3–5 DAYS</p>
+      <p class="order-sub reveal">Kochere G1 · Ethiopia · 85+ SCA<br>Roasted to Order · Ships within 7 Days</p>
       <div class="qty-grid" id="qty-grid">
         <div class="qty-card reveal" data-qty="7" data-sku="brew-7" data-price="7.00">
           <span class="qty-tag">Starter</span>
@@ -1460,7 +1462,7 @@ a:focus-visible,button:focus-visible{
           <div class="qty-price">€90</div>
         </div>
       </div>
-      <p class="order-value reveal">One price. No subscription.<br>No minimum. Order once or always.</p>
+      <p class="order-value reveal">One price. No subscription. No minimum.<br>Order once. Order always. Cancel nothing.</p>
     </div>
     <!-- RIGHT: form -->
     <div class="order-right">

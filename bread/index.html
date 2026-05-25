@@ -139,7 +139,9 @@ a,button,[role=button],input,select,textarea,label{cursor:none!important}
 }
 .hero::before{
   content:'';position:absolute;inset:0;
-  background:linear-gradient(to right, rgba(248,244,236,0.82) 0%, rgba(248,244,236,0.55) 60%, rgba(248,244,236,0.20) 100%);
+  background:
+    linear-gradient(to bottom, rgba(248,244,236,0.6) 0%, rgba(248,244,236,0.0) 30%),
+    linear-gradient(to right, rgba(248,244,236,0.96) 0%, rgba(248,244,236,0.88) 32%, rgba(248,244,236,0.40) 58%, rgba(248,244,236,0.05) 82%, rgba(248,244,236,0.0) 100%);
   pointer-events:none;z-index:0;
 }
 .hero > *{position:relative;z-index:1}
@@ -166,14 +168,14 @@ a,button,[role=button],input,select,textarea,label{cursor:none!important}
 .hero-bottom{animation:fadeUp .9s cubic-bezier(.16,1,.3,1) .2s both;max-width:var(--max)}
 .hero-headline{
   font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;
-  font-weight:900;font-size:clamp(56px,9.5vw,152px);
-  letter-spacing:-0.035em;line-height:0.88;color:var(--ink);
+  font-weight:900;font-size:clamp(64px,10.5vw,168px);
+  letter-spacing:-0.04em;line-height:0.86;color:var(--ink);
   margin-bottom:clamp(20px,3vh,36px);
 }
 .hero-headline span{
-  display:block;font-weight:200;font-size:clamp(14px,2vw,28px);
-  letter-spacing:0.18em;color:var(--cocoa-lt);
-  text-transform:uppercase;margin-top:20px;
+  display:block;font-weight:200;font-size:clamp(11px,1.4vw,18px);
+  letter-spacing:0.32em;color:var(--cocoa-mu);
+  text-transform:uppercase;margin-top:28px;
   font-family:'Courier New',monospace;
 }
 .hero-sub{
@@ -1149,10 +1151,13 @@ a:focus-visible,button:focus-visible{
   <div class="hero-wm" aria-hidden="true">
     <div class="hero-wm-text">BREAD</div>
   </div>
+  <div class="hero-top">
+    <div class="hero-eyebrow">— Our Daily Bread · Buckwheat · Alps · 3 Ingredients</div>
+  </div>
   <div class="hero-bottom">
     <h1 class="hero-headline">
-      OUR<br>DAILY<br>BREAD.
-      <span>Buckwheat · Alps · 3 Ingredients</span>
+      OUR DAILY<br>BREAD.
+      <span>Buckwheat · Alps · 3 Ingredients · Gluten Free</span>
     </h1>
     <p class="hero-sub">Buckwheat flour. Psyllium husk. Salt. Pre-weighed, pre-blended, delivered to your door. Bake for 77 minutes. That's everything.</p>
     <div class="hero-strip">
@@ -1165,7 +1170,7 @@ a:focus-visible,button:focus-visible{
       <div class="hs-pill hl">€ 3 Per Loaf</div>
     </div>
     <div class="hero-cta-row">
-      <a href="#order" class="btn-primary">Get Bread →</a>
+      <a href="#order" class="btn-primary">Order Now →</a>
       <a href="#ingredients" class="btn-ghost">The Ingredients ↓</a>
     </div>
   </div>
