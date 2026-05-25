@@ -316,9 +316,9 @@ a,button,[role=button],input,select,textarea,label{cursor:none!important}
 }
 .hero-accent-num{
   font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;
-  font-weight:900;font-size:clamp(48px,6vw,100px);
+  font-weight:900;font-size:clamp(80px,10vw,160px);
   letter-spacing:-0.06em;line-height:1;
-  color:rgba(92,61,46,0.05);
+  color:rgba(92,61,46,0.12);
   text-align:right;
 }
 .hero-accent-line{
@@ -394,6 +394,15 @@ a,button,[role=button],input,select,textarea,label{cursor:none!important}
 
 /* ── PHILOSOPHY ─────────────────────────────────────────────────── */
 .philosophy{background:var(--dark);color:rgba(248,244,236,0.85);position:relative;overflow:hidden}
+.phil-accent-num{
+  position:absolute;
+  right:var(--g);top:var(--g);
+  font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;
+  font-weight:900;font-size:clamp(80px,10vw,160px);
+  letter-spacing:-0.06em;line-height:1;
+  color:rgba(248,244,236,0.06);
+  pointer-events:none;user-select:none;
+}
 .philosophy::after{
   content:'';
   position:absolute;inset:0;
@@ -905,6 +914,7 @@ a:focus-visible,button:focus-visible{
 
 <!-- PHILOSOPHY -->
 <section class="section philosophy" data-dark>
+  <div class="phil-accent-num" aria-hidden="true">02</div>
   <div class="philosophy-inner">
     <div>
       <span class="eyebrow reveal" style="color:var(--cocoa-mid);margin-bottom:28px">Our Belief</span>
