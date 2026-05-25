@@ -307,11 +307,24 @@ a,button,[role=button],input,select,textarea,label{cursor:none!important}
 .product{background:var(--cream-deep)}
 .product-inner{
   max-width:var(--max);margin:0 auto;
-  display:grid;grid-template-columns:1fr 1fr;gap:clamp(40px,6vw,100px);
+  display:grid;grid-template-columns:1fr 1.2fr 1fr;gap:clamp(32px,4vw,72px);
   align-items:start;
 }
+@media(max-width:1024px){.product-inner{grid-template-columns:1fr 1fr;}}
 @media(max-width:860px){.product-inner{grid-template-columns:1fr}}
 .product-left{}
+.product-center{
+  display:flex;align-items:flex-start;justify-content:center;
+  padding-top:clamp(0px,2vw,24px);
+}
+.product-bag-img{
+  width:100%;max-width:420px;height:auto;
+  display:block;
+  mix-blend-mode:multiply;
+}
+@media(max-width:1024px){
+  .product-center{display:none}
+}
 .product-right{}
 .product-name{
   font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;
@@ -1155,6 +1168,9 @@ a:focus-visible,button:focus-visible{
     <div class="product-left">
       <span class="eyebrow reveal">— The Product</span>
       <div class="product-name reveal">ONE<br>PAD.<br>ONE<br>CUP.</div>
+    </div>
+    <div class="product-center">
+      <img class="product-bag-img" src="../assets/brew-pad-bag.webp" alt="PNC brew pad — biodegradable kraft paper sachet" width="800" height="533" loading="lazy">
     </div>
     <div class="product-right">
       <p class="product-desc reveal">Pre-ground Kochere G1, sealed into a single-serve kraft paper pad. Drop it in your cup, add hot water, let it brew. The flavour evolves as it steeps — floral first, then fruity, then a clean dark chocolate finish. Self-contained. Biodegradable. Roasted to order in the Alp Mountains, packed and shipped within 7 days of roast date.</p>
