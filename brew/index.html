@@ -644,10 +644,10 @@ a,button,[role=button],input,select,textarea,label{cursor:none!important}
 .order{background:var(--dark);position:relative;overflow:hidden}
 .order::before{
   content:'';position:absolute;inset:0;
-  background-image:linear-gradient(rgba(248,244,236,0.025) 1px,transparent 1px),linear-gradient(90deg,rgba(248,244,236,0.025) 1px,transparent 1px);
+  background-image:linear-gradient(rgba(248,244,236,0.028) 1px,transparent 1px),linear-gradient(90deg,rgba(248,244,236,0.028) 1px,transparent 1px);
   background-size:80px 80px;
-  mask-image:linear-gradient(to bottom,transparent 0%,rgba(0,0,0,0.5) 25%,rgba(0,0,0,0.7) 75%,transparent 100%);
-  -webkit-mask-image:linear-gradient(to bottom,transparent 0%,rgba(0,0,0,0.5) 25%,rgba(0,0,0,0.7) 75%,transparent 100%);
+  mask-image:linear-gradient(to bottom,transparent 0%,rgba(0,0,0,0.6) 20%,rgba(0,0,0,0.6) 100%);
+  -webkit-mask-image:linear-gradient(to bottom,transparent 0%,rgba(0,0,0,0.6) 20%,rgba(0,0,0,0.6) 100%);
   pointer-events:none;z-index:0;
 }
 .order-inner{
@@ -676,6 +676,8 @@ a,button,[role=button],input,select,textarea,label{cursor:none!important}
   font-family:'Courier New',monospace;font-size:10px;font-weight:600;
   letter-spacing:0.36em;text-transform:uppercase;color:var(--cocoa-mid);
   display:block;margin-bottom:24px;
+  padding-top:clamp(20px,3vw,32px);
+  border-top:1px solid rgba(248,244,236,0.07);
 }
 .order-h2{
   font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;
@@ -688,7 +690,7 @@ a,button,[role=button],input,select,textarea,label{cursor:none!important}
   font-family:'Courier New',monospace;font-size:9px;font-weight:600;
   letter-spacing:0.28em;text-transform:uppercase;
   color:rgba(248,244,236,0.28);
-  margin-bottom:clamp(40px,5vw,64px);
+  margin-bottom:clamp(28px,3.5vw,44px);
   line-height:1.9;
 }
 /* Quantity strip — 4 tiles in a horizontal row */
@@ -716,8 +718,9 @@ a,button,[role=button],input,select,textarea,label{cursor:none!important}
 .qty-tag{
   font-family:'Courier New',monospace;font-size:7px;font-weight:600;
   letter-spacing:0.3em;text-transform:uppercase;
-  color:rgba(248,244,236,0.22);margin-bottom:10px;display:block;
+  color:rgba(248,244,236,0.30);margin-bottom:10px;display:block;
 }
+.qty-card.selected .qty-tag{color:var(--cocoa-mid)}
 .qty-num{
   font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;
   font-weight:900;font-size:clamp(28px,3.5vw,52px);
@@ -735,9 +738,11 @@ a,button,[role=button],input,select,textarea,label{cursor:none!important}
 .order-value{
   font-family:'Courier New',monospace;font-size:9px;font-weight:600;
   letter-spacing:0.24em;text-transform:uppercase;
-  color:rgba(248,244,236,0.22);
-  line-height:1.9;
+  color:rgba(248,244,236,0.36);
+  line-height:2;
   margin-bottom:0;
+  padding-top:clamp(20px,2.5vw,28px);
+  border-top:1px solid rgba(248,244,236,0.06);
 }
 /* Right col — form */
 .order-form{width:100%;text-align:left}
@@ -764,7 +769,9 @@ a,button,[role=button],input,select,textarea,label{cursor:none!important}
 .form-note{
   font-family:'Courier New',monospace;font-size:8px;font-weight:600;
   letter-spacing:0.22em;text-transform:uppercase;
-  color:rgba(248,244,236,0.18);margin-bottom:20px;line-height:2;
+  color:rgba(248,244,236,0.28);margin-bottom:24px;line-height:2;
+  padding-bottom:20px;
+  border-bottom:1px solid rgba(248,244,236,0.06);
 }
 .btn-order{
   font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;
@@ -806,9 +813,9 @@ footer::before{
   content:'';
   position:absolute;inset:0;
   background-image:
-    linear-gradient(rgba(248,244,236,0.03) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(248,244,236,0.03) 1px, transparent 1px);
-  background-size:60px 60px;
+    linear-gradient(rgba(248,244,236,0.028) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(248,244,236,0.028) 1px, transparent 1px);
+  background-size:80px 80px;
   pointer-events:none;z-index:0;
 }
 .footer-links,.footer-logo,.footer-copy{position:relative;z-index:1;background:transparent!important;}
