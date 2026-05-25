@@ -777,20 +777,24 @@ footer{
   /* No custom cursor on touch */
   .hero-scroll{display:none}
 
-  /* Hero — tighter on small screens */
+  /* Hero — full viewport, content readable */
   .hero{padding-bottom:clamp(40px,8vh,80px);padding-top:clamp(80px,14vh,120px)}
   .hero-top{position:relative;top:auto;left:auto;margin-bottom:clamp(20px,4vh,36px);animation:none;opacity:1;transform:none}
   .hero-headline{font-size:clamp(44px,13vw,72px);line-height:0.88}
   .hero-headline span{font-size:clamp(15px,4vw,22px);margin-top:12px}
   .hero-sub{font-size:10px;margin-bottom:20px}
   .hero-decree{font-size:8px;letter-spacing:0.22em;line-height:1.9;margin-bottom:16px}
-  .hero-products{max-width:100%;gap:2px}
+  .hero-products{max-width:100%;gap:3px}
 
-  /* Product cards — stack tighter */
-  .hero-product{padding:24px 20px}
-  .hp-name{font-size:clamp(32px,9vw,48px)}
-  .hp-stats{gap:16px}
+  /* Product cards */
+  .hero-product{padding:clamp(20px,5vw,28px)}
+  .hp-name{font-size:clamp(32px,9vw,48px);margin-bottom:8px}
+  .hp-origin{font-size:8px;letter-spacing:0.16em;margin-bottom:10px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .hp-desc{font-size:12px;line-height:1.6;margin-bottom:14px}
+  .hp-stats{gap:clamp(12px,4vw,20px);margin-bottom:14px;padding-top:12px}
   .hp-stat-val{font-size:clamp(18px,5vw,26px)}
+  .hp-stat-key{font-size:7px;letter-spacing:0.18em}
+  .hp-footer{padding-top:12px}
 
   /* Philosophy */
   .phil-quote{font-size:clamp(24px,7.5vw,38px);line-height:0.95}
@@ -803,8 +807,9 @@ footer{
   .footer-link:last-child{border-bottom:none}
   .footer-copy{text-align:left;padding-top:20px;font-size:8px}
 
-  /* Ticker — slower on mobile */
+  /* Ticker — slower on mobile, slightly taller */
   .ticker-inner{animation-duration:55s}
+  .ticker{padding:20px 0}
 
   /* Buttons — full width on mobile */
   .btn-primary,.btn-ghost,.btn-light,.btn-cream{width:100%;text-align:center;justify-content:center}

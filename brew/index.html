@@ -185,7 +185,8 @@ nav{
   color:rgba(248,244,236,0.35);
   background:rgba(248,244,236,0.05);
   border:1px solid rgba(248,244,236,0.06);
-  padding:9px 16px;
+  padding:10px 18px;
+  min-height:36px;display:inline-flex;align-items:center;
 }
 .hs-pill.hl{color:var(--cocoa-mid);border-color:rgba(122,85,68,0.2)}
 .hero-cta-row{display:flex;gap:12px;flex-wrap:wrap}
@@ -753,16 +754,25 @@ footer{
   /* No custom cursor on touch */
   .hero-scroll{display:none}
 
-  /* Hero — tighter on small screens */
+  /* Brew hero — full-bleed, legible on small screens */
   .hero{padding-bottom:clamp(40px,8vh,80px);padding-top:clamp(80px,14vh,120px)}
   .hero-top{position:relative;top:auto;left:auto;margin-bottom:clamp(20px,4vh,36px);animation:none;opacity:1;transform:none}
-  .hero-headline{font-size:clamp(44px,13vw,72px);line-height:0.88}
-  .hero-headline span{font-size:clamp(15px,4vw,22px);margin-top:12px}
-  .hero-sub{font-size:10px;margin-bottom:20px}
+  .hero-headline{font-size:clamp(52px,16vw,80px);line-height:0.86}
+  .hero-headline span{font-size:clamp(10px,2.8vw,14px);letter-spacing:0.28em;margin-top:16px}
+  .hero-sub{font-size:clamp(14px,3.8vw,18px);line-height:1.55;margin-bottom:24px;max-width:100%}
   .hero-decree{font-size:8px;letter-spacing:0.22em;line-height:1.9;margin-bottom:16px}
   .hero-products{max-width:100%;gap:2px}
 
-  /* Product cards — stack tighter */
+  /* Pill strip — wrap nicely, more readable */
+  .hero-strip{gap:3px;margin-bottom:clamp(28px,5vh,44px)}
+  .hs-pill{font-size:9px;padding:9px 14px;letter-spacing:0.22em}
+
+  /* CTA buttons */
+  .btn-light{font-size:10px;padding:14px 20px;min-height:48px}
+  .btn-ghost-dark{font-size:10px;padding:14px 20px;min-height:48px}
+  .hero-cta-row{flex-direction:column;gap:8px;width:100%}
+
+  /* Product cards (not used on brew hero but included for consistency) */
   .hero-product{padding:24px 20px}
   .hp-name{font-size:clamp(32px,9vw,48px)}
   .hp-stats{gap:16px}
@@ -779,17 +789,17 @@ footer{
   .footer-link:last-child{border-bottom:none}
   .footer-copy{text-align:left;padding-top:20px;font-size:8px}
 
-  /* Ticker — slower on mobile */
+  /* Ticker — slower on mobile, taller */
   .ticker-inner{animation-duration:55s}
+  .ticker{padding:20px 0}
 
   /* Buttons — full width on mobile */
   .btn-primary,.btn-ghost,.btn-light,.btn-cream{width:100%;text-align:center;justify-content:center}
-  .hero-cta-row{flex-direction:column;gap:8px}
 }
 
 /* ── SMALL MOBILE (380px) ─────────────────────────────────────────────── */
 @media(max-width:380px){
-  .hero-headline{font-size:clamp(38px,11.5vw,52px)}
+  .hero-headline{font-size:clamp(44px,14vw,64px)}
   .hp-name{font-size:clamp(28px,8.5vw,40px)}
 }
 
