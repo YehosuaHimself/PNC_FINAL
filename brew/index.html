@@ -467,13 +467,13 @@ a,button,[role=button],input,select,textarea,label{cursor:none!important}
 .step{
   display:grid;grid-template-columns:1fr auto;
   gap:clamp(20px,3vw,48px);align-items:start;
-  background:rgba(245,240,230,0.72);
-  backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);
+  background:rgba(245,240,230,0.88);
+  backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
   padding:clamp(32px,4vw,56px) clamp(24px,3vw,40px);
   border:1px solid rgba(42,24,16,0.08);
   transition:background .2s;
 }
-.step:hover{background:rgba(245,240,230,0.88)}
+.step:hover{background:rgba(248,244,236,0.96)}
 @media(max-width:600px){.step{grid-template-columns:1fr}}
 .step-num{
   font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;
@@ -481,7 +481,7 @@ a,button,[role=button],input,select,textarea,label{cursor:none!important}
   letter-spacing:-0.03em;color:var(--cocoa-mu);
   line-height:1;padding-top:4px;
 }
-.step-content{}
+.step-content{min-width:0}
 .step-title{
   font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;
   font-weight:900;font-size:clamp(22px,2.8vw,42px);
@@ -495,8 +495,9 @@ a,button,[role=button],input,select,textarea,label{cursor:none!important}
 .step-meta{
   font-family:'Courier New',monospace;font-size:8px;font-weight:600;
   letter-spacing:0.26em;text-transform:uppercase;
-  color:var(--cocoa-mu);text-align:right;white-space:nowrap;
-  padding-top:6px;
+  color:var(--cocoa-mu);text-align:right;
+  white-space:nowrap;padding-top:6px;
+  flex-shrink:0;
 }
 @media(max-width:600px){.step-meta{display:none}}
 
@@ -553,12 +554,7 @@ a,button,[role=button],input,select,textarea,label{cursor:none!important}
 .chain::before{
   content:'';
   position:absolute;inset:0;
-  background:linear-gradient(
-    to bottom,
-    rgba(248,244,236,0.93) 0%,
-    rgba(248,244,236,0.88) 40%,
-    rgba(248,244,236,0.93) 100%
-  );
+  background:rgba(248,244,236,0.94);
   pointer-events:none;
   z-index:0;
 }
@@ -569,6 +565,7 @@ a,button,[role=button],input,select,textarea,label{cursor:none!important}
   display:block;
   padding:clamp(32px,4vw,52px) 0;
   border-bottom:1px solid var(--cocoa-fa);
+  overflow:hidden;
 }
 .chain-step:last-child{border-bottom:none}
 .cs-num{
@@ -577,7 +574,7 @@ a,button,[role=button],input,select,textarea,label{cursor:none!important}
   letter-spacing:-0.02em;color:var(--cocoa-mu);
   line-height:1;padding-top:4px;
 }
-.cs-content{}
+.cs-content{min-width:0;max-width:680px}
 .cs-title{
   font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;
   font-weight:900;font-size:clamp(18px,2.2vw,32px);
