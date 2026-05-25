@@ -504,80 +504,107 @@ a,button,[role=button],input,select,textarea,label{cursor:none!important}
 .method{
   background:var(--cream);
   position:relative;
-  background-image:url('../assets/brew-steps-bg.webp');
-  background-size:auto 92%;
-  background-position:right center;
-  background-repeat:no-repeat;
+  overflow:hidden;
   min-height:100vh;
   display:flex;
-  flex-direction:column;
-  justify-content:center;
+  align-items:stretch;
 }
-.method::before{
+/* image panel — left 52%, full height */
+.method-img{
+  position:absolute;
+  left:0;top:0;bottom:0;
+  width:52%;
+  background-image:url('../assets/brew-steps-bg.webp');
+  background-size:cover;
+  background-position:center center;
+}
+/* gradient: image fades to cream on right edge only */
+.method-img::after{
+  content:'';
+  position:absolute;inset:0;
+  background:linear-gradient(
+    to right,
+    rgba(248,244,236,0.0) 0%,
+    rgba(248,244,236,0.0) 52%,
+    rgba(248,244,236,0.55) 72%,
+    rgba(248,244,236,1.0) 100%
+  );
+}
+/* top & bottom edge fades */
+.method-img::before{
   content:'';
   position:absolute;inset:0;
   background:
-    linear-gradient(
-      to bottom,
-      rgba(248,244,236,0.88) 0%,
-      rgba(248,244,236,0.0) 22%
-    ),
-    linear-gradient(
-      to right,
-      rgba(248,244,236,1.0) 0%,
-      rgba(248,244,236,0.97) 30%,
-      rgba(248,244,236,0.60) 48%,
-      rgba(248,244,236,0.10) 62%,
-      rgba(248,244,236,0.00) 72%
-    );
-  pointer-events:none;z-index:0;
+    linear-gradient(to bottom,rgba(248,244,236,0.6) 0%,rgba(248,244,236,0) 12%),
+    linear-gradient(to top,rgba(248,244,236,0.6) 0%,rgba(248,244,236,0) 12%);
+  z-index:1;
 }
-.method-inner{max-width:var(--max);margin:0 auto;position:relative;z-index:1;display:flex;flex-direction:column;align-items:flex-start}
-.method-header{margin-bottom:clamp(48px,6vw,80px);width:auto}
-.steps{display:flex;flex-direction:column;gap:clamp(6px,0.8vw,10px);max-width:52%;width:52%}
+/* right content column */
+.method-inner{
+  position:relative;z-index:1;
+  margin-left:auto;
+  width:52%;
+  padding:clamp(80px,10vw,140px) clamp(40px,5vw,80px) clamp(80px,10vw,140px) clamp(60px,6vw,100px);
+  display:flex;flex-direction:column;justify-content:center;
+}
+.method-header{margin-bottom:clamp(40px,5vw,70px);text-align:right}
+.method-header .eyebrow{display:block;text-align:right}
+.method-header .h2{text-align:right}
+/* steps: open rows, right-aligned, no cards */
+.steps{display:flex;flex-direction:column;width:100%}
 .step{
   display:grid;
-  grid-template-columns:clamp(44px,4.5vw,64px) 1fr clamp(90px,11vw,160px);
-  gap:clamp(20px,3vw,48px);align-items:center;
-  background:rgba(245,240,230,0.84);
-  backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
-  padding:clamp(24px,3vw,40px) clamp(20px,2.5vw,36px);
-  border:1px solid rgba(42,24,16,0.07);
-  transition:background .2s;
+  grid-template-columns:1fr clamp(80px,9vw,130px);
+  gap:clamp(20px,2.5vw,40px);
+  align-items:start;
+  padding:clamp(28px,3.5vw,48px) 0;
+  border-bottom:1px solid rgba(42,24,16,0.10);
+  position:relative;
+  transition:opacity .25s;
 }
-.step > div{min-width:0}
-.step:hover{background:rgba(248,244,236,0.96)}
-.step-content{min-width:0}
-@media(max-width:700px){
-  .method-inner{align-items:flex-start}
-  .method-header{width:100%}
-  .steps{max-width:100%;width:100%}
-  .step{grid-template-columns:clamp(36px,8vw,52px) 1fr;grid-template-rows:auto auto}
-  .step-meta{grid-column:2;margin-top:10px}
-}
+.step:first-child{border-top:1px solid rgba(42,24,16,0.10)}
+.step:hover .step-title{letter-spacing:-0.01em}
+.step-left{text-align:right;display:flex;flex-direction:column;align-items:flex-end}
 .step-num{
-  font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;
-  font-weight:900;font-size:clamp(12px,1.2vw,16px);
-  letter-spacing:0.06em;color:var(--cocoa-mu);
-  line-height:1;
+  font-family:'Courier New',monospace;
+  font-weight:600;font-size:clamp(9px,0.85vw,11px);
+  letter-spacing:0.28em;color:var(--cocoa-mu);
+  line-height:1;margin-bottom:clamp(10px,1.2vw,16px);
+  display:block;
 }
 .step-title{
   font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;
-  font-weight:900;font-size:clamp(24px,3.2vw,50px);
-  letter-spacing:-0.03em;line-height:0.93;
-  color:var(--ink);margin-bottom:8px;
+  font-weight:900;font-size:clamp(28px,3.8vw,62px);
+  letter-spacing:-0.04em;line-height:0.90;
+  color:var(--ink);margin-bottom:clamp(10px,1.2vw,16px);
+  transition:letter-spacing .3s ease;
 }
 .step-text{
-  font-size:clamp(13px,1.4vw,15px);
-  color:var(--cocoa-lt);line-height:1.65;
+  font-size:clamp(13px,1.35vw,15px);
+  color:var(--cocoa-lt);line-height:1.68;
+  max-width:340px;text-align:right;
 }
 .step-meta{
-  font-family:'Courier New',monospace;font-size:7.5px;font-weight:600;
-  letter-spacing:0.26em;text-transform:uppercase;
-  color:var(--cocoa-mu);text-align:right;
-  white-space:nowrap;line-height:1.9;
+  font-family:'Courier New',monospace;font-size:clamp(8px,0.75vw,10px);font-weight:600;
+  letter-spacing:0.24em;text-transform:uppercase;
+  color:var(--cocoa-mu);text-align:left;
+  white-space:nowrap;line-height:2.0;
+  padding-top:clamp(28px,3.5vw,48px);
+  border-left:1px solid rgba(42,24,16,0.12);
+  padding-left:clamp(16px,2vw,28px);
+  align-self:start;
 }
-@media(max-width:600px){.step-meta{text-align:left}}
+@media(max-width:900px){
+  .method{flex-direction:column;min-height:auto}
+  .method-img{position:relative;width:100%;height:55vw;min-height:280px}
+  .method-img::after{background:linear-gradient(to bottom,rgba(248,244,236,0) 60%,rgba(248,244,236,1) 100%)}
+  .method-inner{width:100%;margin-left:0;padding:clamp(48px,8vw,80px) var(--g)}
+  .method-header{text-align:left}
+  .method-header .eyebrow,.method-header .h2{text-align:left}
+  .step-left{align-items:flex-start;text-align:left}
+  .step-text{text-align:left}
+  .step-meta{border-left:none;border-top:1px solid rgba(42,24,16,0.12);padding-left:0;padding-top:12px;align-self:end;text-align:right}
+}
 
 /* ── WHY ────────────────────────────────────────────────────────── */
 .why{background:var(--dark);position:relative;overflow:hidden}
@@ -1117,11 +1144,6 @@ a:focus-visible,button:focus-visible{
 }
 
 
-/* Step items (ritual/brew method) — same treatment */
-.step{transition:background .2s,padding-left .2s}
-@media(hover:hover){
-  .step:hover{padding-left:calc(clamp(24px,3vw,40px) + 8px)}
-}
 
 /* Mobile — ensure drawer CTA is always full width */
 @media(max-width:720px){
@@ -1373,6 +1395,7 @@ a:focus-visible,button:focus-visible{
 
 <!-- BREW METHOD -->
 <section class="section method">
+  <div class="method-img"></div>
   <div class="method-inner">
     <div class="method-header">
       <span class="eyebrow reveal">— How to Brew</span>
@@ -1380,28 +1403,28 @@ a:focus-visible,button:focus-visible{
     </div>
     <div class="steps">
       <div class="step reveal">
-        <div class="step-num">01</div>
-        <div class="step-content">
+        <div class="step-left">
+          <span class="step-num">01</span>
           <div class="step-title">Drop it in.</div>
           <p class="step-text">Place the pad into your cup. The pad is self-contained — no filter, no equipment, nothing else required.</p>
         </div>
-        <div class="step-meta">Cup Size<br>200–250 ml ideal</div>
+        <div class="step-meta">Cup Size<br>200–250 ml<br>ideal</div>
       </div>
       <div class="step reveal">
-        <div class="step-num">02</div>
-        <div class="step-content">
+        <div class="step-left">
+          <span class="step-num">02</span>
           <div class="step-title">Add hot water.</div>
           <p class="step-text">Pour around 92–94°C directly over the pad. The bloom begins immediately — jasmine first.</p>
         </div>
         <div class="step-meta">Water Temp<br>92–94°C</div>
       </div>
       <div class="step reveal">
-        <div class="step-num">03</div>
-        <div class="step-content">
+        <div class="step-left">
+          <span class="step-num">03</span>
           <div class="step-title">Watch it bloom.</div>
-          <p class="step-text">Leave the pad in. The flavour evolves as it steeps — floral first, then fruity, then a clean dark chocolate finish. Remove when it reaches your preferred strength.</p>
+          <p class="step-text">Leave the pad in. Floral first, then fruity, then a clean dark chocolate finish. Remove when it reaches your preferred strength.</p>
         </div>
-        <div class="step-meta">Brew Time<br>3–5 min · leave it in</div>
+        <div class="step-meta">Brew Time<br>3–5 min<br>leave it in</div>
       </div>
     </div>
   </div>
