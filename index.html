@@ -992,41 +992,96 @@ a:focus-visible,button:focus-visible{
 <!-- CURSOR SCRIPT -->
 <script>
 (function(){
-  const dot=document.getElementById('cur-dot');
-  const ring=document.getElementById('cur-ring');
-  if(!dot||!ring||window.matchMedia('(pointer:coarse)').matches)return;
-  const SD=4,SR=18;
-  let mx=-9999,my=-9999,rx=-9999,ry=-9999,moved=false,raf=null;
-  function isDark(x,y){
-    dot.style.visibility='hidden';ring.style.visibility='hidden';
-    const el=document.elementFromPoint(x,y);
-    dot.style.visibility='';ring.style.visibility='';
-    return el&&!!el.closest('[data-dark]');
+  const dot = document.getElementById('cur-dot');
+  const ring = document.getElementById('cur-ring');
+  if (!dot || !ring || window.matchMedia('(pointer:coarse)').matches) return;
+
+  const C_DARK  = '#2A1810';
+  const C_LIGHT = '#F8F4EC';
+  const DOT_R = 4, RING_R = 18;
+  const LERP = 0.10;
+
+  let mx = -9999, my = -9999;
+  let rx = -9999, ry = -9999;
+  let currentDark = false;
+  let rafId = null;
+  let darkZones = [];
+
+  function buildDarkZones() {
+    darkZones = Array.from(document.querySelectorAll('[data-dark]')).map(function(el) {
+      const r = el.getBoundingClientRect();
+      return { top: r.top + window.scrollY, bottom: r.bottom + window.scrollY, left: r.left, right: r.right };
+    });
   }
-  function paint(dark){
-    const c=dark?'#F8F4EC':'#5C3D2E';
-    dot.style.background=c;
-    ring.style.borderColor=c;
+
+  function updateDarkZones() {
+    darkZones = Array.from(document.querySelectorAll('[data-dark]')).map(function(el) {
+      const r = el.getBoundingClientRect();
+      return { top: r.top + window.scrollY, bottom: r.bottom + window.scrollY, left: r.left, right: r.right };
+    });
   }
-  function loop(){
-    rx+=(mx-SR-rx)*0.055;ry+=(my-SR-ry)*0.055;
-    dot.style.transform='translate('+(mx-SD)+'px,'+(my-SD)+'px)';
-    ring.style.transform='translate('+rx+'px,'+ry+'px)';
-    requestAnimationFrame(loop);
+
+  function checkDark(x, y) {
+    const sy = y + window.scrollY;
+    for (var i = 0; i < darkZones.length; i++) {
+      var z = darkZones[i];
+      if (sy >= z.top && sy <= z.bottom && x >= z.left && x <= z.right) return true;
+    }
+    return false;
   }
-  document.addEventListener('mousemove',function(e){
-    mx=e.clientX;my=e.clientY;
-    paint(isDark(mx,my));
-    if(!moved){rx=mx-SR;ry=my-SR;moved=true;loop();}
+
+  function applyColor(dark) {
+    var c = dark ? C_LIGHT : C_DARK;
+    dot.style.background = c;
+    ring.style.borderColor = c;
+    ring.style.opacity = dark ? '0.55' : '0.60';
+  }
+
+  function loop() {
+    rx += (mx - RING_R - rx) * LERP;
+    ry += (my - RING_R - ry) * LERP;
+    dot.style.transform  = 'translate3d(' + (mx - DOT_R) + 'px,' + (my - DOT_R) + 'px,0)';
+    ring.style.transform = 'translate3d(' + Math.round(rx) + 'px,' + Math.round(ry) + 'px,0)';
+    rafId = requestAnimationFrame(loop);
+  }
+
+  document.addEventListener('mousemove', function(e) {
+    mx = e.clientX; my = e.clientY;
+    var dark = checkDark(mx, my);
+    if (dark !== currentDark) { currentDark = dark; applyColor(dark); }
+    if (rafId === null) {
+      rx = mx - RING_R; ry = my - RING_R;
+      applyColor(checkDark(mx, my));
+      loop();
+    }
+  }, { passive: true });
+
+  document.addEventListener('mouseleave', function() {
+    mx = -9999; my = -9999;
+    dot.style.transform  = 'translate3d(-9999px,-9999px,0)';
+    ring.style.transform = 'translate3d(-9999px,-9999px,0)';
   });
-  document.addEventListener('mouseleave',function(){
-    dot.style.transform='translate(-9999px,-9999px)';
-    ring.style.transform='translate(-9999px,-9999px)';
+
+  document.querySelectorAll('a,button,[role=button]').forEach(function(el) {
+    el.addEventListener('mouseenter', function() {
+      ring.style.width = '52px'; ring.style.height = '52px';
+      ring.style.opacity = currentDark ? '0.40' : '0.35';
+      dot.style.transform = 'translate3d(' + (mx - DOT_R) + 'px,' + (my - DOT_R) + 'px,0) scale(1.5)';
+    });
+    el.addEventListener('mouseleave', function() {
+      ring.style.width = '36px'; ring.style.height = '36px';
+      ring.style.opacity = currentDark ? '0.55' : '0.60';
+      dot.style.transform = 'translate3d(' + (mx - DOT_R) + 'px,' + (my - DOT_R) + 'px,0) scale(1)';
+    });
   });
-  document.querySelectorAll('a,button').forEach(function(el){
-    el.addEventListener('mouseenter',function(){ring.style.width='54px';ring.style.height='54px';ring.style.opacity='0.4'});
-    el.addEventListener('mouseleave',function(){ring.style.width='36px';ring.style.height='36px';ring.style.opacity='0.6'});
-  });
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', buildDarkZones);
+  } else {
+    buildDarkZones();
+  }
+  window.addEventListener('scroll',  updateDarkZones, { passive: true });
+  window.addEventListener('resize',  updateDarkZones, { passive: true });
 })();
 </script>
 
