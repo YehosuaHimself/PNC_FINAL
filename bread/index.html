@@ -160,13 +160,14 @@ a,button,[role=button],input,select,textarea,label{cursor:none!important}
 .hero-eyebrow{
   display:block;
   font-family:'Courier New',monospace;
-  font-size:clamp(11px,1.1vw,14px);font-weight:600;
-  letter-spacing:0.30em;text-transform:uppercase;
+  font-size:clamp(12px,1.2vw,16px);font-weight:600;
+  letter-spacing:0.28em;text-transform:uppercase;
   color:var(--cocoa);
-  margin-bottom:clamp(20px,3vh,36px);
+  margin-bottom:clamp(28px,4vh,52px);
   animation:fadeUp .9s cubic-bezier(.16,1,.3,1) .1s both;
+  position:relative;z-index:2;
 }
-.hero-bottom{animation:fadeUp .9s cubic-bezier(.16,1,.3,1) .2s both;max-width:var(--max)}
+.hero-bottom{animation:fadeUp .9s cubic-bezier(.16,1,.3,1) .2s both;max-width:var(--max);display:flex;flex-direction:column}
 .hero-headline{
   font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;
   font-weight:900;font-size:clamp(64px,10.5vw,168px);
