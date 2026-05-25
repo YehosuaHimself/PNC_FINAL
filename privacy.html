@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Privacy · PNC — Panem Nostrum Cotidianum</title>
+<meta name="description" content="What data PNC keeps, why, and for how long. Plain language.">
+<meta name="theme-color" content="#F8F4EC">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 32 32%22><rect width=%2232%22 height=%2232%22 fill=%22%232A1810%22/><text x=%2216%22 y=%2222%22 font-size=%2216%22 font-family=%22Helvetica Neue,Helvetica,Arial,sans-serif%22 font-weight=%22900%22 fill=%22%23F8F4EC%22 text-anchor=%22middle%22>P</text></svg>">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{font-size:16px;overflow-x:hidden;scrollbar-width:none}
+::-webkit-scrollbar{display:none}
+*{font-style:normal!important;cursor:none!important}
+@media(pointer:coarse){*{cursor:auto!important}a,button,[role=button]{cursor:pointer!important}}
+:root{
+  --cream:#F8F4EC;--cream-deep:#EDE5D4;
+  --cocoa:#5C3D2E;--cocoa-mid:#7A5544;--cocoa-lt:rgba(92,61,46,0.55);
+  --cocoa-mu:rgba(92,61,46,0.32);--cocoa-fa:rgba(92,61,46,0.09);
+  --ink:#2A1810;--dark:#180E08;
+  --g:clamp(20px,5vw,80px);--max:760px;--nav-h:62px;
+}
+body{
+  background:var(--cream);color:var(--ink);
+  font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;
+  font-size:15px;line-height:1.7;
+  -webkit-font-smoothing:antialiased;
+  padding-top:var(--nav-h);
+}
+a{text-decoration:none;color:var(--cocoa)}
+a:hover{text-decoration:underline}
+::selection{background:var(--cocoa);color:var(--cream)}
+
+/* CURSOR */
+#cur-dot{position:fixed;top:0;left:0;width:8px;height:8px;background:var(--cocoa);pointer-events:none;z-index:9998;transform:translate(-9999px,-9999px);}
+#cur-ring{position:fixed;top:0;left:0;width:36px;height:36px;border:1.5px solid var(--cocoa);pointer-events:none;z-index:9997;transform:translate(-9999px,-9999px);opacity:0.6;transition:width .22s,height .22s,opacity .2s;}
+
+/* GRAIN */
+#grain{position:fixed;inset:0;pointer-events:none;z-index:9999;opacity:0.022;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");background-size:160px;}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;height:var(--nav-h);z-index:200;padding:0 var(--g);display:flex;align-items:center;justify-content:space-between;background:rgba(248,244,236,0.97);border-bottom:1px solid var(--cocoa-fa);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);}
+.nav-logo{font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:900;font-size:14px;letter-spacing:0.38em;text-transform:uppercase;color:var(--ink);transition:color .2s,letter-spacing .3s;}
+.nav-logo:hover{color:var(--cocoa);letter-spacing:0.46em;text-decoration:none}
+.nav-back{font-family:'Courier New',monospace;font-size:10px;font-weight:600;letter-spacing:0.22em;text-transform:uppercase;color:var(--cocoa);opacity:0.7;transition:opacity .18s;}
+.nav-back:hover{opacity:1;text-decoration:none}
+.nav-cta{font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:10px;letter-spacing:0.22em;text-transform:uppercase;background:var(--ink);color:var(--cream);padding:11px 22px;transition:background .18s;min-height:40px;line-height:1.8;display:inline-block;}
+.nav-cta:hover{background:var(--cocoa);text-decoration:none}
+
+/* MAIN */
+.l-main{max-width:var(--max);margin:0 auto;padding:clamp(60px,8vw,100px) var(--g) clamp(80px,10vw,140px);}
+.l-eyebrow{font-family:'Courier New',monospace;font-size:10px;font-weight:600;letter-spacing:0.36em;text-transform:uppercase;color:var(--cocoa);display:block;margin-bottom:20px;}
+h1{font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:900;font-size:clamp(42px,6vw,88px);letter-spacing:-0.04em;line-height:0.9;color:var(--ink);margin-bottom:12px;}
+.l-meta{font-family:'Courier New',monospace;font-size:9px;font-weight:600;letter-spacing:0.28em;text-transform:uppercase;color:var(--cocoa-mu);margin-bottom:48px;display:block;}
+.l-main > p:first-of-type{font-size:17px;color:var(--cocoa-lt);line-height:1.7;margin-bottom:40px;border-bottom:1px solid var(--cocoa-fa);padding-bottom:40px;}
+h2{font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:900;font-size:clamp(20px,2.4vw,28px);letter-spacing:-0.02em;color:var(--ink);margin-top:48px;margin-bottom:16px;padding-top:48px;border-top:1px solid var(--cocoa-fa);}
+h2:first-of-type{margin-top:0;padding-top:0;border-top:none;}
+h3{font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:16px;letter-spacing:-0.01em;color:var(--ink);margin-top:32px;margin-bottom:10px;}
+p{color:var(--cocoa-lt);margin-bottom:16px;line-height:1.75;}
+ul,ol{padding-left:1.4em;margin-bottom:16px;}
+li{color:var(--cocoa-lt);margin-bottom:8px;line-height:1.7;}
+strong{color:var(--ink);font-weight:700;}
+.l-callout{background:var(--dark);color:rgba(248,244,236,0.7);padding:clamp(24px,3vw,40px);margin:48px 0;border-left:3px solid var(--cocoa-mid);}
+.l-callout p{color:rgba(248,244,236,0.7);margin:0}
+.l-callout strong{color:rgba(248,244,236,0.9);}
+.l-callout a{color:var(--cocoa-mid)}
+
+/* FOOTER */
+.l-footer{margin-top:80px;padding-top:32px;border-top:1px solid var(--cocoa-fa);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;}
+.l-footer span{font-family:'Courier New',monospace;font-size:9px;font-weight:600;letter-spacing:0.24em;text-transform:uppercase;color:var(--cocoa-mu);}
+.l-footer a{color:var(--cocoa-mu);padding:0 8px;border-right:1px solid var(--cocoa-fa);transition:color .18s;}
+.l-footer a:last-child{border-right:none}
+.l-footer a:hover{color:var(--cocoa);text-decoration:none}
+
+/* SITE FOOTER */
+footer.site-footer{background:var(--dark);color:rgba(248,244,236,0.4);padding:clamp(40px,6vw,80px) var(--g);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:24px;border-top:1px solid rgba(248,244,236,0.04);}
+.footer-logo{font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:900;font-size:12px;letter-spacing:0.32em;text-transform:uppercase;color:rgba(248,244,236,0.5);}
+.footer-links{display:flex;flex-wrap:wrap;gap:4px 0}
+.footer-link{font-family:'Courier New',monospace;font-size:10px;font-weight:600;letter-spacing:0.22em;text-transform:uppercase;color:rgba(248,244,236,0.25);padding:4px 14px;border-right:1px solid rgba(248,244,236,0.08);transition:color .18s;}
+.footer-link:last-child{border-right:none}
+.footer-link:hover{color:rgba(248,244,236,0.7);text-decoration:none}
+.footer-copy{font-family:'Courier New',monospace;font-size:9px;font-weight:600;letter-spacing:0.22em;text-transform:uppercase;color:rgba(248,244,236,0.18);width:100%;text-align:center;padding-top:16px;border-top:1px solid rgba(248,244,236,0.04);}
+
+@media(max-width:720px){:root{--nav-h:56px}.nav-cta{display:none}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important}}
+</style>
+</head>
+<body>
+<div id="cur-dot" aria-hidden="true"></div>
+<div id="cur-ring" aria-hidden="true"></div>
+<div id="grain" aria-hidden="true"></div>
+
+<nav>
+  <a href="/" class="nav-logo">PNC</a>
+  <a href="/" class="nav-back">← Back</a>
+  <a href="/bread#order" class="nav-cta">Order Now</a>
+</nav>
+
+<main id="main" class="l-main">
+  <p class="l-eyebrow">— Plain-language privacy</p>
+  <h1>Privacy <em style="font-weight:200;color:var(--cocoa-lt)">policy.</em></h1>
+  <p class="l-meta">V1.0 · Effective MMXXVI · Last reviewed today</p>
+
+  <p>This policy is written in plain language because we'd rather you read it than skim it. The legalese version is the same content, in lawyer language &#8212; <a href="/privacy-legal.html">click here to read it</a>.</p>
+
+  <h2>Who we are</h2>
+  <p><strong>PNC LLC</strong> (<span lang="la">Panem Nostrum Cotidianum</span>), trading as PNC Bread, is a company registered in Wyoming, USA. We are the data controller for the personal data described below.</p>
+  <p>Contact: <a href="mailto:hello@pncbread.love">hello@pncbread.love</a> &middot; See <a href="/imprint.html">Imprint</a> for company details.</p>
+
+  <h2>What data we collect, and why</h2>
+  <p>Just enough to send you bread.</p>
+  <ul>
+    <li><strong>Email and first name</strong> — so we can confirm your pre-order, send you a welcome note, and tell you when the loaf ships. Lawful basis: contract performance.</li>
+    <li><strong>Shipping country, quantity preference</strong> — so we can quote shipping accurately and reserve enough mix.</li>
+    <li><strong>Postal address and payment information</strong> — collected only at the moment you place a paid order, by our payment processor (Stripe). We never see or store your card number.</li>
+    <li><strong>Optional: anonymous analytics</strong> — only if you accept the cookie banner. If you click "Essential only", we collect no analytics at all.</li>
+  </ul>
+
+  <h2>What we don't do</h2>
+  <ul>
+    <li>We do not sell your data.</li>
+    <li>We do not share your data with advertisers.</li>
+    <li>We do not run third-party trackers (Meta Pixel, TikTok, Google Ads) in this site.</li>
+    <li>We do not enrich your data with external sources.</li>
+  </ul>
+
+  <h2>Who else sees your data</h2>
+  <p>Three companies, each only the data they strictly need:</p>
+  <ul>
+    <li><strong>Email service</strong> (Postmark or similar) — sees your email and the contents of the message we send you.</li>
+    <li><strong>Courier</strong> (DHL / DPD / Hermes depending on country) — sees your name and address.</li>
+    <li><strong>Payment processor</strong> (Stripe) — sees what you paid and your card data, which we never see.</li>
+  </ul>
+
+  <h2>How long we keep it</h2>
+  <ul>
+    <li>Pre-order intent (email + name only): up to 12 months.</li>
+    <li>Active subscriptions: as long as you are subscribed, plus 36 months for tax records.</li>
+    <li>Anonymous analytics (if accepted): 13 months.</li>
+  </ul>
+
+  <h2>Your rights under the GDPR</h2>
+  <p>You can ask us to:</p>
+  <ul>
+    <li>send you everything we have on you (right of access);</li>
+    <li>correct anything that's wrong (rectification);</li>
+    <li>delete it all (right to erasure);</li>
+    <li>stop processing it (restriction);</li>
+    <li>export it in a portable format (data portability);</li>
+    <li>object to processing.</li>
+  </ul>
+  <p>Email <a href="mailto:privacy@pncbread.love">privacy@pncbread.love</a>. We answer within 30 days, usually within a week. If we don't, you can complain to your national data protection authority.</p>
+
+  <h2>Cookies</h2>
+  <p>Covered separately in the <a href="/cookies.html">cookie policy</a>.</p>
+
+  <h2>Changes</h2>
+  <p>If we change anything material we'll bump the version number above and email everyone affected before the change takes effect.</p>
+
+  <div class="l-callout">
+    <p><strong>The short version.</strong> We collect your name, email and shipping address. We use it to send you bread. We don't sell it. You can ask us to delete everything any time at <a href="mailto:privacy@pncbread.love">privacy@pncbread.love</a>.</p>
+  </div>
+
+  <div class="l-footer">
+    <span>PNC &middot; MMXXVI</span>
+    <span><a href="/terms.html">Terms</a><a href="/shipping.html">Shipping</a><a href="/imprint.html">Imprint</a></span>
+  </div>
+</main>
+
+<footer class="site-footer" data-dark>
+  <span class="footer-logo">PNC</span>
+  <nav class="footer-links" aria-label="Footer navigation">
+    <a href="/bread" class="footer-link">Bread</a>
+    <a href="/brew" class="footer-link">Brew</a>
+    <a href="/privacy.html" class="footer-link">Privacy</a>
+    <a href="/terms.html" class="footer-link">Terms</a>
+    <a href="/shipping.html" class="footer-link">Shipping</a>
+    <a href="/imprint.html" class="footer-link">Imprint</a>
+  </nav>
+  <p class="footer-copy">© MMXXVI PNC — Panem Nostrum Cotidianum · Fiat panis.</p>
+</footer>
+
+<script>
+(function(){
+  const dot=document.getElementById('cur-dot'),ring=document.getElementById('cur-ring');
+  if(!dot||!ring||window.matchMedia('(pointer:coarse)').matches)return;
+  const SD=4,SR=18;let mx=-9999,my=-9999,rx=-9999,ry=-9999,moved=false;
+  function loop(){rx+=(mx-SR-rx)*0.055;ry+=(my-SR-ry)*0.055;dot.style.transform='translate('+(mx-SD)+'px,'+(my-SD)+'px)';ring.style.transform='translate('+rx+'px,'+ry+'px)';requestAnimationFrame(loop);}
+  document.addEventListener('mousemove',function(e){mx=e.clientX;my=e.clientY;if(!moved){rx=mx-SR;ry=my-SR;moved=true;loop();}});
+  document.addEventListener('mouseleave',function(){dot.style.transform='translate(-9999px,-9999px)';ring.style.transform='translate(-9999px,-9999px)';});
+})();
+</script>
+</body>
+</html>

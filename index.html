@@ -95,11 +95,11 @@ nav{
 .nav-link{
   font-family:'Courier New',monospace;font-size:11px;font-weight:600;
   letter-spacing:0.26em;text-transform:uppercase;
-  color:var(--ink);opacity:0.45;padding:8px 16px;
+  color:var(--cocoa);opacity:0.85;padding:8px 16px;
   border-bottom:1px solid transparent;transition:color .2s,border-color .2s,opacity .2s;
 }
-.nav-link:hover{color:var(--ink);opacity:1}
-.nav-link.active{color:var(--ink);opacity:1;border-bottom-color:var(--ink)}
+.nav-link:hover{color:var(--cocoa);opacity:1}
+.nav-link.active{color:var(--cocoa);opacity:1;border-bottom-color:var(--cocoa)}
 .nav-cta{
   font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;
   font-weight:700;font-size:10px;letter-spacing:0.22em;text-transform:uppercase;
@@ -142,12 +142,22 @@ nav{
 .hero-headline{
   font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;
   font-weight:900;font-size:clamp(52px,9.5vw,152px);
-  letter-spacing:-0.035em;line-height:0.9;color:var(--ink);
+  letter-spacing:-0.035em;line-height:0.9;color:var(--cream);
   margin-bottom:clamp(20px,3vh,40px);
+}
+.hero-headline-inner{
+  display:inline;
+  background:var(--ink);
+  color:var(--cream);
+  -webkit-box-decoration-break:clone;
+  box-decoration-break:clone;
+  padding:0 0.12em;
+  line-height:1.05;
 }
 .hero-headline span{
   display:block;font-weight:200;font-size:clamp(18px,2.8vw,42px);
   letter-spacing:-0.01em;color:var(--cocoa-lt);margin-top:16px;
+  background:none;padding:0;
 }
 .hero-sub{
   font-family:'Courier New',monospace;font-size:11px;font-weight:600;
@@ -746,7 +756,7 @@ a:focus-visible,button:focus-visible{
   </div>
   <div class="hero-bottom">
     <h1 class="hero-headline">
-      THE FINEST<br>BREAD &amp;<br>COFFEE.
+      <span class="hero-headline-inner">THE FINEST<br>BREAD &amp;<br>COFFEE.</span>
       <span>In the simplest form imaginable.</span>
     </h1>
     <p class="hero-sub">"Simply the best for all."</p>
