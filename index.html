@@ -192,10 +192,15 @@ nav{
 }
 .hero-product--bread::before{
   content:'';position:absolute;inset:0;
-  background:rgba(248,244,236,0.82);
-  transition:background .35s cubic-bezier(.16,1,.3,1);
+  background:linear-gradient(
+    160deg,
+    rgba(248,244,236,0.88) 0%,
+    rgba(248,244,236,0.74) 50%,
+    rgba(248,244,236,0.60) 100%
+  );
+  transition:opacity .4s cubic-bezier(.16,1,.3,1);
 }
-.hero-product--bread:hover::before{background:rgba(248,244,236,0.72)}
+.hero-product--bread:hover::before{opacity:0.82}
 .hero-product--bread > *{position:relative;z-index:1}
 .hero-product--brew{
   background-image:url("/img/brew-hero.webp");
@@ -203,10 +208,15 @@ nav{
 }
 .hero-product--brew::before{
   content:'';position:absolute;inset:0;
-  background:rgba(248,244,236,0.82);
-  transition:background .35s cubic-bezier(.16,1,.3,1);
+  background:linear-gradient(
+    160deg,
+    rgba(248,244,236,0.88) 0%,
+    rgba(248,244,236,0.74) 50%,
+    rgba(248,244,236,0.58) 100%
+  );
+  transition:opacity .4s cubic-bezier(.16,1,.3,1);
 }
-.hero-product--brew:hover::before{background:rgba(248,244,236,0.72)}
+.hero-product--brew:hover::before{opacity:0.80}
 .hero-product--brew > *{position:relative;z-index:1}
 .hp-tag{
   font-family:'Courier New',monospace;font-size:9px;font-weight:600;
@@ -280,7 +290,37 @@ nav{
 @keyframes lineGrow{0%,100%{transform:scaleY(0.4);opacity:.25}50%{transform:scaleY(1);opacity:.6}}
 @keyframes fadeUp{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:translateY(0)}}
 
-/* ── TICKER ─────────────────────────────────────────────────── */
+/* ── HERO ACCENT (right-side vertical) ───────────────────── */
+.hero-accent{
+  position:absolute;
+  right:var(--g);
+  top:calc(var(--nav-h) + clamp(16px,3vh,40px));
+  bottom:clamp(60px,10vh,120px);
+  display:flex;flex-direction:column;
+  align-items:flex-end;justify-content:space-between;
+  pointer-events:none;
+  animation:fadeUp .9s cubic-bezier(.16,1,.3,1) .4s both;
+}
+.hero-accent-num{
+  font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;
+  font-weight:900;font-size:clamp(72px,10vw,160px);
+  letter-spacing:-0.06em;line-height:1;
+  color:rgba(92,61,46,0.07);
+  text-align:right;
+}
+.hero-accent-line{
+  width:1px;height:clamp(60px,8vh,120px);
+  background:linear-gradient(to bottom, transparent, var(--cocoa-mu));
+  margin-right:2px;
+}
+.hero-accent-meta{
+  writing-mode:vertical-rl;
+  font-family:'Courier New',monospace;font-size:8px;font-weight:600;
+  letter-spacing:0.28em;text-transform:uppercase;
+  color:var(--cocoa-mu);
+  text-align:right;
+}
+@media(max-width:720px){.hero-accent{display:none}}
 .ticker{
   background:var(--dark);overflow:hidden;
   padding:18px 0;white-space:nowrap;
@@ -339,22 +379,37 @@ nav{
 .btn-ghost:hover{border-color:rgba(92,61,46,0.3);color:var(--ink)}
 
 /* ── PHILOSOPHY ─────────────────────────────────────────────────── */
-.philosophy{background:var(--dark);color:rgba(248,244,236,0.85)}
+.philosophy{background:var(--dark);color:rgba(248,244,236,0.85);position:relative;overflow:hidden}
+.philosophy::before{
+  content:'II';
+  position:absolute;right:var(--g);top:50%;transform:translateY(-50%);
+  font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;
+  font-weight:900;font-size:clamp(120px,18vw,280px);
+  letter-spacing:-0.06em;line-height:1;
+  color:rgba(248,244,236,0.025);
+  pointer-events:none;user-select:none;
+}
 .philosophy-inner{
   max-width:var(--max);margin:0 auto;
   display:grid;grid-template-columns:1fr 1fr;gap:clamp(40px,6vw,100px);
-  align-items:center;
+  align-items:center;position:relative;
 }
-@media(max-width:760px){.philosophy-inner{grid-template-columns:1fr}}
+@media(max-width:760px){.philosophy-inner{grid-template-columns:1fr}
+  .phil-quote{padding-left:clamp(12px,3vw,20px)}
+}
 .phil-quote{
   font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;
   font-weight:900;font-size:clamp(28px,4vw,64px);
   letter-spacing:-0.03em;line-height:1;
   color:rgba(248,244,236,0.9);
+  padding-left:clamp(16px,2vw,28px);
+  border-left:2px solid var(--cocoa-mid);
 }
 .phil-quote em{
-  display:block;font-weight:200;font-size:0.7em;
-  color:rgba(248,244,236,0.35);margin-top:12px;letter-spacing:0;
+  display:block;font-weight:400;font-size:clamp(11px,1.2vw,15px);
+  color:rgba(248,244,236,0.3);margin-top:20px;
+  letter-spacing:0.18em;text-transform:uppercase;
+  font-family:'Courier New',monospace;
 }
 .phil-text{
   font-size:clamp(15px,1.7vw,18px);
@@ -376,15 +431,17 @@ nav{
 .holy-bg{
   position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
   font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;
-  font-weight:900;font-size:clamp(80px,18vw,280px);
-  letter-spacing:-0.04em;line-height:1;white-space:nowrap;
-  color:rgba(248,244,236,0.025);pointer-events:none;user-select:none;
+  font-weight:900;font-size:clamp(160px,28vw,480px);
+  letter-spacing:-0.06em;line-height:0.85;white-space:nowrap;
+  color:rgba(248,244,236,0.04);pointer-events:none;user-select:none;
+  will-change:transform;
 }
 .holy-inner{
   max-width:var(--max);margin:0 auto;
-  display:flex;justify-content:space-between;align-items:flex-end;
-  flex-wrap:wrap;gap:40px;position:relative;
+  display:grid;grid-template-columns:1fr 1fr;align-items:end;
+  gap:clamp(40px,6vw,100px);position:relative;
 }
+@media(max-width:760px){.holy-inner{grid-template-columns:1fr;gap:40px}}
 .holy-left{}
 .holy-pre{
   font-family:'Courier New',monospace;font-size:10px;font-weight:600;
@@ -397,17 +454,27 @@ nav{
   letter-spacing:-0.04em;line-height:0.88;
   color:rgba(248,244,236,0.9);
 }
-.holy-title span{
-  display:block;font-weight:200;font-size:0.38em;
-  color:rgba(248,244,236,0.35);letter-spacing:0.04em;text-transform:uppercase;
-  font-family:'Courier New',monospace;margin-top:20px;line-height:1.6;
+.holy-subtitle{
+  display:block;
+  font-family:'Courier New',monospace;
+  font-weight:600;font-size:clamp(10px,1.1vw,14px);
+  color:rgba(248,244,236,0.28);letter-spacing:0.24em;text-transform:uppercase;
+  margin-top:clamp(16px,2.5vh,28px);line-height:1.8;
+  max-width:340px;
 }
 .holy-right{
-  display:flex;flex-direction:column;align-items:flex-end;gap:20px;
+  display:flex;flex-direction:column;align-items:flex-start;gap:20px;
+  padding-bottom:8px;
 }
 .holy-desc{
   font-size:clamp(14px,1.6vw,17px);color:rgba(248,244,236,0.35);
-  line-height:1.7;max-width:340px;text-align:right;
+  line-height:1.7;max-width:340px;
+}
+.holy-rule{
+  width:40px;height:1px;background:var(--cocoa-mid);margin-bottom:8px;
+}
+.holy-cta-row{
+  display:flex;flex-wrap:wrap;gap:10px;align-items:center;
 }
 .btn-light{
   font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;
@@ -570,9 +637,10 @@ footer{
 
   /* Holy Hundred */
   .holy-title{font-size:clamp(44px,13vw,72px);letter-spacing:-0.05em}
-  .holy-inner{flex-direction:column;gap:28px}
+  .holy-inner{grid-template-columns:1fr;gap:28px}
   .holy-right{align-items:flex-start}
   .holy-desc{text-align:left;max-width:100%}
+  .holy-subtitle{font-size:9px}
 
   /* Footer */
   footer{flex-direction:column;align-items:flex-start;gap:16px;padding:40px var(--g)}
@@ -827,6 +895,11 @@ a:focus-visible,button:focus-visible{
       </a>
     </div>
   </div>
+  <div class="hero-accent" aria-hidden="true">
+    <div class="hero-accent-num">01</div>
+    <div class="hero-accent-line"></div>
+    <div class="hero-accent-meta">MMXXVI · Panem Nostrum</div>
+  </div>
   <div class="hero-scroll" aria-hidden="true">
     <div class="hero-scroll-line"></div>
     Explore
@@ -867,14 +940,15 @@ a:focus-visible,button:focus-visible{
 <section class="section philosophy" data-dark>
   <div class="philosophy-inner">
     <div>
+      <span class="eyebrow" style="color:var(--cocoa-mid);margin-bottom:28px" class="reveal">Our Belief</span>
       <div class="phil-quote reveal">
-        "Simply the best for all."
-        <em>— Panem Nostrum Cotidianum</em>
+        "Simply the<br>best for all."
+        <em>— Panem Nostrum Cotidianum · MMXXVI</em>
       </div>
     </div>
     <div>
       <p class="phil-text reveal">We do not make things for a niche. We do not charge a premium because we can. We charge what it costs to do it right — no more. The finest grain in Europe. The finest coffee on Earth. One price. Every table.</p>
-      <p class="phil-attr reveal">Fiat panis. · MMXXVI</p>
+      <p class="phil-attr reveal" style="margin-top:32px;padding-top:32px;border-top:1px solid rgba(248,244,236,0.06)">Fiat panis. · MMXXVI</p>
     </div>
   </div>
 </section>
@@ -887,10 +961,11 @@ a:focus-visible,button:focus-visible{
       <span class="holy-pre reveal">Holy Hundred</span>
       <div class="holy-title reveal">
         The<br>Manifesto.
-        <span>One hundred beliefs about bread,<br>coffee, and how things should be made.</span>
       </div>
+      <span class="holy-subtitle reveal">One hundred beliefs about bread,<br>coffee, and how things should be made.</span>
     </div>
     <div class="holy-right">
+      <div class="holy-rule reveal"></div>
       <p class="holy-desc reveal">Read it. Sign it. Or argue with it. A public declaration of everything we believe — and everything we refuse to compromise on.</p>
       <div class="holy-cta-row reveal reveal-d1">
         <a href="/holyhundred/manifesto/final" class="btn-light">Read the Manifesto</a>
