@@ -404,9 +404,17 @@ a,button,[role=button],input,select,textarea,label{cursor:none!important}
 }
 
 /* ── SOURCE ────────────────────────────────────────────────────────── */
-.source{background:var(--ink)}
+.source{background:var(--ink);position:relative;overflow:hidden}
+.source::before{
+  content:'';position:absolute;inset:0;pointer-events:none;z-index:0;
+  background-image:
+    linear-gradient(rgba(248,244,236,0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(248,244,236,0.03) 1px, transparent 1px);
+  background-size:80px 80px;
+  mask-image:linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.5) 15%, rgba(0,0,0,0.5) 85%, transparent 100%);
+}
 .source-inner{
-  max-width:var(--max);margin:0 auto;
+  max-width:var(--max);margin:0 auto;position:relative;z-index:1;
 }
 .source-headline{
   font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;
@@ -469,36 +477,37 @@ a,button,[role=button],input,select,textarea,label{cursor:none!important}
   position:relative;
   background-image:url('../assets/brew-steps-bg.webp');
   background-size:cover;
-  background-position:center 30%;
+  background-position:center 40%;
 }
 .method::before{
   content:'';
   position:absolute;inset:0;
   background:linear-gradient(
     to right,
-    rgba(248,244,236,0.72) 0%,
-    rgba(248,244,236,0.55) 60%,
-    rgba(248,244,236,0.45) 100%
+    rgba(248,244,236,0.82) 0%,
+    rgba(248,244,236,0.60) 45%,
+    rgba(248,244,236,0.25) 100%
   );
   pointer-events:none;z-index:0;
 }
 .method-inner{max-width:var(--max);margin:0 auto;position:relative;z-index:1}
 .method-header{margin-bottom:clamp(60px,8vw,100px)}
-.steps{display:flex;flex-direction:column;gap:2px}
+.steps{display:flex;flex-direction:column;gap:2px;max-width:72%}
 .step{
   display:grid;
   grid-template-columns:clamp(48px,5vw,72px) 1fr clamp(100px,12vw,180px);
   gap:clamp(24px,3.5vw,56px);align-items:start;
-  background:rgba(245,240,230,0.88);
-  backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
+  background:rgba(245,240,230,0.82);
+  backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
   padding:clamp(32px,4vw,56px) clamp(24px,3vw,40px);
-  border:1px solid rgba(42,24,16,0.08);
+  border:1px solid rgba(42,24,16,0.07);
   transition:background .2s;
 }
 .step > div{min-width:0}
 .step:hover{background:rgba(248,244,236,0.96)}
 .step-content{min-width:0}
 @media(max-width:700px){
+  .steps{max-width:100%}
   .step{grid-template-columns:clamp(36px,8vw,52px) 1fr;grid-template-rows:auto auto}
   .step-meta{grid-column:2;margin-top:10px}
 }
