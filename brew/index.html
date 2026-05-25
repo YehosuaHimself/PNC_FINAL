@@ -304,28 +304,38 @@ a,button,[role=button],input,select,textarea,label{cursor:none!important}
 }
 
 /* ── PRODUCT ────────────────────────────────────────────────────────── */
-.product{background:var(--cream-deep)}
+.product{background:var(--cream-deep);overflow:hidden;padding:0}
 .product-inner{
-  max-width:var(--max);margin:0 auto;
-  display:grid;grid-template-columns:1fr 1.2fr 1fr;gap:clamp(32px,4vw,72px);
-  align-items:start;
+  max-width:none;margin:0;
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:0;align-items:start;
+  min-height:100vh;
 }
-@media(max-width:1024px){.product-inner{grid-template-columns:1fr 1fr;}}
 @media(max-width:860px){.product-inner{grid-template-columns:1fr}}
-.product-left{}
+.product-left{
+  max-width:680px;margin-left:auto;
+  padding:clamp(80px,12vw,160px) clamp(40px,5vw,80px) clamp(80px,12vw,160px) clamp(24px,4vw,60px);
+}
 .product-center{
-  display:flex;align-items:flex-start;justify-content:center;
-  padding-top:clamp(0px,2vw,24px);
+  position:sticky;top:0;
+  height:100vh;
+  overflow:hidden;
+  background:var(--cream);
 }
 .product-bag-img{
-  width:100%;max-width:420px;height:auto;
+  width:100%;height:100%;
+  object-fit:contain;
+  object-position:center center;
   display:block;
-  mix-blend-mode:multiply;
+  padding:clamp(32px,5vw,80px);
+  box-sizing:border-box;
 }
-@media(max-width:1024px){
-  .product-center{display:none}
+@media(max-width:860px){
+  .product-center{
+    position:relative;height:80vw;top:auto;
+  }
 }
-.product-right{}
+.product-right{display:none}
 .product-name{
   font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;
   font-weight:900;font-size:clamp(52px,7vw,110px);
@@ -455,7 +465,7 @@ a,button,[role=button],input,select,textarea,label{cursor:none!important}
 .method-header{margin-bottom:clamp(60px,8vw,100px)}
 .steps{display:flex;flex-direction:column;gap:2px}
 .step{
-  display:grid;grid-template-columns:clamp(60px,8vw,120px) 1fr auto;
+  display:grid;grid-template-columns:1fr auto;
   gap:clamp(20px,3vw,48px);align-items:start;
   background:rgba(245,240,230,0.72);
   backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);
@@ -464,7 +474,7 @@ a,button,[role=button],input,select,textarea,label{cursor:none!important}
   transition:background .2s;
 }
 .step:hover{background:rgba(245,240,230,0.88)}
-@media(max-width:600px){.step{grid-template-columns:40px 1fr}}
+@media(max-width:600px){.step{grid-template-columns:1fr}}
 .step-num{
   font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;
   font-weight:900;font-size:clamp(18px,2.5vw,36px);
@@ -1185,11 +1195,6 @@ a:focus-visible,button:focus-visible{
     <div class="product-left">
       <span class="eyebrow reveal">— The Product</span>
       <div class="product-name reveal">ONE<br>PAD.<br>ONE<br>CUP.</div>
-    </div>
-    <div class="product-center">
-      <img class="product-bag-img" src="../assets/brew-pad-bag.webp" alt="PNC brew pad — biodegradable kraft paper sachet" width="800" height="533" loading="lazy">
-    </div>
-    <div class="product-right">
       <p class="product-desc reveal">Pre-ground Kochere G1, sealed into a single-serve kraft paper pad. Drop it in your cup, add hot water, let it brew. The flavour evolves as it steeps — floral first, then fruity, then a clean dark chocolate finish. Self-contained. Biodegradable. Roasted to order in the Alp Mountains, packed and shipped within 7 days of roast date.</p>
       <table class="spec-table reveal">
         <tr><td>Contents</td><td>10g</td></tr>
@@ -1219,6 +1224,9 @@ a:focus-visible,button:focus-visible{
           <span class="p-stat-key">Per Cup</span>
         </div>
       </div>
+    </div>
+    <div class="product-center">
+      <img class="product-bag-img" src="../assets/brew-pad-bag.webp" alt="PNC brew pad — biodegradable kraft paper sachet" width="800" height="533" loading="lazy">
     </div>
   </div>
 </section>
