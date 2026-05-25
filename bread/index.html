@@ -560,7 +560,7 @@ a,button,[role=button],input,select,textarea,label{cursor:none!important}
 }
 /* Alt time badges */
 .sum-alts{
-  display:flex;flex-wrap:wrap;gap:2px;
+  display:flex;flex-direction:column;gap:2px;
   margin-top:clamp(20px,2.5vw,32px);
 }
 .sum-alt{
@@ -1243,7 +1243,7 @@ a:focus-visible,button:focus-visible{
     <div class="sum-item">
       <span class="sum-label">Blend</span>
       <span class="sum-val">60 seconds</span>
-      <span class="sum-desc">Water in. Stir once. Done.</span>
+      <span class="sum-desc">Pour in. Stir once.</span>
       <div class="sum-steps">
         <div class="sum-step">
           <span class="sum-step-num">01</span>
@@ -1282,6 +1282,7 @@ a:focus-visible,button:focus-visible{
         <div class="sum-alt"><span class="sum-alt-time">7 min</span><span class="sum-alt-label">Pancakes</span></div>
       </div>
       <div class="sum-steps">
+        <div class="sum-step-spacer"></div>
         <div class="sum-step">
           <span class="sum-step-num">04</span>
           <div>
@@ -1290,7 +1291,6 @@ a:focus-visible,button:focus-visible{
           </div>
           <span class="sum-step-meta">77 min</span>
         </div>
-        <div class="sum-step-spacer"></div>
       </div>
     </div>
 
@@ -1299,7 +1299,7 @@ a:focus-visible,button:focus-visible{
       <span class="sum-val">yours</span>
       <span class="sum-desc">Your table. Your bread.</span>
       <div class="sum-break-quote">
-        <span class="sum-break-line">05 —<br>Yours.<br>Ready.</span>
+        <span class="sum-break-line">05 —<br>Done.<br>Yours.</span>
         <p class="sum-break-body">Let it cool. Then break it. The best bread you've ever made — with three ingredients and one sachet. That's everything.</p>
       </div>
     </div>
@@ -1320,7 +1320,7 @@ a:focus-visible,button:focus-visible{
         <div class="nutr-tag">0g Sugars</div>
         <div class="nutr-tag">High Fibre</div>
         <div class="nutr-tag">Celiac Safe</div>
-        <div class="nutr-tag">All Protein People</div>
+        <div class="nutr-tag">Protein People</div>
       </div>
     </div>
     <div class="nutrition-right">
