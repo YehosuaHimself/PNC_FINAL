@@ -433,19 +433,37 @@ a,button,[role=button],input,select,textarea,label{cursor:none!important}
 }
 
 /* ── BREW METHOD ────────────────────────────────────────────────────────── */
-.method{background:var(--cream)}
-.method-inner{max-width:var(--max);margin:0 auto}
+.method{
+  background:var(--cream);
+  position:relative;
+  background-image:url('../assets/brew-steps-bg.webp');
+  background-size:cover;
+  background-position:center 30%;
+}
+.method::before{
+  content:'';
+  position:absolute;inset:0;
+  background:linear-gradient(
+    to right,
+    rgba(248,244,236,0.90) 0%,
+    rgba(248,244,236,0.78) 60%,
+    rgba(248,244,236,0.70) 100%
+  );
+  pointer-events:none;z-index:0;
+}
+.method-inner{max-width:var(--max);margin:0 auto;position:relative;z-index:1}
 .method-header{margin-bottom:clamp(60px,8vw,100px)}
 .steps{display:flex;flex-direction:column;gap:2px}
 .step{
   display:grid;grid-template-columns:clamp(60px,8vw,120px) 1fr auto;
   gap:clamp(20px,3vw,48px);align-items:start;
-  background:var(--cream-deep);
+  background:rgba(245,240,230,0.72);
+  backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);
   padding:clamp(32px,4vw,56px) clamp(24px,3vw,40px);
-  border:1px solid var(--cocoa-fa);
+  border:1px solid rgba(42,24,16,0.08);
   transition:background .2s;
 }
-.step:hover{background:var(--cream)}
+.step:hover{background:rgba(245,240,230,0.88)}
 @media(max-width:600px){.step{grid-template-columns:40px 1fr}}
 .step-num{
   font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;
