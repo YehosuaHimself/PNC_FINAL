@@ -588,47 +588,51 @@ a,button,[role=button],input,select,textarea,label{cursor:none!important}
 .chain::before{
   content:'';
   position:absolute;inset:0;
-  background:rgba(248,244,236,0.72);
+  background:linear-gradient(
+    to right,
+    rgba(248,244,236,0.94) 0%,
+    rgba(248,244,236,0.85) 40%,
+    rgba(248,244,236,0.50) 70%,
+    rgba(248,244,236,0.15) 100%
+  );
   pointer-events:none;
   z-index:0;
 }
 .chain-inner{max-width:var(--max);margin:0 auto;position:relative;z-index:1}
-.chain-header{margin-bottom:clamp(60px,8vw,100px);text-shadow:0 2px 20px rgba(248,244,236,0.7)}
-.chain-steps{display:flex;flex-direction:column;gap:0}
+.chain-header{margin-bottom:clamp(60px,8vw,100px)}
+.chain-steps{display:flex;flex-direction:column;gap:0;max-width:72%}
 .chain-step{
   display:grid;
   grid-template-columns:clamp(48px,6vw,80px) 1fr;
   gap:0 clamp(20px,3vw,40px);
   align-items:start;
   padding:clamp(32px,4vw,52px) 0;
-  border-bottom:1px solid var(--cocoa-fa);
+  border-bottom:1px solid rgba(42,24,16,0.1);
   overflow:hidden;
 }
 .chain-step:last-child{border-bottom:none}
 .cs-num{
   font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;
-  font-weight:900;font-size:clamp(14px,1.8vw,22px);
-  letter-spacing:-0.02em;color:var(--cocoa-mu);
-  line-height:1;padding-top:6px;
+  font-weight:900;font-size:clamp(11px,1.2vw,15px);
+  letter-spacing:0.06em;color:var(--cocoa-mu);
+  line-height:1;padding-top:8px;
 }
-.cs-content{min-width:0;max-width:680px}
+.cs-content{min-width:0;max-width:640px}
 .cs-title{
   font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;
-  font-weight:900;font-size:clamp(18px,2.2vw,32px);
-  letter-spacing:-0.02em;line-height:1;
-  color:var(--ink);margin-bottom:8px;
-  text-shadow:0 1px 12px rgba(248,244,236,0.6);
+  font-weight:900;font-size:clamp(20px,2.4vw,36px);
+  letter-spacing:-0.03em;line-height:0.95;
+  color:var(--ink);margin-bottom:10px;
 }
 .cs-sub{
   font-family:'Courier New',monospace;font-size:9px;font-weight:600;
-  letter-spacing:0.26em;text-transform:uppercase;
+  letter-spacing:0.28em;text-transform:uppercase;
   color:var(--cocoa-mu);margin-bottom:14px;
 }
 .cs-text{
-  font-size:clamp(13px,1.5vw,16px);
-  color:var(--cocoa-lt);line-height:1.7;
-  max-width:560px;
-  text-shadow:0 1px 8px rgba(248,244,236,0.5);
+  font-size:clamp(13px,1.4vw,15px);
+  color:var(--cocoa-lt);line-height:1.75;
+  max-width:520px;
 }
 
 /* ── ORDER ────────────────────────────────────────────────────────── */
@@ -942,6 +946,7 @@ footer::before{
   .pillar{padding:28px 20px}
   .pillar-title{font-size:clamp(16px,5vw,22px)}
   .chain-step{padding:24px 0;gap:12px}
+  .chain-steps{max-width:100%}
   .cs-title{font-size:clamp(16px,5vw,22px)}
   .qty-grid{gap:2px}
   .qty-card{padding:20px 16px}
@@ -1360,32 +1365,33 @@ a:focus-visible,button:focus-visible{
       <div class="chain-step reveal">
         <div class="cs-num">01</div>
         <div class="cs-content">
-          <div class="cs-sub">Ethiopia · Direct Source</div>
-          <p class="cs-text">Direct relationship with AMG Coffee Export, Ethiopia. Fully washed. Dried on raised beds. EUDR-compliant. Traceable to cooperative.</p>
+          <div class="cs-title">Kochere, Ethiopia.</div>
+          <div class="cs-sub">Direct Source · AMG Coffee Export · EUDR-Compliant</div>
+          <p class="cs-text">Direct relationship with AMG Coffee Export, Ethiopia. Fully washed. Dried on raised beds. Traceable to cooperative. Every batch certified.</p>
         </div>
       </div>
       <div class="chain-step reveal">
         <div class="cs-num">02</div>
         <div class="cs-content">
-          <div class="cs-title">In-House · The Alp Mountains</div>
-          <div class="cs-sub">Roastery · Small-Batch</div>
-          <p class="cs-text">Small-batch light roast. Taken to first crack. 48hr rest before grinding. Every batch traceable, every date stamped.</p>
+          <div class="cs-title">The Alp Mountains.</div>
+          <div class="cs-sub">In-House Roastery · Small-Batch · Light Roast</div>
+          <p class="cs-text">Roasted to first crack in small batches. 48hr rest before grinding. Every batch traceable, every date stamped. No blending. No compromise on freshness.</p>
         </div>
       </div>
       <div class="chain-step reveal">
         <div class="cs-num">03</div>
         <div class="cs-content">
-          <div class="cs-title">Single-Serve · Biodegradable</div>
-          <div class="cs-sub">Packing · Kraft Paper · Nitrogen-Flushed</div>
-          <p class="cs-text">Medium grind. Kraft paper. Nitrogen-flushed. 10g per pad. Packed within 7 days of roast date. No plastic. No compromise.</p>
+          <div class="cs-title">Packed. Sealed. Dated.</div>
+          <div class="cs-sub">Kraft Paper · Nitrogen-Flushed · 10g Per Pad</div>
+          <p class="cs-text">Medium grind. Kraft paper. Nitrogen-flushed for peak freshness. Packed within 7 days of roast date. No plastic. No intermediary storage.</p>
         </div>
       </div>
       <div class="chain-step reveal">
         <div class="cs-num">04</div>
         <div class="cs-content">
-          <div class="cs-title">Delivery · Rapid Global Shipping</div>
-          <div class="cs-sub">Worldwide · Ships in 3–5 Days</div>
-          <p class="cs-text">Shipped worldwide. Tracked. Direct to your door. No intermediaries. No distributor markup. One price, every country.</p>
+          <div class="cs-title">At your door.</div>
+          <div class="cs-sub">Worldwide · Tracked · Ships in 3–5 Days</div>
+          <p class="cs-text">Direct to your door. No distributors. No markup. One price, every country. The time between roast and your first cup is as short as we can make it.</p>
         </div>
       </div>
     </div>
