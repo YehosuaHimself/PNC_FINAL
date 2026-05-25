@@ -535,7 +535,16 @@ button{cursor:none;font:inherit;border:none;background:none}
 }
 
 /* ── ORDER ────────────────────────────────────────────────────────── */
-.order{background:var(--ink)}
+.order{background:var(--dark);position:relative;overflow:hidden}
+.order::before{
+  content:'';position:absolute;inset:0;
+  background-image:linear-gradient(rgba(248,244,236,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(248,244,236,0.03) 1px,transparent 1px);
+  background-size:60px 60px;
+  -webkit-mask-image:linear-gradient(to bottom,transparent 0%,rgba(0,0,0,0.5) 40%,rgba(0,0,0,1) 100%);
+  mask-image:linear-gradient(to bottom,transparent 0%,rgba(0,0,0,0.5) 40%,rgba(0,0,0,1) 100%);
+  pointer-events:none;z-index:0;
+}
+.order-inner{position:relative;z-index:1}
 .order-inner{max-width:var(--max);margin:0 auto}
 .order-eyebrow{
   font-family:'Courier New',monospace;font-size:10px;font-weight:600;
@@ -647,13 +656,13 @@ footer::before{
   background-size:60px 60px;
   pointer-events:none;z-index:0;
 }
-.footer-links,.footer-logo,.footer-copy{position:relative;z-index:1;}
+.footer-links,.footer-logo,.footer-copy{position:relative;z-index:1;background:transparent!important;}
 .footer-logo{
   font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;
   font-weight:900;font-size:12px;letter-spacing:0.32em;text-transform:uppercase;
   color:rgba(248,244,236,0.5);
 }
-.footer-links{background:transparent !important;display:flex;flex-wrap:wrap;gap:4px 0}
+.footer-links{background:transparent !important;background-color:transparent !important;display:flex;flex-wrap:wrap;gap:4px 0}
 .footer-link{
   font-family:'Courier New',monospace;font-size:10px;font-weight:600;
   letter-spacing:0.22em;text-transform:uppercase;
@@ -666,7 +675,7 @@ footer::before{
 .footer-copy{
   font-family:'Courier New',monospace;font-size:9px;font-weight:600;
   letter-spacing:0.22em;text-transform:uppercase;
-  color:rgba(248,244,236,0.18);
+  color:rgba(248,244,236,0.18);background:transparent;
   width:100%;text-align:center;padding-top:16px;
   border-top:1px solid rgba(248,244,236,0.04);
 }
@@ -1502,7 +1511,6 @@ a:focus-visible,button:focus-visible{
     <a href="/privacy.html" class="footer-link">Privacy</a>
     <a href="/terms.html" class="footer-link">Terms</a>
     <a href="/shipping.html" class="footer-link">Shipping</a>
-    <a href="/imprint.html" class="footer-link">Imprint</a>
   </nav>
   <p class="footer-copy">© MMXXVI PNC — PANEM NOSTRUM COTIDIANUM · ADVENTUS INCEPTUS EST.</p>
 </footer>
