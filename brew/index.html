@@ -457,9 +457,9 @@ a,button,[role=button],input,select,textarea,label{cursor:none!important}
   position:absolute;inset:0;
   background:linear-gradient(
     to right,
-    rgba(248,244,236,0.90) 0%,
-    rgba(248,244,236,0.78) 60%,
-    rgba(248,244,236,0.70) 100%
+    rgba(248,244,236,0.72) 0%,
+    rgba(248,244,236,0.55) 60%,
+    rgba(248,244,236,0.45) 100%
   );
   pointer-events:none;z-index:0;
 }
@@ -477,6 +477,12 @@ a,button,[role=button],input,select,textarea,label{cursor:none!important}
 }
 .step:hover{background:rgba(248,244,236,0.96)}
 .step-content{max-width:640px}
+.step-num{
+  font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;
+  font-weight:900;font-size:clamp(11px,1.2vw,15px);
+  letter-spacing:0.18em;color:var(--cocoa-mu);
+  margin-bottom:clamp(10px,1.5vw,16px);display:block;
+}
 .step-title{
   font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;
   font-weight:900;font-size:clamp(22px,2.8vw,42px);
@@ -1273,6 +1279,7 @@ a:focus-visible,button:focus-visible{
     <div class="steps">
       <div class="step reveal">
         <div class="step-content">
+          <span class="step-num">01</span>
           <div class="step-title">Drop it in.</div>
           <p class="step-text">Place the pad into your cup. The pad is self-contained — no filter, no equipment, nothing else required.</p>
         </div>
@@ -1280,6 +1287,7 @@ a:focus-visible,button:focus-visible{
       </div>
       <div class="step reveal">
         <div class="step-content">
+          <span class="step-num">02</span>
           <div class="step-title">Add hot water.</div>
           <p class="step-text">Pour around 92–94°C directly over the pad. The bloom begins immediately — jasmine first.</p>
         </div>
@@ -1287,6 +1295,7 @@ a:focus-visible,button:focus-visible{
       </div>
       <div class="step reveal">
         <div class="step-content">
+          <span class="step-num">03</span>
           <div class="step-title">Watch it bloom.</div>
           <p class="step-text">Leave the pad in. The flavour evolves as it steeps — floral first, then fruity, then a clean dark chocolate finish. Remove when it reaches your preferred strength.</p>
         </div>
