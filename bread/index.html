@@ -332,6 +332,32 @@ nav{
   font-size:clamp(13px,1.5vw,16px);
   color:rgba(248,244,236,0.32);line-height:1.7;
 }
+.step-alts{
+  display:flex;flex-wrap:wrap;gap:2px;
+  margin-top:16px;
+  border-top:1px solid rgba(248,244,236,0.06);
+  padding-top:14px;
+}
+.step-alt{
+  display:flex;align-items:baseline;gap:8px;
+  font-family:'Courier New',monospace;
+  padding:6px 14px;
+  border:1px solid rgba(248,244,236,0.07);
+  background:rgba(248,244,236,0.03);
+}
+.step-alt-time{
+  font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;
+  font-weight:900;font-size:clamp(13px,1.4vw,17px);
+  letter-spacing:-0.02em;
+  color:rgba(248,244,236,0.65);
+  white-space:nowrap;
+}
+.step-alt-label{
+  font-size:8px;font-weight:600;
+  letter-spacing:0.28em;text-transform:uppercase;
+  color:rgba(248,244,236,0.25);
+  white-space:nowrap;
+}
 .step-meta{
   font-family:'Courier New',monospace;font-size:8px;font-weight:600;
   letter-spacing:0.26em;text-transform:uppercase;
@@ -1157,6 +1183,20 @@ a:focus-visible,button:focus-visible{
         <div>
           <div class="step-title">77 minutes. 180°C.</div>
           <p class="step-text">Shape. Place in a loaf tin. Bake at 180°C for 77 minutes. No proving. No kneading. Just heat and time.</p>
+          <div class="step-alts">
+            <div class="step-alt">
+              <span class="step-alt-time">33 min</span>
+              <span class="step-alt-label">Pizza &amp; Pizzetta</span>
+            </div>
+            <div class="step-alt">
+              <span class="step-alt-time">22 min</span>
+              <span class="step-alt-label">Flatbread</span>
+            </div>
+            <div class="step-alt">
+              <span class="step-alt-time">7 min</span>
+              <span class="step-alt-label">Pancakes</span>
+            </div>
+          </div>
         </div>
         <div class="step-meta">77 min · one temp</div>
       </div>
