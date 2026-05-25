@@ -525,8 +525,9 @@ a,button,[role=button],input,select,textarea,label{cursor:none!important}
 .summary-inner{
   max-width:var(--max);margin:0 auto;
   display:grid;grid-template-columns:repeat(3,1fr);gap:2px;
+  align-items:start;
 }
-@media(max-width:640px){.summary-inner{grid-template-columns:1fr}}
+@media(max-width:760px){.summary-inner{grid-template-columns:1fr}}
 .sum-item{
   padding:clamp(48px,6vw,80px) clamp(28px,3.5vw,48px);
   border-right:1px solid rgba(248,244,236,0.1);
@@ -567,6 +568,40 @@ a,button,[role=button],input,select,textarea,label{cursor:none!important}
   font-family:'Courier New',monospace;font-size:7px;font-weight:600;
   letter-spacing:0.26em;text-transform:uppercase;
   color:rgba(248,244,236,0.22);white-space:nowrap;
+}
+/* Embedded step rows inside each panel */
+.sum-steps{
+  margin-top:clamp(28px,3.5vw,44px);
+  border-top:1px solid rgba(248,244,236,0.08);
+  display:flex;flex-direction:column;gap:2px;
+}
+.sum-step{
+  display:grid;
+  grid-template-columns:clamp(32px,3vw,44px) 1fr;
+  gap:clamp(12px,1.5vw,20px);align-items:start;
+  padding:clamp(16px,2vw,24px) 0;
+  border-bottom:1px solid rgba(248,244,236,0.05);
+}
+.sum-step:last-child{border-bottom:none}
+.sum-step > div{min-width:0}
+.sum-step-num{
+  font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;
+  font-weight:900;font-size:11px;
+  letter-spacing:0.06em;color:rgba(248,244,236,0.2);
+  padding-top:3px;display:block;
+}
+.sum-step-title{
+  font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;
+  font-weight:700;font-size:clamp(13px,1.4vw,17px);
+  letter-spacing:-0.01em;line-height:1.1;
+  color:rgba(248,244,236,0.72);margin-bottom:5px;
+}
+.sum-step-text{
+  font-size:clamp(11px,1.1vw,13px);
+  color:rgba(248,244,236,0.28);line-height:1.65;
+}
+.sum-step-meta{
+  display:none;
 }
 
 /* ── ORDER ─────────────────────────────────────────────────── */
@@ -1164,77 +1199,42 @@ a:focus-visible,button:focus-visible{
 </section>
 
 <!-- RITUAL -->
-<section class="section ritual" data-dark>
-  <div class="ritual-inner">
-    <span class="ritual-eyebrow reveal">— The Ritual</span>
-    <h2 class="ritual-h2 reveal">Five steps<br>to bread.</h2>
-    <div class="steps">
-      <div class="step reveal">
-        <div class="step-num">01</div>
-        <div>
-          <div class="step-title">Empty the bowl.</div>
-          <p class="step-text">Open the sachet. Pour everything into a mixing bowl. The blend is already weighed and ready.</p>
-        </div>
-        <div class="step-meta">Prep<br>60 seconds</div>
-      </div>
-      <div class="step reveal">
-        <div class="step-num">02</div>
-        <div>
-          <div class="step-title">One sachet.</div>
-          <p class="step-text">One sachet equals one loaf. No measuring, no guessing. The ratio is fixed.</p>
-        </div>
-        <div class="step-meta">Quantity<br>One loaf</div>
-      </div>
-      <div class="step reveal">
-        <div class="step-num">03</div>
-        <div>
-          <div class="step-title">400 ml water.</div>
-          <p class="step-text">Add 400 ml of water at room temperature. Stir until fully combined.</p>
-        </div>
-        <div class="step-meta">Water<br>480 ml</div>
-      </div>
-      <div class="step reveal">
-        <div class="step-num">04</div>
-        <div>
-          <div class="step-title">77 minutes. 180°C.</div>
-          <p class="step-text">Shape. Place in a loaf tin. Bake at 180°C for 77 minutes. No proving. No kneading. Just heat and time.</p>
-          <div class="step-alts">
-            <div class="step-alt">
-              <span class="step-alt-time">33 min</span>
-              <span class="step-alt-label">Pizza &amp; Pizzetta</span>
-            </div>
-            <div class="step-alt">
-              <span class="step-alt-time">22 min</span>
-              <span class="step-alt-label">Flatbread</span>
-            </div>
-            <div class="step-alt">
-              <span class="step-alt-time">7 min</span>
-              <span class="step-alt-label">Pancakes</span>
-            </div>
-          </div>
-        </div>
-        <div class="step-meta">77 min · one temp</div>
-      </div>
-      <div class="step reveal">
-        <div class="step-num">05</div>
-        <div>
-          <div class="step-title">Yours. Ready.</div>
-          <p class="step-text">Let it cool, then break the best of bread.</p>
-        </div>
-        <div class="step-meta">Your table</div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- RITUAL SUMMARY BAR -->
+<!-- RITUAL + SUMMARY — consolidated -->
 <div class="summary" data-dark>
   <div class="summary-inner">
+
     <div class="sum-item">
       <span class="sum-label">Blend</span>
       <span class="sum-val">60 seconds</span>
       <span class="sum-desc">Water in. Stir once. Done.</span>
+      <div class="sum-steps">
+        <div class="sum-step">
+          <span class="sum-step-num">01</span>
+          <div>
+            <div class="sum-step-title">Empty the bowl.</div>
+            <p class="sum-step-text">Open the sachet. Pour everything into a mixing bowl. The blend is already weighed and ready.</p>
+          </div>
+          <span class="sum-step-meta">Prep · 60 sec</span>
+        </div>
+        <div class="sum-step">
+          <span class="sum-step-num">02</span>
+          <div>
+            <div class="sum-step-title">One sachet.</div>
+            <p class="sum-step-text">One sachet equals one loaf. No measuring, no guessing. The ratio is fixed.</p>
+          </div>
+          <span class="sum-step-meta">Qty · 1 loaf</span>
+        </div>
+        <div class="sum-step">
+          <span class="sum-step-num">03</span>
+          <div>
+            <div class="sum-step-title">400 ml water.</div>
+            <p class="sum-step-text">Add 400 ml at room temperature. Stir until fully combined.</p>
+          </div>
+          <span class="sum-step-meta">Water · 400 ml</span>
+        </div>
+      </div>
     </div>
+
     <div class="sum-item">
       <span class="sum-label">Bake</span>
       <span class="sum-val">77 min · 180°C · Loaf</span>
@@ -1244,12 +1244,34 @@ a:focus-visible,button:focus-visible{
         <div class="sum-alt"><span class="sum-alt-time">22 min</span><span class="sum-alt-label">Flatbread</span></div>
         <div class="sum-alt"><span class="sum-alt-time">7 min</span><span class="sum-alt-label">Pancakes</span></div>
       </div>
+      <div class="sum-steps">
+        <div class="sum-step">
+          <span class="sum-step-num">04</span>
+          <div>
+            <div class="sum-step-title">77 minutes. 180°C.</div>
+            <p class="sum-step-text">Shape. Place in a loaf tin. Bake at 180°C for 77 minutes. No proving. No kneading. Just heat and time.</p>
+          </div>
+          <span class="sum-step-meta">77 min · 180°C</span>
+        </div>
+      </div>
     </div>
+
     <div class="sum-item">
       <span class="sum-label">Break</span>
       <span class="sum-val">yours</span>
       <span class="sum-desc">Your table. Your bread.</span>
+      <div class="sum-steps">
+        <div class="sum-step">
+          <span class="sum-step-num">05</span>
+          <div>
+            <div class="sum-step-title">Yours. Ready.</div>
+            <p class="sum-step-text">Let it cool, then break the best of bread.</p>
+          </div>
+          <span class="sum-step-meta">Your table</span>
+        </div>
+      </div>
     </div>
+
   </div>
 </div>
 
