@@ -32,7 +32,7 @@ nav{position:fixed;top:0;left:0;right:0;height:var(--nav-h);z-index:200;padding:
 .l-eyebrow{font-family:'Courier New',monospace;font-size:10px;font-weight:600;letter-spacing:0.36em;text-transform:uppercase;color:var(--cocoa);display:block;margin-bottom:20px;}
 h1{font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:900;font-size:clamp(42px,6vw,88px);letter-spacing:-0.04em;line-height:0.9;color:var(--ink);margin-bottom:12px;}
 .l-meta{font-family:'Courier New',monospace;font-size:9px;font-weight:600;letter-spacing:0.28em;text-transform:uppercase;color:var(--cocoa-mu);margin-bottom:48px;display:block;}
-.l-main > p:first-of-type{font-size:17px;color:var(--cocoa-lt);line-height:1.7;margin-bottom:40px;border-bottom:1px solid var(--cocoa-fa);padding-bottom:40px;}
+.l-intro{font-size:17px;color:var(--cocoa-lt);line-height:1.7;margin-bottom:40px;border-bottom:1px solid var(--cocoa-fa);padding-bottom:40px;}
 h2{font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:900;font-size:clamp(20px,2.4vw,28px);letter-spacing:-0.02em;color:var(--ink);margin-top:48px;margin-bottom:16px;padding-top:48px;border-top:1px solid var(--cocoa-fa);}
 h2:first-of-type{margin-top:0;padding-top:0;border-top:none;}
 h3{font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:16px;color:var(--ink);margin-top:32px;margin-bottom:10px;}
@@ -58,12 +58,28 @@ footer.site-footer{background:var(--dark);color:rgba(248,244,236,0.4);padding:cl
 .footer-copy{font-family:'Courier New',monospace;font-size:9px;font-weight:600;letter-spacing:0.22em;text-transform:uppercase;color:rgba(248,244,236,0.18);width:100%;text-align:center;padding-top:16px;border-top:1px solid rgba(248,244,236,0.04);}
 @media(max-width:720px){:root{--nav-h:56px}.nav-cta{display:none}}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important}}
+
+/* PROGRESS */
+#prog{position:fixed;top:0;left:0;width:2px;height:0;background:var(--cocoa);z-index:9996;border-radius:0 1px 1px 0;}
+/* Scroll-aware nav */
+nav{transition:border-color .3s,box-shadow .3s}
+nav.scrolled{border-bottom-color:rgba(92,61,46,0.14);box-shadow:0 1px 24px rgba(42,24,16,0.06)}
+/* Reveal */
+.reveal{opacity:0;transform:translateY(20px);transition:opacity .7s cubic-bezier(.16,1,.3,1),transform .7s cubic-bezier(.16,1,.3,1)}
+.reveal.visible{opacity:1;transform:translateY(0)}
+/* Smooth entry */
+@keyframes bodyShow{from{opacity:0}to{opacity:1}}
+body{animation:bodyShow .4s .05s both}
+/* Focus */
+a:focus-visible{outline:2px solid var(--cocoa);outline-offset:3px}
+@media(prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none}body{animation:none}}
 </style>
 </head>
 <body>
 <div id="cur-dot" aria-hidden="true"></div>
 <div id="cur-ring" aria-hidden="true"></div>
 <div id="grain" aria-hidden="true"></div>
+<div id="prog" aria-hidden="true"></div>
 
 <nav>
   <a href="/" class="nav-logo">PNC</a>
@@ -76,7 +92,7 @@ footer.site-footer{background:var(--dark);color:rgba(248,244,236,0.4);padding:cl
   <h1>Terms of <em style="font-weight:200;color:var(--cocoa-lt)">service.</em></h1>
   <p class="l-meta">V1.0 · Effective MMXXVI · Last reviewed today</p>
 
-  <p>This is the contract between you and PNC Bread when you place a pre-order or subscribe. We've kept it short.</p>
+  <p class="l-intro">This is the contract between you and PNC Bread when you place a pre-order or subscribe. We've kept it short.</p>
 
   <h2>1 · What you get</h2>
   <p>For each box you order, we ship you five sachets of pre-weighed, pre-blended buckwheat baking mix (300 g buckwheat flour, 15 g psyllium husk, 7 g fine sea salt per sachet). One sachet makes one loaf. Each box is €15. That's €3 per loaf.</p>
@@ -130,7 +146,32 @@ footer.site-footer{background:var(--dark);color:rgba(248,244,236,0.4);padding:cl
 </footer>
 
 <script>
-(function(){const dot=document.getElementById('cur-dot'),ring=document.getElementById('cur-ring');if(!dot||!ring||window.matchMedia('(pointer:coarse)').matches)return;const SD=4,SR=18;let mx=-9999,my=-9999,rx=-9999,ry=-9999,moved=false;function loop(){rx+=(mx-SR-rx)*0.055;ry+=(my-SR-ry)*0.055;dot.style.transform='translate('+(mx-SD)+'px,'+(my-SD)+'px)';ring.style.transform='translate('+rx+'px,'+ry+'px)';requestAnimationFrame(loop);}document.addEventListener('mousemove',function(e){mx=e.clientX;my=e.clientY;if(!moved){rx=mx-SR;ry=my-SR;moved=true;loop();}});document.addEventListener('mouseleave',function(){dot.style.transform='translate(-9999px,-9999px)';ring.style.transform='translate(-9999px,-9999px)';});})();
+(function(){
+  const dot=document.getElementById('cur-dot'),ring=document.getElementById('cur-ring');
+  if(!dot||!ring||window.matchMedia('(pointer:coarse)').matches)return;
+  const SD=4,SR=18;let mx=-9999,my=-9999,rx=-9999,ry=-9999,moved=false;
+  function isDark(x,y){dot.style.visibility='hidden';ring.style.visibility='hidden';const el=document.elementFromPoint(x,y);dot.style.visibility='';ring.style.visibility='';return el&&!!el.closest('[data-dark]');}
+  function paint(d){const c=d?'#F8F4EC':'#5C3D2E';dot.style.background=c;ring.style.borderColor=c;}
+  function loop(){rx+=(mx-SR-rx)*0.055;ry+=(my-SR-ry)*0.055;dot.style.transform='translate('+(mx-SD)+'px,'+(my-SD)+'px)';ring.style.transform='translate('+rx+'px,'+ry+'px)';requestAnimationFrame(loop);}
+  document.addEventListener('mousemove',function(e){mx=e.clientX;my=e.clientY;paint(isDark(mx,my));if(!moved){rx=mx-SR;ry=my-SR;moved=true;loop();}});
+  document.addEventListener('mouseleave',function(){dot.style.transform='translate(-9999px,-9999px)';ring.style.transform='translate(-9999px,-9999px)';});
+  document.querySelectorAll('a,button').forEach(function(el){el.addEventListener('mouseenter',function(){ring.style.width='54px';ring.style.height='54px';ring.style.opacity='0.4'});el.addEventListener('mouseleave',function(){ring.style.width='36px';ring.style.height='36px';ring.style.opacity='0.6'});});
+})();
+</script>
+<script>
+/* Progress + scroll nav */
+(function(){
+  var prog=document.getElementById('prog');
+  var nav=document.querySelector('nav');
+  window.addEventListener('scroll',function(){
+    var y=window.scrollY||window.pageYOffset;
+    var max=document.body.scrollHeight-window.innerHeight;
+    if(prog&&max>0)prog.style.height=(y/max*100)+'%';
+    if(nav){if(y>40)nav.classList.add('scrolled');else nav.classList.remove('scrolled');}
+  },{passive:true});
+  var obs=new IntersectionObserver(function(entries){entries.forEach(function(e){if(e.isIntersecting){e.target.classList.add('visible');obs.unobserve(e.target);}});},{threshold:0.06,rootMargin:'0px 0px -24px 0px'});
+  document.querySelectorAll('h2,h3,.l-callout,.l-footer').forEach(function(el){el.classList.add('reveal');obs.observe(el);});
+})();
 </script>
 </body>
 </html>
