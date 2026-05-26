@@ -1481,6 +1481,8 @@ a:focus-visible,button:focus-visible{
   transition:transform .5s cubic-bezier(.16,1,.3,1);
 }
 #cookie-bar.visible{transform:translateY(0)}
+/* Push mobile CTA above cookie bar when both visible */
+body.cookie-visible #mobile-cta{bottom:var(--cookie-h,80px);}
 #cookie-bar p{
   font-size:12px;letter-spacing:.06em;line-height:1.5;
   color:rgba(248,244,236,0.75);margin:0;flex:1;min-width:200px;
@@ -2720,10 +2722,16 @@ document.addEventListener('DOMContentLoaded',function(){
   if(localStorage.getItem('pnc_cookie_consent'))return;
   var bar=document.getElementById('cookie-bar');
   if(!bar)return;
-  setTimeout(function(){bar.classList.add('visible');},800);
+  setTimeout(function(){
+    bar.classList.add('visible');
+    document.body.classList.add('cookie-visible');
+    // measure actual height for accurate push
+    document.documentElement.style.setProperty('--cookie-h', bar.offsetHeight+'px');
+  },800);
   function dismiss(val){
     localStorage.setItem('pnc_cookie_consent',val);
     bar.classList.remove('visible');
+    document.body.classList.remove('cookie-visible');
     setTimeout(function(){bar.style.display='none';},500);
   }
   document.getElementById('cookie-essential').addEventListener('click',function(){dismiss('essential');});
