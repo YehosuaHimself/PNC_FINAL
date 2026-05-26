@@ -97,7 +97,7 @@ a,a:hover,a:active,a:focus{cursor:none!important}
 /* ── CURSOR ────────────────────────────────────────────────────────── */
 *,*::before,*::after{cursor:none!important}
 a,button,[role=button]{cursor:none!important}
-input,select,textarea{cursor:auto!important}
+input,select,textarea{cursor:none!important}
 @media(pointer:coarse){*{cursor:auto!important}a,button,[role=button]{cursor:pointer!important}}
 #cur-dot{
   position:fixed;top:0;left:0;width:13px;height:9px;
@@ -2138,10 +2138,28 @@ body.cookie-visible #mobile-cta{bottom:var(--cookie-h,80px);}
         dot.style.height = '18px';
         dot.style.borderRadius = '1px';
         ring.style.opacity = '0';
+        ring.style.transform = 'translate3d(-9999px,-9999px,0)';
       }
     });
     el.addEventListener('mouseleave', function() {
-      if (!inTextField) leaveTextField();
+      if (!inTextField) {
+        ring.style.transform = '';
+        leaveTextField();
+      }
+    });
+  });
+
+  /* Select elements — expand ring like a button on hover */
+  document.querySelectorAll('select').forEach(function(el) {
+    el.addEventListener('mouseenter', function() {
+      ring.style.width = '72px'; ring.style.height = '50px';
+      ring.style.opacity = currentDark ? '0.40' : '0.35';
+      dot.style.transform = 'translate3d(' + (mx - DOT_R) + 'px,' + (my - DOT_R) + 'px,0) rotate(-20deg) scale(1.5)';
+    });
+    el.addEventListener('mouseleave', function() {
+      ring.style.width = '56px'; ring.style.height = '38px';
+      ring.style.opacity = currentDark ? '0.55' : '0.60';
+      dot.style.transform = 'translate3d(' + (mx - DOT_R) + 'px,' + (my - DOT_R) + 'px,0) rotate(-20deg) scale(1)';
     });
   });
 
