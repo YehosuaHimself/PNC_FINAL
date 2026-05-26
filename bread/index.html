@@ -2903,69 +2903,208 @@ document.addEventListener('DOMContentLoaded',function(){
 
 
 <script>
-/* ── CURRENCY EQUIVALENCY — non-EUR visitors see a local approx ─── */
+/* ── GLOBAL PRICE COMPREHENSION ──────────────────────────────────────────
+   €3 and €1 are always the anchor. Always large. Always first.
+   The local currency equivalent appears beneath — small, calm, monospace.
+   Covers every country in the PNC shipping list via a complete map.
+   Silent fail: if API unreachable, EUR prices stand alone, nothing breaks.
+──────────────────────────────────────────────────────────────────────── */
 (function(){
-  var locale = navigator.language || 'en';
-  var currency = 'EUR';
-  // Map common locale prefixes to currencies
-  var map = {
-    'en-US':'USD','en-GB':'GBP','en-AU':'AUD','en-CA':'CAD',
-    'ja':'JPY','ko':'KRW','zh':'CNY','pt-BR':'BRL','ru':'RUB',
-    'tr':'TRY','pl':'PLN','cs':'CZK','hu':'HUF','ro':'RON',
-    'sv':'SEK','da':'DKK','no':'NOK','is':'ISK','ch':'CHF',
-    'de-CH':'CHF','fr-CH':'CHF','it-CH':'CHF'
+  // Complete currency map by country code (via Intl API) + common locales
+  // Covers every country in the PNC ship list
+  var COUNTRY_CURRENCY = {
+    // Eurozone — skip
+    'AT':'EUR','DE':'EUR','FR':'EUR','IT':'EUR','ES':'EUR','PT':'EUR',
+    'BE':'EUR','NL':'EUR','LU':'EUR','IE':'EUR','FI':'EUR','GR':'EUR',
+    'CY':'EUR','MT':'EUR','SK':'EUR','SI':'EUR','EE':'EUR','LV':'EUR',
+    'LT':'EUR','MC':'EUR','AD':'EUR',
+    // Non-EUR Europe
+    'GB':'GBP','CH':'CHF','SE':'SEK','DK':'DKK','NO':'NOK','IS':'ISK',
+    'PL':'PLN','CZ':'CZK','HU':'HUF','RO':'RON','BG':'BGN','HR':'HRK',
+    'RS':'RSD','BA':'BAM','ME':'EUR','MK':'MKD','AL':'ALL','MD':'MDL',
+    'UA':'UAH','BY':'BYR','LI':'CHF','KV':'EUR',
+    // Americas
+    'US':'USD','CA':'CAD','AU':'AUD','NZ':'NZD','MX':'MXN','BR':'BRL',
+    'AR':'ARS','CL':'CLP','CO':'COP','PE':'PEN','VE':'VES','UY':'UYU',
+    'PY':'PYG','EC':'USD','BO':'BOB','CR':'CRC','PA':'USD','GT':'GTQ',
+    'HN':'HNL','SV':'USD','DO':'DOP','JM':'JMD',
+    // Middle East
+    'IL':'ILS','AE':'AED','SA':'SAR','QA':'QAR','KW':'KWD','BH':'BHD',
+    'OM':'OMR','JO':'JOD','LB':'LBP','TR':'TRY','IQ':'IQD','YE':'YER',
+    'PS':'ILS','IR':'IRR','AF':'AFN',
+    // Asia Pacific
+    'JP':'JPY','KR':'KRW','SG':'SGD','HK':'HKD','TW':'TWD','CN':'CNY',
+    'IN':'INR','TH':'THB','VN':'VND','PH':'PHP','MY':'MYR','ID':'IDR',
+    'KH':'KHR','LK':'LKR','BD':'BDT','PK':'PKR',
+    // Africa
+    'ZA':'ZAR','NG':'NGN','GH':'GHS','KE':'KES','TZ':'TZS','UG':'UGX',
+    'ET':'ETB','SN':'XOF','MA':'MAD','TN':'TND','EG':'EGP','DZ':'DZD',
+    'ZW':'USD','CM':'XAF','AO':'AOA','MZ':'MZN',
+    // Russia/CIS
+    'RU':'RUB','KZ':'KZT','AZ':'AZN','AM':'AMD','GE':'GEL'
   };
-  // Try exact match first, then prefix
-  currency = map[locale] || map[locale.substring(0,5)] || map[locale.substring(0,2)] || 'EUR';
-  if(currency === 'EUR') return; // no conversion needed
 
-  var rates = null;
-  // Use exchangerate-api free tier (no key needed for base EUR)
+  // Detect country from timezone → reasonable proxy, no IP lookup needed
+  // Falls back to locale-based detection
+  function detectCurrency(){
+    // 1. Try Intl.Locale with region
+    try {
+      var loc = new Intl.Locale(navigator.language || 'en');
+      if(loc.region && COUNTRY_CURRENCY[loc.region]) return COUNTRY_CURRENCY[loc.region];
+    } catch(e){}
+
+    // 2. Try timezone → country heuristic
+    try {
+      var tz = Intl.DateTimeFormat().resolvedOptions().timeZone || '';
+      var tzMap = {
+        'America/New_York':'US','America/Chicago':'US','America/Denver':'US',
+        'America/Los_Angeles':'US','America/Toronto':'CA','America/Vancouver':'CA',
+        'Europe/London':'GB','Europe/Zurich':'CH','Europe/Stockholm':'SE',
+        'Europe/Oslo':'NO','Europe/Copenhagen':'DK','Europe/Warsaw':'PL',
+        'Europe/Prague':'CZ','Europe/Budapest':'HU','Europe/Bucharest':'RO',
+        'Europe/Sofia':'BG','Europe/Zagreb':'HR','Europe/Belgrade':'RS',
+        'Europe/Kiev':'UA','Europe/Minsk':'BY','Europe/Moscow':'RU',
+        'Europe/Istanbul':'TR','Asia/Tokyo':'JP','Asia/Seoul':'KR',
+        'Asia/Singapore':'SG','Asia/Hong_Kong':'HK','Asia/Taipei':'TW',
+        'Asia/Shanghai':'CN','Asia/Kolkata':'IN','Asia/Bangkok':'TH',
+        'Asia/Ho_Chi_Minh':'VN','Asia/Manila':'PH','Asia/Kuala_Lumpur':'MY',
+        'Asia/Jakarta':'ID','Asia/Phnom_Penh':'KH','Asia/Colombo':'LK',
+        'Asia/Dhaka':'BD','Asia/Karachi':'PK','Asia/Kabul':'AF',
+        'Asia/Tehran':'IR','Asia/Baghdad':'IQ','Asia/Amman':'JO',
+        'Asia/Beirut':'LB','Asia/Jerusalem':'IL','Asia/Dubai':'AE',
+        'Asia/Riyadh':'SA','Asia/Qatar':'QA','Asia/Kuwait':'KW',
+        'Asia/Bahrain':'BH','Asia/Muscat':'OM','America/Sao_Paulo':'BR',
+        'America/Argentina/Buenos_Aires':'AR','America/Santiago':'CL',
+        'America/Bogota':'CO','America/Lima':'PE','America/Caracas':'VE',
+        'America/Montevideo':'UY','America/Asuncion':'PY','America/Guayaquil':'EC',
+        'America/La_Paz':'BO','America/Costa_Rica':'CR','America/Guatemala':'GT',
+        'America/Tegucigalpa':'HN','America/Santo_Domingo':'DO',
+        'America/Jamaica':'JM','America/Mexico_City':'MX',
+        'Pacific/Auckland':'NZ','Australia/Sydney':'AU',
+        'Africa/Johannesburg':'ZA','Africa/Lagos':'NG','Africa/Accra':'GH',
+        'Africa/Nairobi':'KE','Africa/Dar_es_Salaam':'TZ','Africa/Kampala':'UG',
+        'Africa/Addis_Ababa':'ET','Africa/Dakar':'SN','Africa/Casablanca':'MA',
+        'Africa/Tunis':'TN','Africa/Cairo':'EG','Africa/Algiers':'DZ',
+        'Africa/Harare':'ZW','Africa/Douala':'CM','Africa/Luanda':'AO',
+        'Africa/Maputo':'MZ','Asia/Tbilisi':'GE','Asia/Yerevan':'AM',
+        'Asia/Baku':'AZ','Asia/Almaty':'KZ'
+      };
+      var country = tzMap[tz];
+      if(country && COUNTRY_CURRENCY[country]) return COUNTRY_CURRENCY[country];
+    } catch(e){}
+
+    // 3. Locale prefix fallback
+    var lang = (navigator.language || 'en').toLowerCase();
+    var langMap = {'ja':'JPY','ko':'KRW','zh':'CNY','ru':'RUB','tr':'TRY',
+                   'pl':'PLN','cs':'CZK','hu':'HUF','ro':'RON','sv':'SEK',
+                   'da':'DKK','nb':'NOK','nn':'NOK','fi':'EUR','is':'ISK'};
+    return langMap[lang.substring(0,2)] || 'EUR';
+  }
+
+  var currency = detectCurrency();
+  if(currency === 'EUR') return;
+
   fetch('https://open.er-api.com/v6/latest/EUR', {mode:'cors'})
     .then(function(r){ return r.json(); })
     .then(function(data){
       if(!data || !data.rates) return;
       var rate = data.rates[currency];
       if(!rate) return;
-      // Format: €3 → ~$3.30 for example
-      var fmt = new Intl.NumberFormat(locale, {
+
+      // Format local amount — compact, no decimals for whole numbers
+      var fmt = new Intl.NumberFormat(navigator.language || 'en', {
         style:'currency', currency:currency,
         minimumFractionDigits:0, maximumFractionDigits:0
       });
-      var loafEq  = fmt.format(Math.round(3  * rate));
-      var cupEq   = fmt.format(Math.round(1  * rate));
-      var boxEq   = fmt.format(Math.round(15 * rate));
-      var brewBoxEq = fmt.format(Math.round(12 * rate));
-      // Inject equivalencies next to every price display — subtle, monospace
+
+      var loaf3  = fmt.format(Math.round(3  * rate));   // €3 → local
+      var cup1   = fmt.format(Math.round(1  * rate));   // €1 → local
+      var box15  = fmt.format(Math.round(15 * rate));   // €15 → local
+      var box12  = fmt.format(Math.round(12 * rate));   // €12 → local
+
+      // ── CSS: sub-line sits below the EUR anchor, never replaces it ──
       var style = document.createElement('style');
-      style.textContent = '.price-eq{font-family:"Courier New",monospace;font-size:0.62em;letter-spacing:0.1em;opacity:0.55;vertical-align:middle;margin-left:0.5em;font-weight:400;}';
+      style.textContent = [
+        '.price-local{',
+          'display:block;',
+          'font-family:"Courier New",monospace;',
+          'font-size:0.38em;',              // very small vs the large EUR
+          'font-weight:400;',
+          'letter-spacing:0.14em;',
+          'text-transform:uppercase;',
+          'opacity:0.52;',
+          'margin-top:0.18em;',
+          'line-height:1.2;',
+        '}',
+        // Inline variant for where block isn't appropriate (ticker, pills)
+        '.price-local-inline{',
+          'font-family:"Courier New",monospace;',
+          'font-size:0.58em;font-weight:400;',
+          'letter-spacing:0.1em;opacity:0.48;',
+          'vertical-align:middle;margin-left:0.4em;',
+        '}',
+        // Ship-everywhere strip below price
+        '.price-ship-note{',
+          'display:block;',
+          'font-family:"Courier New",monospace;',
+          'font-size:clamp(9px,0.9vw,11px);',
+          'letter-spacing:0.22em;text-transform:uppercase;',
+          'opacity:0.42;margin-top:0.5em;',
+          'color:inherit;',
+        '}'
+      ].join('');
       document.head.appendChild(style);
 
-      // Target all price displays
-      var targets = [
-        { sel: '.hp-price-anchor',  eq: { bread: loafEq, brew: cupEq } },
-        { sel: '.hp-price',         eq: { bread: loafEq, brew: cupEq } },
-      ];
+      var isBrewPage  = window.location.pathname.indexOf('/brew')  !== -1;
+      var isBreadPage = window.location.pathname.indexOf('/bread') !== -1;
 
-      // Homepage: two cards — first is bread, second is brew
+      // ── HOMEPAGE ──────────────────────────────────────────────────
+      // hp-price-anchor: top-right of card — add local sub-line
       var anchors = document.querySelectorAll('.hp-price-anchor');
-      if(anchors[0]) anchors[0].insertAdjacentHTML('beforeend','<span class="price-eq">≈ '+loafEq+'</span>');
-      if(anchors[1]) anchors[1].insertAdjacentHTML('beforeend','<span class="price-eq">≈ '+cupEq+'</span>');
+      if(anchors[0]) anchors[0].insertAdjacentHTML('beforeend',
+        '<span class="price-local">≈ '+loaf3+' · ships worldwide</span>');
+      if(anchors[1]) anchors[1].insertAdjacentHTML('beforeend',
+        '<span class="price-local">≈ '+cup1+'</span>');
 
-      var prices = document.querySelectorAll('.hp-price');
-      if(prices[0]) prices[0].insertAdjacentHTML('beforeend','<span class="price-eq">≈ '+loafEq+'</span>');
-      if(prices[1]) prices[1].insertAdjacentHTML('beforeend','<span class="price-eq">≈ '+cupEq+'</span>');
+      // hp-price: card footer price — add local inline
+      var hpPrices = document.querySelectorAll('.hp-price');
+      if(hpPrices[0]) hpPrices[0].insertAdjacentHTML('beforeend',
+        '<span class="price-local-inline">≈ '+loaf3+'</span>');
+      if(hpPrices[1]) hpPrices[1].insertAdjacentHTML('beforeend',
+        '<span class="price-local-inline">≈ '+cup1+'</span>');
 
-      // Product pages: .price-main
+      // ── BREAD PRODUCT PAGE ────────────────────────────────────────
+      // .price-main = "€ 3" in big type — add local below + ship note
       var mains = document.querySelectorAll('.price-main');
-      if(mains[0]) {
-        // detect which page by URL
-        var isBrewPage = window.location.pathname.indexOf('/brew') !== -1;
-        var eq = isBrewPage ? '≈ '+brewBoxEq : '≈ '+boxEq;
-        mains[0].insertAdjacentHTML('beforeend','<span class="price-eq">'+eq+'</span>');
+      if(mains[0] && isBreadPage){
+        mains[0].insertAdjacentHTML('beforeend',
+          '<span class="price-local">≈ '+loaf3+' per loaf</span>');
+        // Also update price-note (€15 per box)
+        var pnote = document.querySelector('.price-note');
+        if(pnote) pnote.insertAdjacentHTML('afterbegin',
+          '<span class="price-local-inline" style="font-size:0.85em;opacity:0.5;">≈ '+box15+' per box · </span>');
+      }
+
+      // ── BREW PRODUCT PAGE ─────────────────────────────────────────
+      if(mains[0] && isBrewPage){
+        mains[0].insertAdjacentHTML('beforeend',
+          '<span class="price-local">≈ '+cup1+' per cup</span>');
+        var pnote = document.querySelector('.price-note');
+        if(pnote) pnote.insertAdjacentHTML('afterbegin',
+          '<span class="price-local-inline" style="font-size:0.85em;opacity:0.5;">≈ '+box12+' per box · </span>');
+      }
+
+      // ── RAPID GLOBAL SHIPPING NOTE on product pages ───────────────
+      // Below the order CTA on bread/brew — "Order in EUR. Pay in any currency. Ships worldwide."
+      if(isBreadPage || isBrewPage){
+        var orderBtn = document.querySelector('#order-btn, .order-btn, [id="order-btn"]');
+        if(orderBtn) orderBtn.insertAdjacentHTML('afterend',
+          '<p class="price-ship-note" aria-label="Currency note">'+
+          'Order in EUR · pay in any currency via Stripe · rapid global shipping'+
+          '</p>');
       }
     })
-    .catch(function(){}); // silent fail — EUR price stands alone
+    .catch(function(){});
 })();
 </script>
 </body>
