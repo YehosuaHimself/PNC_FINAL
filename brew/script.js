@@ -369,19 +369,55 @@ document.addEventListener('DOMContentLoaded',function(){
   var btn=document.getElementById('nav-hamburger');
   var drawer=document.getElementById('nav-drawer');
   if(!btn||!drawer)return;
+
+  /* ── US2 AC6: Focus trap ── */
+  var FOCUSABLE='a[href],button:not([disabled]),input:not([disabled]),select:not([disabled]),textarea:not([disabled]),[tabindex]:not([tabindex="-1"])';
+
+  function getFocusable(){
+    return Array.prototype.slice.call(drawer.querySelectorAll(FOCUSABLE)).filter(function(el){
+      return !el.closest('[hidden]') && el.offsetParent!==null;
+    });
+  }
+
+  function trapTab(e){
+    if(e.key!=='Tab')return;
+    var nodes=getFocusable();
+    if(!nodes.length){e.preventDefault();return;}
+    var first=nodes[0], last=nodes[nodes.length-1];
+    if(e.shiftKey){
+      if(document.activeElement===first){e.preventDefault();last.focus();}
+    } else {
+      if(document.activeElement===last){e.preventDefault();first.focus();}
+    }
+  }
+
+  function openDrawer(){
+    drawer.classList.add('open');
+    btn.classList.add('open');
+    btn.setAttribute('aria-expanded','true');
+    document.body.style.overflow='hidden';
+    if(window.PNC_LENIS){window.PNC_LENIS.stop();}
+    /* Move focus into drawer on next frame */
+    requestAnimationFrame(function(){
+      var nodes=getFocusable();
+      if(nodes.length)nodes[0].focus();
+    });
+    drawer.addEventListener('keydown',trapTab);
+  }
+
   function closeDrawer(){
     drawer.classList.remove('open');
     btn.classList.remove('open');
     btn.setAttribute('aria-expanded','false');
     document.body.style.overflow='';
     if(window.PNC_LENIS){window.PNC_LENIS.start();}
+    drawer.removeEventListener('keydown',trapTab);
+    /* Return focus to trigger */
+    btn.focus();
   }
+
   btn.addEventListener('click',function(){
-    var open=drawer.classList.toggle('open');
-    btn.classList.toggle('open',open);
-    btn.setAttribute('aria-expanded',open);
-    document.body.style.overflow=open?'hidden':'';
-    if(window.PNC_LENIS){open?window.PNC_LENIS.stop():window.PNC_LENIS.start();}
+    if(drawer.classList.contains('open')){closeDrawer();}else{openDrawer();}
   });
   drawer.querySelectorAll('a').forEach(function(a){
     a.addEventListener('click',closeDrawer);
