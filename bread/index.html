@@ -541,13 +541,22 @@
             <input type="email" id="bread-email" name="email" placeholder="your@email.com" autocomplete="email" aria-invalid="false" aria-describedby="order-msg" required>
           </div>
           <div class="form-row reveal">
-            <label for="bread-qty">Quantity</label>
-            <select id="bread-qty" name="qty">
-              <option value="5" selected>5 loaves — € 15</option>
-              <option value="10">10 loaves — € 30</option>
-              <option value="20">20 loaves — € 60</option>
-              <option value="50">50 loaves — € 150</option>
-            </select>
+            <span class="qty-label">Quantity</span>
+            <div class="bread-qty-grid" role="group" aria-label="Select quantity">
+              <button type="button" class="bread-qty-card selected" data-sku="5"  data-price="15"  aria-pressed="true">
+                <span class="bqc-count">5</span><span class="bqc-unit">loaves</span><span class="bqc-price">€ 15</span>
+              </button>
+              <button type="button" class="bread-qty-card" data-sku="10" data-price="30" aria-pressed="false">
+                <span class="bqc-count">10</span><span class="bqc-unit">loaves</span><span class="bqc-price">€ 30</span>
+              </button>
+              <button type="button" class="bread-qty-card" data-sku="20" data-price="60" aria-pressed="false">
+                <span class="bqc-count">20</span><span class="bqc-unit">loaves</span><span class="bqc-price">€ 60</span>
+              </button>
+              <button type="button" class="bread-qty-card" data-sku="50" data-price="150" aria-pressed="false">
+                <span class="bqc-count">50</span><span class="bqc-unit">loaves</span><span class="bqc-price">€ 150</span>
+              </button>
+            </div>
+            <input type="hidden" id="bread-qty" name="qty" value="5">
           </div>
           <div class="form-row reveal">
             <label for="bread-country">Country</label>
