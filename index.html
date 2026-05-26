@@ -1255,5 +1255,72 @@ document.addEventListener('DOMContentLoaded',function(){
 })();
 </script>
 
+
+<script>
+/* ── CURRENCY EQUIVALENCY — non-EUR visitors see a local approx ─── */
+(function(){
+  var locale = navigator.language || 'en';
+  var currency = 'EUR';
+  // Map common locale prefixes to currencies
+  var map = {
+    'en-US':'USD','en-GB':'GBP','en-AU':'AUD','en-CA':'CAD',
+    'ja':'JPY','ko':'KRW','zh':'CNY','pt-BR':'BRL','ru':'RUB',
+    'tr':'TRY','pl':'PLN','cs':'CZK','hu':'HUF','ro':'RON',
+    'sv':'SEK','da':'DKK','no':'NOK','is':'ISK','ch':'CHF',
+    'de-CH':'CHF','fr-CH':'CHF','it-CH':'CHF'
+  };
+  // Try exact match first, then prefix
+  currency = map[locale] || map[locale.substring(0,5)] || map[locale.substring(0,2)] || 'EUR';
+  if(currency === 'EUR') return; // no conversion needed
+
+  var rates = null;
+  // Use exchangerate-api free tier (no key needed for base EUR)
+  fetch('https://open.er-api.com/v6/latest/EUR', {mode:'cors'})
+    .then(function(r){ return r.json(); })
+    .then(function(data){
+      if(!data || !data.rates) return;
+      var rate = data.rates[currency];
+      if(!rate) return;
+      // Format: €3 → ~$3.30 for example
+      var fmt = new Intl.NumberFormat(locale, {
+        style:'currency', currency:currency,
+        minimumFractionDigits:0, maximumFractionDigits:0
+      });
+      var loafEq  = fmt.format(Math.round(3  * rate));
+      var cupEq   = fmt.format(Math.round(1  * rate));
+      var boxEq   = fmt.format(Math.round(15 * rate));
+      var brewBoxEq = fmt.format(Math.round(12 * rate));
+      // Inject equivalencies next to every price display — subtle, monospace
+      var style = document.createElement('style');
+      style.textContent = '.price-eq{font-family:"Courier New",monospace;font-size:0.62em;letter-spacing:0.1em;opacity:0.55;vertical-align:middle;margin-left:0.5em;font-weight:400;}';
+      document.head.appendChild(style);
+
+      // Target all price displays
+      var targets = [
+        { sel: '.hp-price-anchor',  eq: { bread: loafEq, brew: cupEq } },
+        { sel: '.hp-price',         eq: { bread: loafEq, brew: cupEq } },
+      ];
+
+      // Homepage: two cards — first is bread, second is brew
+      var anchors = document.querySelectorAll('.hp-price-anchor');
+      if(anchors[0]) anchors[0].insertAdjacentHTML('beforeend','<span class="price-eq">≈ '+loafEq+'</span>');
+      if(anchors[1]) anchors[1].insertAdjacentHTML('beforeend','<span class="price-eq">≈ '+cupEq+'</span>');
+
+      var prices = document.querySelectorAll('.hp-price');
+      if(prices[0]) prices[0].insertAdjacentHTML('beforeend','<span class="price-eq">≈ '+loafEq+'</span>');
+      if(prices[1]) prices[1].insertAdjacentHTML('beforeend','<span class="price-eq">≈ '+cupEq+'</span>');
+
+      // Product pages: .price-main
+      var mains = document.querySelectorAll('.price-main');
+      if(mains[0]) {
+        // detect which page by URL
+        var isBrewPage = window.location.pathname.indexOf('/brew') !== -1;
+        var eq = isBrewPage ? '≈ '+brewBoxEq : '≈ '+boxEq;
+        mains[0].insertAdjacentHTML('beforeend','<span class="price-eq">'+eq+'</span>');
+      }
+    })
+    .catch(function(){}); // silent fail — EUR price stands alone
+})();
+</script>
 </body>
 </html>
