@@ -100,16 +100,21 @@ a,button,[role=button]{cursor:none!important}
 input,select,textarea{cursor:auto!important}
 @media(pointer:coarse){*{cursor:auto!important}a,button,[role=button]{cursor:pointer!important}}
 #cur-dot{
-  position:fixed;top:0;left:0;width:8px;height:8px;
+  position:fixed;top:0;left:0;width:7px;height:7px;
   background:var(--cocoa);pointer-events:none;z-index:9998;
-  transform:translate(-9999px,-9999px);
+  border-radius:50% 50% 50% 50% / 70% 70% 30% 30%;
+  transform:translate(-9999px,-9999px) rotate(35deg);
 }
 #cur-ring{
-  position:fixed;top:0;left:0;width:36px;height:36px;
+  position:fixed;top:0;left:0;width:32px;height:32px;
   border:1.5px solid var(--cocoa);pointer-events:none;z-index:9997;
-  border-radius:2px;
-  transform:translate(-9999px,-9999px);opacity:0.6;
-  transition:width .22s cubic-bezier(.16,1,.3,1),height .22s cubic-bezier(.16,1,.3,1),opacity .2s,border-radius .3s cubic-bezier(.16,1,.3,1);
+  /* Buckwheat grain — triangular seed with rounded faces, rotated */
+  border-radius:50% 50% 50% 50% / 70% 70% 30% 30%;
+  transform:translate(-9999px,-9999px) rotate(35deg);opacity:0.65;
+  transition:width .22s cubic-bezier(.16,1,.3,1),
+             height .22s cubic-bezier(.16,1,.3,1),
+             opacity .2s,
+             border-radius .35s cubic-bezier(.16,1,.3,1);
 }
 
 
@@ -2380,7 +2385,7 @@ body.cookie-visible #mobile-cta{bottom:var(--cookie-h,80px);}
     rx += (mx - RING_R - rx) * LERP;
     ry += (my - RING_R - ry) * LERP;
     dot.style.transform  = 'translate3d(' + (mx - DOT_R) + 'px,' + (my - DOT_R) + 'px,0)';
-    ring.style.transform = 'translate3d(' + Math.round(rx) + 'px,' + Math.round(ry) + 'px,0)';
+    ring.style.transform = 'translate3d(' + Math.round(rx) + 'px,' + Math.round(ry) + 'px,0) rotate(35deg)';
     rafId = requestAnimationFrame(loop);
   }
 
@@ -2402,24 +2407,24 @@ body.cookie-visible #mobile-cta{bottom:var(--cookie-h,80px);}
   });
 
   document.addEventListener('mousedown', function(e) {
-    dot.style.transform = 'translate3d(' + (mx - DOT_R) + 'px,' + (my - DOT_R) + 'px,0) scale(0.8)';
-    ring.style.transform = 'translate3d(' + Math.round(rx) + 'px,' + Math.round(ry) + 'px,0) scale(0.85)';
+    dot.style.transform = 'translate3d(' + (mx - DOT_R) + 'px,' + (my - DOT_R) + 'px,0) rotate(35deg) scale(0.8)';
+    ring.style.transform = 'translate3d(' + Math.round(rx) + 'px,' + Math.round(ry) + 'px,0) rotate(35deg) scale(0.85)';
   }, { passive: true });
   document.addEventListener('mouseup', function(e) {
-    dot.style.transform = 'translate3d(' + (mx - DOT_R) + 'px,' + (my - DOT_R) + 'px,0) scale(1)';
-    ring.style.transform = 'translate3d(' + Math.round(rx) + 'px,' + Math.round(ry) + 'px,0) scale(1)';
+    dot.style.transform = 'translate3d(' + (mx - DOT_R) + 'px,' + (my - DOT_R) + 'px,0) rotate(35deg) scale(1)';
+    ring.style.transform = 'translate3d(' + Math.round(rx) + 'px,' + Math.round(ry) + 'px,0) rotate(35deg) scale(1)';
   }, { passive: true });
 
   document.querySelectorAll('a,button,[role=button]').forEach(function(el) {
     el.addEventListener('mouseenter', function() {
       ring.style.width = '52px'; ring.style.height = '52px';
       ring.style.opacity = currentDark ? '0.40' : '0.35';
-      dot.style.transform = 'translate3d(' + (mx - DOT_R) + 'px,' + (my - DOT_R) + 'px,0) scale(1.5)';
+      dot.style.transform = 'translate3d(' + (mx - DOT_R) + 'px,' + (my - DOT_R) + 'px,0) rotate(35deg) scale(1.5)';
     });
     el.addEventListener('mouseleave', function() {
       ring.style.width = '36px'; ring.style.height = '36px';
       ring.style.opacity = currentDark ? '0.55' : '0.60';
-      dot.style.transform = 'translate3d(' + (mx - DOT_R) + 'px,' + (my - DOT_R) + 'px,0) scale(1)';
+      dot.style.transform = 'translate3d(' + (mx - DOT_R) + 'px,' + (my - DOT_R) + 'px,0) rotate(35deg) scale(1)';
     });
   });
 

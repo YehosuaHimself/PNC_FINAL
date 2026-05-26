@@ -100,16 +100,22 @@ a,button,[role=button]{cursor:none!important}
 input,select,textarea{cursor:auto!important}
 @media(pointer:coarse){*{cursor:auto!important}a,button,[role=button]{cursor:pointer!important}}
 #cur-dot{
-  position:fixed;top:0;left:0;width:8px;height:8px;
+  position:fixed;top:0;left:0;width:8px;height:6px;
   background:var(--cocoa);pointer-events:none;z-index:9998;
-  transform:translate(-9999px,-9999px);
+  border-radius:60% 40% 40% 60% / 50% 50% 50% 50%;
+  transform:translate(-9999px,-9999px) rotate(-20deg);
 }
 #cur-ring{
-  position:fixed;top:0;left:0;width:36px;height:36px;
+  position:fixed;top:0;left:0;width:38px;height:28px;
   border:1.5px solid var(--cocoa);pointer-events:none;z-index:9997;
-  border-radius:50%;
-  transform:translate(-9999px,-9999px);opacity:0.6;
-  transition:width .22s cubic-bezier(.16,1,.3,1),height .22s cubic-bezier(.16,1,.3,1),opacity .2s,border-radius .35s cubic-bezier(.16,1,.3,1);
+  /* Coffee bean — oval with slight pinch suggesting the bean crease */
+  border-radius:60% 40% 40% 60% / 50% 50% 50% 50%;
+  transform:translate(-9999px,-9999px) rotate(-20deg);opacity:0.6;
+  transition:width .22s cubic-bezier(.16,1,.3,1),
+             height .22s cubic-bezier(.16,1,.3,1),
+             opacity .2s,
+             border-radius .35s cubic-bezier(.16,1,.3,1),
+             transform .35s cubic-bezier(.16,1,.3,1);
 }
 
 /* ── BLOOM PARTICLES ─────────────────────────────────────────────── */
@@ -2110,15 +2116,18 @@ body.cookie-visible #mobile-cta{bottom:var(--cookie-h,80px);}
     dot.style.background = c;
     ring.style.borderColor = c;
     ring.style.opacity = dark ? '0.55' : '0.60';
-    // Brew-specific: ring morphs to coffee-bean oval in dark zones
-    ring.style.borderRadius = dark ? '60% 40% 40% 60% / 50% 50% 50% 50%' : '50%';
+    // Coffee bean: in dark zones = rounder bean, rotated more; light = elongated oval
+    ring.style.borderRadius = dark
+      ? '55% 45% 45% 55% / 62% 62% 38% 38%'
+      : '60% 40% 40% 60% / 50% 50% 50% 50%';
+    ring.dataset.rot = dark ? '-32deg' : '-20deg';
   }
 
   function loop() {
     rx += (mx - RING_R - rx) * LERP;
     ry += (my - RING_R - ry) * LERP;
-    dot.style.transform  = 'translate3d(' + (mx - DOT_R) + 'px,' + (my - DOT_R) + 'px,0)';
-    ring.style.transform = 'translate3d(' + Math.round(rx) + 'px,' + Math.round(ry) + 'px,0)';
+    dot.style.transform  = 'translate3d(' + (mx - DOT_R) + 'px,' + (my - DOT_R) + 'px,0) rotate(-20deg)';
+    ring.style.transform = 'translate3d(' + Math.round(rx) + 'px,' + Math.round(ry) + 'px,0) rotate(' + (ring.dataset.rot||'-20deg') + ')';
     rafId = requestAnimationFrame(loop);
   }
 
@@ -2141,23 +2150,23 @@ body.cookie-visible #mobile-cta{bottom:var(--cookie-h,80px);}
 
   document.addEventListener('mousedown', function(e) {
     dot.style.transform = 'translate3d(' + (mx - DOT_R) + 'px,' + (my - DOT_R) + 'px,0) scale(0.8)';
-    ring.style.transform = 'translate3d(' + Math.round(rx) + 'px,' + Math.round(ry) + 'px,0) scale(0.85)';
+    ring.style.transform = 'translate3d(' + Math.round(rx) + 'px,' + Math.round(ry) + 'px,0) rotate(' + (ring.dataset.rot||'-20deg') + ') scale(0.85)';
   }, { passive: true });
   document.addEventListener('mouseup', function(e) {
     dot.style.transform = 'translate3d(' + (mx - DOT_R) + 'px,' + (my - DOT_R) + 'px,0) scale(1)';
-    ring.style.transform = 'translate3d(' + Math.round(rx) + 'px,' + Math.round(ry) + 'px,0) scale(1)';
+    ring.style.transform = 'translate3d(' + Math.round(rx) + 'px,' + Math.round(ry) + 'px,0) rotate(' + (ring.dataset.rot||'-20deg') + ') scale(1)';
   }, { passive: true });
 
   document.querySelectorAll('a,button,[role=button]').forEach(function(el) {
     el.addEventListener('mouseenter', function() {
       ring.style.width = '52px'; ring.style.height = '52px';
       ring.style.opacity = currentDark ? '0.40' : '0.35';
-      dot.style.transform = 'translate3d(' + (mx - DOT_R) + 'px,' + (my - DOT_R) + 'px,0) scale(1.5)';
+      dot.style.transform = 'translate3d(' + (mx - DOT_R) + 'px,' + (my - DOT_R) + 'px,0) rotate(-20deg) scale(1.5)';
     });
     el.addEventListener('mouseleave', function() {
       ring.style.width = '36px'; ring.style.height = '36px';
       ring.style.opacity = currentDark ? '0.55' : '0.60';
-      dot.style.transform = 'translate3d(' + (mx - DOT_R) + 'px,' + (my - DOT_R) + 'px,0) scale(1)';
+      dot.style.transform = 'translate3d(' + (mx - DOT_R) + 'px,' + (my - DOT_R) + 'px,0) rotate(-20deg) scale(1)';
     });
   });
 
