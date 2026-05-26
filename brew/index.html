@@ -34,6 +34,7 @@ em,i,cite,address,b,strong{font-style:normal}
   --cocoa-mu:   rgba(92,61,46,0.32);
   --cocoa-fa:   rgba(92,61,46,0.09);
   --ink:        #2A1810;
+  --err:        #C0533A;
   --dark:       #180E08;
   --g:          clamp(20px,5vw,80px);
   --max:        1320px;
@@ -877,7 +878,7 @@ input,select,textarea{cursor:auto!important}
   border-color:rgba(92,61,46,0.55);background:rgba(248,244,236,0.07);
 }
 .form-row input::placeholder{color:rgba(248,244,236,0.2)}
-.form-row select option{background:#1a0f0a;color:var(--cream)}
+.form-row select option{background:var(--dark);color:var(--cream)}
 .form-note{
   font-family:'Courier New',monospace;font-size:13px;font-weight:600;
   letter-spacing:0.22em;text-transform:uppercase;
@@ -903,7 +904,7 @@ input,select,textarea{cursor:auto!important}
   min-height:18px;line-height:1.8;
 }
 #order-msg.ok{color:var(--cocoa-mid)}
-#order-msg.err{color:#C0533A}
+#order-msg.err{color:var(--err)}
 /* Order responsive */
 @media(max-width:800px){
   .order-inner{grid-template-columns:1fr;gap:clamp(40px,6vw,60px) 0}
