@@ -2527,202 +2527,160 @@ body.cookie-visible #mobile-cta{bottom:var(--cookie-h,80px);}
 <!-- CURSOR SCRIPT -->
 <script>
 (function(){
-  const dot = document.getElementById('cur-dot');
-  const ring = document.getElementById('cur-ring');
+  var dot  = document.getElementById('cur-dot');
+  var ring = document.getElementById('cur-ring');
   if (!dot || !ring || window.matchMedia('(pointer:coarse)').matches) return;
 
-  const C_DARK  = '#2A1810';
-  const C_LIGHT = '#F8F4EC';
-  const DOT_R = 6, RING_R = 25;
-  const LERP = 0.10;
+  var C_DARK  = '#2A1810';
+  var C_LIGHT = '#F8F4EC';
+  var DOT_R  = 6;
+  var RING_RX = 25, RING_RY = 21;
+  var LERP = 0.18;
+  var BEAN_W = '13px', BEAN_H = '12px';
+  var BEAN_BR = '48% 48% 22% 22% / 62% 62% 30% 30%';
+  var BEAN_ROT = '30deg';
 
-  let mx = -9999, my = -9999;
-  let rx = -9999, ry = -9999;
-  let currentDark = false;
-  let rafId = null;
-  let darkZones = [];
+  var mx = -9999, my = -9999;
+  var rx = -9999, ry = -9999;
+  var rafId = null, settled = 0;
+  var currentDark = false;
+  var darkZones = [];
+  var inTextField = false;
+
+  dot.style.willChange  = 'transform';
+  ring.style.willChange = 'transform';
 
   function buildDarkZones() {
     darkZones = Array.from(document.querySelectorAll('[data-dark]')).map(function(el) {
-      const r = el.getBoundingClientRect();
+      var r = el.getBoundingClientRect();
       return { top: r.top + window.scrollY, bottom: r.bottom + window.scrollY, left: r.left, right: r.right };
     });
   }
-
   function checkDark(x, y) {
-    // Nav is always cream — force dark cursor when hovering it
     var navH = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--nav-h')) || 62;
     if (y <= navH) return false;
-    const sy = y + window.scrollY;
+    var sy = y + window.scrollY;
     for (var i = 0; i < darkZones.length; i++) {
       var z = darkZones[i];
       if (sy >= z.top && sy <= z.bottom && x >= z.left && x <= z.right) return true;
     }
     return false;
   }
-
+  function scheduleRebuild() {
+    if (typeof requestIdleCallback !== 'undefined') { requestIdleCallback(buildDarkZones, {timeout:200}); }
+    else { setTimeout(buildDarkZones, 100); }
+  }
   function applyColor(dark) {
     var c = dark ? C_LIGHT : C_DARK;
-    dot.style.background = c;
+    dot.style.background   = c;
     ring.style.borderColor = c;
-    ring.style.setProperty('--cc', c);
-    ring.style.opacity = dark ? '0.55' : '0.60';
+    if (!inTextField) ring.style.opacity = dark ? '0.55' : '0.60';
   }
 
   function loop() {
-    rx += (mx - RING_R - rx) * LERP;
-    ry += (my - RING_R - ry) * LERP;
-    dot.style.transform  = 'translate3d(' + (mx - DOT_R) + 'px,' + (my - DOT_R) + 'px,0)';
-    ring.style.transform = 'translate3d(' + Math.round(rx) + 'px,' + Math.round(ry) + 'px,0) rotate(25deg)';
+    var dx = (mx - RING_RX) - rx;
+    var dy = (my - RING_RY) - ry;
+    rx += dx * LERP;
+    ry += dy * LERP;
+    dot.style.transform  = 'translate3d(' + (mx - DOT_R) + 'px,' + (my - DOT_R) + 'px,0) rotate(' + BEAN_ROT + ')';
+    ring.style.transform = 'translate3d(' + Math.round(rx) + 'px,' + Math.round(ry) + 'px,0) rotate(' + BEAN_ROT + ')';
+    if (Math.abs(dx) < 0.3 && Math.abs(dy) < 0.3) {
+      if (++settled > 4) { rafId = null; return; }
+    } else { settled = 0; }
     rafId = requestAnimationFrame(loop);
   }
+  function startLoop() { settled = 0; if (rafId === null) rafId = requestAnimationFrame(loop); }
 
   document.addEventListener('mousemove', function(e) {
     mx = e.clientX; my = e.clientY;
     var dark = checkDark(mx, my);
     if (dark !== currentDark) { currentDark = dark; applyColor(dark); }
-    if (rafId === null) {
-      rx = mx - RING_R; ry = my - RING_R;
-      applyColor(checkDark(mx, my));
-      loop();
-    }
-  }, { passive: true });
+    if (inTextField) { dot.style.transform = 'translate3d(' + (mx - 1) + 'px,' + (my - 10) + 'px,0)'; return; }
+    startLoop();
+  }, {passive:true});
 
   document.addEventListener('mouseleave', function() {
     mx = -9999; my = -9999;
     dot.style.transform  = 'translate3d(-9999px,-9999px,0)';
     ring.style.transform = 'translate3d(-9999px,-9999px,0)';
   });
+  document.addEventListener('mousedown', function() {
+    if (inTextField) return;
+    dot.style.transform  = 'translate3d(' + (mx - DOT_R) + 'px,' + (my - DOT_R) + 'px,0) rotate(' + BEAN_ROT + ') scale(0.8)';
+    ring.style.transform = 'translate3d(' + Math.round(rx) + 'px,' + Math.round(ry) + 'px,0) rotate(' + BEAN_ROT + ') scale(0.85)';
+  }, {passive:true});
+  document.addEventListener('mouseup', function() {
+    if (inTextField) return;
+    dot.style.transform  = 'translate3d(' + (mx - DOT_R) + 'px,' + (my - DOT_R) + 'px,0) rotate(' + BEAN_ROT + ')';
+    ring.style.transform = 'translate3d(' + Math.round(rx) + 'px,' + Math.round(ry) + 'px,0) rotate(' + BEAN_ROT + ')';
+  }, {passive:true});
 
-  document.addEventListener('mousedown', function(e) {
-    dot.style.transform = 'translate3d(' + (mx - DOT_R) + 'px,' + (my - DOT_R) + 'px,0) rotate(25deg) scale(0.8)';
-    ring.style.transform = 'translate3d(' + Math.round(rx) + 'px,' + Math.round(ry) + 'px,0) rotate(25deg) scale(0.85)';
-  }, { passive: true });
-  document.addEventListener('mouseup', function(e) {
-    dot.style.transform = 'translate3d(' + (mx - DOT_R) + 'px,' + (my - DOT_R) + 'px,0) rotate(25deg) scale(1)';
-    ring.style.transform = 'translate3d(' + Math.round(rx) + 'px,' + Math.round(ry) + 'px,0) rotate(25deg) scale(1)';
-  }, { passive: true });
-
-  document.querySelectorAll('a,button,[role=button]').forEach(function(el) {
+  document.querySelectorAll('a,button,[role=button],select').forEach(function(el) {
     el.addEventListener('mouseenter', function() {
-      ring.style.width = '68px'; ring.style.height = '56px';
+      ring.style.width = '72px'; ring.style.height = '58px';
       ring.style.opacity = currentDark ? '0.40' : '0.35';
-      dot.style.transform = 'translate3d(' + (mx - DOT_R) + 'px,' + (my - DOT_R) + 'px,0) rotate(25deg) scale(1.5)';
+      startLoop();
     });
     el.addEventListener('mouseleave', function() {
       ring.style.width = '50px'; ring.style.height = '42px';
       ring.style.opacity = currentDark ? '0.55' : '0.60';
-      dot.style.transform = 'translate3d(' + (mx - DOT_R) + 'px,' + (my - DOT_R) + 'px,0) rotate(25deg) scale(1)';
+      startLoop();
     });
   });
-
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', buildDarkZones);
-  } else {
-    buildDarkZones();
-  }
-  var lastRebuildY = 0;
-  window.addEventListener('scroll', function() {
-    if (Math.abs(window.scrollY - lastRebuildY) > 80) {
-      lastRebuildY = window.scrollY;
-      buildDarkZones();
-    }
-  }, { passive: true });
-  window.addEventListener('resize',  buildDarkZones, { passive: true });
-
-  /* ── TEXT FIELD CURSOR ─────────────────────────────────────────────
-     When cursor enters a text input: dot morphs into a vertical blinking
-     caret line. On leave/blur: dot snaps back to the buckwheat grain.
-     Ring hides completely while in or hovering a text field.            */
-  var inTextField = false;
-
-  /* Canonical grain dimensions — must match #cur-dot CSS exactly */
-  var GRAIN_W  = '13px', GRAIN_H  = '12px';
-  var GRAIN_BR = '48% 48% 22% 22% / 62% 62% 30% 30%';
 
   function enterTextField() {
     if (inTextField) return;
     inTextField = true;
-    /* Hide ring completely */
+    if (rafId !== null) { cancelAnimationFrame(rafId); rafId = null; }
+    dot.style.transition   = 'width 70ms ease, height 70ms ease, border-radius 70ms ease';
+    dot.style.width = '2px'; dot.style.height = '20px'; dot.style.borderRadius = '1px';
+    dot.style.background = currentDark ? C_LIGHT : C_DARK;
+    dot.style.animation = 'textCursorBlink 1.1s step-end infinite';
     ring.style.opacity   = '0';
     ring.style.transform = 'translate3d(-9999px,-9999px,0)';
-    /* Morph dot → vertical caret */
-    dot.style.transition   = 'width 80ms ease, height 80ms ease, border-radius 80ms ease, opacity 80ms ease';
-    dot.style.width        = '2px';
-    dot.style.height       = '20px';
-    dot.style.borderRadius = '1px';
-    dot.style.opacity      = '1';
-    dot.style.background   = currentDark ? C_LIGHT : C_DARK;
-    dot.style.animation    = 'textCursorBlink 1.1s step-end infinite';
   }
-
   function leaveTextField() {
     if (!inTextField) return;
     inTextField = false;
-    /* Stop blink */
     dot.style.animation    = 'none';
-    /* Morph dot back → buckwheat grain (exact CSS dimensions) */
-    dot.style.transition   = 'width 120ms ease, height 120ms ease, border-radius 200ms ease, opacity 120ms ease';
-    dot.style.width        = GRAIN_W;
-    dot.style.height       = GRAIN_H;
-    dot.style.borderRadius = GRAIN_BR;
-    dot.style.opacity      = '0.9';
-    dot.style.background   = currentDark ? C_LIGHT : C_DARK;
-    /* Restore ring — snap to current mouse position, no fly-in from -9999 */
-    ring.style.transition  = 'opacity 200ms ease, border-color 160ms ease, width .22s cubic-bezier(.16,1,.3,1), height .22s cubic-bezier(.16,1,.3,1), border-radius .35s cubic-bezier(.16,1,.3,1)';
-    ring.style.width       = '50px';
-    ring.style.height      = '42px';
-    ring.style.opacity     = currentDark ? '0.55' : '0.60';
-    ring.style.transform   = 'translate3d(' + Math.round(mx - 25) + 'px,' + Math.round(my - 21) + 'px,0) rotate(' + (ring.dataset.rot || '30deg') + ')';
-    rx = mx - 25; ry = my - 21;
+    dot.style.transition   = 'width 120ms ease, height 120ms ease, border-radius 180ms ease';
+    dot.style.width = BEAN_W; dot.style.height = BEAN_H; dot.style.borderRadius = BEAN_BR;
+    dot.style.background = currentDark ? C_LIGHT : C_DARK;
+    rx = mx - RING_RX; ry = my - RING_RY;
+    ring.style.transform = 'translate3d(' + Math.round(rx) + 'px,' + Math.round(ry) + 'px,0) rotate(' + BEAN_ROT + ')';
+    ring.style.opacity = currentDark ? '0.55' : '0.60';
+    ring.style.width = '50px'; ring.style.height = '42px';
+    startLoop();
   }
-
-  /* Text inputs — caret on enter, grain on leave */
   document.querySelectorAll('input[type="text"],input[type="email"],input:not([type]),textarea').forEach(function(el) {
     el.addEventListener('focus',      enterTextField);
     el.addEventListener('blur',       leaveTextField);
     el.addEventListener('mouseenter', function() {
       if (!inTextField) {
-        /* Hovering but not yet focused — show caret preview, hide ring */
-        dot.style.transition   = 'width 80ms ease, height 80ms ease, border-radius 80ms ease';
-        dot.style.width        = '2px';
-        dot.style.height       = '20px';
-        dot.style.borderRadius = '1px';
-        ring.style.opacity     = '0';
-        ring.style.transform   = 'translate3d(-9999px,-9999px,0)';
+        dot.style.transition = 'width 70ms ease, height 70ms ease, border-radius 70ms ease';
+        dot.style.width = '2px'; dot.style.height = '20px'; dot.style.borderRadius = '1px';
+        ring.style.opacity = '0'; ring.style.transform = 'translate3d(-9999px,-9999px,0)';
       }
     });
     el.addEventListener('mouseleave', function() {
       if (!inTextField) {
-        /* Left without clicking — fully restore grain */
-        dot.style.animation    = 'none';
-        dot.style.transition   = 'width 120ms ease, height 120ms ease, border-radius 200ms ease';
-        dot.style.width        = GRAIN_W;
-        dot.style.height       = GRAIN_H;
-        dot.style.borderRadius = GRAIN_BR;
-        ring.style.opacity     = currentDark ? '0.55' : '0.60';
-        ring.style.transform   = '';
-        rx = mx - 25; ry = my - 21;
+        dot.style.animation = 'none';
+        dot.style.transition = 'width 120ms ease, height 120ms ease, border-radius 180ms ease';
+        dot.style.width = BEAN_W; dot.style.height = BEAN_H; dot.style.borderRadius = BEAN_BR;
+        rx = mx - RING_RX; ry = my - RING_RY;
+        ring.style.opacity = currentDark ? '0.55' : '0.60';
+        startLoop();
       }
     });
   });
 
-  /* Select dropdowns — button-expand ring on hover, no caret */
-  document.querySelectorAll('select').forEach(function(el) {
-    el.addEventListener('mouseenter', function() {
-      ring.style.width    = '72px';
-      ring.style.height   = '50px';
-      ring.style.opacity  = currentDark ? '0.40' : '0.35';
-      dot.style.transform = 'translate3d(' + (mx - DOT_R) + 'px,' + (my - DOT_R) + 'px,0) rotate(30deg) scale(1.5)';
-    });
-    el.addEventListener('mouseleave', function() {
-      ring.style.width    = '50px';
-      ring.style.height   = '42px';
-      ring.style.opacity  = currentDark ? '0.55' : '0.60';
-      dot.style.transform = 'translate3d(' + (mx - DOT_R) + 'px,' + (my - DOT_R) + 'px,0) rotate(30deg) scale(1)';
-    });
-  });
-
+  if (document.readyState === 'loading') { document.addEventListener('DOMContentLoaded', buildDarkZones); }
+  else { buildDarkZones(); }
+  var rebuildTimer = 0;
+  window.addEventListener('scroll', function() {
+    clearTimeout(rebuildTimer); rebuildTimer = setTimeout(scheduleRebuild, 150);
+  }, {passive:true});
+  window.addEventListener('resize', scheduleRebuild, {passive:true});
 })();
 </script>
 
