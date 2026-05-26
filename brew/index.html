@@ -2243,6 +2243,16 @@ document.addEventListener('DOMContentLoaded',function(){
       else{mcta.classList.remove('visible');mcta.setAttribute('aria-hidden','true');}
     }
   },{passive:true});
+
+  if(window.visualViewport&&mcta){
+    function onVPResize(){
+      var keyboardOpen=(window.innerHeight-window.visualViewport.height)>150;
+      if(keyboardOpen){mcta.style.display='none';}
+      else{mcta.style.display='';}
+    }
+    window.visualViewport.addEventListener('resize',onVPResize,{passive:true});
+    window.visualViewport.addEventListener('scroll',onVPResize,{passive:true});
+  }
 });
 </script>
 
