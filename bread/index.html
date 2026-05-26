@@ -58,7 +58,8 @@ a,a:hover,a:active,a:focus{cursor:none!important}
 
 /* ── CURSOR ─────────────────────────────────────────────────── */
 *,*::before,*::after{cursor:none!important}
-a,button,[role=button],input,select,textarea,label{cursor:none!important}
+a,button,[role=button]{cursor:none!important}
+input,select,textarea{cursor:auto!important}
 @media(pointer:coarse){*{cursor:auto!important}a,button,[role=button]{cursor:pointer!important}}
 #cur-dot{
   position:fixed;top:0;left:0;width:8px;height:8px;
