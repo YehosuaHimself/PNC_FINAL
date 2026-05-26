@@ -207,7 +207,8 @@ document.addEventListener('DOMContentLoaded',function(){
     var name    = nameEl.value.trim();
     var email   = emailEl.value.trim().toLowerCase();
     var country = cntryEl.value;
-    var sku     = document.getElementById('bread-qty') ? document.getElementById('bread-qty').value : '5';
+    var qtyCard = document.querySelector('.bread-qty-card.selected');
+    var sku     = qtyCard ? qtyCard.dataset.sku : '5';
 
     var ok = true;
     if(name.length < 2){setErr('Enter your full name — we need this for your order confirmation.',nameEl);nameEl.focus();ok=false;}
@@ -931,19 +932,24 @@ document.addEventListener('DOMContentLoaded',function(){
         if(sb) sb.insertAdjacentHTML('afterend',
           '<span class="pship">Order in EUR · Stripe converts to your currency · ships worldwide</span>');
 
-        /* Qty select — update price-note on change */
-        var qtySelect = document.getElementById('bread-qty');
+        /* Qty card grid — update hidden input + price-note on click (US2-AC1) */
         var priceNote = document.querySelector('.price-note');
+        var qtyHidden = document.getElementById('bread-qty');
         var qtyMap = {'5':'From € 15 per box · 5 to 50 loaves · Gluten Free','10':'€ 30 per box · 10 loaves · Gluten Free','20':'€ 60 per box · 20 loaves · Gluten Free','50':'€ 150 per box · 50 loaves · Gluten Free'};
         var localMap = {'5':fmtLocal(15),'10':fmtLocal(30),'20':fmtLocal(60),'50':fmtLocal(150)};
-        if(qtySelect && priceNote){
-          qtySelect.addEventListener('change', function(){
-            var v = qtySelect.value;
+        document.querySelectorAll('.bread-qty-card').forEach(function(card){
+          card.addEventListener('click', function(){
+            document.querySelectorAll('.bread-qty-card').forEach(function(c){
+              c.classList.remove('selected'); c.setAttribute('aria-pressed','false');
+            });
+            card.classList.add('selected'); card.setAttribute('aria-pressed','true');
+            if(qtyHidden) qtyHidden.value = card.dataset.sku;
+            var v = card.dataset.sku;
             var label = qtyMap[v] || qtyMap['5'];
             var loc = localMap[v];
-            priceNote.innerHTML = label + (loc ? ' · ≈ ' + loc : '') + '<br>Ships in 3–5 business days';
+            if(priceNote) priceNote.innerHTML = label + (loc ? ' · ≈ ' + loc : '') + '<br>Ships in 3–5 business days';
           });
-        }
+        });
       }
 
       /* ── 7. BREW PAGE INJECTIONS ────────────────────────────────── */
