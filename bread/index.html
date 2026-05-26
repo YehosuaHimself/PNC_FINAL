@@ -372,19 +372,26 @@ input,select,textarea{cursor:auto!important}
   margin-bottom:clamp(32px,5vh,56px);
 }
 .hero-strip{
-  display:flex;flex-wrap:wrap;gap:2px;max-width:680px;
+  display:flex;flex-wrap:wrap;gap:6px;max-width:700px;
   margin-bottom:clamp(40px,6vh,60px);
 }
 .hs-pill{
   font-family:'Courier New',monospace;font-size:13px;font-weight:600;
-  letter-spacing:0.28em;text-transform:uppercase;
-  color:var(--cocoa-lt);
-  background:rgba(92,61,46,0.08);
-  border:1px solid rgba(92,61,46,0.15);
-  padding:11px 18px;
-  min-height:40px;display:inline-flex;align-items:center;
+  letter-spacing:0.26em;text-transform:uppercase;
+  color:var(--cocoa);
+  background:var(--cocoa-fa);
+  border:1px solid rgba(92,61,46,0.12);
+  border-left:3px solid rgba(92,61,46,0.28);
+  padding:9px 14px 9px 13px;
+  display:inline-flex;align-items:center;
 }
-.hs-pill.hl{color:var(--cocoa);border-color:rgba(92,61,46,0.28);background:rgba(92,61,46,0.12)}
+.hs-pill.hl{
+  color:#fff;
+  background:var(--err);
+  border-color:var(--err);
+  border-left-color:rgba(0,0,0,0.18);
+  font-weight:700;
+}
 .hero-cta-row{display:flex;gap:12px;flex-wrap:wrap}
 .btn-primary{
   font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;
@@ -1806,13 +1813,13 @@ body.cookie-visible #mobile-cta{bottom:var(--cookie-h,80px);}
     </h1>
     <p class="hero-sub">Buckwheat from Lausitz. Salt from the Austrian Alps. Psyllium from Gujarat. Pre-weighed, pre-blended, shipped to you. Bake for 55 minutes. That's everything.</p>
     <div class="hero-strip">
-      <div class="hs-pill hl">3 Ingredients</div>
       <div class="hs-pill hl">Gluten Free</div>
+      <div class="hs-pill hl">Sugar Free</div>
+      <div class="hs-pill hl">€ 3 Per Loaf</div>
+      <div class="hs-pill">3 Ingredients</div>
       <div class="hs-pill">Complete Protein</div>
-      <div class="hs-pill">Sugar Free</div>
       <div class="hs-pill">30g Fibre</div>
       <div class="hs-pill">5 Loaves / Box</div>
-      <div class="hs-pill hl">€ 3 Per Loaf</div>
     </div>
     <div class="hero-cta-row">
       <a href="#order" class="btn-primary">Get Bread →</a>
