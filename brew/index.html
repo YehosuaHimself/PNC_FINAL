@@ -781,131 +781,69 @@ input,select,textarea{cursor:auto!important}
 }
 
 /* ── WHY ────────────────────────────────────────────────────────── */
-.why{background:var(--dark);position:relative;overflow:hidden}
-.why::before{
+/* ── SIX REASONS — consolidated section ──────────────────────────── */
+.six-reasons{
+  background:var(--dark);
+  padding:clamp(80px,12vw,160px) var(--g);
+  position:relative;overflow:hidden;
+}
+.six-reasons::before{
   content:'';position:absolute;inset:0;pointer-events:none;z-index:0;
   background-image:
-    linear-gradient(rgba(248,244,236,0.025) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(248,244,236,0.025) 1px, transparent 1px);
+    linear-gradient(rgba(248,244,236,0.022) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(248,244,236,0.022) 1px, transparent 1px);
   background-size:80px 80px;
-  mask-image:linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.7) 15%, rgba(0,0,0,0.7) 85%, transparent 100%);
+  mask-image:linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.6) 12%, rgba(0,0,0,0.6) 88%, transparent 100%);
+  -webkit-mask-image:linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.6) 12%, rgba(0,0,0,0.6) 88%, transparent 100%);
 }
-.why-inner{max-width:var(--max);margin:0 auto;position:relative;z-index:1}
-.why-header{margin-bottom:clamp(64px,9vw,120px)}
-.why-eyebrow{
+.sr-inner{max-width:var(--max);margin:0 auto;position:relative;z-index:1;}
+.sr-header{margin-bottom:clamp(56px,8vw,100px);}
+.sr-eyebrow{
   font-family:'Courier New',monospace;font-size:13px;font-weight:600;
   letter-spacing:0.36em;text-transform:uppercase;color:var(--cocoa-mid);
   display:block;margin-bottom:20px;
 }
-.why-h2{
+.sr-h2{
   font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;
   font-weight:900;font-size:clamp(48px,7vw,110px);
   letter-spacing:-0.04em;line-height:0.88;
   color:rgba(248,244,236,0.92);margin-bottom:0;
 }
-/* Asymmetric layout: left col has 01+02 stacked, right col has 03+04 stacked
-   but left col is narrower with a large decorative numeral as anchor */
-.pillars{
-  display:grid;
-  grid-template-columns:1fr 1px 1fr;
-  gap:0;
-}
-@media(max-width:700px){.pillars{grid-template-columns:1fr}}
-.pillars-divider{background:rgba(248,244,236,0.05)}
-.pillar-col{display:flex;flex-direction:column}
-.pillar{
-  background:transparent;
-  border:none;
-  padding:clamp(36px,4.5vw,64px) clamp(0px,0vw,0px);
-  border-bottom:1px solid rgba(248,244,236,0.06);
-  transition:none;
-  position:relative;
-}
-.pillar:last-child{border-bottom:none}
-.pillar-col:first-child .pillar{padding-right:clamp(40px,5vw,80px)}
-.pillar-col:last-child .pillar{padding-left:clamp(40px,5vw,80px)}
-.pillar-num{
-  font-family:'Courier New',monospace;
-  font-weight:600;font-size:12px;
-  letter-spacing:0.3em;
-  color:rgba(248,244,236,0.2);
-  margin-bottom:clamp(20px,2.5vw,32px);
-  display:block;
-}
-.pillar-title{
-  font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;
-  font-weight:900;font-size:clamp(22px,3vw,44px);
-  letter-spacing:-0.03em;line-height:0.92;
-  color:rgba(248,244,236,0.92);margin-bottom:20px;
-}
-.pillar-text{
-  font-size:clamp(13px,1.5vw,16px);
-  color:rgba(248,244,236,0.40);line-height:1.78;
-  max-width:480px;
-}
-
-/* ── SUPPLY CHAIN ────────────────────────────────────────────────────────── */
-
-/* ── ORIGIN DEPTH ─────────────────────────────────────────────────── */
-.origin-depth{
-  padding:clamp(80px,10vw,140px) var(--g);
-  background:var(--cream);
-}
-.od-inner{
-  max-width:var(--max);margin:0 auto;
-}
-.od-header{
-  display:flex;align-items:baseline;gap:2rem;
-  margin-bottom:clamp(48px,6vw,80px);
-}
-.od-eyebrow{
-  font:700 10px/1 'Helvetica Neue',Arial,sans-serif;
-  letter-spacing:.18em;text-transform:uppercase;
-  color:var(--cocoa);opacity:.7;white-space:nowrap;
-}
-.od-h2{
-  font:900 clamp(28px,4vw,48px)/1.05 'Helvetica Neue',Arial,sans-serif;
-  letter-spacing:-.02em;color:var(--ink);text-transform:uppercase;
-}
-.od-cols{
+.sr-grid{
   display:grid;grid-template-columns:1fr 1fr 1fr;
-  gap:0;border-top:1px solid rgba(42,24,16,.12);
+  gap:0;border-top:1px solid rgba(248,244,236,0.07);
 }
-.od-col{
-  padding:clamp(32px,4vw,56px) clamp(24px,3vw,48px) clamp(32px,4vw,56px) 0;
-  border-right:1px solid rgba(42,24,16,.12);
+@media(max-width:700px){.sr-grid{grid-template-columns:1fr;}}
+.sr-item{
+  padding:clamp(32px,4vw,56px) clamp(20px,3vw,44px) clamp(32px,4vw,56px) 0;
+  border-right:1px solid rgba(248,244,236,0.07);
+  border-bottom:1px solid rgba(248,244,236,0.07);
 }
-.od-col:last-child{
-  padding-right:0;border-right:none;
-  padding-left:clamp(24px,3vw,48px);
+.sr-item:nth-child(3n){border-right:none;padding-right:0;}
+.sr-item:nth-child(3n+2),.sr-item:nth-child(3n){padding-left:clamp(20px,3vw,44px);}
+.sr-item:nth-child(4),.sr-item:nth-child(5),.sr-item:nth-child(6){border-bottom:none;}
+@media(max-width:700px){
+  .sr-item{padding:28px 0;border-right:none;border-bottom:1px solid rgba(248,244,236,0.07);}
+  .sr-item:nth-child(3n+2),.sr-item:nth-child(3n){padding-left:0;}
+  .sr-item:last-child{border-bottom:none;}
 }
-.od-col:nth-child(2){
-  padding-left:clamp(24px,3vw,48px);
+.sr-num{
+  font-family:'Courier New',monospace;font-weight:600;font-size:11px;
+  letter-spacing:0.28em;color:rgba(248,244,236,0.20);
+  display:block;margin-bottom:clamp(16px,2vw,24px);
 }
-.od-num{
-  font:700 10px/1 'Courier New',monospace;
-  letter-spacing:.14em;color:var(--cocoa);
-  display:block;margin-bottom:20px;
+.sr-title{
+  font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;
+  font-weight:900;font-size:clamp(17px,2vw,26px);
+  letter-spacing:-0.02em;line-height:0.96;
+  color:rgba(248,244,236,0.92);margin-bottom:14px;
 }
-.od-title{
-  font:700 13px/1.3 'Helvetica Neue',Arial,sans-serif;
-  letter-spacing:.06em;text-transform:uppercase;
-  color:var(--ink);margin-bottom:16px;
+.sr-text{
+  font-size:clamp(13px,1.2vw,15px);
+  color:rgba(248,244,236,0.40);line-height:1.80;
 }
-.od-text{
-  font:400 14px/1.75 'Helvetica Neue',Arial,sans-serif;
-  color:var(--ink);opacity:.78;
-}
-.od-text strong{
-  font-weight:700;opacity:1;color:var(--ink);
-}
-@media(max-width:768px){
-  .od-cols{grid-template-columns:1fr;}
-  .od-col,.od-col:last-child,.od-col:nth-child(2){
-    padding:32px 0;border-right:none;border-bottom:1px solid rgba(42,24,16,.12);
-  }
-  .od-col:last-child{border-bottom:none;}
-}
+.sr-text strong{color:rgba(248,244,236,0.72);font-weight:600;}
+
 
 /* ── ORDER ────────────────────────────────────────────────────────── */
 .order{background:var(--dark);position:relative;overflow:hidden}
@@ -1792,93 +1730,55 @@ body.cookie-visible #mobile-cta{bottom:var(--cookie-h,80px);}
 </section>
 
 <!-- WHY THIS FORMAT -->
-<section class="section why" data-dark>
-  <div class="why-inner">
-    <div class="why-header">
-      <span class="why-eyebrow reveal">— Why This Format</span>
-      <h2 class="why-h2 reveal">The only cup<br>worth making.</h2>
+<section class="six-reasons" data-dark>
+  <div class="sr-inner">
+
+    <div class="sr-header">
+      <span class="sr-eyebrow reveal">— Six Reasons</span>
+      <h2 class="sr-h2 reveal">Everything<br>by design.</h2>
     </div>
-    <div class="pillars">
-      <div class="pillar-col">
-        <div class="pillar reveal">
-          <span class="pillar-num">01</span>
-          <div class="pillar-title">85+ SCA. No exceptions.</div>
-          <p class="pillar-text">Kochere G1 scores 85+ on the SCA scale — specialty grade, the top tier of the classification system. The grind weight, dose, and distribution are calibrated at source. You skip the technique. You get the result.</p>
-        </div>
-        <div class="pillar reveal">
-          <span class="pillar-num">02</span>
-          <div class="pillar-title">Immersion is correct for this bean.</div>
-          <p class="pillar-text">Full immersion extraction is the optimal method for Kochere G1's jasmine and bergamot aromatics. The pad format is not a shortcut — it is the brewing method this bean was designed for.</p>
-        </div>
+
+    <div class="sr-grid">
+
+      <div class="sr-item reveal">
+        <span class="sr-num">01 · THE SOURCE</span>
+        <div class="sr-title">AMG Coffee Export.<br>Kochere. Direct.</div>
+        <p class="sr-text">AMG has worked with smallholder farmers in Kochere woreda at <strong>2,100 metres</strong> since the cooperative system was built. Altitude slows cherry ripening by weeks — concentrating what no lower farm can replicate. Washed process: pulped within hours, fermented <strong>36–48 hours</strong>, dried on raised beds in direct sun. Washed means clean. Every floral note is in the bean. EUDR-compliant. Traceable to the cooperative. We name them because anyone who doesn't is hiding something.</p>
       </div>
-      <div class="pillars-divider" aria-hidden="true"></div>
-      <div class="pillar-col">
-        <div class="pillar reveal">
-          <span class="pillar-num">03</span>
-          <div class="pillar-title">Identical. Every single time.</div>
-          <p class="pillar-text">No variable grind. No scale. No thermometer. No gap between you and a trained barista. The cup you make at home is the cup we designed. Bright, clean, repeatable.</p>
-        </div>
-        <div class="pillar reveal">
-          <span class="pillar-num">04</span>
-          <div class="pillar-title">Roasted when you order. At your door in 7.</div>
-          <p class="pillar-text">No warehouse. No sitting stock. No stale beans. Roasted the day you order, packed the same afternoon. Specialty coffee at peak freshness — for €1 a cup, anywhere in the world.</p>
-        </div>
+
+      <div class="sr-item reveal">
+        <span class="sr-num">02 · THE TEMPERATURE</span>
+        <div class="sr-title">92–94°C.<br>Not boiling.</div>
+        <p class="sr-text">Boiling water is <strong>100°C</strong>. The jasmine and bergamot aromatics in Kochere G1 are heat-volatile above <strong>94°C</strong> — they scorch and disappear. Letting the kettle rest 45 seconds after boiling is not a preference. It is the instruction. The pause is the brewing.</p>
       </div>
+
+      <div class="sr-item reveal">
+        <span class="sr-num">03 · THE BAG</span>
+        <div class="sr-title">Kraft. Unbleached.<br>Nitrogen-flushed.</div>
+        <p class="sr-text"><strong>Unbleached kraft cellulose</strong> — no chlorine, no dioxin bleach, nothing near the coffee that shouldn't be. Nitrogen-flushed at packing: the enemy of roasted coffee is oxidation, not time. Sealed: <strong>90 days</strong> peak flavour. Opened: 14. Composts in 8–12 weeks. Nothing in it is decorative.</p>
+      </div>
+
+      <div class="sr-item reveal">
+        <span class="sr-num">04 · THE GRADE</span>
+        <div class="sr-title">85+ SCA.<br>No exceptions.</div>
+        <p class="sr-text">Kochere G1 scores 85+ on the SCA scale — specialty grade, the top tier of the classification system. Grind weight, dose, and distribution calibrated at source. You skip the technique. You get the result.</p>
+      </div>
+
+      <div class="sr-item reveal">
+        <span class="sr-num">05 · THE METHOD</span>
+        <div class="sr-title">Immersion is correct<br>for this bean.</div>
+        <p class="sr-text">Full immersion extraction preserves Kochere G1's jasmine and bergamot aromatics in a way pour-over doesn't. The pad format is not a shortcut — it is the brewing method this bean was designed for. Identical every time. No variable grind. No thermometer. No gap between you and a trained barista.</p>
+      </div>
+
+      <div class="sr-item reveal">
+        <span class="sr-num">06 · THE FRESHNESS</span>
+        <div class="sr-title">Roasted to order.<br>At your door in 7.</div>
+        <p class="sr-text">No warehouse. No sitting stock. Roasted the day you order, packed the same afternoon, shipped within 7 days. Specialty coffee at peak freshness — for <strong>€1 a cup</strong>, anywhere in the world.</p>
+      </div>
+
     </div>
   </div>
 </section>
-
-<!-- ORIGIN DEPTH — three decisions at biographical register -->
-<section class="origin-depth">
-  <div class="od-inner">
-    <div class="od-header">
-      <span class="od-eyebrow reveal">— Three Decisions</span>
-      <h2 class="od-h2 reveal">Why this bean.<br>Why this cup.</h2>
-    </div>
-    <div class="od-cols">
-      <div class="od-col reveal">
-        <span class="od-num">01 · THE SOURCE</span>
-        <div class="od-title">AMG Coffee Export. Kochere. Direct.</div>
-        <p class="od-text">
-          AMG Coffee Export has operated in Yirgacheffe since the cooperative
-          system was built — working with smallholder farmers in Kochere woreda
-          at <strong>2,100 metres</strong>, where the altitude slows cherry
-          ripening by weeks and concentrates flavour no lower farm can replicate.
-          Washed process: cherries pulped within hours of picking, fermented
-          <strong>36–48 hours</strong> in clean water tanks, then dried on
-          raised beds for 10–15 days in direct sun. Washed means clean. Every
-          floral note in the cup is in the bean — nothing added, nothing hidden.
-          EUDR-compliant. Traceable to the cooperative. We name them because
-          anyone who doesn't is hiding something.
-        </p>
-      </div>
-      <div class="od-col reveal">
-        <span class="od-num">02 · THE TEMPERATURE</span>
-        <div class="od-title">92–94°C. Not boiling.</div>
-        <p class="od-text">
-          Boiling water is <strong>100°C</strong>. The floral aromatic compounds
-          in Kochere that produce jasmine and bergamot on the palate are
-          heat-volatile above <strong>94°C</strong> — they scorch on contact and
-          disappear from the cup. Letting the kettle rest for 45 seconds after
-          boiling is not a preference. It is the instruction. The pause is the brewing.
-        </p>
-      </div>
-      <div class="od-col reveal">
-        <span class="od-num">03 · THE BAG</span>
-        <div class="od-title">Kraft. Unbleached. Nitrogen-flushed.</div>
-        <p class="od-text">
-          The bag is <strong>unbleached kraft cellulose</strong> — no chlorine,
-          no dioxin bleach, no chemical residue near the coffee.
-          Nitrogen-flushed at packing to displace oxygen: the enemy of roasted
-          coffee is not time, it is oxidation. Sealed, this bag holds peak
-          flavour for <strong>90 days</strong>. Once opened, 14.
-          The bag composts in 8–12 weeks. Nothing in it is decorative.
-        </p>
-      </div>
-    </div>
-  </div>
-</section>
-
 
 <!-- ORDER -->
 <section class="section order" data-dark id="order">
