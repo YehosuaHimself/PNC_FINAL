@@ -100,7 +100,7 @@ a,a:hover,a:active,a:focus{cursor:none!important}
 /* ── CURSOR ─────────────────────────────────────────────────── */
 *,*::before,*::after{cursor:none!important}
 a,button,[role=button]{cursor:none!important}
-input,select,textarea{cursor:auto!important}
+input,select,textarea{cursor:none!important}
 @media(pointer:coarse){*{cursor:auto!important}a,button,[role=button]{cursor:pointer!important}}
 #cur-dot{
   position:fixed;top:0;left:0;width:13px;height:12px;
@@ -2553,59 +2553,95 @@ body.cookie-visible #mobile-cta{bottom:var(--cookie-h,80px);}
   window.addEventListener('resize',  buildDarkZones, { passive: true });
 
   /* ── TEXT FIELD CURSOR ─────────────────────────────────────────────
-     When the cursor enters a text input or textarea, the custom cursor
-     transforms into a precise blinking text insertion line — 2px wide,
-     the exact height of the input's line-height. On blur it restores.
-     select elements fall back to the system cursor (cursor:auto).      */
+     When cursor enters a text input: dot morphs into a vertical blinking
+     caret line. On leave/blur: dot snaps back to the buckwheat grain.
+     Ring hides completely while in or hovering a text field.            */
   var inTextField = false;
+
+  /* Canonical grain dimensions — must match #cur-dot CSS exactly */
+  var GRAIN_W  = '13px', GRAIN_H  = '12px';
+  var GRAIN_BR = '48% 48% 22% 22% / 62% 62% 30% 30%';
 
   function enterTextField() {
     if (inTextField) return;
     inTextField = true;
-    // Hide the grain ring entirely
-    ring.style.opacity = '0';
+    /* Hide ring completely */
+    ring.style.opacity   = '0';
     ring.style.transform = 'translate3d(-9999px,-9999px,0)';
-    // Morph dot into a vertical text-insertion line
-    dot.style.transition = 'width 80ms ease, height 80ms ease, border-radius 80ms ease, background 160ms ease';
-    dot.style.width  = '2px';
-    dot.style.height = '18px';
+    /* Morph dot → vertical caret */
+    dot.style.transition   = 'width 80ms ease, height 80ms ease, border-radius 80ms ease, opacity 80ms ease';
+    dot.style.width        = '2px';
+    dot.style.height       = '20px';
     dot.style.borderRadius = '1px';
-    dot.style.background = currentDark ? C_LIGHT : C_DARK;
-    dot.style.opacity = '1';
-    // Blink animation — matches system text cursor blink rhythm
-    dot.style.animation = 'textCursorBlink 1.1s step-end infinite';
+    dot.style.opacity      = '1';
+    dot.style.background   = currentDark ? C_LIGHT : C_DARK;
+    dot.style.animation    = 'textCursorBlink 1.1s step-end infinite';
   }
 
   function leaveTextField() {
     if (!inTextField) return;
     inTextField = false;
-    dot.style.animation = 'none';
-    dot.style.transition = 'width 80ms ease, height 80ms ease, border-radius 80ms ease, background 160ms ease';
-    dot.style.width  = '13px';
-    dot.style.height = '12px';
-    dot.style.borderRadius = '';   // restore grain shape via CSS class
-    dot.style.opacity = '0.9';
-    dot.style.background = currentDark ? C_LIGHT : C_DARK;
-    // Restore ring
-    ring.style.transition = 'opacity 160ms ease, border-color 160ms ease, width .22s cubic-bezier(.16,1,.3,1), height .22s cubic-bezier(.16,1,.3,1), border-radius .35s cubic-bezier(.16,1,.3,1)';
-    ring.style.opacity = currentDark ? '0.55' : '0.60';
+    /* Stop blink */
+    dot.style.animation    = 'none';
+    /* Morph dot back → buckwheat grain (exact CSS dimensions) */
+    dot.style.transition   = 'width 120ms ease, height 120ms ease, border-radius 200ms ease, opacity 120ms ease';
+    dot.style.width        = GRAIN_W;
+    dot.style.height       = GRAIN_H;
+    dot.style.borderRadius = GRAIN_BR;
+    dot.style.opacity      = '0.9';
+    dot.style.background   = currentDark ? C_LIGHT : C_DARK;
+    /* Restore ring — snap to current mouse position, no fly-in from -9999 */
+    ring.style.transition  = 'opacity 200ms ease, border-color 160ms ease, width .22s cubic-bezier(.16,1,.3,1), height .22s cubic-bezier(.16,1,.3,1), border-radius .35s cubic-bezier(.16,1,.3,1)';
+    ring.style.width       = '50px';
+    ring.style.height      = '42px';
+    ring.style.opacity     = currentDark ? '0.55' : '0.60';
+    ring.style.transform   = 'translate3d(' + Math.round(mx - 25) + 'px,' + Math.round(my - 21) + 'px,0) rotate(' + (ring.dataset.rot || '30deg') + ')';
+    rx = mx - 25; ry = my - 21;
   }
 
+  /* Text inputs — caret on enter, grain on leave */
   document.querySelectorAll('input[type="text"],input[type="email"],input:not([type]),textarea').forEach(function(el) {
-    el.addEventListener('focus',     enterTextField);
-    el.addEventListener('blur',      leaveTextField);
+    el.addEventListener('focus',      enterTextField);
+    el.addEventListener('blur',       leaveTextField);
     el.addEventListener('mouseenter', function() {
       if (!inTextField) {
-        // Preview the line cursor on hover — before focus
-        dot.style.transition = 'width 80ms ease, height 80ms ease, border-radius 80ms ease';
-        dot.style.width  = '2px';
-        dot.style.height = '18px';
+        /* Hovering but not yet focused — show caret preview, hide ring */
+        dot.style.transition   = 'width 80ms ease, height 80ms ease, border-radius 80ms ease';
+        dot.style.width        = '2px';
+        dot.style.height       = '20px';
         dot.style.borderRadius = '1px';
-        ring.style.opacity = '0';
+        ring.style.opacity     = '0';
+        ring.style.transform   = 'translate3d(-9999px,-9999px,0)';
       }
     });
     el.addEventListener('mouseleave', function() {
-      if (!inTextField) leaveTextField();
+      if (!inTextField) {
+        /* Left without clicking — fully restore grain */
+        dot.style.animation    = 'none';
+        dot.style.transition   = 'width 120ms ease, height 120ms ease, border-radius 200ms ease';
+        dot.style.width        = GRAIN_W;
+        dot.style.height       = GRAIN_H;
+        dot.style.borderRadius = GRAIN_BR;
+        ring.style.opacity     = currentDark ? '0.55' : '0.60';
+        ring.style.transform   = '';
+        rx = mx - 25; ry = my - 21;
+      }
+    });
+  });
+
+  /* Select dropdowns — button-expand ring on hover, no caret */
+  document.querySelectorAll('select').forEach(function(el) {
+    el.addEventListener('mouseenter', function() {
+      ring.style.width    = '72px';
+      ring.style.height   = '50px';
+      ring.style.opacity  = currentDark ? '0.40' : '0.35';
+      dot.style.transform = 'translate3d(' + (mx - DOT_R) + 'px,' + (my - DOT_R) + 'px,0) rotate(30deg) scale(1.5)';
+    });
+    el.addEventListener('mouseleave', function() {
+      ring.style.width    = '50px';
+      ring.style.height   = '42px';
+      ring.style.opacity  = currentDark ? '0.55' : '0.60';
+      dot.style.transform = 'translate3d(' + (mx - DOT_R) + 'px,' + (my - DOT_R) + 'px,0) rotate(30deg) scale(1)';
     });
   });
 
