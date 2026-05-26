@@ -71,24 +71,25 @@ a,a:hover,a:active,a:focus{cursor:none!important}
 /* ── CURSOR ─────────────────────────────────────────────────── */
 *,*::before,*::after{cursor:none!important}
 a,button,[role=button]{cursor:none!important}
-input,select,textarea{cursor:auto!important}
+input,select,textarea{cursor:none!important}
 @media(pointer:coarse){*{cursor:auto!important}a,button,[role=button]{cursor:pointer!important}}
 #cur-dot{
-  position:fixed;top:0;left:0;width:14px;height:14px;
+  position:fixed;top:0;left:0;width:13px;height:12px;
   background:var(--cocoa);pointer-events:none;z-index:9998;
-  border-radius:2px;
-  transform:translate(-9999px,-9999px);
-  transition:background 160ms ease;
+  border-radius:48% 48% 22% 22% / 62% 62% 30% 30%;
+  transform:translate(-9999px,-9999px) rotate(30deg);
+  transition:background 160ms ease, opacity 160ms ease;
 }
 #cur-ring{
-  position:fixed;top:0;left:0;width:56px;height:56px;
+  position:fixed;top:0;left:0;width:50px;height:42px;
   border:1.5px solid var(--cocoa);pointer-events:none;z-index:9997;
-  border-radius:2px;
-  transform:translate(-9999px,-9999px);opacity:0.55;
+  border-radius:48% 48% 22% 22% / 62% 62% 30% 30%;
+  transform:translate(-9999px,-9999px) rotate(30deg);opacity:0.6;
   transition:width .22s cubic-bezier(.16,1,.3,1),
              height .22s cubic-bezier(.16,1,.3,1),
              opacity 160ms ease,
-             border-color 160ms ease;
+             border-color 160ms ease,
+             border-radius .35s cubic-bezier(.16,1,.3,1);
 }
 
 /* ── GRAIN ─────────────────────────────────────────────────── */
@@ -1122,107 +1123,111 @@ a:focus-visible,button:focus-visible{
 <!-- CURSOR SCRIPT -->
 <script>
 (function(){
-  const dot = document.getElementById('cur-dot');
-  const ring = document.getElementById('cur-ring');
+  var dot  = document.getElementById('cur-dot');
+  var ring = document.getElementById('cur-ring');
   if (!dot || !ring || window.matchMedia('(pointer:coarse)').matches) return;
 
-  const C_DARK  = '#2A1810';
-  const C_LIGHT = '#F8F4EC';
-  const DOT_R = 7, RING_R = 28;
-  const LERP = 0.10;
+  var C_DARK  = '#2A1810';
+  var C_LIGHT = '#F8F4EC';
+  var DOT_R  = 6;
+  var RING_RX = 25, RING_RY = 21;
+  var LERP = 0.18;
+  var BEAN_W = '13px', BEAN_H = '12px';
+  var BEAN_BR = '48% 48% 22% 22% / 62% 62% 30% 30%';
+  var BEAN_ROT = '30deg';
 
-  let mx = -9999, my = -9999;
-  let rx = -9999, ry = -9999;
-  let currentDark = false;
-  let rafId = null;
-  let darkZones = [];
+  var mx = -9999, my = -9999;
+  var rx = -9999, ry = -9999;
+  var rafId = null, settled = 0;
+  var currentDark = false;
+  var darkZones = [];
+  var inTextField = false;
+
+  dot.style.willChange  = 'transform';
+  ring.style.willChange = 'transform';
 
   function buildDarkZones() {
     darkZones = Array.from(document.querySelectorAll('[data-dark]')).map(function(el) {
-      const r = el.getBoundingClientRect();
+      var r = el.getBoundingClientRect();
       return { top: r.top + window.scrollY, bottom: r.bottom + window.scrollY, left: r.left, right: r.right };
     });
   }
-
   function checkDark(x, y) {
-    // Nav is always cream — force dark cursor when hovering it
     var navH = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--nav-h')) || 62;
     if (y <= navH) return false;
-    const sy = y + window.scrollY;
+    var sy = y + window.scrollY;
     for (var i = 0; i < darkZones.length; i++) {
       var z = darkZones[i];
       if (sy >= z.top && sy <= z.bottom && x >= z.left && x <= z.right) return true;
     }
     return false;
   }
-
+  function scheduleRebuild() {
+    if (typeof requestIdleCallback !== 'undefined') { requestIdleCallback(buildDarkZones, {timeout:200}); }
+    else { setTimeout(buildDarkZones, 100); }
+  }
   function applyColor(dark) {
     var c = dark ? C_LIGHT : C_DARK;
-    dot.style.background = c;
+    dot.style.background   = c;
     ring.style.borderColor = c;
-    ring.style.opacity = dark ? '0.55' : '0.60';
+    if (!inTextField) ring.style.opacity = dark ? '0.55' : '0.60';
   }
 
   function loop() {
-    rx += (mx - RING_R - rx) * LERP;
-    ry += (my - RING_R - ry) * LERP;
-    dot.style.transform  = 'translate3d(' + (mx - DOT_R) + 'px,' + (my - DOT_R) + 'px,0)';
-    ring.style.transform = 'translate3d(' + Math.round(rx) + 'px,' + Math.round(ry) + 'px,0)';
+    var dx = (mx - RING_RX) - rx;
+    var dy = (my - RING_RY) - ry;
+    rx += dx * LERP;
+    ry += dy * LERP;
+    dot.style.transform  = 'translate3d(' + (mx - DOT_R) + 'px,' + (my - DOT_R) + 'px,0) rotate(' + BEAN_ROT + ')';
+    ring.style.transform = 'translate3d(' + Math.round(rx) + 'px,' + Math.round(ry) + 'px,0) rotate(' + BEAN_ROT + ')';
+    if (Math.abs(dx) < 0.3 && Math.abs(dy) < 0.3) {
+      if (++settled > 4) { rafId = null; return; }
+    } else { settled = 0; }
     rafId = requestAnimationFrame(loop);
   }
+  function startLoop() { settled = 0; if (rafId === null) rafId = requestAnimationFrame(loop); }
 
   document.addEventListener('mousemove', function(e) {
     mx = e.clientX; my = e.clientY;
     var dark = checkDark(mx, my);
     if (dark !== currentDark) { currentDark = dark; applyColor(dark); }
-    if (rafId === null) {
-      rx = mx - RING_R; ry = my - RING_R;
-      applyColor(checkDark(mx, my));
-      loop();
-    }
-  }, { passive: true });
+    startLoop();
+  }, {passive:true});
 
   document.addEventListener('mouseleave', function() {
     mx = -9999; my = -9999;
     dot.style.transform  = 'translate3d(-9999px,-9999px,0)';
     ring.style.transform = 'translate3d(-9999px,-9999px,0)';
   });
+  document.addEventListener('mousedown', function() {
+    dot.style.transform  = 'translate3d(' + (mx - DOT_R) + 'px,' + (my - DOT_R) + 'px,0) rotate(' + BEAN_ROT + ') scale(0.8)';
+    ring.style.transform = 'translate3d(' + Math.round(rx) + 'px,' + Math.round(ry) + 'px,0) rotate(' + BEAN_ROT + ') scale(0.85)';
+  }, {passive:true});
+  document.addEventListener('mouseup', function() {
+    dot.style.transform  = 'translate3d(' + (mx - DOT_R) + 'px,' + (my - DOT_R) + 'px,0) rotate(' + BEAN_ROT + ')';
+    ring.style.transform = 'translate3d(' + Math.round(rx) + 'px,' + Math.round(ry) + 'px,0) rotate(' + BEAN_ROT + ')';
+  }, {passive:true});
 
-  document.addEventListener('mousedown', function(e) {
-    dot.style.transform = 'translate3d(' + (mx - DOT_R) + 'px,' + (my - DOT_R) + 'px,0) scale(0.8)';
-    ring.style.transform = 'translate3d(' + Math.round(rx) + 'px,' + Math.round(ry) + 'px,0) scale(0.85)';
-  }, { passive: true });
-  document.addEventListener('mouseup', function(e) {
-    dot.style.transform = 'translate3d(' + (mx - DOT_R) + 'px,' + (my - DOT_R) + 'px,0) scale(1)';
-    ring.style.transform = 'translate3d(' + Math.round(rx) + 'px,' + Math.round(ry) + 'px,0) scale(1)';
-  }, { passive: true });
-
-  document.querySelectorAll('a,button,[role=button]').forEach(function(el) {
+  document.querySelectorAll('a,button,[role=button],select').forEach(function(el) {
     el.addEventListener('mouseenter', function() {
-      ring.style.width = '72px'; ring.style.height = '72px';
+      ring.style.width = '72px'; ring.style.height = '58px';
       ring.style.opacity = currentDark ? '0.40' : '0.35';
-      dot.style.transform = 'translate3d(' + (mx - DOT_R) + 'px,' + (my - DOT_R) + 'px,0) scale(1.5)';
+      startLoop();
     });
     el.addEventListener('mouseleave', function() {
-      ring.style.width = '56px'; ring.style.height = '56px';
+      ring.style.width = '50px'; ring.style.height = '42px';
       ring.style.opacity = currentDark ? '0.55' : '0.60';
-      dot.style.transform = 'translate3d(' + (mx - DOT_R) + 'px,' + (my - DOT_R) + 'px,0) scale(1)';
+      startLoop();
     });
   });
 
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', buildDarkZones);
-  } else {
-    buildDarkZones();
-  }
-  var lastRebuildY = 0;
+  if (document.readyState === 'loading') { document.addEventListener('DOMContentLoaded', buildDarkZones); }
+  else { buildDarkZones(); }
+  var rebuildTimer = 0;
   window.addEventListener('scroll', function() {
-    if (Math.abs(window.scrollY - lastRebuildY) > 80) {
-      lastRebuildY = window.scrollY;
-      buildDarkZones();
-    }
-  }, { passive: true });
-  window.addEventListener('resize',  buildDarkZones, { passive: true });
+    clearTimeout(rebuildTimer); rebuildTimer = setTimeout(scheduleRebuild, 150);
+  }, {passive:true});
+  window.addEventListener('resize', scheduleRebuild, {passive:true});
 })();
 </script>
 
