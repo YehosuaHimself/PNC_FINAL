@@ -87,6 +87,97 @@ input,select,textarea{cursor:auto!important}
   transition:width .22s cubic-bezier(.16,1,.3,1),height .22s cubic-bezier(.16,1,.3,1),opacity .2s,border-radius .3s cubic-bezier(.16,1,.3,1);
 }
 
+
+/* ── FORMATS SECTION ─────────────────────────────────────────────── */
+.formats-section{
+  padding:clamp(80px,10vw,140px) var(--pad);
+  background:var(--ink);
+  color:var(--cream);
+}
+.formats-inner{max-width:var(--max);margin:0 auto;}
+.formats-header{
+  display:flex;align-items:baseline;gap:2rem;
+  margin-bottom:clamp(48px,6vw,80px);
+  border-bottom:1px solid rgba(248,244,236,0.12);
+  padding-bottom:clamp(28px,3vw,40px);
+}
+.formats-eyebrow{
+  font:700 10px/1 'Helvetica Neue',Arial,sans-serif;
+  letter-spacing:.18em;text-transform:uppercase;
+  color:rgba(248,244,236,0.45);white-space:nowrap;
+}
+.formats-h2{
+  font:900 clamp(28px,4vw,52px)/1.0 'Helvetica Neue',Arial,sans-serif;
+  letter-spacing:-.02em;text-transform:uppercase;color:var(--cream);
+}
+.formats-sub{
+  font:400 14px/1.7 'Helvetica Neue',Arial,sans-serif;
+  color:rgba(248,244,236,0.55);max-width:480px;margin-left:auto;
+  align-self:flex-end;
+}
+.formats-grid{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:0;
+}
+.format-card{
+  padding:clamp(28px,3.5vw,48px) clamp(20px,2.5vw,36px);
+  border-right:1px solid rgba(248,244,236,0.1);
+  display:flex;flex-direction:column;gap:20px;
+}
+.format-card:last-child{border-right:none;}
+.format-time{
+  font:900 clamp(48px,6vw,80px)/1 'Helvetica Neue',Arial,sans-serif;
+  letter-spacing:-.04em;color:var(--cream);
+  display:block;
+}
+.format-unit{
+  font:700 11px/1 'Courier New',monospace;
+  letter-spacing:.14em;color:rgba(248,244,236,0.4);
+  display:block;margin-top:6px;
+}
+.format-name{
+  font:900 13px/1.2 'Helvetica Neue',Arial,sans-serif;
+  letter-spacing:.1em;text-transform:uppercase;
+  color:var(--cream);
+}
+.format-method{
+  font:700 10px/1 'Courier New',monospace;
+  letter-spacing:.14em;text-transform:uppercase;
+  color:rgba(248,244,236,0.35);
+}
+.format-desc{
+  font:400 13px/1.7 'Helvetica Neue',Arial,sans-serif;
+  color:rgba(248,244,236,0.55);
+  margin-top:auto;
+}
+.format-ratio{
+  font:700 10px/1 'Courier New',monospace;
+  letter-spacing:.12em;color:rgba(248,244,236,0.3);
+  border-top:1px solid rgba(248,244,236,0.1);
+  padding-top:14px;margin-top:4px;
+}
+.formats-note{
+  margin-top:clamp(40px,5vw,64px);
+  padding-top:clamp(28px,3vw,40px);
+  border-top:1px solid rgba(248,244,236,0.12);
+  font:700 11px/1.6 'Helvetica Neue',Arial,sans-serif;
+  letter-spacing:.12em;text-transform:uppercase;
+  color:rgba(248,244,236,0.35);
+  text-align:center;
+}
+@media(max-width:900px){
+  .formats-grid{grid-template-columns:repeat(2,1fr);}
+  .format-card:nth-child(2){border-right:none;}
+  .format-card:nth-child(1),.format-card:nth-child(2){border-bottom:1px solid rgba(248,244,236,0.1);}
+}
+@media(max-width:540px){
+  .formats-grid{grid-template-columns:1fr;}
+  .format-card{border-right:none;border-bottom:1px solid rgba(248,244,236,0.1);}
+  .format-card:last-child{border-bottom:none;}
+  .formats-header{flex-direction:column;gap:16px;}
+  .formats-sub{margin-left:0;}
+}
 /* ── GRAIN ─────────────────────────────────────────────────── */
 #grain{
   position:fixed;inset:0;pointer-events:none;z-index:9999;opacity:0.022;
@@ -788,8 +879,8 @@ input,select,textarea{cursor:auto!important}
 .sum-alt{
   display:flex;align-items:baseline;gap:8px;
   padding:8px 14px;
-  border:1px solid rgba(248,244,236,0.1);
-  background:rgba(248,244,236,0.04);
+  border:1px solid rgba(248,244,236,0.18);
+  background:rgba(248,244,236,0.06);
 }
 .sum-alt-primary{
   border-color:rgba(248,244,236,0.22);
@@ -800,12 +891,12 @@ input,select,textarea{cursor:auto!important}
 .sum-alt-time{
   font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;
   font-weight:900;font-size:clamp(13px,1.3vw,17px);
-  letter-spacing:-0.02em;color:rgba(248,244,236,0.65);white-space:nowrap;
+  letter-spacing:-0.02em;color:rgba(248,244,236,0.85);white-space:nowrap;
 }
 .sum-alt-label{
   font-family:'Courier New',monospace;font-size:13px;font-weight:600;
   letter-spacing:0.22em;text-transform:uppercase;
-  color:rgba(248,244,236,0.25);white-space:nowrap;
+  color:rgba(248,244,236,0.55);white-space:nowrap;
 }
 /* Steps block */
 .sum-steps{
@@ -1397,6 +1488,66 @@ a:focus-visible,button:focus-visible{
 </section>
 
 <!-- TICKER -->
+
+<!-- FORMATS — same dough, any meal, any time you have -->
+<section class="formats-section" data-dark>
+  <div class="formats-inner">
+    <div class="formats-header">
+      <span class="formats-eyebrow reveal">— One Dough · Four Formats</span>
+      <h2 class="formats-h2 reveal">No matter<br>how much<br>time you have.</h2>
+      <p class="formats-sub reveal">The same flour. The same water. The same ratio. One sachet makes any of these — you choose the format when you shape it.</p>
+    </div>
+    <div class="formats-grid">
+
+      <div class="format-card reveal">
+        <div>
+          <span class="format-time">77</span>
+          <span class="format-unit">minutes · 180°C oven</span>
+        </div>
+        <div class="format-name">Classic Loaf</div>
+        <div class="format-method">Oven · Fan or Static</div>
+        <p class="format-desc">Press into a loaf tin or shape by hand. Straight into the oven — no proving, no second rise. Dense crumb, clean crust. The bread that started this.</p>
+        <div class="format-ratio">400 ml water · 1 sachet · loaf tin</div>
+      </div>
+
+      <div class="format-card reveal">
+        <div>
+          <span class="format-time">33</span>
+          <span class="format-unit">minutes · 220°C oven</span>
+        </div>
+        <div class="format-name">Pizza &amp; Pizzetta</div>
+        <div class="format-method">Oven · Higher Heat</div>
+        <p class="format-desc">Press flat on a lined tray — thin for pizzetta, thicker for pizza. Add toppings after 15 minutes. Gluten-free pizza base that holds. One sachet makes two pizzette or one pizza.</p>
+        <div class="format-ratio">400 ml water · 1 sachet · lined tray</div>
+      </div>
+
+      <div class="format-card reveal">
+        <div>
+          <span class="format-time">22</span>
+          <span class="format-unit">minutes · 200°C oven</span>
+        </div>
+        <div class="format-name">Flatbread</div>
+        <div class="format-method">Oven · Dry Tray</div>
+        <p class="format-desc">Divide and press thin — 6–8mm. No tin needed. Bakes crisp at the edges, dense at the centre. Serves alongside anything. One sachet makes four flatbreads.</p>
+        <div class="format-ratio">400 ml water · 1 sachet · 4 flatbreads</div>
+      </div>
+
+      <div class="format-card reveal">
+        <div>
+          <span class="format-time">7</span>
+          <span class="format-unit">minutes · stovetop</span>
+        </div>
+        <div class="format-name">Pancakes</div>
+        <div class="format-method">Pan · Medium Heat · No Oven</div>
+        <p class="format-desc">Add 450 ml water instead of 400 for a looser batter. Pour into a hot pan — 3 minutes per side. No oven required. One sachet makes six pancakes. Ready before the coffee brews.</p>
+        <div class="format-ratio">450 ml water · 1 sachet · 6 pancakes</div>
+      </div>
+
+    </div>
+    <p class="formats-note">Same flour. Same psyllium husk. Same Alpine salt. Same ratio. Every format. No measuring. No guesswork. One sachet.</p>
+  </div>
+</section>
+
 
 <!-- SHIPPING BADGE -->
 <div class="ship-badge" data-dark aria-label="Rapid global shipping">
