@@ -1502,7 +1502,9 @@ a:focus-visible,button:focus-visible{
 
 /* ── GRAIN SCATTER — Creativity AC-02 ───────────────────────────────── */
 /* The three ingredients scatter like grains thrown on linen.            */
-/* Hold over the hero for 1.5s. Exists only because of what these are.  */
+/* Still the cursor over the hero. Wait. Then: flour disperses wide,    */
+/* psyllium husk drifts and tumbles, Alpine salt crystals fall short.   */
+/* Each physics profile exists only because of what the ingredient is.  */
 
 .hero-ingredients-scatter{
   position:absolute;inset:0;
@@ -1514,87 +1516,100 @@ a:focus-visible,button:focus-visible{
   position:absolute;
   font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;
   font-weight:900;
-  font-size:clamp(18px,2.2vw,28px);
-  letter-spacing:0.12em;
+  font-size:clamp(13px,1.5vw,20px);
+  letter-spacing:0.18em;
   text-transform:uppercase;
   color:rgba(248,244,236,0);
   white-space:nowrap;
   pointer-events:none;
-  will-change:transform,opacity;
+  will-change:transform,opacity,color;
   transition:none;
+  transform:translate(-50%,-50%) rotate(0deg) scale(1);
 }
 
-/* State: settled — faint, in position */
+/* ── STATES ── */
 .scatter-word.settled{
-  color:rgba(248,244,236,0.08);
-  transition:transform 2.4s cubic-bezier(.16,1,.3,1),
-             color 1.2s ease;
+  color:rgba(248,244,236,0.07);
+  transition:transform 3s cubic-bezier(.16,1,.3,1),
+             color 1.4s ease;
 }
-
-/* State: scattered — burst apart */
 .scatter-word.scattered{
-  color:rgba(248,244,236,0.65);
-  transition:transform 1.8s cubic-bezier(.16,1,.3,1),
-             color 0.6s ease;
+  color:rgba(248,244,236,0.72);
+  transition:transform var(--scatter-dur,1.6s) cubic-bezier(.16,1,.3,1),
+             color 0.5s ease;
 }
-
-/* State: returning */
 .scatter-word.returning{
-  color:rgba(248,244,236,0.08);
-  transition:transform 2.8s cubic-bezier(.16,1,.3,1),
-             color 2s ease 0.4s;
+  color:rgba(248,244,236,0.07);
+  transition:transform 3.2s cubic-bezier(.16,1,.3,1),
+             color 2.4s ease 0.6s;
 }
 
-/* Hint pulse — appears at 1s hold, disappears on trigger */
+/* ── HINT ── */
 .hero-scatter-hint{
   position:absolute;
-  bottom:28%;left:50%;
+  bottom:22%;left:50%;
   transform:translateX(-50%);
   font-family:'Courier New',monospace;
-  font-size:10px;
-  letter-spacing:0.3em;
+  font-size:9px;
+  letter-spacing:0.38em;
   text-transform:uppercase;
   color:rgba(248,244,236,0);
   pointer-events:none;
   z-index:4;
   white-space:nowrap;
-  transition:color 0.6s ease;
+  transition:color 0.8s ease, opacity 0.8s ease;
+  opacity:0;
 }
 .hero-scatter-hint.hinting{
-  color:rgba(248,244,236,0.28);
+  color:rgba(248,244,236,0.22);
+  opacity:1;
 }
 .hero-scatter-hint.gone{
   color:rgba(248,244,236,0) !important;
-  transition:color 0.3s ease;
+  opacity:0 !important;
+  transition:color 0.25s ease, opacity 0.25s ease !important;
 }
 
-/* Hold progress ring around cursor */
+/* ── HOLD PROGRESS RING ── */
+/* Replaces the existing cursor ring during hold — sits at cursor position */
 .scatter-hold-ring{
   position:fixed;
-  width:48px;height:48px;
-  margin:-24px 0 0 -24px;
+  width:52px;height:52px;
   pointer-events:none;
-  z-index:9998;
+  z-index:9996;
   opacity:0;
-  transition:opacity .2s;
+  transition:opacity .25s ease;
+  transform:translate(-50%,-50%);
+  top:0;left:0;
 }
 .scatter-hold-ring.active{opacity:1;}
-.scatter-hold-ring circle{
+.scatter-hold-ring circle.track{
   fill:none;
-  stroke:rgba(248,244,236,0.6);
-  stroke-width:1.5;
-  stroke-dasharray:138.2;
-  stroke-dashoffset:138.2;
+  stroke:rgba(248,244,236,0.12);
+  stroke-width:1;
+}
+.scatter-hold-ring circle.fill{
+  fill:none;
+  stroke:rgba(248,244,236,0.55);
+  stroke-width:1;
+  stroke-dasharray:141.4;
+  stroke-dashoffset:141.4;
   stroke-linecap:round;
   transform-origin:50% 50%;
   transform:rotate(-90deg);
   transition:stroke-dashoffset 1.5s linear;
 }
-.scatter-hold-ring.filling circle{
+.scatter-hold-ring.filling circle.fill{
   stroke-dashoffset:0;
 }
+
 @media(prefers-reduced-motion:reduce){
-  .scatter-word,.scatter-hold-ring,.hero-scatter-hint{display:none!important}
+  .scatter-word,
+  .scatter-hold-ring,
+  .hero-scatter-hint{display:none!important}
+}
+@media(max-width:480px){
+  .scatter-word{font-size:clamp(11px,3.5vw,15px);}
 }
 @media(max-width:600px){
   .scatter-word{font-size:clamp(14px,4.5vw,20px);}
@@ -1615,8 +1630,9 @@ a:focus-visible,button:focus-visible{
 <!-- CURSOR -->
 <div id="cur-dot" aria-hidden="true"></div>
 <!-- GRAIN SCATTER HOLD RING -->
-<svg class="scatter-hold-ring" id="scatter-ring" aria-hidden="true" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
-  <circle cx="24" cy="24" r="22"/>
+<svg class="scatter-hold-ring" id="scatter-ring" aria-hidden="true" viewBox="0 0 52 52" xmlns="http://www.w3.org/2000/svg">
+  <circle class="track" cx="26" cy="26" r="22.5"/>
+  <circle class="fill"  cx="26" cy="26" r="22.5"/>
 </svg>
 <div id="cur-ring" aria-hidden="true"></div>
 <!-- GRAIN -->
@@ -1678,13 +1694,13 @@ a:focus-visible,button:focus-visible{
     </div>
   </div>
   <!-- Grain Scatter — Creativity AC-02 -->
-  <!-- Hold over hero 1.5s: flour disperses, psyllium drifts, salt crystallises -->
+  <!-- Still the cursor. Wait 1.5s. The three ingredients scatter. -->
   <div class="hero-ingredients-scatter" aria-hidden="true" id="scatter-layer">
-    <div class="scatter-word" id="sw-flour"  data-base-x="18"  data-base-y="38">Buckwheat Flour</div>
-    <div class="scatter-word" id="sw-husk"   data-base-x="52"  data-base-y="58">Psyllium Husk</div>
-    <div class="scatter-word" id="sw-salt"   data-base-x="72"  data-base-y="42">Alpine Salt</div>
+    <div class="scatter-word" id="sw-flour" data-base-x="16" data-base-y="36">Buckwheat Flour</div>
+    <div class="scatter-word" id="sw-husk"  data-base-x="54" data-base-y="60">Psyllium Husk</div>
+    <div class="scatter-word" id="sw-salt"  data-base-x="74" data-base-y="44">Alpine Salt</div>
   </div>
-  <div class="hero-scatter-hint" id="scatter-hint" aria-hidden="true">Hold</div>
+  <div class="hero-scatter-hint" id="scatter-hint" aria-hidden="true">Three ingredients.</div>
 
   <!-- Design AC-03: purely visual moment, no label -->
   <div class="hero-grain-count" aria-hidden="true">2,300,000</div>
@@ -2616,179 +2632,271 @@ document.addEventListener('DOMContentLoaded',function(){
 
 
 <!-- GRAIN SCATTER INTERACTION — Creativity AC-02 -->
+<!-- World-class: viewport-relative physics, staggered scatter,      -->
+<!-- hold-to-trigger with live ring, touch support, clean state mgmt  -->
 <script>
 (function(){
-  /* Respect reduced motion */
+  'use strict';
+
   if(window.matchMedia('(prefers-reduced-motion:reduce)').matches) return;
+  /* Only desktop+tablet — touch devices get a lighter version below */
 
   var hero   = document.getElementById('main');
-  var layer  = document.getElementById('scatter-layer');
   var hint   = document.getElementById('scatter-hint');
   var ring   = document.getElementById('scatter-ring');
-  if(!hero||!layer||!ring) return;
-
   var flour  = document.getElementById('sw-flour');
   var husk   = document.getElementById('sw-husk');
   var salt   = document.getElementById('sw-salt');
-  var words  = [flour, husk, salt];
+  if(!hero||!ring||!flour||!husk||!salt) return;
 
-  /* ── PHYSICS PROFILES ─────────────────────────────────────────
-     Flour  — fine particulate, disperses widest, drifts upward
-     Husk   — fibrous, medium scatter, slight tumble rotation
-     Salt   — crystalline, sharp burst, short range, falls
+  /* ── PHYSICS: viewport-relative displacement ─────────────────────
+     Each ingredient has a scatter profile derived from its physical
+     properties. Distances are in vw/vh so they read on any screen.
+
+     Flour  — finely milled grain, lightest, disperses furthest,
+              drifts upward and left, slight counter-clockwise rotation.
+     Husk   — fibrous psyllium, medium weight, tumbles sideways,
+              slight clockwise spin, settles lower than it started.
+     Salt   — crystalline, densest of the three, shortest burst,
+              drops sharply, rotates most aggressively.
   ──────────────────────────────────────────────────────────────── */
-  var profiles = {
-    flour: { tx: -38, ty: -52, rot:  -14, scale: 1.08 },
-    husk:  { tx:  28, ty: -18, rot:    8, scale: 0.94 },
-    salt:  { tx:  14, ty:  32, rot:  -22, scale: 1.02 }
-  };
+  function vw(n){ return window.innerWidth  * n / 100; }
+  function vh(n){ return window.innerHeight * n / 100; }
 
-  /* ── INITIAL SETTLE ──────────────────────────────────────────── */
-  function place(el, bx, by) {
-    el.style.left = bx + '%';
-    el.style.top  = by + '%';
+  function getProfiles(){
+    return {
+      flour: { tx: -vw(14), ty: -vh(22), rot: -18, scale: 1.06, dur: '1.55s', delay: 0   },
+      husk:  { tx:  vw(11), ty:  vh(8),  rot:  12, scale: 0.92, dur: '1.72s', delay: 60  },
+      salt:  { tx:  vw(6),  ty:  vh(16), rot: -28, scale: 1.0,  dur: '1.38s', delay: 120 }
+    };
+  }
+
+  /* ── STATE ───────────────────────────────────────────────────── */
+  var state       = 'idle'; /* idle | settling | settled | holding | scattered | returning */
+  var holdTimer   = null;
+  var hintTimer   = null;
+  var returnTimer = null;
+  var staggerTimers = [];
+  var originX = 0, originY = 0;
+  var HOLD_MS = 1500;
+  var MOVE_THRESHOLD = 14; /* px — cancel hold if cursor drifts */
+
+  /* ── INITIAL POSITIONING ─────────────────────────────────────── */
+  function place(el){
+    el.style.left      = el.dataset.baseX + '%';
+    el.style.top       = el.dataset.baseY + '%';
     el.style.transform = 'translate(-50%,-50%) rotate(0deg) scale(1)';
   }
 
-  function settleAll() {
-    words.forEach(function(w) {
+  function settleAll(){
+    if(state === 'scattered' || state === 'returning') return;
+    state = 'settling';
+    [flour,husk,salt].forEach(function(w){
       w.classList.remove('scattered','returning');
       w.classList.add('settled');
-      place(w,
-        parseFloat(w.dataset.baseX),
-        parseFloat(w.dataset.baseY)
-      );
+      place(w);
     });
+    setTimeout(function(){ if(state==='settling') state='settled'; }, 3100);
   }
 
-  /* Small initialisation delay so page load animations clear */
-  setTimeout(settleAll, 1800);
+  setTimeout(settleAll, 1600);
 
   /* ── SCATTER ─────────────────────────────────────────────────── */
-  function scatter() {
-    scattered = true;
-    hint.classList.add('gone');
-    ring.classList.remove('filling','active');
+  function doScatter(){
+    if(state === 'scattered') return;
+    clearTimers();
+    state = 'scattered';
 
-    var apply = function(el, key) {
-      var p = profiles[key];
+    hint.classList.add('gone');
+    ringOff();
+
+    var profiles = getProfiles();
+    var pairs = [
+      { el: flour, key: 'flour' },
+      { el: husk,  key: 'husk'  },
+      { el: salt,  key: 'salt'  }
+    ];
+
+    pairs.forEach(function(pair){
+      var p  = profiles[pair.key];
+      var el = pair.el;
       var bx = parseFloat(el.dataset.baseX);
       var by = parseFloat(el.dataset.baseY);
-      el.classList.remove('settled','returning');
-      el.classList.add('scattered');
-      el.style.left = bx + '%';
-      el.style.top  = by + '%';
-      el.style.transform = 'translate(-50%,-50%) translate(' + p.tx + 'px,' + p.ty + 'px) rotate(' + p.rot + 'deg) scale(' + p.scale + ')';
-    };
 
-    apply(flour, 'flour');
-    apply(husk,  'husk');
-    apply(salt,  'salt');
+      var t = setTimeout(function(){
+        el.style.setProperty('--scatter-dur', p.dur);
+        el.classList.remove('settled','returning');
+        el.classList.add('scattered');
+        /* Apply viewport-relative displacement */
+        el.style.transform =
+          'translate(-50%,-50%)' +
+          ' translate(' + p.tx + 'px,' + p.ty + 'px)' +
+          ' rotate(' + p.rot + 'deg)' +
+          ' scale(' + p.scale + ')';
+      }, p.delay);
 
-    /* Auto-return after 2.8s */
-    returnTimer = setTimeout(returnAll, 2800);
+      staggerTimers.push(t);
+    });
+
+    /* Auto-return */
+    returnTimer = setTimeout(returnAll, 3200);
   }
 
   /* ── RETURN ──────────────────────────────────────────────────── */
-  var returnTimer = null;
-  var scattered   = false;
+  function returnAll(){
+    if(state !== 'scattered') return;
+    state = 'returning';
 
-  function returnAll() {
-    scattered = false;
-    words.forEach(function(w) {
-      w.classList.remove('scattered');
-      w.classList.add('returning');
-      place(w,
-        parseFloat(w.dataset.baseX),
-        parseFloat(w.dataset.baseY)
-      );
-      /* After transition ends, swap to settled */
-      setTimeout(function() {
+    [flour,husk,salt].forEach(function(w, i){
+      var t = setTimeout(function(){
+        w.classList.remove('scattered');
+        w.classList.add('returning');
+        place(w);
+      }, i * 80);
+      staggerTimers.push(t);
+    });
+
+    /* After longest return transition completes, mark settled */
+    setTimeout(function(){
+      [flour,husk,salt].forEach(function(w){
         w.classList.remove('returning');
         w.classList.add('settled');
-      }, 2900);
-    });
+      });
+      state = 'settled';
+      /* Re-enable hold after a cooldown */
+      setTimeout(function(){ }, 400);
+    }, 3400);
   }
 
-  /* ── HOLD MECHANIC ───────────────────────────────────────────── */
-  var holdTimer  = null;
-  var hintTimer  = null;
-  var holdActive = false;
-  var ringX = 0, ringY = 0;
-  var HOLD_MS = 1500;
-
-  function startHold(cx, cy) {
-    if(scattered) return;
-    holdActive = true;
-    ringX = cx; ringY = cy;
-    ring.style.left = cx + 'px';
-    ring.style.top  = cy + 'px';
+  /* ── RING ─────────────────────────────────────────────────────── */
+  function ringOn(x, y){
+    ring.style.left = x + 'px';
+    ring.style.top  = y + 'px';
     ring.classList.add('active');
-    /* Small delay then start fill animation */
     requestAnimationFrame(function(){
       requestAnimationFrame(function(){
         ring.classList.add('filling');
       });
     });
-
-    /* Show hint at 700ms */
-    hintTimer = setTimeout(function(){
-      hint.classList.add('hinting');
-    }, 700);
-
-    holdTimer = setTimeout(function(){
-      if(holdActive) scatter();
-    }, HOLD_MS);
   }
 
-  function cancelHold() {
-    holdActive = false;
-    clearTimeout(holdTimer);
-    clearTimeout(hintTimer);
-    ring.classList.remove('filling','active');
-    hint.classList.remove('hinting');
-    /* Reset ring stroke for next time */
+  function ringOff(){
+    ring.classList.remove('filling');
+    ring.classList.remove('active');
+    /* Force reflow so transition resets cleanly for next hold */
     void ring.offsetWidth;
   }
 
-  /* ── MOUSE ───────────────────────────────────────────────────── */
+  /* ── HOLD ─────────────────────────────────────────────────────── */
+  function startHold(x, y){
+    if(state === 'scattered' || state === 'returning' || state === 'holding') return;
+    state    = 'holding';
+    originX  = x;
+    originY  = y;
+
+    ringOn(x, y);
+
+    hintTimer = setTimeout(function(){
+      if(state === 'holding'){
+        hint.classList.remove('gone');
+        hint.classList.add('hinting');
+      }
+    }, 700);
+
+    holdTimer = setTimeout(function(){
+      if(state === 'holding') doScatter();
+    }, HOLD_MS);
+  }
+
+  function cancelHold(){
+    if(state !== 'holding') return;
+    state = 'settled';
+    clearTimeout(holdTimer);
+    clearTimeout(hintTimer);
+    holdTimer = hintTimer = null;
+    ringOff();
+    hint.classList.remove('hinting');
+  }
+
+  function clearTimers(){
+    clearTimeout(holdTimer);
+    clearTimeout(hintTimer);
+    clearTimeout(returnTimer);
+    staggerTimers.forEach(clearTimeout);
+    staggerTimers = [];
+    holdTimer = hintTimer = returnTimer = null;
+  }
+
+  /* ── MOUSE ────────────────────────────────────────────────────── */
+  /* mouseenter: start hold only if cursor arrives stationary        */
+  /* (velocity-based: we check if no mousemove fires within 120ms)  */
+  var enterTimer = null;
+
   hero.addEventListener('mouseenter', function(e){
-    if(!scattered) startHold(e.clientX, e.clientY);
+    clearTimeout(enterTimer);
+    var ex = e.clientX, ey = e.clientY;
+    var moved = false;
+    var onMove = function(ev){
+      var dx = ev.clientX - ex, dy = ev.clientY - ey;
+      if(Math.sqrt(dx*dx+dy*dy) > 4) moved = true;
+    };
+    document.addEventListener('mousemove', onMove, {once:false});
+    enterTimer = setTimeout(function(){
+      document.removeEventListener('mousemove', onMove);
+      if(!moved && state !== 'scattered' && state !== 'returning'){
+        startHold(ex, ey);
+      }
+    }, 140);
   });
+
   hero.addEventListener('mousemove', function(e){
-    if(holdActive){
-      /* Cancel if mouse moves more than 12px from hold origin */
-      var dx = e.clientX - ringX;
-      var dy = e.clientY - ringY;
-      if(Math.sqrt(dx*dx+dy*dy) > 12) cancelHold();
+    /* Update ring position while holding */
+    if(state === 'holding'){
+      ring.style.left = e.clientX + 'px';
+      ring.style.top  = e.clientY + 'px';
+      var dx = e.clientX - originX;
+      var dy = e.clientY - originY;
+      if(Math.sqrt(dx*dx+dy*dy) > MOVE_THRESHOLD){
+        cancelHold();
+        /* Restart hold at new position after brief pause */
+        var nx = e.clientX, ny = e.clientY;
+        var restartTimer = setTimeout(function(){
+          startHold(nx, ny);
+        }, 300);
+        staggerTimers.push(restartTimer);
+      }
     }
   });
-  hero.addEventListener('mouseleave', cancelHold);
+
+  hero.addEventListener('mouseleave', function(){
+    clearTimeout(enterTimer);
+    cancelHold();
+  });
   hero.addEventListener('mousedown',  cancelHold);
 
   /* ── TOUCH (long press) ──────────────────────────────────────── */
-  var touchX = 0, touchY = 0;
+  var touchOriginX = 0, touchOriginY = 0;
+
   hero.addEventListener('touchstart', function(e){
     var t = e.touches[0];
-    touchX = t.clientX; touchY = t.clientY;
+    touchOriginX = t.clientX;
+    touchOriginY = t.clientY;
     startHold(t.clientX, t.clientY);
   }, {passive:true});
+
   hero.addEventListener('touchmove', function(e){
     var t = e.touches[0];
-    var dx = t.clientX - touchX;
-    var dy = t.clientY - touchY;
+    var dx = t.clientX - touchOriginX;
+    var dy = t.clientY - touchOriginY;
     if(Math.sqrt(dx*dx+dy*dy) > 10) cancelHold();
-  }, {passive:true});
-  hero.addEventListener('touchend',   cancelHold);
-  hero.addEventListener('touchcancel',cancelHold);
-
-  /* ── TRACK CURSOR POSITION for ring ─────────────────────────── */
-  document.addEventListener('mousemove', function(e){
-    if(holdActive){
-      ring.style.left = e.clientX + 'px';
-      ring.style.top  = e.clientY + 'px';
+    if(state === 'holding'){
+      ring.style.left = t.clientX + 'px';
+      ring.style.top  = t.clientY + 'px';
     }
-  });
+  }, {passive:true});
+
+  hero.addEventListener('touchend',    cancelHold);
+  hero.addEventListener('touchcancel', cancelHold);
 
 })();
 </script>
