@@ -885,6 +885,57 @@ a:focus-visible,button:focus-visible{
   .cookie-btns{width:100%;}
   .cookie-btn{flex:1;text-align:center;}
 }
+
+/* ── SHIP BADGE ─────────────────────────────────────────────── */
+.ship-badge{
+  display:flex;align-items:center;justify-content:center;
+  padding:clamp(18px,2.5vw,28px) var(--g);
+  border-top:1px solid rgba(92,61,46,0.10);
+  border-bottom:1px solid rgba(92,61,46,0.10);
+  background:var(--cream);
+}
+.ship-badge[data-dark]{
+  background:transparent;
+  border-top-color:rgba(248,244,236,0.08);
+  border-bottom-color:rgba(248,244,236,0.08);
+}
+.ship-badge-inner{
+  display:flex;align-items:center;gap:clamp(16px,2.5vw,36px);
+  max-width:var(--max);width:100%;justify-content:center;
+}
+.ship-rule{
+  flex:1;max-width:200px;height:1px;
+  background:linear-gradient(to right,transparent,rgba(92,61,46,0.18));
+}
+.ship-rule.r{
+  background:linear-gradient(to left,transparent,rgba(92,61,46,0.18));
+}
+.ship-badge[data-dark] .ship-rule{
+  background:linear-gradient(to right,transparent,rgba(248,244,236,0.14));
+}
+.ship-badge[data-dark] .ship-rule.r{
+  background:linear-gradient(to left,transparent,rgba(248,244,236,0.14));
+}
+.ship-badge-content{
+  display:flex;align-items:center;gap:clamp(10px,1.5vw,18px);
+  flex-shrink:0;
+}
+.ship-globe{
+  width:clamp(20px,2vw,26px);height:clamp(20px,2vw,26px);
+  opacity:0.45;flex-shrink:0;
+}
+.ship-badge[data-dark] .ship-globe{opacity:0.50;filter:invert(1);}
+.ship-text{
+  font-family:'Courier New',monospace;font-size:13px;font-weight:600;
+  letter-spacing:0.28em;text-transform:uppercase;
+  color:var(--cocoa);white-space:nowrap;
+}
+.ship-badge[data-dark] .ship-text{color:rgba(248,244,236,0.62);}
+.ship-dot{
+  width:3px;height:3px;border-radius:50%;
+  background:var(--cocoa-mu);flex-shrink:0;opacity:0.5;
+}
+.ship-badge[data-dark] .ship-dot{background:rgba(248,244,236,0.4);}
 </style>
 </head>
 <body>
