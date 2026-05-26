@@ -56,7 +56,8 @@ a,a:hover,a:active,a:focus{cursor:none!important}
 
 /* ── CURSOR ────────────────────────────────────────────────────────── */
 *,*::before,*::after{cursor:none!important}
-a,button,[role=button],input,select,textarea,label{cursor:none!important}
+a,button,[role=button]{cursor:none!important}
+input,select,textarea{cursor:auto!important}
 @media(pointer:coarse){*{cursor:auto!important}a,button,[role=button]{cursor:pointer!important}}
 #cur-dot{
   position:fixed;top:0;left:0;width:8px;height:8px;
@@ -1908,9 +1909,9 @@ document.addEventListener('DOMContentLoaded',function(){
     var country = cntryEl.value;
 
     var ok = true;
-    if(name.length < 2){setErr('Please enter your name.');nameEl.focus();ok=false;}
-    if(ok && !emailValid(email)){setErr('Please enter a valid email address.');emailEl.focus();ok=false;}
-    if(ok && !country){setErr('Please select your country.');cntryEl.focus();ok=false;}
+    if(name.length < 2){setErr('Enter your full name — we need this for your order confirmation.');nameEl.focus();ok=false;}
+    if(ok && !emailValid(email)){setErr('Email must include @ and a domain — for example, name@gmail.com.');emailEl.focus();ok=false;}
+    if(ok && !country){setErr('Select your shipping country so we know where to send your coffee.');cntryEl.focus();ok=false;}
     if(!ok) return;
 
     var orig = btn.textContent;
