@@ -1751,7 +1751,7 @@ body.cookie-visible #mobile-cta{bottom:var(--cookie-h,80px);}
 <div id="mobile-cta" aria-hidden="true">
   <a href="#order">
     <span>From €15 · Order Now</span>
-    <span class="mcta-price">5 loaves · ships worldwide</span>
+    <span class="mcta-price">From 5 loaves · ships worldwide</span>
   </a>
 </div>
 
@@ -2209,7 +2209,7 @@ body.cookie-visible #mobile-cta{bottom:var(--cookie-h,80px);}
           <span class="price-main">€ 3</span>
           <span class="price-unit">Per Loaf</span>
         </div>
-        <p class="price-note reveal">€ 15 per box · 5 loaves · Gluten Free<br>Ships in 3–5 business days after roast</p>
+        <p class="price-note reveal">From € 15 per box · 5 to 50 loaves · Gluten Free<br>Ships in 3–5 business days after roast</p>
       </div>
       <div class="order-divider" aria-hidden="true"></div>
       <div class="order-info-right">
@@ -2228,6 +2228,8 @@ body.cookie-visible #mobile-cta{bottom:var(--cookie-h,80px);}
             <select id="bread-qty" name="qty">
               <option value="5" selected>5 loaves — € 15</option>
               <option value="10">10 loaves — € 30</option>
+              <option value="20">20 loaves — € 60</option>
+              <option value="50">50 loaves — € 150</option>
             </select>
           </div>
           <div class="form-row reveal">
@@ -3332,6 +3334,20 @@ document.addEventListener('DOMContentLoaded',function(){
         var sb = document.getElementById('bread-submit');
         if(sb) sb.insertAdjacentHTML('afterend',
           '<span class="pship">Order in EUR · Stripe converts to your currency · ships worldwide</span>');
+
+        /* Qty select — update price-note on change */
+        var qtySelect = document.getElementById('bread-qty');
+        var priceNote = document.querySelector('.price-note');
+        var qtyMap = {'5':'From € 15 per box · 5 to 50 loaves · Gluten Free','10':'€ 30 per box · 10 loaves · Gluten Free','20':'€ 60 per box · 20 loaves · Gluten Free','50':'€ 150 per box · 50 loaves · Gluten Free'};
+        var localMap = {'5':fmtLocal(15),'10':fmtLocal(30),'20':fmtLocal(60),'50':fmtLocal(150)};
+        if(qtySelect && priceNote){
+          qtySelect.addEventListener('change', function(){
+            var v = qtySelect.value;
+            var label = qtyMap[v] || qtyMap['5'];
+            var loc = localMap[v];
+            priceNote.innerHTML = label + (loc ? ' · ≈ ' + loc : '') + '<br>Ships in 3–5 business days after roast';
+          });
+        }
       }
 
       /* ── 7. BREW PAGE INJECTIONS ────────────────────────────────── */
