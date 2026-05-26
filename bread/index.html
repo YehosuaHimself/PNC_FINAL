@@ -2086,11 +2086,11 @@ a:focus-visible,button:focus-visible{
           <p class="form-note reveal">All fields required · Secure · No account needed</p>
           <div class="form-row reveal">
             <label for="bread-name">Full Name</label>
-            <input type="text" id="bread-name" name="name" placeholder="Your name" autocomplete="name">
+            <input type="text" id="bread-name" name="name" placeholder="Your name" autocomplete="name" aria-invalid="false" aria-describedby="order-msg" required>
           </div>
           <div class="form-row reveal">
             <label for="bread-email">Email Address</label>
-            <input type="email" id="bread-email" name="email" placeholder="your@email.com" autocomplete="email">
+            <input type="email" id="bread-email" name="email" placeholder="your@email.com" autocomplete="email" aria-invalid="false" aria-describedby="order-msg" required>
           </div>
           <div class="form-row reveal">
             <label for="bread-qty">Quantity</label>
@@ -2101,7 +2101,7 @@ a:focus-visible,button:focus-visible{
           </div>
           <div class="form-row reveal">
             <label for="bread-country">Country</label>
-            <select id="bread-country" name="country">
+            <select id="bread-country" name="country" aria-invalid="false" aria-describedby="order-msg" required>
 <option value="">Select country…</option>
 <optgroup label="— German-speaking">
 <option>Germany</option>
@@ -2380,7 +2380,12 @@ document.addEventListener('DOMContentLoaded',function(){
   if(!btn) return;
 
   function emailValid(e){return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(e)}
-  function setErr(msg){msgEl.className='err';msgEl.textContent=msg}
+  function setErr(msg,fieldEl){
+    msgEl.className='err';msgEl.textContent=msg;
+    // Clear previous aria-invalid
+    [nameEl,emailEl,cntryEl].forEach(function(el){if(el)el.setAttribute('aria-invalid','false');});
+    if(fieldEl){fieldEl.setAttribute('aria-invalid','true');}
+  }
   function clearMsg(){msgEl.className='';msgEl.textContent=''}
 
   btn.addEventListener('click', async function(){
@@ -2391,9 +2396,9 @@ document.addEventListener('DOMContentLoaded',function(){
     var sku     = document.getElementById('bread-qty') ? document.getElementById('bread-qty').value : '5';
 
     var ok = true;
-    if(name.length < 2){setErr('Enter your full name — we need this for your order confirmation.');nameEl.focus();ok=false;}
-    if(ok && !emailValid(email)){setErr('Email must include @ and a domain — for example, name@gmail.com.');emailEl.focus();ok=false;}
-    if(ok && !country){setErr('Select your shipping country so we know where to send your bread.');cntryEl.focus();ok=false;}
+    if(name.length < 2){setErr('Enter your full name — we need this for your order confirmation.',nameEl);nameEl.focus();ok=false;}
+    if(ok && !emailValid(email)){setErr('Email must include @ and a domain — for example, name@gmail.com.',emailEl);emailEl.focus();ok=false;}
+    if(ok && !country){setErr('Select your shipping country so we know where to send your bread.',cntryEl);cntryEl.focus();ok=false;}
     if(!ok) return;
 
     var orig = btn.textContent;
