@@ -80,8 +80,9 @@ input,select,textarea{cursor:auto!important}
 #cur-ring{
   position:fixed;top:0;left:0;width:36px;height:36px;
   border:1.5px solid var(--cocoa);pointer-events:none;z-index:9997;
+  border-radius:50%;
   transform:translate(-9999px,-9999px);opacity:0.6;
-  transition:width .22s cubic-bezier(.16,1,.3,1),height .22s cubic-bezier(.16,1,.3,1),opacity .2s;
+  transition:width .22s cubic-bezier(.16,1,.3,1),height .22s cubic-bezier(.16,1,.3,1),opacity .2s,border-radius .35s cubic-bezier(.16,1,.3,1);
 }
 
 /* ── GRAIN ────────────────────────────────────────────────────────── */
@@ -1804,6 +1805,8 @@ a:focus-visible,button:focus-visible{
     dot.style.background = c;
     ring.style.borderColor = c;
     ring.style.opacity = dark ? '0.55' : '0.60';
+    // Brew-specific: ring morphs to coffee-bean oval in dark zones
+    ring.style.borderRadius = dark ? '60% 40% 40% 60% / 50% 50% 50% 50%' : '50%';
   }
 
   function loop() {

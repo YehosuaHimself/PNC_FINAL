@@ -82,8 +82,9 @@ input,select,textarea{cursor:auto!important}
 #cur-ring{
   position:fixed;top:0;left:0;width:36px;height:36px;
   border:1.5px solid var(--cocoa);pointer-events:none;z-index:9997;
+  border-radius:2px;
   transform:translate(-9999px,-9999px);opacity:0.6;
-  transition:width .22s cubic-bezier(.16,1,.3,1),height .22s cubic-bezier(.16,1,.3,1),opacity .2s;
+  transition:width .22s cubic-bezier(.16,1,.3,1),height .22s cubic-bezier(.16,1,.3,1),opacity .2s,border-radius .3s cubic-bezier(.16,1,.3,1);
 }
 
 /* ── GRAIN ─────────────────────────────────────────────────── */
