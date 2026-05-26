@@ -819,13 +819,34 @@ input,select,textarea{cursor:auto!important}
   font-family:'Courier New',monospace;font-size:13px;font-weight:600;
   letter-spacing:0.26em;text-transform:uppercase;
   color:var(--cocoa);background:var(--cocoa-fa);
-  border:1px solid rgba(92,61,46,0.1);padding:9px 16px;
+  border:1px solid rgba(92,61,46,0.12);
+  border-left:3px solid rgba(92,61,46,0.28);
+  padding:9px 14px 9px 13px;
 }
 .nutr-tag.nt-orange{
   color:#fff;
   background:var(--err);
   border-color:var(--err);
+  border-left-color:rgba(0,0,0,0.18);
   font-weight:700;
+}
+/* Celiac Safe — teal left accent: medical precision, zero cross-contamination */
+.nutr-tag.nt-celiac{
+  border-left:3px solid #4A7C6F;
+  background:rgba(74,124,111,0.06);
+  color:var(--cocoa);
+}
+/* High Fibre — amber-brown left accent: plant origin, roughage, natural */
+.nutr-tag.nt-fibre{
+  border-left:3px solid #8B6914;
+  background:rgba(139,105,20,0.06);
+  color:var(--cocoa);
+}
+/* High Vitamin — gold left accent: vitality, nutritional density */
+.nutr-tag.nt-vitamin{
+  border-left:3px solid #B8860B;
+  background:rgba(184,134,11,0.07);
+  color:var(--cocoa);
 }
 
 /* ── ORIGINS ─────────────────────────────────────────────────── */
@@ -1922,9 +1943,9 @@ body.cookie-visible #mobile-cta{bottom:var(--cookie-h,80px);}
         <div class="nutr-tag nt-orange">Gluten Free</div>
         <div class="nutr-tag nt-orange">Sugar Free</div>
         <div class="nutr-tag nt-orange">Ultra High Protein</div>
-        <div class="nutr-tag">Complete Protein</div>
-        <div class="nutr-tag">High Fibre</div>
-        <div class="nutr-tag">Celiac Safe</div>
+        <div class="nutr-tag nt-celiac">Celiac Safe</div>
+        <div class="nutr-tag nt-fibre">High Fibre</div>
+        <div class="nutr-tag nt-vitamin">High Vitamin</div>
       </div>
     </div>
     <div class="nutrition-right">
