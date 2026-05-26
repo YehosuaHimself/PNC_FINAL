@@ -113,6 +113,20 @@ input,select,textarea{cursor:auto!important}
 }
 @media(prefers-reduced-motion:reduce){.bloom-p{animation:none;}}
 
+/* ── COORDINATE LINE ── */
+.hero-coord{
+  position:absolute;top:50%;left:0;right:0;
+  display:flex;align-items:center;gap:0;
+  pointer-events:none;z-index:3;
+  opacity:0.18;
+}
+.hero-coord-line{flex:1;height:1px;background:var(--cream);}
+.hero-coord-label{
+  font:600 9px/1 'Courier New',monospace;
+  letter-spacing:.18em;color:var(--cream);
+  padding:0 14px;white-space:nowrap;
+}
+
 /* ── GRAIN ────────────────────────────────────────────────────────── */
 #grain{
   position:fixed;inset:0;pointer-events:none;z-index:9999;opacity:0.022;
@@ -1404,6 +1418,7 @@ a:focus-visible,button:focus-visible{
       <a href="#source" class="btn-ghost-dark">Our Source ↓</a>
     </div>
   </div>
+  <div class="hero-coord" aria-hidden="true"><div class="hero-coord-line"></div><span class="hero-coord-label">38.2°E · KOCHERE</span><div class="hero-coord-line"></div></div>
   <div class="bloom-wrap" aria-hidden="true">
     <div class="bloom-p"></div>
     <div class="bloom-p"></div>
