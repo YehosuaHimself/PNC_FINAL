@@ -1447,6 +1447,11 @@ document.addEventListener('DOMContentLoaded',function(){
         var sb = document.getElementById('bread-submit');
         if(sb) sb.insertAdjacentHTML('afterend',
           '<span class="pship">Order in EUR · Stripe converts to your currency · ships worldwide</span>');
+
+        /* form-note: add currency note so non-EUR visitors see it before filling form */
+        var fn = document.querySelector('.form-note');
+        if(fn) fn.insertAdjacentHTML('beforeend',
+          ' · <span style="opacity:0.75">Priced in EUR — your card converts automatically.</span>');
       }
 
       /* ── 7. BREW PAGE INJECTIONS ────────────────────────────────── */
@@ -1477,6 +1482,11 @@ document.addEventListener('DOMContentLoaded',function(){
         var sb = document.getElementById('brew-submit');
         if(sb) sb.insertAdjacentHTML('afterend',
           '<span class="pship">Order in EUR · Stripe converts to your currency · ships worldwide</span>');
+
+        /* form-note: add currency note so non-EUR visitors see it before filling form */
+        var fn = document.querySelector('.form-note');
+        if(fn) fn.insertAdjacentHTML('beforeend',
+          ' · <span style="opacity:0.75">Priced in EUR — your card converts automatically.</span>');
       }
 
     }).catch(function(){});
