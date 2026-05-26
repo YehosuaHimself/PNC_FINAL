@@ -677,21 +677,18 @@ input,select,textarea{cursor:auto!important}
 /* ── BREW METHOD ────────────────────────────────────────────────────────── */
 .method{
   background:var(--cream);
-  position:relative;
-  overflow:hidden;
-  min-height:100vh;
   display:flex;
   align-items:stretch;
+  isolation:isolate;
 }
-/* image panel — left 52%, full height */
+/* image panel — left 52%, natural height */
 .method-img{
-  position:absolute;
-  left:0;top:0;bottom:0;
-  width:52%;
-  background-image:url('../assets/brew-steps-bg.webp');
+  flex:0 0 52%;
+  min-height:clamp(500px,70vw,900px);
+  position:relative;
+  background-image:url("../assets/brew-steps-bg.webp");
   background-size:cover;
   background-position:center center;
-  transform:translateZ(0);
 }
 /* gradient: image fades to cream on right edge only */
 .method-img::after{
@@ -700,25 +697,14 @@ input,select,textarea{cursor:auto!important}
   background:linear-gradient(
     to right,
     rgba(248,244,236,0.0) 0%,
-    rgba(248,244,236,0.0) 52%,
-    rgba(248,244,236,0.55) 72%,
+    rgba(248,244,236,0.55) 80%,
     rgba(248,244,236,1.0) 100%
   );
-}
-/* top & bottom edge fades */
-.method-img::before{
-  content:'';
-  position:absolute;inset:0;
-  background:
-    linear-gradient(to bottom,rgba(248,244,236,0.6) 0%,rgba(248,244,236,0) 12%),
-    linear-gradient(to top,rgba(248,244,236,0.6) 0%,rgba(248,244,236,0) 12%);
-  z-index:1;
+  pointer-events:none;
 }
 /* right content column */
 .method-inner{
-  position:relative;z-index:1;
-  margin-left:auto;
-  width:52%;
+  flex:1;
   padding:clamp(80px,10vw,140px) clamp(40px,5vw,80px) clamp(80px,10vw,140px) clamp(60px,6vw,100px);
   display:flex;flex-direction:column;justify-content:center;
 }
@@ -769,7 +755,7 @@ input,select,textarea{cursor:auto!important}
   align-self:start;
 }
 @media(max-width:900px){
-  .method{flex-direction:column;min-height:auto}
+  .method{flex-direction:column}
   .method-img{position:relative;width:100%;height:55vw;min-height:280px}
   .method-img::after{background:linear-gradient(to bottom,rgba(248,244,236,0) 60%,rgba(248,244,236,1) 100%)}
   .method-inner{width:100%;margin-left:0;padding:clamp(48px,8vw,80px) var(--g)}
