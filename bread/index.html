@@ -100,21 +100,33 @@ a,button,[role=button]{cursor:none!important}
 input,select,textarea{cursor:auto!important}
 @media(pointer:coarse){*{cursor:auto!important}a,button,[role=button]{cursor:pointer!important}}
 #cur-dot{
-  position:fixed;top:0;left:0;width:7px;height:7px;
+  position:fixed;top:0;left:0;width:8px;height:7px;
   background:var(--cocoa);pointer-events:none;z-index:9998;
-  border-radius:50% 50% 50% 50% / 70% 70% 30% 30%;
-  transform:translate(-9999px,-9999px) rotate(35deg);
+  /* Buckwheat grain: wider top lobes, pointed base, heart silhouette */
+  border-radius:50% 50% 42% 42% / 58% 58% 40% 40%;
+  transform:translate(-9999px,-9999px) rotate(25deg);
 }
 #cur-ring{
-  position:fixed;top:0;left:0;width:32px;height:32px;
+  position:fixed;top:0;left:0;width:34px;height:29px;
   border:1.5px solid var(--cocoa);pointer-events:none;z-index:9997;
-  /* Buckwheat grain — triangular seed with rounded faces, rotated */
-  border-radius:50% 50% 50% 50% / 70% 70% 30% 30%;
-  transform:translate(-9999px,-9999px) rotate(35deg);opacity:0.65;
+  /* Buckwheat grain heart — wide top lobes taper to a point at base   */
+  /* TL and TR are full 50% (two rounded lobes), BL/BR taper to 42/42% */
+  /* The height < width ratio creates the squash; rotation reads grain. */
+  border-radius:50% 50% 42% 42% / 60% 60% 38% 38%;
+  transform:translate(-9999px,-9999px) rotate(25deg);opacity:0.7;
   transition:width .22s cubic-bezier(.16,1,.3,1),
              height .22s cubic-bezier(.16,1,.3,1),
              opacity .2s,
              border-radius .35s cubic-bezier(.16,1,.3,1);
+}
+/* Heart cleft — the indent at the top of the grain, visible at rest   */
+#cur-ring::before{
+  content:'';position:absolute;
+  top:-2px;left:50%;transform:translateX(-50%);
+  width:3px;height:3px;
+  background:var(--cream);
+  border-radius:50%;
+  opacity:0.9;
 }
 
 
@@ -2401,7 +2413,7 @@ body.cookie-visible #mobile-cta{bottom:var(--cookie-h,80px);}
     rx += (mx - RING_R - rx) * LERP;
     ry += (my - RING_R - ry) * LERP;
     dot.style.transform  = 'translate3d(' + (mx - DOT_R) + 'px,' + (my - DOT_R) + 'px,0)';
-    ring.style.transform = 'translate3d(' + Math.round(rx) + 'px,' + Math.round(ry) + 'px,0) rotate(35deg)';
+    ring.style.transform = 'translate3d(' + Math.round(rx) + 'px,' + Math.round(ry) + 'px,0) rotate(25deg)';
     rafId = requestAnimationFrame(loop);
   }
 
@@ -2423,24 +2435,24 @@ body.cookie-visible #mobile-cta{bottom:var(--cookie-h,80px);}
   });
 
   document.addEventListener('mousedown', function(e) {
-    dot.style.transform = 'translate3d(' + (mx - DOT_R) + 'px,' + (my - DOT_R) + 'px,0) rotate(35deg) scale(0.8)';
-    ring.style.transform = 'translate3d(' + Math.round(rx) + 'px,' + Math.round(ry) + 'px,0) rotate(35deg) scale(0.85)';
+    dot.style.transform = 'translate3d(' + (mx - DOT_R) + 'px,' + (my - DOT_R) + 'px,0) rotate(25deg) scale(0.8)';
+    ring.style.transform = 'translate3d(' + Math.round(rx) + 'px,' + Math.round(ry) + 'px,0) rotate(25deg) scale(0.85)';
   }, { passive: true });
   document.addEventListener('mouseup', function(e) {
-    dot.style.transform = 'translate3d(' + (mx - DOT_R) + 'px,' + (my - DOT_R) + 'px,0) rotate(35deg) scale(1)';
-    ring.style.transform = 'translate3d(' + Math.round(rx) + 'px,' + Math.round(ry) + 'px,0) rotate(35deg) scale(1)';
+    dot.style.transform = 'translate3d(' + (mx - DOT_R) + 'px,' + (my - DOT_R) + 'px,0) rotate(25deg) scale(1)';
+    ring.style.transform = 'translate3d(' + Math.round(rx) + 'px,' + Math.round(ry) + 'px,0) rotate(25deg) scale(1)';
   }, { passive: true });
 
   document.querySelectorAll('a,button,[role=button]').forEach(function(el) {
     el.addEventListener('mouseenter', function() {
       ring.style.width = '52px'; ring.style.height = '52px';
       ring.style.opacity = currentDark ? '0.40' : '0.35';
-      dot.style.transform = 'translate3d(' + (mx - DOT_R) + 'px,' + (my - DOT_R) + 'px,0) rotate(35deg) scale(1.5)';
+      dot.style.transform = 'translate3d(' + (mx - DOT_R) + 'px,' + (my - DOT_R) + 'px,0) rotate(25deg) scale(1.5)';
     });
     el.addEventListener('mouseleave', function() {
       ring.style.width = '36px'; ring.style.height = '36px';
       ring.style.opacity = currentDark ? '0.55' : '0.60';
-      dot.style.transform = 'translate3d(' + (mx - DOT_R) + 'px,' + (my - DOT_R) + 'px,0) rotate(35deg) scale(1)';
+      dot.style.transform = 'translate3d(' + (mx - DOT_R) + 'px,' + (my - DOT_R) + 'px,0) rotate(25deg) scale(1)';
     });
   });
 
