@@ -658,6 +658,7 @@ input,select,textarea{cursor:auto!important}
   min-height:100vh;
   display:flex;
   align-items:stretch;
+  contain:layout;
 }
 /* image panel — left 52%, full height */
 .method-img{
@@ -667,6 +668,8 @@ input,select,textarea{cursor:auto!important}
   background-image:url('../assets/brew-steps-bg.webp');
   background-size:cover;
   background-position:center center;
+  will-change:transform;
+  transform:translateZ(0);
 }
 /* gradient: image fades to cream on right edge only */
 .method-img::after{
@@ -711,6 +714,7 @@ input,select,textarea{cursor:auto!important}
   border-bottom:1px solid rgba(42,24,16,0.10);
   position:relative;
   transition:opacity .25s;
+  contain:layout style;
 }
 .step:first-child{border-top:1px solid rgba(42,24,16,0.10)}
 .step:hover .step-title{letter-spacing:-0.01em}
@@ -2169,7 +2173,7 @@ a:focus-visible,button:focus-visible{
 <script>
 document.addEventListener('DOMContentLoaded',function(){
   if(typeof Lenis==='undefined')return;
-  const lenis=new Lenis({duration:1.2,easing:function(t){return Math.min(1,1.001-Math.pow(2,-10*t))},smoothWheel:true});
+  const lenis=new Lenis({duration:1.0,easing:function(t){return Math.min(1,1.001-Math.pow(2,-10*t))},smoothWheel:true});
   window.PNC_LENIS=lenis;
   const prog=document.getElementById('prog');
   function raf(time){
