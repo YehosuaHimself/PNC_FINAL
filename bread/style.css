@@ -1836,3 +1836,15 @@ body.cookie-visible #mobile-cta{bottom:var(--cookie-h,80px);}
   transform:translateY(100%);
   transition:opacity 0.8s ease, transform 0.8s ease;
 }
+
+/* ── Bread qty card grid (US2-AC1) ──────────────────────── */
+.qty-label{display:block;font-size:.75rem;letter-spacing:.08em;text-transform:uppercase;color:#6b6560;margin-bottom:.5rem}
+.bread-qty-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:.5rem;margin-bottom:.25rem}
+.bread-qty-card{background:#fff;border:1.5px solid #e2ddd8;border-radius:10px;padding:.65rem .25rem .55rem;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:.15rem;transition:border-color .18s,background .18s,transform .2s cubic-bezier(.16,1,.3,1);font-family:inherit;color:inherit}
+.bread-qty-card:hover{border-color:#b8a898;transform:translateY(-2px)}
+.bread-qty-card.selected{border-color:#3b2a1a;background:#3b2a1a;color:#fff}
+.bread-qty-card.selected .bqc-price{color:#e8d5b0}
+.bqc-count{font-size:1.1rem;font-weight:700;line-height:1}
+.bqc-unit{font-size:.62rem;letter-spacing:.06em;text-transform:uppercase;opacity:.7}
+.bqc-price{font-size:.78rem;font-weight:600;margin-top:.15rem}
+@media(max-width:420px){.bread-qty-grid{grid-template-columns:repeat(2,1fr)}}
