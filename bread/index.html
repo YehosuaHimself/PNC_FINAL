@@ -254,8 +254,8 @@ input,select,textarea{cursor:none!important}
 #site-nav{
   position:fixed;top:0;left:0;right:0;height:var(--nav-h);z-index:200;
   padding:0 var(--g);display:flex;align-items:center;justify-content:space-between;
-  background:rgba(248,244,236,0.97);border-bottom:1px solid rgba(92,61,46,0.09);
-  backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
+  background:rgba(248,244,236,0.98);border-bottom:1px solid rgba(92,61,46,0.09);
+  will-change:transform;
 }
 #site-nav .nav-logo,
 .nav-logo{
@@ -436,6 +436,7 @@ input,select,textarea{cursor:none!important}
 .ticker-inner{
   display:inline-flex;
   animation:tickerMove 42s linear infinite;
+  will-change:transform;
 }
 @keyframes tickerMove{from{transform:translateX(0)}to{transform:translateX(-50%)}}
 .ticker-item{
@@ -2688,22 +2689,35 @@ body.cookie-visible #mobile-cta{bottom:var(--cookie-h,80px);}
 <script>
 document.addEventListener('DOMContentLoaded',function(){
   if(typeof Lenis==='undefined')return;
-  /* Disable Lenis on touch (native scroll is smoother) and reduced-motion */
   if(window.matchMedia('(pointer:coarse)').matches) return;
   if(window.matchMedia('(prefers-reduced-motion:reduce)').matches) return;
-  const lenis=new Lenis({duration:1.2,easing:function(t){return Math.min(1,1.001-Math.pow(2,-10*t))},smoothWheel:true});
-  window.PNC_LENIS=lenis;
-  const prog=document.getElementById('prog');
-  function raf(time){
-    lenis.raf(time);
-    if(prog){const max=document.body.scrollHeight-window.innerHeight;prog.style.height=(max>0?(lenis.scroll/max)*100:0)+'%';}
-    requestAnimationFrame(raf);
+
+  var lenis = new Lenis({
+    duration: 1.2,
+    easing: function(t){ return Math.min(1, 1.001 - Math.pow(2, -10*t)); },
+    smoothWheel: true
+  });
+  window.PNC_LENIS = lenis;
+
+  var prog   = document.getElementById('prog');
+  var rafId2 = null;
+
+  function lenisRaf(time){ lenis.raf(time); if(lenis.isScrolling) rafId2 = requestAnimationFrame(lenisRaf); else rafId2 = null; }
+  lenis.on('scroll', function(){
+    if(rafId2 === null) rafId2 = requestAnimationFrame(lenisRaf);
+  });
+
+  if(prog){
+    window.addEventListener('scroll', function(){
+      var max = document.body.scrollHeight - window.innerHeight;
+      prog.style.height = (max > 0 ? (window.scrollY / max) * 100 : 0) + '%';
+    }, {passive:true});
   }
-  requestAnimationFrame(raf);
+
   document.querySelectorAll('a[href^="#"]').forEach(function(a){
-    a.addEventListener('click',function(e){
-      const t=document.querySelector(this.getAttribute('href'));
-      if(t){e.preventDefault();lenis.scrollTo(t,{offset:-62,duration:1.4});}
+    a.addEventListener('click', function(e){
+      var t = document.querySelector(this.getAttribute('href'));
+      if(t){ e.preventDefault(); lenis.scrollTo(t, {offset:-62, duration:1.4}); }
     });
   });
 });
