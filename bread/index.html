@@ -415,8 +415,8 @@ input,select,textarea{cursor:auto!important}
 
 /* ── TICKER ─────────────────────────────────────────────────── */
 .ticker{
-  background:var(--dark);overflow:hidden;
-  padding:22px 0;white-space:nowrap;
+  background:var(--cocoa);overflow:hidden;
+  padding:20px 0;white-space:nowrap;
 }
 .ticker-inner{
   display:inline-flex;
@@ -425,10 +425,10 @@ input,select,textarea{cursor:auto!important}
 @keyframes tickerMove{from{transform:translateX(0)}to{transform:translateX(-50%)}}
 .ticker-item{
   font-family:'Courier New',monospace;font-size:13px;font-weight:600;
-  letter-spacing:0.24em;text-transform:uppercase;
-  color:rgba(248,244,236,0.38);padding:0 44px;
+  letter-spacing:0.28em;text-transform:uppercase;
+  color:rgba(248,244,236,0.55);padding:0 44px;
 }
-.ticker-item.hl{color:var(--cocoa-mid)}
+.ticker-item.hl{color:rgba(248,244,236,0.95)}
 
 /* ── SECTION BASE ─────────────────────────────────────────────────── */
 /* ── SHIPPING BADGE ─────────────────────────────────────────────── */
@@ -1838,6 +1838,38 @@ body.cookie-visible #mobile-cta{bottom:var(--cookie-h,80px);}
 </section>
 
 <!-- TICKER -->
+<div class="ticker" data-dark aria-hidden="true">
+  <div class="ticker-inner">
+    <span class="ticker-item hl">Buckwheat · Alps · 3 Ingredients</span>
+    <span class="ticker-item">·</span>
+    <span class="ticker-item">Lausitz · Gujarat · Altaussee</span>
+    <span class="ticker-item">·</span>
+    <span class="ticker-item hl">Gluten Free · Complete Protein · Sugar Free</span>
+    <span class="ticker-item">·</span>
+    <span class="ticker-item">55 Minutes · 177°C · One Loaf</span>
+    <span class="ticker-item">·</span>
+    <span class="ticker-item hl">€ 3 Per Loaf · 5 Loaves Per Box</span>
+    <span class="ticker-item">·</span>
+    <span class="ticker-item">Pre-Weighed · Pre-Blended · Ready to Bake</span>
+    <span class="ticker-item">·</span>
+    <span class="ticker-item hl">Mill Since 1772 · 250M Year Salt · Direct Source</span>
+    <span class="ticker-item">·</span>
+    <span class="ticker-item">Buckwheat · Alps · 3 Ingredients</span>
+    <span class="ticker-item">·</span>
+    <span class="ticker-item hl">Lausitz · Gujarat · Altaussee</span>
+    <span class="ticker-item">·</span>
+    <span class="ticker-item">Gluten Free · Complete Protein · Sugar Free</span>
+    <span class="ticker-item">·</span>
+    <span class="ticker-item hl">55 Minutes · 177°C · One Loaf</span>
+    <span class="ticker-item">·</span>
+    <span class="ticker-item">€ 3 Per Loaf · 5 Loaves Per Box</span>
+    <span class="ticker-item">·</span>
+    <span class="ticker-item hl">Pre-Weighed · Pre-Blended · Ready to Bake</span>
+    <span class="ticker-item">·</span>
+    <span class="ticker-item">Mill Since 1772 · 250M Year Salt · Direct Source</span>
+    <span class="ticker-item">·</span>
+  </div>
+</div>
 
 <!-- FORMATS — same dough, any meal, any time you have -->
 <section class="formats-section" data-dark>
