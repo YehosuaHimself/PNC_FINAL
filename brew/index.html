@@ -335,8 +335,8 @@ input,select,textarea{cursor:auto!important}
 
 /* ── TICKER ────────────────────────────────────────────────────────── */
 .ticker{
-  background:var(--ink);overflow:hidden;
-  padding:22px 0;white-space:nowrap;
+  background:var(--cocoa);overflow:hidden;
+  padding:20px 0;white-space:nowrap;
 }
 .ticker-inner{
   display:inline-flex;
@@ -345,10 +345,10 @@ input,select,textarea{cursor:auto!important}
 @keyframes tickerMove{from{transform:translateX(0)}to{transform:translateX(-50%)}}
 .ticker-item{
   font-family:'Courier New',monospace;font-size:13px;font-weight:600;
-  letter-spacing:0.24em;text-transform:uppercase;
-  color:rgba(248,244,236,0.38);padding:0 44px;
+  letter-spacing:0.28em;text-transform:uppercase;
+  color:rgba(248,244,236,0.55);padding:0 44px;
 }
-.ticker-item.hl{color:var(--cocoa-mid)}
+.ticker-item.hl{color:rgba(248,244,236,0.95)}
 
 /* ── SECTION BASE ────────────────────────────────────────────────────────── */
 /* ── SHIPPING BADGE ─────────────────────────────────────────────── */
@@ -1583,6 +1583,42 @@ body.cookie-visible #mobile-cta{bottom:var(--cookie-h,80px);}
 </section>
 
 <!-- TICKER -->
+<div class="ticker" data-dark aria-hidden="true">
+  <div class="ticker-inner">
+    <span class="ticker-item hl">Kochere G1 · Yirgacheffe · Ethiopia</span>
+    <span class="ticker-item">·</span>
+    <span class="ticker-item">2,100 Metres · Home of Coffee</span>
+    <span class="ticker-item">·</span>
+    <span class="ticker-item hl">Jasmine · Bergamot · Blueberry</span>
+    <span class="ticker-item">·</span>
+    <span class="ticker-item">85+ SCA · Grade 1 · Washed Process</span>
+    <span class="ticker-item">·</span>
+    <span class="ticker-item hl">One Pad · One Cup · € 1</span>
+    <span class="ticker-item">·</span>
+    <span class="ticker-item">Roasted to Order · Nitrogen-Flushed</span>
+    <span class="ticker-item">·</span>
+    <span class="ticker-item hl">92–94°C · Full Immersion · 4 Minutes</span>
+    <span class="ticker-item">·</span>
+    <span class="ticker-item">AMG Coffee Export · Direct Source</span>
+    <span class="ticker-item">·</span>
+    <span class="ticker-item hl">Kochere G1 · Yirgacheffe · Ethiopia</span>
+    <span class="ticker-item">·</span>
+    <span class="ticker-item">2,100 Metres · Home of Coffee</span>
+    <span class="ticker-item">·</span>
+    <span class="ticker-item hl">Jasmine · Bergamot · Blueberry</span>
+    <span class="ticker-item">·</span>
+    <span class="ticker-item">85+ SCA · Grade 1 · Washed Process</span>
+    <span class="ticker-item">·</span>
+    <span class="ticker-item hl">One Pad · One Cup · € 1</span>
+    <span class="ticker-item">·</span>
+    <span class="ticker-item">Roasted to Order · Nitrogen-Flushed</span>
+    <span class="ticker-item">·</span>
+    <span class="ticker-item hl">92–94°C · Full Immersion · 4 Minutes</span>
+    <span class="ticker-item">·</span>
+    <span class="ticker-item">AMG Coffee Export · Direct Source</span>
+    <span class="ticker-item">·</span>
+  </div>
+</div>
 
 <!-- SHIPPING BADGE -->
 <div class="ship-badge" data-dark aria-label="Rapid global shipping">
@@ -1594,39 +1630,6 @@ body.cookie-visible #mobile-cta{bottom:var(--cookie-h,80px);}
       
     </div>
     <div class="ship-rule r"></div>
-  </div>
-</div>
-
-<div class="ticker" data-dark aria-hidden="true">
-  <div class="ticker-inner">
-    <span class="ticker-item hl">Kochere G1 · Yirgacheffe · Ethiopia</span>
-    <span class="ticker-item">·</span>
-    <span class="ticker-item">2,100 Metres · Washed Process</span>
-    <span class="ticker-item">·</span>
-    <span class="ticker-item hl">85+ SCA Cup Score</span>
-    <span class="ticker-item">·</span>
-    <span class="ticker-item">Roasted to Order · Ships in 7 Days</span>
-    <span class="ticker-item">·</span>
-    <span class="ticker-item hl">One Pad · One Cup · € 1</span>
-    <span class="ticker-item">·</span>
-    <span class="ticker-item">Biodegradable Kraft Paper</span>
-    <span class="ticker-item">·</span>
-    <span class="ticker-item hl">Jasmine · Bergamot · Blueberry</span>
-    <span class="ticker-item">·</span>
-    <span class="ticker-item">Kochere G1 · Yirgacheffe · Ethiopia</span>
-    <span class="ticker-item">·</span>
-    <span class="ticker-item">2,100 Metres · Washed Process</span>
-    <span class="ticker-item">·</span>
-    <span class="ticker-item hl">85+ SCA Cup Score</span>
-    <span class="ticker-item">·</span>
-    <span class="ticker-item">Roasted to Order · Ships in 7 Days</span>
-    <span class="ticker-item">·</span>
-    <span class="ticker-item hl">One Pad · One Cup · € 1</span>
-    <span class="ticker-item">·</span>
-    <span class="ticker-item">Biodegradable Kraft Paper</span>
-    <span class="ticker-item">·</span>
-    <span class="ticker-item hl">Jasmine · Bergamot · Blueberry</span>
-    <span class="ticker-item">·</span>
   </div>
 </div>
 
