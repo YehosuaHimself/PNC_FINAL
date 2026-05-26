@@ -21,7 +21,7 @@
 <style>
 /* ── RESET ─────────────────────────────────────────────────── */
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-html{font-size:16px;overflow-x:hidden;scrollbar-width:none}
+html{font-size:16px;overflow-x:hidden;scrollbar-width:none;background:#F8F4EC}
 ::-webkit-scrollbar{display:none}
 html,html.lenis,html.lenis body{height:auto}
 .lenis.lenis-smooth{scroll-behavior:auto!important}
@@ -242,7 +242,7 @@ input,select,textarea{cursor:none!important;caret-color:transparent}
 
 /* ── GRAIN ─────────────────────────────────────────────────── */
 #grain{
-  position:fixed;inset:0;pointer-events:none;z-index:9999;opacity:0.022;
+  position:fixed;inset:0;pointer-events:none;z-index:9999;opacity:0.04;
   background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   background-size:160px;
 }

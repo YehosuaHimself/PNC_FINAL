@@ -21,7 +21,7 @@
 <style>
 /* ── RESET ─────────────────────────────────────────────────── */
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-html{font-size:16px;overflow-x:hidden;scrollbar-width:none}
+html{font-size:16px;overflow-x:hidden;scrollbar-width:none;background:#F8F4EC}
 ::-webkit-scrollbar{display:none}
 html,html.lenis,html.lenis body{height:auto}
 .lenis.lenis-smooth{scroll-behavior:auto!important}
@@ -94,7 +94,7 @@ input,select,textarea{cursor:none!important;caret-color:transparent}
 
 /* ── GRAIN ─────────────────────────────────────────────────── */
 #grain{
-  position:fixed;inset:0;pointer-events:none;z-index:9999;opacity:0.022;
+  position:fixed;inset:0;pointer-events:none;z-index:9999;opacity:0.04;
   background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   background-size:160px;
 }
@@ -262,8 +262,28 @@ input,select,textarea{cursor:none!important;caret-color:transparent}
   width:84px;height:84px;
   border-color:rgba(248,244,236,0.42);
 }
-.hero-product--bread{background:var(--ink);}
-.hero-product--brew{background:var(--dark);}
+.hero-product--bread{
+  background:var(--ink);
+  background-image:
+    linear-gradient(to top,
+      rgba(42,24,16,0.97) 0%,
+      rgba(42,24,16,0.72) 38%,
+      rgba(42,24,16,0.18) 68%,
+      rgba(42,24,16,0.10) 100%),
+    url('/img/bread-hero.webp');
+  background-size:cover;background-position:center top;
+}
+.hero-product--brew{
+  background:var(--dark);
+  background-image:
+    linear-gradient(to top,
+      rgba(24,14,8,0.97) 0%,
+      rgba(24,14,8,0.74) 38%,
+      rgba(24,14,8,0.20) 68%,
+      rgba(24,14,8,0.10) 100%),
+    url('/img/brew-hero.webp');
+  background-size:cover;background-position:center;
+}
 .hero-product--bread > *,
 .hero-product--brew > *{position:relative;z-index:1;}
 .hp-tag{
