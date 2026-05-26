@@ -85,6 +85,34 @@ input,select,textarea{cursor:auto!important}
   transition:width .22s cubic-bezier(.16,1,.3,1),height .22s cubic-bezier(.16,1,.3,1),opacity .2s,border-radius .35s cubic-bezier(.16,1,.3,1);
 }
 
+/* ── BLOOM PARTICLES ─────────────────────────────────────────────── */
+/* Invented for the specific act of 93°C water meeting Kochere       */
+/* Five steam wisps — each unique in timing, height, lateral drift    */
+.bloom-wrap{
+  position:absolute;bottom:0;left:0;right:0;height:100%;
+  pointer-events:none;overflow:hidden;z-index:2;
+}
+.bloom-p{
+  position:absolute;bottom:18%;
+  width:1px;height:0;
+  background:linear-gradient(to top,transparent,rgba(248,244,236,0.18),transparent);
+  border-radius:1px;
+  opacity:0;
+  animation:bloom-rise var(--dur,6s) var(--delay,0s) infinite ease-out;
+}
+.bloom-p:nth-child(1){left:22%; --dur:7.2s; --delay:0s;   --h:120px; --dx:8px;}
+.bloom-p:nth-child(2){left:38%; --dur:5.8s; --delay:1.4s; --h:90px;  --dx:-6px;}
+.bloom-p:nth-child(3){left:52%; --dur:8.1s; --delay:0.7s; --h:145px; --dx:12px;}
+.bloom-p:nth-child(4){left:66%; --dur:6.4s; --delay:2.1s; --h:80px;  --dx:-9px;}
+.bloom-p:nth-child(5){left:80%; --dur:7.7s; --delay:3.3s; --h:110px; --dx:5px;}
+@keyframes bloom-rise{
+  0%  {height:0;    opacity:0;   transform:translateX(0)           translateY(0);}
+  8%  {opacity:1;}
+  60% {opacity:0.6;}
+  100%{height:var(--h,100px); opacity:0; transform:translateX(var(--dx,8px)) translateY(-20px);}
+}
+@media(prefers-reduced-motion:reduce){.bloom-p{animation:none;}}
+
 /* ── GRAIN ────────────────────────────────────────────────────────── */
 #grain{
   position:fixed;inset:0;pointer-events:none;z-index:9999;opacity:0.022;
@@ -1314,6 +1342,13 @@ a:focus-visible,button:focus-visible{
       <a href="#order" class="btn-light">Get Brew →</a>
       <a href="#source" class="btn-ghost-dark">Our Source ↓</a>
     </div>
+  </div>
+  <div class="bloom-wrap" aria-hidden="true">
+    <div class="bloom-p"></div>
+    <div class="bloom-p"></div>
+    <div class="bloom-p"></div>
+    <div class="bloom-p"></div>
+    <div class="bloom-p"></div>
   </div>
   <div class="hero-scroll" aria-hidden="true">
     <div class="hero-scroll-line"></div>
