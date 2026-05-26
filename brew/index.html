@@ -952,6 +952,52 @@ input,select,textarea{cursor:none!important;caret-color:transparent}
   border-top:1px solid rgba(248,244,236,0.06);
 }
 /* Right col — form */
+/* WHY €1 SECTION */
+.why-price{background:var(--cream);padding:clamp(80px,12vw,160px) var(--side-pad);}
+.why-inner{max-width:var(--max);margin:0 auto;}
+.why-header{margin-bottom:clamp(48px,7vw,80px);}
+.why-grid{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:2px;
+  margin-bottom:clamp(48px,7vw,72px);
+}
+.why-item{
+  background:var(--cream-deep);
+  border:1px solid var(--cocoa-fa);
+  padding:clamp(32px,4vw,56px) clamp(24px,3vw,40px);
+  transition:background .2s,transform .2s;
+}
+.why-item:hover{background:var(--cream);transform:translateY(-2px);}
+.why-num{
+  font-family:'Courier New',monospace;font-size:12px;font-weight:700;
+  letter-spacing:0.3em;text-transform:uppercase;
+  color:var(--cocoa-mu);margin-bottom:20px;
+}
+.why-title{
+  font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;
+  font-weight:900;font-size:clamp(20px,2vw,28px);
+  letter-spacing:-0.025em;line-height:1;
+  color:var(--ink);margin-bottom:16px;
+}
+.why-text{
+  font-family:'Courier New',monospace;font-size:13px;
+  line-height:1.65;color:var(--cocoa);
+}
+.why-coda{
+  font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;
+  font-weight:700;font-size:clamp(16px,1.4vw,20px);
+  letter-spacing:-0.01em;line-height:1.4;
+  color:var(--ink);max-width:640px;
+  border-left:3px solid var(--cocoa-mid);
+  padding-left:clamp(16px,2vw,28px);
+}
+@media(max-width:900px){
+  .why-grid{grid-template-columns:repeat(2,1fr);}
+}
+@media(max-width:540px){
+  .why-grid{grid-template-columns:1fr;}
+}
 .order-form{width:100%;text-align:left}
 .form-row{margin-bottom:10px}
 .form-row label{
@@ -1864,6 +1910,39 @@ body.cookie-visible #mobile-cta{bottom:var(--cookie-h,80px);}
       </div>
 
     </div>
+  </div>
+</section>
+
+<!-- WHY €1 -->
+<section class="section why-price">
+  <div class="why-inner">
+    <div class="why-header reveal">
+      <span class="eyebrow">— The Price</span>
+      <h2 class="h2">Why €1<br>a cup.</h2>
+    </div>
+    <div class="why-grid">
+      <div class="why-item reveal">
+        <div class="why-num">01</div>
+        <div class="why-title">No middleman.</div>
+        <p class="why-text">We buy directly from AMG Coffee Export in Kochere. No importer, no distributor, no retail margin. Every step we remove reduces cost without removing quality.</p>
+      </div>
+      <div class="why-item reveal reveal-d1">
+        <div class="why-num">02</div>
+        <div class="why-title">No warehouse.</div>
+        <p class="why-text">We roast to order. There is no sitting stock. Coffee never ages on a shelf. You pay for the bean, the roast, and the pad — nothing else.</p>
+      </div>
+      <div class="why-item reveal reveal-d2">
+        <div class="why-num">03</div>
+        <div class="why-title">No retail.</div>
+        <p class="why-text">This does not go through a supermarket, a café, or a subscription box. The margin that would fund their shelf space funds your price instead.</p>
+      </div>
+      <div class="why-item reveal reveal-d3">
+        <div class="why-num">04</div>
+        <div class="why-title">Small batch, honest volume.</div>
+        <p class="why-text">We order in quantities that sustain direct sourcing — large enough to make the economics work, small enough to never dilute the grade. This is what €1 buys.</p>
+      </div>
+    </div>
+    <p class="why-coda reveal">The price is not a compromise. It is what the product costs when you remove everything that should never have been in it.</p>
   </div>
 </section>
 
