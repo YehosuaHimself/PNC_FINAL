@@ -682,7 +682,6 @@ input,select,textarea{cursor:auto!important}
   min-height:100vh;
   display:flex;
   align-items:stretch;
-  contain:layout;
 }
 /* image panel — left 52%, full height */
 .method-img{
@@ -692,7 +691,6 @@ input,select,textarea{cursor:auto!important}
   background-image:url('../assets/brew-steps-bg.webp');
   background-size:cover;
   background-position:center center;
-  will-change:transform;
   transform:translateZ(0);
 }
 /* gradient: image fades to cream on right edge only */
@@ -737,8 +735,6 @@ input,select,textarea{cursor:auto!important}
   padding:clamp(28px,3.5vw,48px) 0;
   border-bottom:1px solid rgba(42,24,16,0.10);
   position:relative;
-  transition:opacity .25s;
-  contain:layout style;
 }
 .step:first-child{border-top:1px solid rgba(42,24,16,0.10)}
 .step:hover .step-title{letter-spacing:-0.01em}
@@ -1765,11 +1761,11 @@ body.cookie-visible #mobile-cta{bottom:var(--cookie-h,80px);}
   <div class="method-img"></div>
   <div class="method-inner">
     <div class="method-header">
-      <span class="eyebrow reveal">— How to Brew</span>
-      <h2 class="h2 reveal">Three<br>steps.</h2>
+      <span class="eyebrow">— How to Brew</span>
+      <h2 class="h2">Three<br>steps.</h2>
     </div>
     <div class="steps">
-      <div class="step reveal">
+      <div class="step">
         <div class="step-left">
           <span class="step-num">01</span>
           <div class="step-title">Drop it in.</div>
@@ -1777,7 +1773,7 @@ body.cookie-visible #mobile-cta{bottom:var(--cookie-h,80px);}
         </div>
         <div class="step-meta">Cup Size<br>200–250 ml<br>ideal</div>
       </div>
-      <div class="step reveal">
+      <div class="step">
         <div class="step-left">
           <span class="step-num">02</span>
           <div class="step-title">Add hot water.</div>
@@ -1785,7 +1781,7 @@ body.cookie-visible #mobile-cta{bottom:var(--cookie-h,80px);}
         </div>
         <div class="step-meta">Water Temp<br>92–94°C</div>
       </div>
-      <div class="step reveal">
+      <div class="step">
         <div class="step-left">
           <span class="step-num">03</span>
           <div class="step-title">Watch it bloom.</div>
