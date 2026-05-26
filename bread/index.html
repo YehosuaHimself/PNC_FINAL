@@ -227,6 +227,19 @@ input,select,textarea{cursor:auto!important}
   .formats-header{grid-template-columns:1fr;gap:16px;}
   .formats-sub{max-width:100%;}
 }
+.hero-coord{
+  position:absolute;top:50%;left:0;right:0;
+  display:flex;align-items:center;
+  pointer-events:none;z-index:3;
+  opacity:0.16;
+}
+.hero-coord-line{flex:1;height:1px;background:rgba(248,244,236,0.9);}
+.hero-coord-label{
+  font:600 9px/1 'Courier New',monospace;
+  letter-spacing:.18em;color:rgba(248,244,236,0.9);
+  padding:0 14px;white-space:nowrap;
+}
+
 /* ── GRAIN ─────────────────────────────────────────────────── */
 #grain{
   position:fixed;inset:0;pointer-events:none;z-index:9999;opacity:0.022;
@@ -323,12 +336,13 @@ input,select,textarea{cursor:auto!important}
   transform-origin:right center;
   font-family:'Courier New',monospace;
   font-size:clamp(10px,0.9vw,13px);
-  font-weight:400;
-  letter-spacing:0.35em;
-  color:rgba(248,244,236,0.12);
+  font-weight:600;
+  letter-spacing:0.42em;
+  color:rgba(248,244,236,0.22);
   white-space:nowrap;
   pointer-events:none;user-select:none;
   animation:grainFade 3s 1.2s cubic-bezier(.16,1,.3,1) both;
+  transition:color .6s;
 }
 @keyframes grainFade{from{opacity:0}to{opacity:1}}
 @media(max-width:768px){.hero-grain-count{display:none}}
@@ -1830,6 +1844,7 @@ body.cookie-visible #mobile-cta{bottom:var(--cookie-h,80px);}
 
   <!-- Design AC-03: purely visual moment, no label -->
   <div class="hero-grain-count" aria-hidden="true">2,300,000</div>
+  <div class="hero-coord" aria-hidden="true"><div class="hero-coord-line"></div><span class="hero-coord-label">51.5°N · LAUSITZ</span><div class="hero-coord-line"></div></div>
 
   <div class="hero-scroll" aria-hidden="true">
     <div class="hero-scroll-line"></div>
