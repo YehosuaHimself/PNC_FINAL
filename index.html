@@ -160,7 +160,7 @@ input,select,textarea{cursor:auto!important}
   font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;
   font-weight:900;font-size:clamp(160px,30vw,520px);
   letter-spacing:-0.05em;line-height:1;
-  color:rgba(92,61,46,0.42);white-space:nowrap;
+  color:rgba(42,24,16,0.065);white-space:nowrap;
   animation:driftIn 1.8s cubic-bezier(.16,1,.3,1) both;
 }
 @keyframes driftIn{from{opacity:0;transform:scale(1.04)}to{opacity:1;transform:scale(1)}}
@@ -187,6 +187,8 @@ input,select,textarea{cursor:auto!important}
   font-weight:900;font-size:clamp(58px,9.5vw,152px);
   letter-spacing:-0.04em;line-height:0.86;color:var(--ink);
   margin-bottom:clamp(24px,3.5vh,48px);
+  /* Reserve space for the 01 accent — clamp(180px,14vw,240px) is its footprint */
+  max-width:calc(100% - clamp(180px,14vw,240px));
 }
 .hero-headline-inner{display:block}
 .hero-headline span{
@@ -1097,7 +1099,7 @@ a:focus-visible,button:focus-visible{
       </div>
     </div>
     <div class="phil-right">
-      <p class="phil-text reveal">Every product on this site is priced at what it costs to make it right — not at what the market will bear. The finest buckwheat in Europe: grown in Lausitz, milled on stones that have not stopped since 1772, baked in your oven in 55 minutes. The finest coffee on Earth: discovered in Ethiopia, grown at 2,100 metres — the highest altitude a coffee plant will grow — for €1 a cup. One belief. Two products. Every table.</p>
+      <p class="phil-text reveal">Every product here is priced at what it costs to make it right — not at what the market will bear. The bread: buckwheat grown in Lausitz, milled on stone wheels that have not stopped since 1772, baked in your oven in 55 minutes, for €3 a loaf. The coffee: discovered in Ethiopia, grown at 2,100 metres — the highest altitude a coffee plant will reach — roasted to order in the Alps, for €1 a cup. Both things. One belief. Every table.</p>
       <p class="phil-attr reveal">Fiat panis. · MMXXVI</p>
     </div>
   </div>
