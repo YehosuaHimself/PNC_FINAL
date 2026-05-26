@@ -71,7 +71,7 @@ a,a:hover,a:active,a:focus{cursor:none!important}
 /* ── CURSOR ─────────────────────────────────────────────────── */
 *,*::before,*::after{cursor:none!important}
 a,button,[role=button]{cursor:none!important}
-input,select,textarea{cursor:none!important}
+input,select,textarea{cursor:none!important;caret-color:transparent}
 @media(pointer:coarse){*{cursor:auto!important}a,button,[role=button]{cursor:pointer!important}}
 #cur-dot{
   position:fixed;top:0;left:0;width:13px;height:12px;
@@ -1249,10 +1249,8 @@ document.addEventListener('DOMContentLoaded',function(){
   var prog   = document.getElementById('prog');
   var rafId2 = null;
 
-  function lenisRaf(time){ lenis.raf(time); if(lenis.isScrolling) rafId2 = requestAnimationFrame(lenisRaf); else rafId2 = null; }
-  lenis.on('scroll', function(){
-    if(rafId2 === null) rafId2 = requestAnimationFrame(lenisRaf);
-  });
+  function lenisRaf(time){ lenis.raf(time); rafId2 = requestAnimationFrame(lenisRaf); }
+  rafId2 = requestAnimationFrame(lenisRaf);
 
   if(prog){
     window.addEventListener('scroll', function(){
