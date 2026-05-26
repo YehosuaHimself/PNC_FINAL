@@ -39,6 +39,9 @@ em,i,cite,address,b,strong{font-style:normal}
   --cocoa-fa:   rgba(92,61,46,0.09);
   --ink:        #2A1810;
   --err:        #C0533A;
+  --teal:       #4A7C6F;
+  --amber:      #8B6914;
+  --gold:       #B8860B;
   --dark:       #180E08;
   --g:          clamp(20px,5vw,80px);
   --max:        1320px;
@@ -839,19 +842,19 @@ input,select,textarea{cursor:auto!important}
 }
 /* Celiac Safe — teal left accent: medical precision, zero cross-contamination */
 .nutr-tag.nt-celiac{
-  border-left:3px solid #4A7C6F;
+  border-left:3px solid var(--teal);
   background:rgba(74,124,111,0.06);
   color:var(--cocoa);
 }
 /* High Fibre — amber-brown left accent: plant origin, roughage, natural */
 .nutr-tag.nt-fibre{
-  border-left:3px solid #8B6914;
+  border-left:3px solid var(--amber);
   background:rgba(139,105,20,0.06);
   color:var(--cocoa);
 }
 /* High Vitamin — gold left accent: vitality, nutritional density */
 .nutr-tag.nt-vitamin{
-  border-left:3px solid #B8860B;
+  border-left:3px solid var(--gold);
   background:rgba(184,134,11,0.07);
   color:var(--cocoa);
 }
