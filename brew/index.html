@@ -100,18 +100,19 @@ a,button,[role=button]{cursor:none!important}
 input,select,textarea{cursor:auto!important}
 @media(pointer:coarse){*{cursor:auto!important}a,button,[role=button]{cursor:pointer!important}}
 #cur-dot{
-  position:fixed;top:0;left:0;width:8px;height:6px;
+  position:fixed;top:0;left:0;width:13px;height:9px;
   background:var(--cocoa);pointer-events:none;z-index:9998;
-  border-radius:60% 40% 40% 60% / 50% 50% 50% 50%;
-  transform:translate(-9999px,-9999px) rotate(-20deg);
+  /* Coffee bean — asymmetric oval, wider one side like real bean anatomy */
+  border-radius:52% 48% 48% 52% / 58% 58% 42% 42%;
+  transform:translate(-9999px,-9999px) rotate(-25deg);
   transition:background 160ms ease, opacity 160ms ease;
 }
 #cur-ring{
-  position:fixed;top:0;left:0;width:38px;height:28px;
+  position:fixed;top:0;left:0;width:56px;height:38px;
   border:1.5px solid var(--cocoa);pointer-events:none;z-index:9997;
-  /* Coffee bean — oval with slight pinch suggesting the bean crease */
-  border-radius:60% 40% 40% 60% / 50% 50% 50% 50%;
-  transform:translate(-9999px,-9999px) rotate(-20deg);opacity:0.6;
+  /* Coffee bean ring — elongated asymmetric oval, clear bean silhouette */
+  border-radius:52% 48% 48% 52% / 58% 58% 42% 42%;
+  transform:translate(-9999px,-9999px) rotate(-25deg);opacity:0.6;
   transition:width .22s cubic-bezier(.16,1,.3,1),
              height .22s cubic-bezier(.16,1,.3,1),
              opacity 160ms ease,
@@ -2093,7 +2094,7 @@ body.cookie-visible #mobile-cta{bottom:var(--cookie-h,80px);}
 
   const C_DARK  = '#2A1810';
   const C_LIGHT = '#F8F4EC';
-  const DOT_R = 4, RING_R = 18;
+  const DOT_R = 6, RING_R = 28;
   const LERP = 0.10;
 
   let mx = -9999, my = -9999;
@@ -2127,11 +2128,12 @@ body.cookie-visible #mobile-cta{bottom:var(--cookie-h,80px);}
     ring.style.borderColor = c;
     ring.style.setProperty('--cc', c);
     ring.style.opacity = dark ? '0.55' : '0.60';
-    // Coffee bean: in dark zones = rounder bean, rotated more; light = elongated oval
+    // Coffee bean: dark zones = rounder bean rotated more (like close-up bean)
+    // light zones = elongated asymmetric oval (like bean at distance)
     ring.style.borderRadius = dark
-      ? '55% 45% 45% 55% / 62% 62% 38% 38%'
-      : '60% 40% 40% 60% / 50% 50% 50% 50%';
-    ring.dataset.rot = dark ? '-32deg' : '-20deg';
+      ? '50% 50% 50% 50% / 62% 62% 38% 38%'
+      : '52% 48% 48% 52% / 58% 58% 42% 42%';
+    ring.dataset.rot = dark ? '-32deg' : '-25deg';
   }
 
   function loop() {
@@ -2170,12 +2172,12 @@ body.cookie-visible #mobile-cta{bottom:var(--cookie-h,80px);}
 
   document.querySelectorAll('a,button,[role=button]').forEach(function(el) {
     el.addEventListener('mouseenter', function() {
-      ring.style.width = '52px'; ring.style.height = '52px';
+      ring.style.width = '72px'; ring.style.height = '50px';
       ring.style.opacity = currentDark ? '0.40' : '0.35';
       dot.style.transform = 'translate3d(' + (mx - DOT_R) + 'px,' + (my - DOT_R) + 'px,0) rotate(-20deg) scale(1.5)';
     });
     el.addEventListener('mouseleave', function() {
-      ring.style.width = '36px'; ring.style.height = '36px';
+      ring.style.width = '56px'; ring.style.height = '38px';
       ring.style.opacity = currentDark ? '0.55' : '0.60';
       dot.style.transform = 'translate3d(' + (mx - DOT_R) + 'px,' + (my - DOT_R) + 'px,0) rotate(-20deg) scale(1)';
     });
