@@ -263,6 +263,24 @@ input,select,textarea{cursor:auto!important}
   letter-spacing:0.34em;text-transform:uppercase;color:var(--cocoa-mu);
   margin-bottom:0;display:block;
 }
+/* Price anchor — top of card, always in viewport, Design AC-06 */
+.hp-price-anchor{
+  position:absolute;top:clamp(20px,2.8vw,36px);right:clamp(20px,2.8vw,36px);
+  font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;
+  font-weight:900;
+  font-size:clamp(20px,2.2vw,28px);
+  letter-spacing:-0.03em;
+  color:var(--ink);
+  z-index:2;
+  line-height:1;
+}
+.hp-price-anchor span{
+  font-family:'Courier New',monospace;
+  font-size:10px;font-weight:600;
+  letter-spacing:0.24em;text-transform:uppercase;
+  color:var(--cocoa-mu);
+  vertical-align:middle;margin-left:5px;
+}
 .hp-body{
   flex:1;display:flex;flex-direction:column;justify-content:flex-end;
   padding-top:clamp(80px,14vh,160px);
@@ -274,10 +292,13 @@ input,select,textarea{cursor:auto!important}
   margin-bottom:14px;
 }
 .hp-origin{
-  font-family:'Courier New',monospace;font-size:13px;font-weight:600;
+  font-family:'Courier New',monospace;font-size:11px;font-weight:600;
   letter-spacing:0.22em;text-transform:uppercase;color:var(--cocoa-mu);
   margin-bottom:20px;line-height:1.7;
-  overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
+  overflow:hidden;
+  /* Never clip — the altitude claim must complete */
+  white-space:normal;
+  display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;
 }
 .hp-desc{
   font-size:clamp(13px,1.2vw,15px);color:var(--cocoa-lt);line-height:1.75;
@@ -305,6 +326,7 @@ input,select,textarea{cursor:auto!important}
   display:flex;align-items:center;justify-content:space-between;
   gap:12px;flex-wrap:wrap;
   padding-top:20px;border-top:1px solid rgba(92,61,46,0.1);
+  margin-top:auto;
 }
 .hp-price{
   font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;
@@ -913,6 +935,7 @@ a:focus-visible,button:focus-visible{
     <div class="hero-products">
       <a href="/bread" class="hero-product hero-product--bread">
         <span class="hp-tag">Daily · Bread</span>
+        <div class="hp-price-anchor" aria-hidden="true">€ 3<span>/ loaf</span></div>
         <div class="hp-body">
         <div class="hp-name">OUR DAILY<br>BREAD.</div>
         <div class="hp-origin">Buckwheat · Alps · 3 Ingredients</div>
@@ -930,6 +953,7 @@ a:focus-visible,button:focus-visible{
       </a>
       <a href="/brew" class="hero-product hero-product--brew">
         <span class="hp-tag">Daily · Brew</span>
+        <div class="hp-price-anchor" aria-hidden="true">€ 1<span>/ cup</span></div>
         <div class="hp-body">
         <div class="hp-name">OUR DAILY<br>BREW.</div>
         <div class="hp-origin">Kochere · Ethiopia · 2,100 m — the highest coffee altitude on Earth</div>
