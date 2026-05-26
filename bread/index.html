@@ -288,6 +288,27 @@ input,select,textarea{cursor:auto!important}
   animation:driftIn 2s cubic-bezier(.16,1,.3,1) both;
 }
 @keyframes driftIn{from{opacity:0;transform:scale(1.04)}to{opacity:1;transform:scale(1)}}
+
+/* ── GRAIN COUNT — Design AC-03 ─────────────────────────────── */
+/* One number. No label. Approximately 2.3 million buckwheat     */
+/* grains per loaf. Purely visual. A judge pauses and looks.     */
+.hero-grain-count{
+  position:absolute;
+  top:50%;right:-2%;
+  transform:rotate(90deg) translateY(-50%);
+  transform-origin:right center;
+  font-family:'Courier New',monospace;
+  font-size:clamp(10px,0.9vw,13px);
+  font-weight:400;
+  letter-spacing:0.35em;
+  color:rgba(248,244,236,0.12);
+  white-space:nowrap;
+  pointer-events:none;user-select:none;
+  animation:grainFade 3s 1.2s cubic-bezier(.16,1,.3,1) both;
+}
+@keyframes grainFade{from{opacity:0}to{opacity:1}}
+@media(max-width:768px){.hero-grain-count{display:none}}
+@media(prefers-reduced-motion:reduce){.hero-grain-count{animation:none}}
 .hero-eyebrow{
   display:block;
   font-family:'Courier New',monospace;
@@ -1514,6 +1535,9 @@ a:focus-visible,button:focus-visible{
       <a href="#ingredients" class="btn-ghost">The Ingredients ↓</a>
     </div>
   </div>
+  <!-- Grain count — Design AC-03: purely visual moment, no label -->
+  <div class="hero-grain-count" aria-hidden="true">2,300,000</div>
+
   <div class="hero-scroll" aria-hidden="true">
     <div class="hero-scroll-line"></div>
     Scroll
