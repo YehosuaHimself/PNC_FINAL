@@ -669,6 +669,7 @@ input,select,textarea{cursor:auto!important}
   border-top:1px solid rgba(248,244,236,0.07);
   max-width:65%;
 }
+@media(max-width:760px){.source-stats{max-width:100%}}
 .ss-val{
   font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;
   font-weight:900;font-size:clamp(28px,4vw,52px);
@@ -2149,6 +2150,9 @@ body.cookie-visible #mobile-cta{bottom:var(--cookie-h,80px);}
 <script>
 document.addEventListener('DOMContentLoaded',function(){
   if(typeof Lenis==='undefined')return;
+  /* Disable Lenis on touch (native scroll is smoother) and reduced-motion */
+  if(window.matchMedia('(pointer:coarse)').matches) return;
+  if(window.matchMedia('(prefers-reduced-motion:reduce)').matches) return;
   const lenis=new Lenis({duration:1.0,easing:function(t){return Math.min(1,1.001-Math.pow(2,-10*t))},smoothWheel:true});
   window.PNC_LENIS=lenis;
   const prog=document.getElementById('prog');

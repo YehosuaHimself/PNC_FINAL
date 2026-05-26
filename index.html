@@ -1231,6 +1231,9 @@ a:focus-visible,button:focus-visible{
 <script>
 document.addEventListener('DOMContentLoaded',function(){
   if(typeof Lenis==='undefined')return;
+  /* Disable Lenis on touch (native scroll is smoother) and reduced-motion */
+  if(window.matchMedia('(pointer:coarse)').matches) return;
+  if(window.matchMedia('(prefers-reduced-motion:reduce)').matches) return;
   const lenis=new Lenis({duration:1.2,easing:function(t){return Math.min(1,1.001-Math.pow(2,-10*t))},smoothWheel:true});
   window.PNC_LENIS=lenis;
   const prog=document.getElementById('prog');

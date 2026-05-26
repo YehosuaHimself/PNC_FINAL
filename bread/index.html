@@ -640,7 +640,7 @@ input,select,textarea{cursor:auto!important}
 .ing-terroir{
   font-family:'Courier New',monospace;
   font-size:clamp(10px,1.05vw,12px);
-  color:rgba(248,244,236,0.22);
+  color:rgba(248,244,236,0.30);
   line-height:1.75;
   max-width:480px;
   margin-top:clamp(14px,1.8vw,22px);
@@ -1394,6 +1394,7 @@ footer nav,footer p,footer a{background:transparent!important;background-color:t
 
 /* ── BREAD — MOBILE SPECIFIC ─────────────────────────────────────── */
 @media(max-width:480px){
+  .ing-terroir{font-size:12px;padding-top:14px;margin-top:14px}
   .ing-name{font-size:clamp(36px,10vw,56px)}
   .step{padding:24px 16px;gap:12px}
   .step-title{font-size:clamp(18px,5.5vw,28px)}
@@ -2614,6 +2615,9 @@ body.cookie-visible #mobile-cta{bottom:var(--cookie-h,80px);}
 <script>
 document.addEventListener('DOMContentLoaded',function(){
   if(typeof Lenis==='undefined')return;
+  /* Disable Lenis on touch (native scroll is smoother) and reduced-motion */
+  if(window.matchMedia('(pointer:coarse)').matches) return;
+  if(window.matchMedia('(prefers-reduced-motion:reduce)').matches) return;
   const lenis=new Lenis({duration:1.2,easing:function(t){return Math.min(1,1.001-Math.pow(2,-10*t))},smoothWheel:true});
   window.PNC_LENIS=lenis;
   const prog=document.getElementById('prog');
