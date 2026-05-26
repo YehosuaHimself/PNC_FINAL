@@ -670,7 +670,8 @@ footer::before{
   .hp-name{font-size:clamp(34px,9.5vw,52px);margin-bottom:8px}
   .hp-origin{
     font-size:12px;letter-spacing:0.16em;margin-bottom:12px;
-    white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+    white-space:normal;overflow:visible;text-overflow:clip;
+    display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;
     max-width:100%;
   }
   .hp-desc{font-size:13px;line-height:1.6;margin-bottom:16px}
