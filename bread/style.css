@@ -1871,7 +1871,7 @@ body.cookie-visible #mobile-cta{bottom:var(--cookie-h,80px);}
   max-width:var(--max);
   margin:0 auto;
   display:grid;
-  grid-template-columns:1fr clamp(480px,70vw,900px) 1fr;
+  grid-template-columns:1fr clamp(600px,82vw,1100px) 1fr;
   align-items:center;
   gap:clamp(24px,3vw,40px);
 }
@@ -1902,14 +1902,24 @@ body.cookie-visible #mobile-cta{bottom:var(--cookie-h,80px);}
 }
 .blessing-quote{
   font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;
-  font-size:clamp(3.2rem,7vw,7rem);
   font-weight:900;
-  line-height:1;
+  line-height:0.96;
   color:var(--cream);
-  letter-spacing:-.02em;
+  letter-spacing:-.03em;
   text-transform:uppercase;
   font-style:normal;
   margin-bottom:0;
+}
+/* MY BREAD — intimate opener, slightly smaller */
+.blessing-quote:first-of-type{
+  font-size:clamp(2.4rem,5.5vw,5.2rem);
+  font-weight:700;
+  letter-spacing:-.01em;
+  color:rgba(248,244,236,0.72);
+}
+/* PANEM NOSTRUM COTIDIANUM — the centrepiece */
+.blessing-quote:nth-of-type(2){
+  font-size:clamp(3.8rem,8.5vw,9rem);
 }
 .blessing-sub{
   font-size:.7rem;
@@ -1918,10 +1928,11 @@ body.cookie-visible #mobile-cta{bottom:var(--cookie-h,80px);}
   color:rgba(248,244,236,0.35);
   line-height:1.8;
 }
-.blessing-quote + .blessing-quote{margin-top:clamp(16px,2.5vw,28px);}
+.blessing-quote + .blessing-quote{margin-top:clamp(10px,1.5vw,18px);}
 .blessing-translation{
-  font-size:clamp(1.4rem,3vw,2.8rem) !important;
-  font-weight:700 !important;
-  color:rgba(248,244,236,0.45) !important;
-  letter-spacing:.04em !important;
+  font-size:clamp(1rem,2vw,1.8rem) !important;
+  font-weight:600 !important;
+  letter-spacing:.12em !important;
+  color:rgba(248,244,236,0.32) !important;
+  font-family:'Courier New',monospace !important;
 }
