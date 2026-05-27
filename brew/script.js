@@ -170,6 +170,7 @@ document.addEventListener('DOMContentLoaded',function(){
   window.PNC_LENIS = lenis;
 
   var prog   = document.getElementById('prog');
+  var progR  = document.getElementById('prog-r');
   var rafId2 = null;
 
   /* Lenis RAF — must run continuously (Lenis 1.x requires permanent loop) */
@@ -180,7 +181,9 @@ document.addEventListener('DOMContentLoaded',function(){
   if(prog){
     window.addEventListener('scroll', function(){
       var max = document.body.scrollHeight - window.innerHeight;
-      prog.style.height = (max > 0 ? (window.scrollY / max) * 100 : 0) + '%';
+      var h = (max > 0 ? (window.scrollY / max) * 100 : 0) + '%';
+      prog.style.height = h;
+      if(progR) progR.style.height = h;
     }, {passive:true});
   }
 
