@@ -229,6 +229,7 @@ input,select,textarea{cursor:none!important;caret-color:transparent}
 
 /* ── PROGRESS ─────────────────────────────────────────────────── */
 #prog{position:fixed;top:0;left:0;width:4px;height:0;background:var(--gold);z-index:9996}
+#prog-r{position:fixed;top:0;right:0;width:4px;height:0;background:var(--gold);z-index:9996}
 
 /* ── NAV ─────────────────────────────────────────────────── */
 #site-nav{
@@ -1469,6 +1470,7 @@ a:focus-visible,button:focus-visible{
 
 /* Scroll progress — rounded cap */
 #prog{border-radius:0 1px 1px 0}
+#prog-r{border-radius:1px 0 0 1px}
 
 /* Order form inputs — focus ring matches brand */
 .form-row input:focus,.form-row select:focus{
