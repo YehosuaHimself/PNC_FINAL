@@ -382,7 +382,7 @@ input,select,textarea{cursor:none!important;caret-color:transparent}
   width:clamp(20px,2vw,26px);height:clamp(20px,2vw,26px);
   opacity:0.45;flex-shrink:0;
 }
-.ship-badge[data-dark] .ship-globe{opacity:0.45;filter:none;}
+.ship-badge[data-dark] .ship-globe{opacity:0.70;filter:invert(1);}
 .ship-text{
   font-family:'Courier New',monospace;font-size:13px;font-weight:600;
   letter-spacing:0.28em;text-transform:uppercase;
@@ -390,7 +390,7 @@ input,select,textarea{cursor:none!important;caret-color:transparent}
   white-space:nowrap;
 }
 .ship-badge[data-dark] .ship-text{
-  color:var(--cocoa);
+  color:rgba(248,244,236,0.88);
 }
 .ship-dot{
   width:3px;height:3px;border-radius:50%;
