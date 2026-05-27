@@ -819,7 +819,8 @@ input,select,textarea{cursor:none!important;caret-color:transparent}
   letter-spacing:0.22em;text-transform:uppercase;
   color:var(--cocoa-mu);margin-top:20px;line-height:1.8;
 }
-.nutr-tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:32px}
+.nutr-tags{display:flex;flex-direction:column;gap:8px;margin-top:32px}
+.nutr-tags-row{display:flex;flex-wrap:nowrap;gap:8px}
 .nutr-tag{
   font-family:'Courier New',monospace;font-size:13px;font-weight:600;
   letter-spacing:0.26em;text-transform:uppercase;
