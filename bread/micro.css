@@ -1,0 +1,449 @@
+/* ─────────────────────────────────────────────────────────────────────────
+   PNC BREAD · micro.css — Awwwards-grade micro-interactions
+   Philosophy: earned attention. Every effect serves content.
+   The test: removing it should make the experience noticeably worse.
+   Zero changes to style.css or script.js.
+───────────────────────────────────────────────────────────────────────── */
+
+/* ── 1. HERO HEADLINE — char-split stagger on load ─────────────────── */
+/* Each word in hero-headline gets a subtle blur-clear arrival */
+.hero-headline {
+  perspective: 800px;
+}
+.hero-hl-word {
+  display: inline-block;
+  opacity: 0;
+  transform: translateY(14px) rotateX(6deg);
+  filter: blur(2px);
+  will-change: transform, opacity, filter;
+  animation: hlWordIn 0.9s cubic-bezier(.16,1,.3,1) both;
+}
+@keyframes hlWordIn {
+  to { opacity: 1; transform: translateY(0) rotateX(0); filter: blur(0); }
+}
+
+/* ── 2. HERO STRIP PILLS — hover fill sweep ────────────────────────── */
+.hs-pill {
+  position: relative;
+  overflow: hidden;
+  transition:
+    color 0.28s cubic-bezier(.16,1,.3,1),
+    border-color 0.28s cubic-bezier(.16,1,.3,1),
+    letter-spacing 0.28s cubic-bezier(.16,1,.3,1);
+}
+.hs-pill::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--cocoa);
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 0.32s cubic-bezier(.16,1,.3,1);
+  z-index: 0;
+}
+.hs-pill > * { position: relative; z-index: 1; }
+@media (hover: hover) {
+  .hs-pill:hover::after { transform: scaleX(1); }
+  .hs-pill:hover {
+    color: var(--cream) !important;
+    border-color: transparent !important;
+    letter-spacing: 0.32em;
+  }
+}
+
+/* ── 3. FORMAT CARDS — time number morphs on hover ─────────────────── */
+.format-card {
+  position: relative;
+  transition:
+    background 0.35s cubic-bezier(.16,1,.3,1),
+    border-color 0.35s cubic-bezier(.16,1,.3,1),
+    transform 0.35s cubic-bezier(.16,1,.3,1);
+  overflow: hidden;
+}
+/* Top-left corner bracket expands on hover */
+.format-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0;
+  width: 28px; height: 28px;
+  border-top: 1.5px solid rgba(248,244,236,0.18);
+  border-left: 1.5px solid rgba(248,244,236,0.18);
+  transition:
+    width 0.42s cubic-bezier(.16,1,.3,1),
+    height 0.42s cubic-bezier(.16,1,.3,1),
+    border-color 0.3s;
+  pointer-events: none;
+  z-index: 1;
+}
+@media (hover: hover) {
+  .format-card:hover::before {
+    width: 52px; height: 52px;
+    border-color: rgba(248,244,236,0.42);
+  }
+  .format-card:hover {
+    background: rgba(248,244,236,0.04) !important;
+    transform: translateY(-2px);
+  }
+  /* The big time number counts down */
+  .format-card:hover .format-time {
+    opacity: 0.65;
+    letter-spacing: -0.04em;
+  }
+  .format-card:hover .format-name {
+    letter-spacing: 0.01em;
+    color: rgba(248,244,236,0.95);
+  }
+}
+.format-time {
+  transition:
+    opacity 0.4s cubic-bezier(.16,1,.3,1),
+    letter-spacing 0.4s cubic-bezier(.16,1,.3,1);
+}
+.format-name {
+  transition:
+    letter-spacing 0.3s cubic-bezier(.16,1,.3,1),
+    color 0.3s;
+}
+
+/* ── 4. INGREDIENT ROWS — traceability bars animate in view ────────── */
+/* Bar fill already animated in script; add an afterglow shimmer */
+.ing-bar-fill::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(184,134,11,0.5) 50%,
+    transparent 100%
+  );
+  background-size: 200% 100%;
+  animation: barShimmer 2.4s ease-in-out infinite;
+  border-radius: inherit;
+}
+@keyframes barShimmer {
+  0%   { background-position: -100% 0; opacity: 0; }
+  30%  { opacity: 1; }
+  100% { background-position: 200% 0; opacity: 0; }
+}
+.ing-bar-fill {
+  position: relative;
+  overflow: hidden;
+}
+
+/* ── 5. ING-STAT VALS — count up on intersection ───────────────────── */
+/* Handled in micro.js. CSS for the transition flicker: */
+.ing-stat-val[data-counted] {
+  transition: color 0.3s;
+}
+.ing-stat-val.counting {
+  color: var(--gold);
+}
+
+/* ── 6. INGREDIENT ROW — coordinate reveal on hover ────────────────── */
+.ing-coords {
+  transition:
+    opacity 0.4s cubic-bezier(.16,1,.3,1),
+    letter-spacing 0.4s cubic-bezier(.16,1,.3,1),
+    color 0.4s;
+  opacity: 0.45;
+}
+@media (hover: hover) {
+  .ing-row:hover .ing-coords {
+    opacity: 1;
+    color: var(--gold);
+    letter-spacing: 0.14em;
+  }
+}
+
+/* ── 7. WHO COLS — icon ("All") resolves on hover ──────────────────── */
+.wc-icon {
+  transition:
+    color 0.38s cubic-bezier(.16,1,.3,1),
+    letter-spacing 0.38s cubic-bezier(.16,1,.3,1),
+    opacity 0.38s cubic-bezier(.16,1,.3,1),
+    transform 0.38s cubic-bezier(.16,1,.3,1);
+}
+@media (hover: hover) {
+  .who-col:hover .wc-icon {
+    color: var(--cocoa);
+    letter-spacing: 0.24em;
+    opacity: 1;
+    transform: translateY(-4px);
+  }
+  .who-col:hover .wc-title {
+    letter-spacing: -0.02em;
+  }
+}
+.wc-title {
+  transition: letter-spacing 0.3s cubic-bezier(.16,1,.3,1);
+}
+
+/* ── 8. SUMMARY / RITUAL STEPS — left pulse border draws down ──────── */
+.sum-step {
+  position: relative;
+  transition:
+    background 0.3s,
+    padding-left 0.3s cubic-bezier(.16,1,.3,1);
+}
+/* Animated left border — grows from top */
+.sum-step::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 0;
+  width: 2px; height: 0;
+  background: var(--gold);
+  transition: height 0.38s cubic-bezier(.16,1,.3,1);
+}
+@media (hover: hover) {
+  .sum-step:hover::before { height: 100%; }
+  .sum-step:hover {
+    background: rgba(248,244,236,0.04);
+    padding-left: calc(clamp(20px,2.5vw,32px) + 6px);
+  }
+  .sum-step:hover .sum-step-num {
+    color: var(--gold);
+    letter-spacing: 0.12em;
+  }
+  .sum-step:hover .sum-step-title {
+    letter-spacing: 0.01em;
+  }
+}
+.sum-step-num {
+  transition: color 0.28s, letter-spacing 0.28s cubic-bezier(.16,1,.3,1);
+}
+.sum-step-title {
+  transition: letter-spacing 0.28s cubic-bezier(.16,1,.3,1);
+}
+
+/* ── 9. BAKE TIME ALT ROWS — hover selects / highlights ────────────── */
+.sum-alt {
+  transition:
+    background 0.26s,
+    border-left-color 0.26s cubic-bezier(.16,1,.3,1),
+    padding-left 0.26s cubic-bezier(.16,1,.3,1),
+    opacity 0.26s;
+  position: relative;
+  border-left: 2px solid transparent;
+}
+@media (hover: hover) {
+  .sum-alt:hover {
+    background: rgba(248,244,236,0.06);
+    border-left-color: var(--gold);
+    padding-left: calc(var(--gap, 0px) + 10px);
+  }
+  .sum-alt:hover .sum-alt-time {
+    color: var(--gold);
+  }
+  /* Siblings dim — focus on the hovered row */
+  .sum-alts:has(.sum-alt:hover) .sum-alt:not(:hover) {
+    opacity: 0.38;
+  }
+}
+.sum-alt-time {
+  transition: color 0.26s;
+}
+
+/* ── 10. BLESSING QUOTES — staggered gold underline on enter ────────── */
+.blessing-quote {
+  position: relative;
+  display: inline-block;
+}
+.blessing-quote::after {
+  content: '';
+  position: absolute;
+  bottom: -3px; left: 0;
+  width: 0; height: 1.5px;
+  background: var(--gold);
+  transition: width 0.6s cubic-bezier(.16,1,.3,1);
+}
+.blessing-quote.visible::after {
+  width: 100%;
+}
+/* Stagger */
+.blessing-quote:nth-child(2)::after { transition-delay: 0.1s; }
+.blessing-quote:nth-child(3)::after { transition-delay: 0.22s; }
+.blessing-quote:nth-child(4)::after { transition-delay: 0.36s; }
+
+/* ── 11. NUTRITION TABLE — row reveal on hover ──────────────────────── */
+.nutr-table tr {
+  transition:
+    background 0.22s,
+    padding 0.22s;
+  position: relative;
+}
+@media (hover: hover) {
+  .nutr-table tbody tr:hover {
+    background: rgba(92,61,46,0.06);
+  }
+  .nutr-table tbody tr:hover td:first-child {
+    color: var(--cocoa);
+    padding-left: 10px;
+  }
+  .nutr-table tbody tr:hover td:last-child {
+    color: var(--ink);
+    font-weight: 700;
+  }
+}
+.nutr-table td {
+  transition: color 0.22s, padding-left 0.22s cubic-bezier(.16,1,.3,1), font-weight 0.22s;
+}
+
+/* ── 12. NUTR TAGS — tag pop on hover ──────────────────────────────── */
+.nutr-tag {
+  transition:
+    transform 0.28s cubic-bezier(.34,1.56,.64,1),
+    box-shadow 0.28s,
+    opacity 0.28s;
+  display: inline-flex;
+  align-items: center;
+}
+@media (hover: hover) {
+  .nutr-tag:hover {
+    transform: translateY(-3px) scale(1.04);
+    box-shadow: 0 4px 12px rgba(92,61,46,0.18);
+  }
+  /* Sibling tags dim slightly */
+  .nutr-tags-row:has(.nutr-tag:hover) .nutr-tag:not(:hover) {
+    opacity: 0.55;
+  }
+}
+
+/* ── 13. BREAD QTY CARDS — spring selection ────────────────────────── */
+.bread-qty-card {
+  transition:
+    border-color 0.22s,
+    background 0.22s,
+    transform 0.3s cubic-bezier(.34,1.56,.64,1),
+    box-shadow 0.3s,
+    color 0.22s;
+}
+.bread-qty-card.selected {
+  transform: scale(1.04) !important;
+  box-shadow: 0 6px 20px rgba(42,24,16,0.18);
+}
+/* Siblings shrink when one is selected */
+.bread-qty-grid:has(.bread-qty-card.selected) .bread-qty-card:not(.selected) {
+  transform: scale(0.97);
+  opacity: 0.72;
+}
+@media (hover: hover) {
+  .bread-qty-card:not(.selected):hover {
+    transform: scale(1.02) translateY(-2px);
+  }
+}
+/* Spring click effect — applied via JS class */
+.bread-qty-card.spring {
+  animation: qtySpring 0.42s cubic-bezier(.34,1.56,.64,1) both;
+}
+@keyframes qtySpring {
+  0%   { transform: scale(1.0); }
+  40%  { transform: scale(1.09); }
+  70%  { transform: scale(1.03); }
+  100% { transform: scale(1.04); }
+}
+
+/* ── 14. FORM FIELDS — dim-inactive focus ──────────────────────────── */
+/* When any field is focused, other rows fade back */
+.order-form:has(input:focus, select:focus) .form-row:not(:focus-within) {
+  opacity: 0.45;
+  transition: opacity 0.3s;
+}
+.order-form .form-row {
+  transition: opacity 0.3s;
+}
+
+/* ── 15. BTN ORDER — magnetic fill sweep ───────────────────────────── */
+.btn-order:not(:disabled) {
+  position: relative;
+  overflow: hidden;
+}
+.btn-order:not(:disabled)::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--cocoa);
+  background-image: none;
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 0.34s cubic-bezier(.16,1,.3,1);
+  z-index: 0;
+}
+.btn-order:not(:disabled) > * { position: relative; z-index: 1; }
+.btn-order:not(:disabled):hover::after { transform: scaleX(1); }
+/* Override: the text content of btn-order is direct (not wrapped) — use color change */
+.btn-order:not(:disabled) {
+  transition: color 0.28s, background 0.28s;
+}
+
+/* ── 16. TRUST BLOCK — stat vals sharpen on enter ──────────────────── */
+.trust-val {
+  display: block;
+  transition:
+    letter-spacing 0.4s cubic-bezier(.16,1,.3,1),
+    color 0.4s;
+  opacity: 0;
+  transform: translateY(8px);
+  will-change: opacity, transform;
+  transition: opacity 0.6s cubic-bezier(.16,1,.3,1), transform 0.6s cubic-bezier(.16,1,.3,1);
+}
+.trust-val.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ── 17. FOOTER LINKS — left-to-right reveal on hover ──────────────── */
+.footer-link {
+  position: relative;
+  overflow: hidden;
+}
+.footer-link::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 50%; right: 50%;
+  height: 1px;
+  background: rgba(248,244,236,0.38);
+  transition: left 0.28s cubic-bezier(.16,1,.3,1), right 0.28s cubic-bezier(.16,1,.3,1);
+}
+@media (hover: hover) {
+  .footer-link:hover::after {
+    left: 14px; right: 14px;
+  }
+}
+
+/* ── 18. HERO SCROLL LINE — pause on idle, resume on scroll ────────── */
+.hero-scroll {
+  transition: opacity 0.4s;
+}
+.hero-scroll.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* ── 19. SHIP BADGE GLOBE — slow orbit ─────────────────────────────── */
+.ship-globe {
+  transition: opacity 0.3s, transform 0.6s cubic-bezier(.16,1,.3,1);
+}
+@media (hover: hover) {
+  .ship-badge:hover .ship-globe {
+    opacity: 0.85 !important;
+    transform: rotate(20deg) scale(1.12);
+  }
+  .ship-badge:hover .ship-text {
+    letter-spacing: 0.34em;
+  }
+}
+.ship-text {
+  transition: letter-spacing 0.38s cubic-bezier(.16,1,.3,1);
+}
+
+/* ─── REDUCED MOTION SAFETY NET ────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .hero-hl-word { animation: none !important; opacity: 1 !important; transform: none !important; filter: none !important; }
+  .hs-pill::after, .format-card::before, .sum-step::before,
+  .blessing-quote::after, .footer-link::after, .btn-order:not(:disabled)::after,
+  .ing-bar-fill::after { display: none !important; }
+  .bread-qty-card.spring { animation: none !important; }
+  .nutr-tag:hover, .who-col:hover .wc-icon { transform: none !important; }
+  .trust-val { opacity: 1 !important; transform: none !important; }
+}
