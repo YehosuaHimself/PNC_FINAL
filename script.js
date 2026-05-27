@@ -5,12 +5,12 @@
 
   var C_DARK  = '#2A1810';
   var C_LIGHT = '#F8F4EC';
-  var DOT_R   = 6;
-  var RING_RX = 25, RING_RY = 21;
-  var LERP    = 0.18;
-  var BEAN_W  = '13px', BEAN_H = '12px';
-  var BEAN_BR = '50% 50% 45% 55% / 55% 45% 55% 45%';
-  var BEAN_ROT = '30deg';
+  var DOT_R   = 5;
+  var RING_RX = 22, RING_RY = 22;
+  var LERP    = 0.10;
+  var SQ_W    = '10px', SQ_H = '10px';
+  var SQ_BR   = '0';
+  var SQ_ROT  = '0deg';
 
   var mx = -9999, my = -9999;
   var rx = -9999, ry = -9999;
@@ -48,8 +48,8 @@
     var dy = (my - RING_RY) - ry;
     rx += dx * LERP;
     ry += dy * LERP;
-    dot.style.transform  = 'translate3d(' + (mx - DOT_R) + 'px,' + (my - DOT_R) + 'px,0) rotate(' + BEAN_ROT + ')';
-    ring.style.transform = 'translate3d(' + Math.round(rx) + 'px,' + Math.round(ry) + 'px,0) rotate(' + (ring.dataset.rot || BEAN_ROT) + ')';
+    dot.style.transform  = 'translate3d(' + (mx - DOT_R) + 'px,' + (my - DOT_R) + 'px,0) rotate(' + SQ_ROT + ')';
+    ring.style.transform = 'translate3d(' + Math.round(rx) + 'px,' + Math.round(ry) + 'px,0) rotate(' + (ring.dataset.rot || SQ_ROT) + ')';
     if (Math.abs(dx) < 0.3 && Math.abs(dy) < 0.3) {
       if (++settled > 4) { rafId = null; return; }
     } else { settled = 0; }
@@ -76,24 +76,24 @@
 
   document.addEventListener('mousedown', function() {
     if (inTextField) return;
-    dot.style.transform  = 'translate3d(' + (mx - DOT_R) + 'px,' + (my - DOT_R) + 'px,0) rotate(' + BEAN_ROT + ') scale(0.8)';
-    ring.style.transform = 'translate3d(' + Math.round(rx) + 'px,' + Math.round(ry) + 'px,0) rotate(' + (ring.dataset.rot || BEAN_ROT) + ') scale(0.85)';
+    dot.style.transform  = 'translate3d(' + (mx - DOT_R) + 'px,' + (my - DOT_R) + 'px,0) rotate(' + SQ_ROT + ') scale(0.8)';
+    ring.style.transform = 'translate3d(' + Math.round(rx) + 'px,' + Math.round(ry) + 'px,0) rotate(' + (ring.dataset.rot || SQ_ROT) + ') scale(0.85)';
   }, {passive:true});
 
   document.addEventListener('mouseup', function() {
     if (inTextField) return;
-    dot.style.transform  = 'translate3d(' + (mx - DOT_R) + 'px,' + (my - DOT_R) + 'px,0) rotate(' + BEAN_ROT + ')';
-    ring.style.transform = 'translate3d(' + Math.round(rx) + 'px,' + Math.round(ry) + 'px,0) rotate(' + (ring.dataset.rot || BEAN_ROT) + ')';
+    dot.style.transform  = 'translate3d(' + (mx - DOT_R) + 'px,' + (my - DOT_R) + 'px,0) rotate(' + SQ_ROT + ')';
+    ring.style.transform = 'translate3d(' + Math.round(rx) + 'px,' + Math.round(ry) + 'px,0) rotate(' + (ring.dataset.rot || SQ_ROT) + ')';
   }, {passive:true});
 
   document.querySelectorAll('a,button,[role=button],select').forEach(function(el) {
     el.addEventListener('mouseenter', function() {
-      ring.style.width = '68px'; ring.style.height = '58px';
+      ring.style.width = '60px'; ring.style.height = '60px';
       ring.style.opacity = currentDark ? '0.40' : '0.35';
       startLoop();
     });
     el.addEventListener('mouseleave', function() {
-      ring.style.width = '50px'; ring.style.height = '42px';
+      ring.style.width = '44px'; ring.style.height = '44px';
       ring.style.opacity = currentDark ? '0.55' : '0.60';
       startLoop();
     });
@@ -118,15 +118,15 @@
     inTextField = false;
     dot.style.animation    = 'none';
     dot.style.transition   = 'width 120ms ease, height 120ms ease, border-radius 180ms ease';
-    dot.style.width        = BEAN_W;
-    dot.style.height       = BEAN_H;
-    dot.style.borderRadius = BEAN_BR;
+    dot.style.width        = SQ_W;
+    dot.style.height       = SQ_H;
+    dot.style.borderRadius = SQ_BR;
     dot.style.background   = currentDark ? C_LIGHT : C_DARK;
     rx = mx - RING_RX; ry = my - RING_RY;
-    ring.style.transform   = 'translate3d(' + Math.round(rx) + 'px,' + Math.round(ry) + 'px,0) rotate(' + BEAN_ROT + ')';
+    ring.style.transform   = 'translate3d(' + Math.round(rx) + 'px,' + Math.round(ry) + 'px,0) rotate(' + SQ_ROT + ')';
     ring.style.opacity     = currentDark ? '0.55' : '0.60';
-    ring.style.width       = '50px';
-    ring.style.height      = '42px';
+    ring.style.width       = '44px';
+    ring.style.height      = '44px';
     startLoop();
   }
 
