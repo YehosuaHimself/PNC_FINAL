@@ -427,7 +427,7 @@ input,select,textarea{cursor:none!important;caret-color:transparent}
 .ship-badge[data-dark]{
   background:var(--cocoa);
   border-top-color:rgba(248,244,236,0.12);
-  border-bottom-color:rgba(248,244,236,0.12);
+  border-bottom:none;
 }
 .ship-badge-inner{
   display:flex;align-items:center;gap:clamp(16px,2.5vw,36px);
