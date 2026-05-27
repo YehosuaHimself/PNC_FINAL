@@ -447,3 +447,16 @@
   .nutr-tag:hover, .who-col:hover .wc-icon { transform: none !important; }
   .trust-val { opacity: 1 !important; transform: none !important; }
 }
+
+
+/* ── NAV VISIBILITY FIX ──────────────────────────────────────────────
+   The hero background lightens to near-cream at the top, causing the
+   cream-background nav to visually merge with it.
+   Fix: add a more visible bottom border and a subtle directional shadow
+   so the nav always reads as a distinct surface.
+   This appends to the existing file — zero style.css changes needed.
+───────────────────────────────────────────────────────────────────── */
+#site-nav {
+  border-bottom: 1px solid rgba(92,61,46,0.16) !important;
+  box-shadow: 0 1px 0 rgba(92,61,46,0.07), 0 2px 12px rgba(42,24,16,0.06) !important;
+}
