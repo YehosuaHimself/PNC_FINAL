@@ -1856,7 +1856,7 @@ body.cookie-visible #mobile-cta{bottom:var(--cookie-h,80px);}
 /* ── Baker's Blessing (US4-AC4) ─────────────────────────────────── */
 .blessing{
   background:var(--ink);
-  padding:clamp(80px,12vw,140px) var(--g);
+  padding:clamp(96px,13vw,160px) var(--g);
   position:relative;
   overflow:hidden;
 }
@@ -1884,7 +1884,7 @@ body.cookie-visible #mobile-cta{bottom:var(--cookie-h,80px);}
 }
 .blessing-rule{
   height:1px;
-  background:rgba(248,244,236,0.12);
+  background:rgba(248,244,236,0.10);
 }
 @media(max-width:760px){
   .blessing-rule{display:none;}
@@ -1896,15 +1896,15 @@ body.cookie-visible #mobile-cta{bottom:var(--cookie-h,80px);}
 .blessing-eyebrow{
   display:block;
   font-size:.7rem;
-  letter-spacing:.25em;
+  letter-spacing:.28em;
   text-transform:uppercase;
-  color:rgba(248,244,236,0.35);
-  margin-bottom:clamp(24px,3vw,36px);
+  color:rgba(248,244,236,0.40);
+  margin-bottom:clamp(28px,3.5vw,44px);
 }
 .blessing-quote{
   font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;
   font-weight:900;
-  line-height:0.96;
+  line-height:0.93;
   color:var(--cream);
   letter-spacing:-.03em;
   text-transform:uppercase;
@@ -1915,8 +1915,9 @@ body.cookie-visible #mobile-cta{bottom:var(--cookie-h,80px);}
 .blessing-quote:first-of-type{
   font-size:clamp(2.4rem,5.5vw,5.2rem);
   font-weight:700;
-  letter-spacing:-.01em;
-  color:rgba(248,244,236,0.72);
+  letter-spacing:-.02em;
+  color:rgba(248,244,236,0.80);
+  line-height:1;
 }
 /* PANEM NOSTRUM COTIDIANUM — the centrepiece */
 .blessing-quote:nth-of-type(2){
@@ -1924,16 +1925,20 @@ body.cookie-visible #mobile-cta{bottom:var(--cookie-h,80px);}
 }
 .blessing-sub{
   font-size:.7rem;
-  letter-spacing:.25em;
+  letter-spacing:.28em;
   text-transform:uppercase;
-  color:rgba(248,244,236,0.35);
+  color:rgba(248,244,236,0.40);
   line-height:1.8;
+  margin-top:clamp(20px,2.5vw,32px);
 }
-.blessing-quote + .blessing-quote{margin-top:clamp(10px,1.5vw,18px);}
+/* Tighter gap between MY BREAD and centrepiece; more air before translation */
+.blessing-quote + .blessing-quote{margin-top:clamp(6px,0.8vw,10px);}
+.blessing-quote + .blessing-quote + .blessing-quote{margin-top:clamp(20px,2.5vw,32px);}
 .blessing-translation{
-  font-size:clamp(1rem,2vw,1.8rem) !important;
+  font-size:clamp(.8rem,1.4vw,1.1rem) !important;
   font-weight:600 !important;
-  letter-spacing:.12em !important;
-  color:rgba(248,244,236,0.32) !important;
+  letter-spacing:.18em !important;
+  color:rgba(248,244,236,0.38) !important;
   font-family:'Courier New',monospace !important;
+  line-height:1.6 !important;
 }
