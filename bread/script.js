@@ -1,17 +1,16 @@
 (function(){
   var dot  = document.getElementById('cur-dot');
-  var ring = document.getElementById('cur-ring');
-  if (!dot || !ring || window.matchMedia('(pointer:coarse)').matches) return;
+  if (!dot || window.matchMedia('(pointer:coarse)').matches) return;
 
   var C_DARK  = '#2A1810';
   var C_LIGHT = '#F8F4EC';
-  var DOT_R   = 20;
-  var RING_RX = 36, RING_RY = 40;
+  var DOT_R   = 32;
+  var RING_RX = 32, RING_RY = 35;
   var LERP    = 0.18;
-  var BEAN_W  = '40px', BEAN_H = '44px';
+  var BEAN_W  = '64px', BEAN_H = '70px';
   var BEAN_BR = 'none'; // unused for SVG
   var BEAN_CP = ''; // SVG shape, no clip-path needed
-  var BEAN_ROT = '15deg';
+  var BEAN_ROT = '175deg';
 
   var mx = -9999, my = -9999;
   var rx = -9999, ry = -9999;
@@ -20,16 +19,13 @@
   var inTextField = false;
 
   dot.style.willChange  = 'transform, background';
-  ring.style.willChange = 'transform, border-color';
   // SVG dot — no clipPath needed
 
   /* ── Color detection via elementFromPoint — zero stale cache ── */
   function isDarkUnder(x, y) {
     dot.style.display  = 'none';
-    ring.style.display = 'none';
     var el = document.elementFromPoint(x, y);
     dot.style.display  = '';
-    ring.style.display = '';
     if (!el) return false;
     var node = el;
     while (node && node !== document.documentElement) {
@@ -42,8 +38,8 @@
   function applyColor(dark) {
     var c = dark ? C_LIGHT : C_DARK;
     dot.style.color   = c;
-    ring.style.color = c;
-    if (!inTextField) ring.style.opacity = dark ? '0.55' : '0.60';
+    // ring removed
+
   }
 
   function loop() {
@@ -52,7 +48,7 @@
     rx += dx * LERP;
     ry += dy * LERP;
     dot.style.transform  = 'translate3d(' + (mx - DOT_R) + 'px,' + (my - DOT_R) + 'px,0) rotate(' + BEAN_ROT + ')';
-    ring.style.transform = 'translate3d(' + Math.round(rx) + 'px,' + Math.round(ry) + 'px,0) rotate(' + (ring.dataset.rot || BEAN_ROT) + ')';
+
     if (Math.abs(dx) < 0.3 && Math.abs(dy) < 0.3) {
       if (++settled > 4) { rafId = null; return; }
     } else { settled = 0; }
@@ -74,30 +70,27 @@
   document.addEventListener('mouseleave', function() {
     mx = -9999; my = -9999;
     dot.style.transform  = 'translate3d(-9999px,-9999px,0)';
-    ring.style.transform = 'translate3d(-9999px,-9999px,0)';
   });
 
   document.addEventListener('mousedown', function() {
     if (inTextField) return;
     dot.style.transform  = 'translate3d(' + (mx - DOT_R) + 'px,' + (my - DOT_R) + 'px,0) rotate(' + BEAN_ROT + ') scale(0.8)';
-    ring.style.transform = 'translate3d(' + Math.round(rx) + 'px,' + Math.round(ry) + 'px,0) rotate(' + (ring.dataset.rot || BEAN_ROT) + ') scale(0.85)';
+
   }, {passive:true});
 
   document.addEventListener('mouseup', function() {
     if (inTextField) return;
     dot.style.transform  = 'translate3d(' + (mx - DOT_R) + 'px,' + (my - DOT_R) + 'px,0) rotate(' + BEAN_ROT + ')';
-    ring.style.transform = 'translate3d(' + Math.round(rx) + 'px,' + Math.round(ry) + 'px,0) rotate(' + (ring.dataset.rot || BEAN_ROT) + ')';
+
   }, {passive:true});
 
   document.querySelectorAll('a,button,[role=button],select').forEach(function(el) {
     el.addEventListener('mouseenter', function() {
-      ring.style.width = '96px'; ring.style.height = '106px';
-      ring.style.opacity = currentDark ? '0.40' : '0.35';
+
       startLoop();
     });
     el.addEventListener('mouseleave', function() {
-      ring.style.width = '72px'; ring.style.height = '80px';
-      ring.style.opacity = currentDark ? '0.55' : '0.60';
+
       startLoop();
     });
   });
@@ -113,8 +106,7 @@
     dot.style.borderRadius = '1px';
     dot.style.color   = currentDark ? C_LIGHT : C_DARK;
     dot.style.animation    = 'textCursorBlink 1.1s step-end infinite';
-    ring.style.opacity     = '0';
-    ring.style.transform   = 'translate3d(-9999px,-9999px,0)';
+
   }
 
   function leaveTextField() {
@@ -127,12 +119,12 @@
     dot.style.borderRadius = BEAN_BR;
     // SVG dot
     dot.style.color   = currentDark ? C_LIGHT : C_DARK;
-    rx = mx - RING_RX; ry = my - RING_RY;
+
     // SVG ring
-    ring.style.transform   = 'translate3d(' + Math.round(rx) + 'px,' + Math.round(ry) + 'px,0) rotate(' + BEAN_ROT + ')';
-    ring.style.opacity     = currentDark ? '0.55' : '0.60';
-    ring.style.width       = '72px';
-    ring.style.height      = '80px';
+
+
+
+
     startLoop();
   }
 

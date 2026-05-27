@@ -84,25 +84,12 @@ a,button,[role=button]{cursor:none!important}
 input,select,textarea{cursor:none!important;caret-color:transparent}
 @media(pointer:coarse){*{cursor:auto!important}a,button,[role=button]{cursor:pointer!important}}
 #cur-dot{
-  position:fixed;top:0;left:0;width:40px;height:44px;
+  position:fixed;top:0;left:0;width:64px;height:70px;
   color:var(--cocoa);pointer-events:none;z-index:9998;
-  transform:translate(-9999px,-9999px) rotate(15deg);
+  /* tip at bottom: grain rotated so Spitze points downward */
+  transform:translate(-9999px,-9999px) rotate(175deg);
   transition:color 160ms ease, opacity 160ms ease;
   overflow:visible;
-}
-#cur-dot-path{
-  /* Buckwheat grain: triangular with 3 plump convex lobes */
-  d: path("M20 2 C28 2 37 9 37 20 C37 30 29 40 20 42 C11 40 3 30 3 20 C3 9 12 2 20 2 Z");
-}
-#cur-ring{
-  position:fixed;top:0;left:0;width:72px;height:80px;
-  color:var(--cocoa);pointer-events:none;z-index:9997;
-  transform:translate(-9999px,-9999px) rotate(15deg);opacity:0.65;
-  overflow:visible;
-  transition:width .22s cubic-bezier(.16,1,.3,1),
-             height .22s cubic-bezier(.16,1,.3,1),
-             opacity 160ms ease,
-             color 160ms ease;
 }
 /* Text insertion cursor blink — matches system caret rhythm */
 @keyframes textCursorBlink{
