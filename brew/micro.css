@@ -1,18 +1,12 @@
 /* ═══════════════════════════════════════════════════════════
-   PNC BREW — MICRO-INTERACTIONS  ·  micro.css
+   PNC BREW — MICRO-INTERACTIONS  ·  micro.css  v2
    Awwwards-grade additions. Every effect earned, none decorative.
+   All conflicts with style.css resolved.
    ═══════════════════════════════════════════════════════════ */
 
-/* ── 1. STEP ROWS — the heart of the brew page ─────────────────────
-   Inspired by what the screenshot shows: large type, sparse meta.
-   The interaction: as you hover, the step "breathes open" —
-   the number slides up and gains weight, a hairline rule draws
-   from left to right beneath the title, the meta values pulse once.
-   Nothing bounces. Nothing spins. It's the calm of boiling water.
-   ─────────────────────────────────────────────────────────────── */
+/* ── 1. STEP ROWS ────────────────────────────────────────────────── */
 
 @media(hover:hover) {
-  /* Step row base — add a precise left-border accent on hover */
   .step {
     transition:
       background 0.32s cubic-bezier(.16,1,.3,1),
@@ -25,7 +19,6 @@
     padding-left: clamp(8px,1vw,16px);
   }
 
-  /* Step number — on hover, it fades slightly and shifts up */
   .step-num {
     transition:
       letter-spacing 0.35s cubic-bezier(.16,1,.3,1),
@@ -38,8 +31,6 @@
     transform: translateY(-2px);
   }
 
-  /* Step title — the big text: tighten tracking further on hover,
-     a subtle shift that feels like attention sharpening */
   .step-title {
     transition:
       letter-spacing 0.4s cubic-bezier(.16,1,.3,1),
@@ -51,7 +42,7 @@
     color: var(--dark);
   }
 
-  /* Underline that draws from left → right on hover */
+  /* Underline draws left → right */
   .step-title::after {
     content: '';
     position: absolute;
@@ -64,15 +55,10 @@
     transform-origin: left;
     transition: transform 0.55s cubic-bezier(.16,1,.3,1);
   }
-  .step-left {
-    /* needed so ::after aligns correctly */
-    align-items: flex-end;
-  }
   .step:hover .step-title::after {
     transform: scaleX(1);
   }
 
-  /* Step body text — slide up and become more legible on hover */
   .step-text {
     transition:
       color 0.3s ease,
@@ -83,7 +69,6 @@
     transform: translateY(-1px);
   }
 
-  /* Step meta — the stat column: values flash to full opacity */
   .step-meta {
     transition:
       color 0.3s ease,
@@ -97,19 +82,21 @@
   }
 }
 
+/* FIX: step-left align guard — only override on desktop where design is right-aligned */
+@media(min-width:901px) {
+  .step-left {
+    align-items: flex-end;
+  }
+}
 
-/* ── 2. TASTING NOTES — flavour cards ──────────────────────────────
-   On hover: the ghost number ascends, the flavour type
-   slides from monospaced label into view, a warm wash
-   appears bottom-to-top like coffee rising in a cup.
-   ─────────────────────────────────────────────────────────────── */
+
+/* ── 2. TASTING NOTES ───────────────────────────────────────────── */
 
 .tasting-note {
   position: relative;
   overflow: hidden;
 }
 
-/* Warm wash — rises from bottom on hover */
 .tasting-note::before {
   content: '';
   position: absolute;
@@ -130,7 +117,6 @@
     transform: translateY(0);
   }
 
-  /* Ghost number drifts upward */
   .tn-num {
     transition:
       transform 0.5s cubic-bezier(.16,1,.3,1),
@@ -141,7 +127,6 @@
     opacity: 0.09;
   }
 
-  /* Flavour name — contracts slightly, colour warms */
   .tn-name {
     transition:
       letter-spacing 0.35s cubic-bezier(.16,1,.3,1),
@@ -152,7 +137,6 @@
     color: var(--ink);
   }
 
-  /* Type labels fade in more strongly */
   .tn-type {
     transition:
       opacity 0.3s ease,
@@ -163,7 +147,6 @@
     transform: translateY(-1px);
   }
 
-  /* "When" note — slides up a touch */
   .tn-when {
     transition:
       color 0.3s ease,
@@ -176,20 +159,11 @@
 }
 
 
-/* ── 3. SOURCE STATS — the numbers that anchor the provenance ───────
-   The large numerals get a subtle count-pulse on first entry.
-   On scroll-in: they animate with a slight scale, not a jump.
-   ─────────────────────────────────────────────────────────────── */
-
-.ss-val {
-  display: block;
-  transition: transform 0.5s cubic-bezier(.16,1,.3,1);
-}
+/* ── 3. SOURCE STATS — entry pulse ──────────────────────────────── */
 
 .source-stats .reveal.visible .ss-val {
   animation: statPulse 0.7s cubic-bezier(.16,1,.3,1) both;
 }
-/* stagger each stat */
 .source-stats > div:nth-child(1) .ss-val { animation-delay: 0s; }
 .source-stats > div:nth-child(2) .ss-val { animation-delay: 0.08s; }
 .source-stats > div:nth-child(3) .ss-val { animation-delay: 0.16s; }
@@ -206,41 +180,29 @@
 }
 
 
-/* ── 4. NAV LINKS — understated, present ───────────────────────────
-   The existing nav has background fill on hover.
-   We add: a fine underline that draws in from centre, 
-   paired with a hair of letter-spacing expansion.
-   Only active with pointer:fine to keep mobile clean.
+/* ── 4. NAV CTA — fill sweep ─────────────────────────────────────
+   FIX: Use background-size trick instead of ::after z-index:-1
+   to avoid stacking context issues with the nav's overflow:hidden.
    ─────────────────────────────────────────────────────────────── */
 
 @media(hover:hover) {
-  /* CTA button — fill sweeps from left on hover */
   .nav-cta {
-    position: relative;
-    overflow: hidden;
-    isolation: isolate;
+    background-image: linear-gradient(var(--cocoa), var(--cocoa));
+    background-size: 0% 100%;
+    background-position: left center;
+    background-repeat: no-repeat;
+    transition:
+      background-size 0.28s cubic-bezier(.16,1,.3,1),
+      background-color 0.28s;
   }
-  .nav-cta::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: var(--cocoa);
-    transform: scaleX(0);
-    transform-origin: left;
-    transition: transform 0.28s cubic-bezier(.16,1,.3,1);
-    z-index: -1;
+  .nav-cta:hover {
+    background-size: 100% 100%;
+    background-color: transparent !important;
   }
-  .nav-cta:hover::after { transform: scaleX(1); }
-  /* Ensure text stays above the sweep */
-  .nav-cta:hover { background: transparent; }
 }
 
 
-/* ── 5. HERO PILLS — origin tags in the strip ──────────────────────
-   On hover: the left accent bar grows taller,
-   a faint shimmer passes left-to-right.
-   The highlighted pills (red) get a subtle glow pulse.
-   ─────────────────────────────────────────────────────────────── */
+/* ── 5. HERO PILLS — shimmer + lift ─────────────────────────────── */
 
 @media(hover:hover) {
   .hs-pill {
@@ -257,7 +219,6 @@
     border-left-width: 5px;
   }
 
-  /* Shimmer pass */
   .hs-pill::after {
     content: '';
     position: absolute;
@@ -272,29 +233,25 @@
     );
     transform: skewX(-20deg);
     opacity: 0;
-    transition: none;
     pointer-events: none;
   }
   .hs-pill:hover::after {
     animation: pillShimmer 0.55s ease-out forwards;
   }
-  @keyframes pillShimmer {
-    0%   { left: -60%; opacity: 1; }
-    100% { left: 120%;  opacity: 0; }
-  }
 
-  /* Highlighted pills — richer hover */
   .hs-pill.hl:hover {
     background: #c0533a;
     border-left-color: rgba(0,0,0,0.25);
   }
 }
 
+@keyframes pillShimmer {
+  0%   { left: -60%; opacity: 1; }
+  100% { left: 120%;  opacity: 0; }
+}
 
-/* ── 6. SPEC TABLE ROWS — product detail ───────────────────────────
-   A barely-there row highlight. The label nudges right.
-   Quiet. It only speaks when you look at it.
-   ─────────────────────────────────────────────────────────────── */
+
+/* ── 6. SPEC TABLE ROWS ─────────────────────────────────────────── */
 
 @media(hover:hover) {
   .spec-table tr {
@@ -303,34 +260,28 @@
   .spec-table tr:hover {
     background: rgba(92,61,46,0.04);
   }
-  .spec-table tr:hover td:first-child {
-    letter-spacing: 0.30em;
-    transition: letter-spacing 0.35s cubic-bezier(.16,1,.3,1);
-  }
   .spec-table tr td:first-child {
     transition: letter-spacing 0.3s cubic-bezier(.16,1,.3,1), color 0.2s;
   }
-  .spec-table tr:hover td:last-child {
-    color: var(--dark);
+  .spec-table tr:hover td:first-child {
+    letter-spacing: 0.30em;
   }
   .spec-table tr td:last-child {
     transition: color 0.2s ease;
   }
+  .spec-table tr:hover td:last-child {
+    color: var(--dark);
+  }
 }
 
 
-/* ── 7. QUANTITY CARDS — order section ─────────────────────────────
-   Selected state already has a bottom bar.
-   We add: on hover, a faint top-to-bottom thermal glow,
-   the number scales up 1%, and the price becomes more legible.
-   ─────────────────────────────────────────────────────────────── */
+/* ── 7. QUANTITY CARDS ──────────────────────────────────────────── */
 
 .qty-card {
   position: relative;
   overflow: hidden;
 }
 
-/* Thermal glow enters from top */
 .qty-card::before {
   content: '';
   position: absolute;
@@ -342,6 +293,7 @@
   transition: transform 0.4s cubic-bezier(.16,1,.3,1);
   z-index: 1;
 }
+
 @media(hover:hover) {
   .qty-card:hover::before { transform: scaleX(1); }
 
@@ -364,28 +316,16 @@
   }
 }
 
-/* Selected card — the underline bar pulses once on selection */
-.qty-card.selected::after {
-  transition: transform 0.4s cubic-bezier(.16,1,.3,1);
-  transform: scaleX(1);
-  transform-origin: left;
-}
 
-
-/* ── 8. SIX REASONS GRID — dark section ────────────────────────────
-   Items are already in a grid. On hover: the tiny number
-   drifts up and warms, the title track tightens, a thin
-   left border draws in from the top.
-   ─────────────────────────────────────────────────────────────── */
+/* ── 8. SIX REASONS GRID ────────────────────────────────────────── */
 
 @media(hover:hover) {
   .sr-item {
-    transition:
-      background 0.3s ease,
-      padding-left 0.32s cubic-bezier(.16,1,.3,1);
+    transition: background 0.3s ease;
     position: relative;
   }
 
+  /* Left border draws top → bottom */
   .sr-item::before {
     content: '';
     position: absolute;
@@ -398,9 +338,7 @@
   }
 
   .sr-item:hover::before { transform: scaleY(1); }
-  .sr-item:hover {
-    background: rgba(248,244,236,0.03);
-  }
+  .sr-item:hover { background: rgba(248,244,236,0.03); }
 
   .sr-num {
     transition: color 0.25s ease, letter-spacing 0.3s cubic-bezier(.16,1,.3,1);
@@ -417,13 +355,10 @@
     letter-spacing: -0.03em;
     color: rgba(248,244,236,1);
   }
-}
 
-/* Hero card — special: the link arrow slides right */
-@media(hover:hover) {
+  /* Hero card link: underline draws from left */
   .sr-hero-link {
     position: relative;
-    overflow: hidden;
   }
   .sr-hero-link::after {
     content: '';
@@ -440,11 +375,7 @@
 }
 
 
-/* ── 9. ORDER BUTTON — the CTA ──────────────────────────────────────
-   The most important element on the page.
-   Fill sweeps from left. Letters expand a fraction.
-   A single brewed moment.
-   ─────────────────────────────────────────────────────────────── */
+/* ── 9. ORDER BUTTON ────────────────────────────────────────────── */
 
 .btn-order {
   position: relative;
@@ -452,60 +383,50 @@
   isolation: isolate;
 }
 
-.btn-order::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: var(--cocoa);
-  transform: scaleX(0);
-  transform-origin: left;
-  transition: transform 0.38s cubic-bezier(.16,1,.3,1);
-  z-index: -1;
+/* FIX: Use background-image gradient sweep to avoid overriding 
+   the disabled state's background-color */
+.btn-order:not(:disabled) {
+  background-image: linear-gradient(var(--cocoa), var(--cocoa));
+  background-size: 0% 100%;
+  background-position: left center;
+  background-repeat: no-repeat;
+  transition:
+    background-size 0.38s cubic-bezier(.16,1,.3,1),
+    background-color 0.18s,
+    letter-spacing 0.35s cubic-bezier(.16,1,.3,1);
 }
 
 @media(hover:hover) {
-  .btn-order:not(:disabled):hover::after {
-    transform: scaleX(1);
-  }
   .btn-order:not(:disabled):hover {
-    background: transparent;
+    background-size: 100% 100%;
     letter-spacing: 0.30em;
-    transition:
-      background 0s,
-      letter-spacing 0.35s cubic-bezier(.16,1,.3,1);
   }
 }
 
 
-/* ── 10. HERO CTA BUTTONS ───────────────────────────────────────────
-   btn-light: fill retreats on hover, revealing dark text.
-   btn-ghost-dark: border draws from corner.
-   ─────────────────────────────────────────────────────────────── */
+/* ── 10. HERO CTA BUTTONS ───────────────────────────────────────── */
 
 @media(hover:hover) {
+  /* btn-light: dark fill sweeps from right.
+     FIX: Use background-image to avoid conflicting with
+     style.css .btn-light:hover { background: var(--cream) }
+     We override that with a gradient that appears to invert the button. */
   .btn-light {
-    position: relative;
-    overflow: hidden;
-    isolation: isolate;
+    background-image: linear-gradient(var(--dark), var(--dark));
+    background-size: 0% 100%;
+    background-position: right center;
+    background-repeat: no-repeat;
+    transition:
+      background-size 0.32s cubic-bezier(.16,1,.3,1),
+      color 0.15s ease;
   }
-  .btn-light::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: var(--dark);
-    transform: scaleX(0);
-    transform-origin: right;
-    transition: transform 0.32s cubic-bezier(.16,1,.3,1);
-    z-index: -1;
-  }
-  .btn-light:hover::after { transform: scaleX(1); }
   .btn-light:hover {
-    background: transparent;
-    color: var(--cream);
-    transition: color 0.15s 0.15s;
+    background-size: 100% 100%;
+    /* FIX: !important needed here to win over style.css .btn-light:hover */
+    background-color: transparent !important;
+    color: var(--cream) !important;
   }
 
-  /* Ghost dark: border brightens, letter-spacing opens */
   .btn-ghost-dark {
     transition:
       border-color 0.25s ease,
@@ -518,14 +439,8 @@
 }
 
 
-/* ── 11. TICKER — pause whisper ────────────────────────────────────
-   Already pauses on hover. We add: on hover, each item
-   that enters the viewport gains a gentle opacity pulse.
-   (Purely CSS, no JS needed.)
-   ─────────────────────────────────────────────────────────────── */
+/* ── 11. TICKER — focus dims ────────────────────────────────────── */
 
-/* Ticker already has hover pause. Small refinement: dim non-highlights
-   more on hover so the highlighted items sing. */
 .ticker:hover .ticker-item:not(.hl) {
   opacity: 0.35;
   transition: opacity 0.3s ease;
@@ -536,10 +451,7 @@
 }
 
 
-/* ── 12. FOOTER LINKS — the last breath ────────────────────────────
-   The existing :hover lightens the text.
-   We add: a hairline underline that draws from left.
-   ─────────────────────────────────────────────────────────────── */
+/* ── 12. FOOTER LINKS ───────────────────────────────────────────── */
 
 @media(hover:hover) {
   .footer-link {
@@ -560,11 +472,7 @@
 }
 
 
-/* ── 13. PRODUCT BAG IMAGE — still life ────────────────────────────
-   Very subtle. On hover over the product section,
-   the bag image lifts 3px and loses a touch of multiply blur.
-   The grain remains. It breathes.
-   ─────────────────────────────────────────────────────────────── */
+/* ── 13. PRODUCT BAG — still life ───────────────────────────────── */
 
 @media(hover:hover) {
   .product-bag-img {
@@ -579,13 +487,7 @@
 }
 
 
-/* ── 14. REVEAL — upgraded entrance ────────────────────────────────
-   The existing reveal fades up from 24px.
-   We give it a very slight blur that clears on entry —
-   adding the feeling that content resolves into focus
-   as if your eyes are adjusting to a dark room.
-   Only on non-reduced-motion.
-   ─────────────────────────────────────────────────────────────── */
+/* ── 14. REVEAL — blur resolves on entry ───────────────────────── */
 
 @media(prefers-reduced-motion:no-preference) {
   .reveal {
@@ -601,15 +503,10 @@
 }
 
 
-/* ── 15. PROGRESS BARS — scroll indicator ──────────────────────────
-   The gold bars already track scroll. We give them a
-   liquid shimmer that passes upward continuously —
-   like espresso running up the sides of a demitasse.
-   ─────────────────────────────────────────────────────────────── */
+/* ── 15. PROGRESS BARS — liquid shimmer ────────────────────────── */
 
 #prog,
 #prog-r {
-  position: relative;
   overflow: hidden;
 }
 
@@ -617,18 +514,19 @@
 #prog-r::after {
   content: '';
   position: absolute;
-  top: -40%;
+  top: 100%;
   left: 0; right: 0;
   height: 40%;
   background: linear-gradient(
     to bottom,
     transparent,
-    rgba(255,255,255,0.5),
+    rgba(255,255,255,0.45),
     transparent
   );
   animation: progressShimmer 2.2s ease-in-out infinite;
   pointer-events: none;
 }
+
 @keyframes progressShimmer {
   0%   { top: 100%; opacity: 0; }
   10%  { opacity: 1; }
@@ -641,11 +539,7 @@
 }
 
 
-/* ── 16. SOURCE SECTION — stat numbers on hover ─────────────────────
-   The source stats (G1, 2400m, 85+, 43000) gain a warm
-   underline that sweeps in when hovered — each one
-   acknowledging the weight of what it represents.
-   ─────────────────────────────────────────────────────────────── */
+/* ── 16. SOURCE STAT NUMBERS — hover ────────────────────────────── */
 
 @media(hover:hover) {
   .source-stats > div {
@@ -673,15 +567,7 @@
 }
 
 
-/* ── 17. FORM INPUTS — focus moment ────────────────────────────────
-   On focus: a thin underline draws from left below the field.
-   The label slides 2px left and warms in colour.
-   The existing border-color change remains.
-   ─────────────────────────────────────────────────────────────── */
-
-.form-row {
-  position: relative;
-}
+/* ── 17. FORM INPUTS — focus moment ────────────────────────────── */
 
 .form-row input,
 .form-row select {
@@ -699,9 +585,7 @@
 .form-row label {
   transition:
     color 0.25s ease,
-    letter-spacing 0.3s cubic-bezier(.16,1,.3,1),
-    transform 0.25s cubic-bezier(.16,1,.3,1);
-  display: block;
+    letter-spacing 0.3s cubic-bezier(.16,1,.3,1);
 }
 
 .form-row:focus-within label {
@@ -710,25 +594,9 @@
 }
 
 
-/* ── 18. DESK BANNER — the floating CTA ────────────────────────────
-   The ::before fill-on-hover already exists.
-   We add: on hover, the "GET BREW →" arrow nudges right.
-   ─────────────────────────────────────────────────────────────── */
+/* ── 18. DESK BANNER CTA ────────────────────────────────────────── */
 
 @media(hover:hover) and (min-width:769px) {
-  .desk-banner-cta {
-    display: inline-flex;
-    align-items: baseline;
-    gap: 0;
-    overflow: hidden;
-  }
-
-  /* The arrow character nudges on hover */
-  .desk-banner-cta::after {
-    content: '';
-    /* uses the parent's existing text */
-  }
-
   .desk-banner-link:hover .desk-banner-cta {
     letter-spacing: 0.03em;
     transition: letter-spacing 0.25s cubic-bezier(.16,1,.3,1);
@@ -736,10 +604,7 @@
 }
 
 
-/* ── 19. CERT TAGS — tasting notes footer ──────────────────────────
-   The small certification tags under tasting notes.
-   On hover, they gain a warm left border and rise.
-   ─────────────────────────────────────────────────────────────── */
+/* ── 19. CERT TAGS ──────────────────────────────────────────────── */
 
 @media(hover:hover) {
   .cert-tag {
@@ -748,8 +613,6 @@
       border-color 0.2s ease,
       transform 0.28s cubic-bezier(.16,1,.3,1),
       color 0.2s ease;
-    position: relative;
-    overflow: hidden;
   }
   .cert-tag:hover {
     background: var(--cocoa-fa);
@@ -760,23 +623,19 @@
 }
 
 
-/* ── MEDIA: REDUCED MOTION SAFETY NET ──────────────────────────────
-   Any animation not already guarded above gets killed here.
-   ─────────────────────────────────────────────────────────────── */
+/* ── REDUCED MOTION — catch-all ─────────────────────────────────── */
 
 @media(prefers-reduced-motion:reduce) {
-  .step::before,
-  .hs-pill::after,
-  .qty-card::before,
-  .sr-item::before,
-  .btn-order::after,
-  .btn-light::after,
-  .footer-link::after,
   .tasting-note::before,
   .step-title::after,
-  .nav-cta::after,
-  .sr-hero-link::after {
-    animation: none !important;
+  .qty-card::before,
+  .sr-item::before,
+  .sr-hero-link::after,
+  .footer-link::after {
     transition: none !important;
+    animation: none !important;
   }
+  @keyframes pillShimmer { 0%,100% { opacity: 0; } }
+  @keyframes statPulse   { 0%,100% { transform: scale(1); opacity: 1; } }
+  @keyframes progressShimmer { 0%,100% { opacity: 0; } }
 }
