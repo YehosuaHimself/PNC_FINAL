@@ -1916,4 +1916,4 @@ body.cookie-visible #mobile-cta{bottom:var(--cookie-h,80px);}
   line-height:1.8;
 }
 .blessing-quote + .blessing-quote{margin-top:clamp(28px,4vw,48px);}
-.blessing-translation{color:rgba(248,244,236,0.38);font-weight:400;font-size:clamp(1rem,2.2vw,1.6rem);letter-spacing:.14em;}
+.blessing-translation{color:rgba(248,244,236,0.38);}
