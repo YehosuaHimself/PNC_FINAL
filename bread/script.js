@@ -5,13 +5,13 @@
 
   var C_DARK  = '#2A1810';
   var C_LIGHT = '#F8F4EC';
-  var DOT_R   = 7;
-  var RING_RX = 27, RING_RY = 21;
+  var DOT_R   = 6;
+  var RING_RX = 24, RING_RY = 26;
   var LERP    = 0.18;
-  var BEAN_W  = '14px', BEAN_H = '11px';
-  var BEAN_BR = '48% 48% 38% 38% / 55% 55% 45% 45%';
-  var BEAN_CP = 'polygon(50% 100%, 2% 48%, 5% 20%, 22% 2%, 42% 8%, 50% 22%, 58% 8%, 78% 2%, 95% 20%, 98% 48%)';
-  var BEAN_ROT = '30deg';
+  var BEAN_W  = '12px', BEAN_H = '13px';
+  var BEAN_BR = 'none';
+  var BEAN_CP = 'polygon(50% 2%, 97% 78%, 84% 98%, 16% 98%, 3% 78%)';
+  var BEAN_ROT = '12deg';
 
   var mx = -9999, my = -9999;
   var rx = -9999, ry = -9999;
@@ -91,12 +91,12 @@
 
   document.querySelectorAll('a,button,[role=button],select').forEach(function(el) {
     el.addEventListener('mouseenter', function() {
-      ring.style.width = '72px'; ring.style.height = '56px';
+      ring.style.width = '64px'; ring.style.height = '70px';
       ring.style.opacity = currentDark ? '0.40' : '0.35';
       startLoop();
     });
     el.addEventListener('mouseleave', function() {
-      ring.style.width = '54px'; ring.style.height = '42px';
+      ring.style.width = '48px'; ring.style.height = '52px';
       ring.style.opacity = currentDark ? '0.55' : '0.60';
       startLoop();
     });
@@ -130,8 +130,8 @@
     rx = mx - RING_RX; ry = my - RING_RY;
     ring.style.transform   = 'translate3d(' + Math.round(rx) + 'px,' + Math.round(ry) + 'px,0) rotate(' + BEAN_ROT + ')';
     ring.style.opacity     = currentDark ? '0.55' : '0.60';
-    ring.style.width       = '54px';
-    ring.style.height      = '42px';
+    ring.style.width       = '48px';
+    ring.style.height      = '52px';
     startLoop();
   }
 

@@ -84,24 +84,23 @@ a,button,[role=button]{cursor:none!important}
 input,select,textarea{cursor:none!important;caret-color:transparent}
 @media(pointer:coarse){*{cursor:auto!important}a,button,[role=button]{cursor:pointer!important}}
 #cur-dot{
-  position:fixed;top:0;left:0;width:14px;height:11px;
+  position:fixed;top:0;left:0;width:12px;height:13px;
   background:var(--cocoa);pointer-events:none;z-index:9998;
-  /* Buckwheat grain — wide heart: two lobes at top, tapers to point at base */
-  clip-path:polygon(50% 100%, 2% 48%, 5% 20%, 22% 2%, 42% 8%, 50% 22%, 58% 8%, 78% 2%, 95% 20%, 98% 48%);
-  transform:translate(-9999px,-9999px) rotate(30deg);
+  /* Buckwheat grain — 3-sided pyramid: rounded apex top, two shoulder edges, flat base */
+  clip-path:polygon(50% 2%, 97% 78%, 84% 98%, 16% 98%, 3% 78%);
+  transform:translate(-9999px,-9999px) rotate(12deg);
   transition:background 160ms ease, opacity 160ms ease;
 }
 #cur-ring{
-  position:fixed;top:0;left:0;width:54px;height:42px;
+  position:fixed;top:0;left:0;width:48px;height:52px;
   border:1.5px solid var(--cocoa);pointer-events:none;z-index:9997;
-  /* Buckwheat grain ring — wide heart silhouette, matching dot */
-  border-radius:48% 48% 38% 38% / 55% 55% 45% 45%;
-  transform:translate(-9999px,-9999px) rotate(30deg);opacity:0.7;
+  /* Buckwheat grain ring — pentagon tracing the triangular grain silhouette */
+  clip-path:polygon(50% 2%, 97% 78%, 84% 98%, 16% 98%, 3% 78%);
+  transform:translate(-9999px,-9999px) rotate(12deg);opacity:0.7;
   transition:width .22s cubic-bezier(.16,1,.3,1),
              height .22s cubic-bezier(.16,1,.3,1),
              opacity 160ms ease,
-             border-color 160ms ease,
-             border-radius .35s cubic-bezier(.16,1,.3,1);
+             border-color 160ms ease;
 }
 /* Text insertion cursor blink — matches system caret rhythm */
 @keyframes textCursorBlink{
