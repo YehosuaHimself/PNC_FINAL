@@ -5,13 +5,13 @@
 
   var C_DARK  = '#2A1810';
   var C_LIGHT = '#F8F4EC';
-  var DOT_R   = 9;
-  var RING_RX = 29, RING_RY = 32;
+  var DOT_R   = 20;
+  var RING_RX = 36, RING_RY = 40;
   var LERP    = 0.18;
-  var BEAN_W  = '18px', BEAN_H = '20px';
-  var BEAN_BR = 'none';
-  var BEAN_CP = 'polygon(50% 0%, 100% 72%, 82% 100%, 18% 100%, 0% 72%)';
-  var BEAN_ROT = '-10deg';
+  var BEAN_W  = '40px', BEAN_H = '44px';
+  var BEAN_BR = 'none'; // unused for SVG
+  var BEAN_CP = ''; // SVG shape, no clip-path needed
+  var BEAN_ROT = '15deg';
 
   var mx = -9999, my = -9999;
   var rx = -9999, ry = -9999;
@@ -21,7 +21,7 @@
 
   dot.style.willChange  = 'transform, background';
   ring.style.willChange = 'transform, border-color';
-  dot.style.clipPath    = BEAN_CP;
+  // SVG dot — no clipPath needed
 
   /* ── Color detection via elementFromPoint — zero stale cache ── */
   function isDarkUnder(x, y) {
@@ -41,8 +41,8 @@
 
   function applyColor(dark) {
     var c = dark ? C_LIGHT : C_DARK;
-    dot.style.background   = c;
-    ring.style.borderColor = c;
+    dot.style.color   = c;
+    ring.style.color = c;
     if (!inTextField) ring.style.opacity = dark ? '0.55' : '0.60';
   }
 
@@ -91,12 +91,12 @@
 
   document.querySelectorAll('a,button,[role=button],select').forEach(function(el) {
     el.addEventListener('mouseenter', function() {
-      ring.style.width = '76px'; ring.style.height = '84px';
+      ring.style.width = '96px'; ring.style.height = '106px';
       ring.style.opacity = currentDark ? '0.40' : '0.35';
       startLoop();
     });
     el.addEventListener('mouseleave', function() {
-      ring.style.width = '58px'; ring.style.height = '64px';
+      ring.style.width = '72px'; ring.style.height = '80px';
       ring.style.opacity = currentDark ? '0.55' : '0.60';
       startLoop();
     });
@@ -107,11 +107,11 @@
     inTextField = true;
     if (rafId !== null) { cancelAnimationFrame(rafId); rafId = null; }
     dot.style.transition   = 'width 70ms ease, height 70ms ease, border-radius 70ms ease';
-    dot.style.clipPath     = 'none';
-    dot.style.width        = '2px';
+    // SVG dot
+    dot.style.width        = '3px';
     dot.style.height       = '20px';
     dot.style.borderRadius = '1px';
-    dot.style.background   = currentDark ? C_LIGHT : C_DARK;
+    dot.style.color   = currentDark ? C_LIGHT : C_DARK;
     dot.style.animation    = 'textCursorBlink 1.1s step-end infinite';
     ring.style.opacity     = '0';
     ring.style.transform   = 'translate3d(-9999px,-9999px,0)';
@@ -125,14 +125,14 @@
     dot.style.width        = BEAN_W;
     dot.style.height       = BEAN_H;
     dot.style.borderRadius = BEAN_BR;
-    dot.style.clipPath     = BEAN_CP;
-    dot.style.background   = currentDark ? C_LIGHT : C_DARK;
+    // SVG dot
+    dot.style.color   = currentDark ? C_LIGHT : C_DARK;
     rx = mx - RING_RX; ry = my - RING_RY;
-    ring.style.borderRadius = '48% 48% 44% 44% / 52% 52% 48% 48%';
+    // SVG ring
     ring.style.transform   = 'translate3d(' + Math.round(rx) + 'px,' + Math.round(ry) + 'px,0) rotate(' + BEAN_ROT + ')';
     ring.style.opacity     = currentDark ? '0.55' : '0.60';
-    ring.style.width       = '58px';
-    ring.style.height      = '64px';
+    ring.style.width       = '72px';
+    ring.style.height      = '80px';
     startLoop();
   }
 
