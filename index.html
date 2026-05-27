@@ -18,34 +18,36 @@
 <meta name="twitter:title" content="PNC — Panem Nostrum Cotidianum">
 <meta name="twitter:description" content="Our Daily Bread. Our Daily Brew. Three ingredients. One sachet. The world's finest — priced for everyone.">
 <meta name="twitter:image" content="https://pncbread.love/img/bread-hero.webp">
-<meta name="theme-color" content="#180E08">
+<meta name="theme-color" content="#3D2210">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 32 32%22><rect width=%2232%22 height=%2232%22 fill=%22%232A1810%22/><text x=%2216%22 y=%2222%22 font-size=%2210%22 font-family=%22Helvetica Neue,Helvetica,Arial,sans-serif%22 font-weight=%22900%22 fill=%22%23F8F4EC%22 text-anchor=%22middle%22 letter-spacing=%22-0.5%22>PNC</text></svg>">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 
 :root{
-  --ink:    #2A1A0E;
+  --ink:    #3D2210;
   --cream:  #F8F4EC;
-  --cocoa:  #5C3D2E;
+  --cocoa:  #7A4E30;
+  --gold:   rgba(180,130,60,0.18);
+  --grid-h: rgba(248,220,160,0.055);
+  --grid-v: rgba(180,130,60,0.13);
 
-  /* ── Sequence timing (all relative to page load) ──────────────
-     0.0s  page loads, gate is black
-     0.4s  eyebrow surfaces
-     1.6s  MY BREAD rises
-     2.8s  PANEM NOSTRUM begins expanding
-     4.4s  translation whispers in
-     5.4s  — THE PRAYER — appears
-     6.6s  stillness
-     7.4s  gate begins lifting
-     8.6s  redirect fires (well after lift starts)
+  /* ── Sequence timing ──────────────────────────────────────────
+     0.0s  page loads
+     0.6s  eyebrow surfaces
+     2.0s  MY BREAD rises
+     3.4s  PANEM NOSTRUM begins expanding
+     5.2s  translation whispers in
+     6.4s  — THE PRAYER — appears
+     8.0s  gate begins lifting
+     9.8s  redirect fires
   ─────────────────────────────────────────────────────────────── */
-  --t-eyebrow:     0.4s;
-  --t-mybread:     1.6s;
-  --t-panem:       2.8s;
-  --t-translation: 4.4s;
-  --t-prayer:      5.4s;
-  --t-lift:        7.4s;
-  --lift-dur:      1.4s;
+  --t-eyebrow:     0.6s;
+  --t-mybread:     2.0s;
+  --t-panem:       3.4s;
+  --t-translation: 5.2s;
+  --t-prayer:      6.4s;
+  --t-lift:        8.0s;
+  --lift-dur:      2.2s;
 }
 
 html, body {
@@ -53,7 +55,9 @@ html, body {
   overflow: hidden;
   background: var(--ink);
   -webkit-font-smoothing: antialiased;
+  cursor: none;
 }
+*, *::before, *::after { cursor: none !important; }
 
 /* ── GATE ────────────────────────────────────────────────────── */
 #gate {
@@ -65,25 +69,43 @@ html, body {
   justify-content: center;
   z-index: 9999;
 
-  /* Lift-away: gate rises like steam off a warm loaf */
-  animation: gateRise var(--lift-dur) cubic-bezier(0.76, 0, 0.24, 1)
+  /* Graceful dissolve upward — warm, unhurried */
+  animation: gateRise var(--lift-dur) cubic-bezier(0.45, 0, 0.15, 1)
              var(--t-lift) both;
 }
 
 @keyframes gateRise {
-  0%   { transform: translateY(0);     opacity: 1; }
-  60%  { transform: translateY(-8vh);  opacity: 1; }
-  100% { transform: translateY(-22vh); opacity: 0; }
+  0%   { transform: translateY(0);      opacity: 1; }
+  40%  { opacity: 1; }
+  70%  { transform: translateY(-6vh);   opacity: 0.6; }
+  100% { transform: translateY(-18vh);  opacity: 0; }
 }
 
-/* Subtle grain */
+/* Grid overlay: normal horizontal + golden vertical lines */
 #gate::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(var(--grid-h) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid-h) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid-v) 1px, transparent 1px);
+  background-size:
+    100% 80px,
+    120px 100%,
+    calc(100% / 7) 100%;
+  pointer-events: none;
+  opacity: 1;
+}
+
+/* Noise film */
+#gate::after {
   content: '';
   position: absolute;
   inset: 0;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
   background-size: 160px;
-  opacity: 0.5;
+  opacity: 0.35;
   pointer-events: none;
 }
 
@@ -128,7 +150,7 @@ html, body {
 
   opacity: 0;
   transform: translateY(10px);
-  animation: breatheUp 1.8s cubic-bezier(0.16,1,0.3,1) var(--t-eyebrow) forwards;
+  animation: breatheUp 3.2s cubic-bezier(0.16,1,0.3,1) var(--t-eyebrow) forwards;
 }
 
 /* ── MY BREAD ───────────────────────────────────────────── */
@@ -146,7 +168,7 @@ html, body {
   opacity: 0;
   transform: translateY(16px) scaleY(0.97);
   transform-origin: bottom center;
-  animation: doughRise 2.4s cubic-bezier(0.16,1,0.3,1) var(--t-mybread) forwards;
+  animation: doughRise 3.6s cubic-bezier(0.16,1,0.3,1) var(--t-mybread) forwards;
 }
 
 /* ── PANEM (line 1) ──────────────────────────────────────── */
@@ -163,7 +185,7 @@ html, body {
   opacity: 0;
   transform: translateY(22px) scaleY(0.96);
   transform-origin: bottom center;
-  animation: doughRise 2.8s cubic-bezier(0.16,1,0.3,1) var(--t-panem) forwards;
+  animation: doughRise 3.8s cubic-bezier(0.16,1,0.3,1) var(--t-panem) forwards;
 }
 
 /* ── COTIDIANUM (line 2) — slight delay, feels like dough finding its full height */
@@ -180,7 +202,7 @@ html, body {
   opacity: 0;
   transform: translateY(22px) scaleY(0.96);
   transform-origin: bottom center;
-  animation: doughRise 2.8s cubic-bezier(0.16,1,0.3,1) calc(var(--t-panem) + 0.22s) forwards;
+  animation: doughRise 3.8s cubic-bezier(0.16,1,0.3,1) calc(var(--t-panem) + 0.32s) forwards;
 }
 
 /* ── TRANSLATION ─────────────────────────────────────────── */
@@ -197,7 +219,7 @@ html, body {
 
   opacity: 0;
   transform: translateY(8px);
-  animation: breatheUp 2s cubic-bezier(0.16,1,0.3,1) var(--t-translation) forwards;
+  animation: breatheUp 3.0s cubic-bezier(0.16,1,0.3,1) var(--t-translation) forwards;
 }
 
 /* ── — THE PRAYER — ──────────────────────────────────────── */
@@ -213,15 +235,16 @@ html, body {
 
   opacity: 0;
   transform: translateY(8px);
-  animation: breatheUp 1.8s cubic-bezier(0.16,1,0.3,1) var(--t-prayer) forwards;
+  animation: breatheUp 2.8s cubic-bezier(0.16,1,0.3,1) var(--t-prayer) forwards;
 }
 
 /* ── SHARED KEYFRAMES ──────────────────────────────────────── */
 
 /* Organic rise — weight settling upward, like dough */
 @keyframes doughRise {
-  0%   { opacity: 0; transform: translateY(22px) scaleY(0.96); }
-  30%  { opacity: 1; }
+  0%   { opacity: 0; transform: translateY(28px) scaleY(0.95); }
+  20%  { opacity: 0; }
+  55%  { opacity: 1; }
   100% { opacity: 1; transform: translateY(0)    scaleY(1);    }
 }
 
@@ -267,7 +290,7 @@ html, body {
 <script>
 // Redirect after gate lift completes
 // t-lift (7.4s) + lift-dur (1.4s) + small buffer = 9.0s
-var REDIRECT_DELAY = 9000;
+var REDIRECT_DELAY = 11000;
 
 // Respect reduced-motion: compress timing
 if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
