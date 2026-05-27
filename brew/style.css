@@ -272,7 +272,8 @@ input,select,textarea{cursor:none!important;caret-color:transparent}
   margin-bottom:clamp(32px,5vh,56px);
 }
 .hero-strip{
-  display:flex;flex-wrap:wrap;gap:6px;max-width:760px;
+  display:grid;grid-template-columns:repeat(2,auto);justify-content:start;
+  gap:6px;max-width:760px;
   margin-bottom:clamp(40px,6vh,60px);
 }
 .hs-pill{
