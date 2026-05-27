@@ -1080,7 +1080,7 @@ input,select,textarea{cursor:none!important;caret-color:transparent}
   position:absolute;inset:0;
   background-image:
     linear-gradient(rgba(248,244,236,0.03) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(248,244,236,0.03) 1px, transparent 1px);
+    linear-gradient(90deg, rgba(184,134,11,0.12) 1px, transparent 1px);
   background-size:60px 60px;
   -webkit-mask-image:linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.4) 40%, rgba(0,0,0,1) 100%);
   mask-image:linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.4) 40%, rgba(0,0,0,1) 100%);

@@ -888,7 +888,7 @@ input,select,textarea{cursor:none!important;caret-color:transparent}
 .order{background:var(--dark);position:relative;overflow:hidden}
 .order::before{
   content:'';position:absolute;inset:0;
-  background-image:linear-gradient(rgba(248,244,236,0.028) 1px,transparent 1px),linear-gradient(90deg,rgba(248,244,236,0.028) 1px,transparent 1px);
+  background-image:linear-gradient(rgba(248,244,236,0.028) 1px,transparent 1px),linear-gradient(90deg,rgba(184,134,11,0.12) 1px,transparent 1px);
   background-size:80px 80px;
   mask-image:linear-gradient(to bottom,transparent 0%,rgba(0,0,0,0.6) 20%,rgba(0,0,0,0.6) 100%);
   -webkit-mask-image:linear-gradient(to bottom,transparent 0%,rgba(0,0,0,0.6) 20%,rgba(0,0,0,0.6) 100%);
