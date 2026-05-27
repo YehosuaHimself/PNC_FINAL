@@ -63,7 +63,7 @@ input,select,textarea{cursor:none!important;caret-color:transparent}
   transition:background 160ms ease, opacity 160ms ease;
 }
 #cur-ring{
-  position:fixed;top:0;left:0;width:44px;height:44px;
+  position:fixed;top:0;left:0;width:80px;height:80px;
   border:1.5px solid var(--cocoa);pointer-events:none;z-index:9997;
   border-radius:0;
   transform:translate(-9999px,-9999px);opacity:0.6;
@@ -489,7 +489,7 @@ input,select,textarea{cursor:none!important;caret-color:transparent}
   letter-spacing:-0.04em;line-height:0.92;
   color:rgba(248,244,236,0.92);
   padding-right:clamp(20px,2.5vw,36px);
-  border-right:3px solid var(--cocoa-mid);
+  border-right:3px solid var(--gold);
   margin-top:clamp(40px,6vh,80px);
 }
 .phil-quote em{

@@ -6,7 +6,7 @@
   var C_DARK  = '#2A1810';
   var C_LIGHT = '#F8F4EC';
   var DOT_R   = 5;
-  var RING_RX = 22, RING_RY = 22;
+  var RING_RX = 40, RING_RY = 40;
   var LERP    = 0.10;
   var SQ_W    = '10px', SQ_H = '10px';
   var SQ_BR   = '0';
@@ -88,12 +88,12 @@
 
   document.querySelectorAll('a,button,[role=button],select').forEach(function(el) {
     el.addEventListener('mouseenter', function() {
-      ring.style.width = '60px'; ring.style.height = '60px';
+      ring.style.width = '96px'; ring.style.height = '96px';
       ring.style.opacity = currentDark ? '0.40' : '0.35';
       startLoop();
     });
     el.addEventListener('mouseleave', function() {
-      ring.style.width = '44px'; ring.style.height = '44px';
+      ring.style.width = '80px'; ring.style.height = '80px';
       ring.style.opacity = currentDark ? '0.55' : '0.60';
       startLoop();
     });
@@ -125,8 +125,8 @@
     rx = mx - RING_RX; ry = my - RING_RY;
     ring.style.transform   = 'translate3d(' + Math.round(rx) + 'px,' + Math.round(ry) + 'px,0) rotate(' + SQ_ROT + ')';
     ring.style.opacity     = currentDark ? '0.55' : '0.60';
-    ring.style.width       = '44px';
-    ring.style.height      = '44px';
+    ring.style.width       = '80px';
+    ring.style.height      = '80px';
     startLoop();
   }
 
