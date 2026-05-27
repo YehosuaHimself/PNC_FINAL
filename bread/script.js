@@ -5,12 +5,13 @@
 
   var C_DARK  = '#2A1810';
   var C_LIGHT = '#F8F4EC';
-  var DOT_R   = 5;
-  var RING_RX = 23, RING_RY = 30;
+  var DOT_R   = 7;
+  var RING_RX = 27, RING_RY = 21;
   var LERP    = 0.18;
-  var BEAN_W  = '11px', BEAN_H = '16px';
-  var BEAN_BR = '48% 52% 38% 62% / 55% 55% 45% 45%';
-  var BEAN_ROT = '-18deg';
+  var BEAN_W  = '14px', BEAN_H = '11px';
+  var BEAN_BR = '48% 48% 38% 38% / 55% 55% 45% 45%';
+  var BEAN_CP = 'polygon(50% 100%, 2% 48%, 5% 20%, 22% 2%, 42% 8%, 50% 22%, 58% 8%, 78% 2%, 95% 20%, 98% 48%)';
+  var BEAN_ROT = '30deg';
 
   var mx = -9999, my = -9999;
   var rx = -9999, ry = -9999;
@@ -20,6 +21,7 @@
 
   dot.style.willChange  = 'transform, background';
   ring.style.willChange = 'transform, border-color';
+  dot.style.clipPath    = BEAN_CP;
 
   /* ── Color detection via elementFromPoint — zero stale cache ── */
   function isDarkUnder(x, y) {
@@ -89,12 +91,12 @@
 
   document.querySelectorAll('a,button,[role=button],select').forEach(function(el) {
     el.addEventListener('mouseenter', function() {
-      ring.style.width = '62px'; ring.style.height = '80px';
+      ring.style.width = '72px'; ring.style.height = '56px';
       ring.style.opacity = currentDark ? '0.40' : '0.35';
       startLoop();
     });
     el.addEventListener('mouseleave', function() {
-      ring.style.width = '46px'; ring.style.height = '60px';
+      ring.style.width = '54px'; ring.style.height = '42px';
       ring.style.opacity = currentDark ? '0.55' : '0.60';
       startLoop();
     });
@@ -105,6 +107,7 @@
     inTextField = true;
     if (rafId !== null) { cancelAnimationFrame(rafId); rafId = null; }
     dot.style.transition   = 'width 70ms ease, height 70ms ease, border-radius 70ms ease';
+    dot.style.clipPath     = 'none';
     dot.style.width        = '2px';
     dot.style.height       = '20px';
     dot.style.borderRadius = '1px';
@@ -122,12 +125,13 @@
     dot.style.width        = BEAN_W;
     dot.style.height       = BEAN_H;
     dot.style.borderRadius = BEAN_BR;
+    dot.style.clipPath     = BEAN_CP;
     dot.style.background   = currentDark ? C_LIGHT : C_DARK;
     rx = mx - RING_RX; ry = my - RING_RY;
     ring.style.transform   = 'translate3d(' + Math.round(rx) + 'px,' + Math.round(ry) + 'px,0) rotate(' + BEAN_ROT + ')';
     ring.style.opacity     = currentDark ? '0.55' : '0.60';
-    ring.style.width       = '46px';
-    ring.style.height      = '60px';
+    ring.style.width       = '54px';
+    ring.style.height      = '42px';
     startLoop();
   }
 
