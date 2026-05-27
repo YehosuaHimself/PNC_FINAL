@@ -1871,9 +1871,9 @@ body.cookie-visible #mobile-cta{bottom:var(--cookie-h,80px);}
   max-width:var(--max);
   margin:0 auto;
   display:grid;
-  grid-template-columns:1fr clamp(280px,40vw,560px) 1fr;
+  grid-template-columns:1fr clamp(480px,70vw,900px) 1fr;
   align-items:center;
-  gap:clamp(32px,5vw,64px);
+  gap:clamp(24px,3vw,40px);
 }
 @media(max-width:760px){
   .blessing-inner{
@@ -1901,14 +1901,15 @@ body.cookie-visible #mobile-cta{bottom:var(--cookie-h,80px);}
   margin-bottom:clamp(24px,3vw,36px);
 }
 .blessing-quote{
-  font-size:clamp(2rem,5vw,3.4rem);
-  font-weight:700;
-  line-height:1.15;
+  font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;
+  font-size:clamp(3.2rem,7vw,7rem);
+  font-weight:900;
+  line-height:1;
   color:var(--cream);
-  letter-spacing:.06em;
+  letter-spacing:-.02em;
   text-transform:uppercase;
   font-style:normal;
-  margin-bottom:clamp(20px,3vw,32px);
+  margin-bottom:0;
 }
 .blessing-sub{
   font-size:.7rem;
@@ -1917,5 +1918,10 @@ body.cookie-visible #mobile-cta{bottom:var(--cookie-h,80px);}
   color:rgba(248,244,236,0.35);
   line-height:1.8;
 }
-.blessing-quote + .blessing-quote{margin-top:clamp(28px,4vw,48px);}
-.blessing-translation{color:var(--cream);}
+.blessing-quote + .blessing-quote{margin-top:clamp(16px,2.5vw,28px);}
+.blessing-translation{
+  font-size:clamp(1.4rem,3vw,2.8rem) !important;
+  font-weight:700 !important;
+  color:rgba(248,244,236,0.45) !important;
+  letter-spacing:.04em !important;
+}
