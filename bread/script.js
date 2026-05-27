@@ -553,9 +553,9 @@ document.addEventListener('DOMContentLoaded',function(){
 
   function getProfiles(){
     return {
-      flour: { tx: -vw(14), ty: -vh(22), rot: -18, scale: 1.06, dur: '1.55s', delay: 0   },
-      husk:  { tx:  vw(11), ty:  vh(8),  rot:  12, scale: 0.92, dur: '1.72s', delay: 60  },
-      salt:  { tx:  vw(6),  ty:  vh(16), rot: -28, scale: 1.0,  dur: '1.38s', delay: 120 }
+      flour: { tx:  vw(4),  ty: -vh(18), rot: -12, scale: 1.06, dur: '1.55s', delay: 0   },
+      husk:  { tx: -vw(6),  ty:  vh(10), rot:  10, scale: 0.92, dur: '1.72s', delay: 60  },
+      salt:  { tx:  vw(8),  ty:  vh(14), rot: -20, scale: 1.0,  dur: '1.38s', delay: 120 }
     };
   }
 
