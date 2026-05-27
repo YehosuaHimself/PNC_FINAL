@@ -502,8 +502,8 @@ input,select,textarea{cursor:none!important;caret-color:transparent}
 .h2{
   font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;
   font-weight:900;font-size:clamp(38px,5.5vw,82px);
-  letter-spacing:-0.03em;line-height:0.93;color:var(--ink);
-  margin-bottom:24px;
+  letter-spacing:0.01em;line-height:0.93;color:var(--ink);
+  margin-bottom:24px;text-transform:uppercase;
 }
 
 /* ── INGREDIENTS ─────────────────────────────────────────────────── */

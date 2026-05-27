@@ -415,8 +415,8 @@ input,select,textarea{cursor:none!important;caret-color:transparent}
 .h2{
   font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;
   font-weight:900;font-size:clamp(38px,5.5vw,82px);
-  letter-spacing:-0.03em;line-height:0.93;color:var(--ink);
-  margin-bottom:24px;
+  letter-spacing:0.01em;line-height:0.93;color:var(--ink);
+  margin-bottom:24px;text-transform:uppercase;
 }
 
 /* ── TASTING NOTES ────────────────────────────────────────────────────────── */
@@ -787,8 +787,9 @@ input,select,textarea{cursor:none!important;caret-color:transparent}
 .sr-h2{
   font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;
   font-weight:900;font-size:clamp(48px,7vw,110px);
-  letter-spacing:-0.04em;line-height:0.88;
+  letter-spacing:0.01em;line-height:0.88;
   color:rgba(248,244,236,0.92);margin-bottom:0;
+  text-transform:uppercase;
 }
 .sr-grid{
   display:grid;grid-template-columns:1fr 1fr 1fr;
