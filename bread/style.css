@@ -411,7 +411,7 @@ input,select,textarea{cursor:none!important;caret-color:transparent}
 /* ── TICKER ─────────────────────────────────────────────────── */
 .ticker{
   background:var(--cocoa);overflow:hidden;
-  padding:20px 0;white-space:nowrap;
+  padding:28px 0;white-space:nowrap;
 }
 .ticker-inner{
   display:inline-flex;
@@ -1362,7 +1362,7 @@ footer nav,footer p,footer a{background:transparent!important;background-color:t
 
   /* Ticker — slower on mobile, slightly taller */
   .ticker-inner{animation-duration:55s}
-  .ticker{padding:20px 0}
+  .ticker{padding:24px 0}
 
   /* Buttons — full width on mobile */
   .btn-primary,.btn-ghost,.btn-light,.btn-cream{width:100%;text-align:center;justify-content:center}
