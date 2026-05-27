@@ -463,7 +463,7 @@ input,select,textarea{cursor:none!important;caret-color:transparent}
   font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;
   font-weight:900;font-size:clamp(120px,18vw,260px);
   letter-spacing:-0.06em;line-height:1;
-  color:rgba(248,244,236,0.04);
+  color:rgba(248,244,236,0.10);
   pointer-events:none;user-select:none;
 }
 .philosophy::after{
