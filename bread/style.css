@@ -106,8 +106,10 @@ input,select,textarea{cursor:none!important;caret-color:transparent}
   padding:clamp(80px,10vw,140px) var(--g);
   background:var(--ink);
   color:var(--cream);
+  overflow:hidden;
 }
 .formats-inner{max-width:var(--max);margin:0 auto;}
+
 .formats-header{
   display:grid;
   grid-template-columns:1fr 1fr;
@@ -136,11 +138,14 @@ input,select,textarea{cursor:none!important;caret-color:transparent}
   display:grid;
   grid-template-columns:repeat(5,1fr);
   gap:0;
+  width:100%;
+  min-width:0;
 }
 .format-card{
-  padding:clamp(28px,3.5vw,48px) clamp(20px,2.5vw,36px);
+  padding:clamp(20px,2.5vw,40px) clamp(14px,1.8vw,28px);
   border-right:1px solid rgba(248,244,236,0.1);
   display:flex;flex-direction:column;gap:20px;
+  min-width:0;
 }
 .format-card:last-child{border-right:none;}
 .format-time{
