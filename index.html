@@ -3,217 +3,280 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>PNC — Panem Nostrum Cotidianum · Bread & Brew</title>
-<meta name="description" content="The finest bread and coffee — in the simplest form imaginable. Buckwheat bread mix. Kochere G1 coffee pads. Priced for everyone.">
-<meta property="og:title" content="PNC — Panem Nostrum Cotidianum · Bread &amp; Brew">
-<meta property="og:description" content="The world's finest bread and coffee. Three ingredients. One sachet. Priced for everyone.">
+<title>PNC — Panem Nostrum Cotidianum</title>
+<meta name="description" content="The finest bread and coffee — in the simplest form imaginable.">
+<meta property="og:title" content="PNC — Panem Nostrum Cotidianum">
 <meta property="og:url" content="https://pncbread.love/">
 <meta property="og:type" content="website">
 <meta property="og:image" content="https://pncbread.love/img/bread-hero.webp">
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://pncbread.love/img/bread-hero.webp">
-<meta name="theme-color" content="#F8F4EC">
+<meta name="theme-color" content="#180E08">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 32 32%22><rect width=%2232%22 height=%2232%22 fill=%22%232A1810%22/><text x=%2216%22 y=%2222%22 font-size=%2216%22 font-family=%22Helvetica Neue,Helvetica,Arial,sans-serif%22 font-weight=%22900%22 fill=%22%23F8F4EC%22 text-anchor=%22middle%22>P</text></svg>">
-<link rel="canonical" href="https://pncbread.love/">
-<link rel="preload" as="image" href="/img/bread-hero.webp" type="image/webp">
-<link rel="preload" as="image" href="/img/brew-hero.webp" type="image/webp">
-<script defer src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js" integrity="sha384-B2WBjDzEjJpYvhmi2UyEn7rektqkf5suS6sNoyyrf0EBAwBHdkiXxIlU0V5Ru2ed" crossorigin="anonymous"></script>
-  <link rel="stylesheet" href="style.css">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
+:root{
+  --ink:    #180E08;
+  --cream:  #F8F4EC;
+  --cocoa:  #5C3D2E;
+
+  /* ── Sequence timing (all relative to page load) ──────────────
+     0.0s  page loads, gate is black
+     0.4s  eyebrow surfaces
+     1.6s  MY BREAD rises
+     2.8s  PANEM NOSTRUM begins expanding
+     4.4s  translation whispers in
+     5.4s  — THE PRAYER — appears
+     6.6s  stillness
+     7.4s  gate begins lifting
+     8.6s  redirect fires (well after lift starts)
+  ─────────────────────────────────────────────────────────────── */
+  --t-eyebrow:     0.4s;
+  --t-mybread:     1.6s;
+  --t-panem:       2.8s;
+  --t-translation: 4.4s;
+  --t-prayer:      5.4s;
+  --t-lift:        7.4s;
+  --lift-dur:      1.4s;
+}
+
+html, body {
+  height: 100%;
+  overflow: hidden;
+  background: var(--ink);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── GATE ────────────────────────────────────────────────────── */
+#gate {
+  position: fixed;
+  inset: 0;
+  background: var(--ink);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+
+  /* Lift-away: gate rises like steam off a warm loaf */
+  animation: gateRise var(--lift-dur) cubic-bezier(0.76, 0, 0.24, 1)
+             var(--t-lift) both;
+}
+
+@keyframes gateRise {
+  0%   { transform: translateY(0);     opacity: 1; }
+  60%  { transform: translateY(-8vh);  opacity: 1; }
+  100% { transform: translateY(-22vh); opacity: 0; }
+}
+
+/* Subtle grain */
+#gate::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+  background-size: 160px;
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+/* Horizontal rule lines (decorative, like the blessing section) */
+#gate-rule-l,
+#gate-rule-r {
+  position: absolute;
+  top: 50%;
+  width: clamp(40px, 6vw, 100px);
+  height: 1px;
+  background: rgba(248,244,236,0.10);
+  animation: ruleReveal 2s cubic-bezier(0.16,1,0.3,1) calc(var(--t-panem) + 0.4s) both;
+}
+#gate-rule-l { left: clamp(20px, 3vw, 60px); transform-origin: left center; }
+#gate-rule-r { right: clamp(20px, 3vw, 60px); transform-origin: right center; }
+
+@keyframes ruleReveal {
+  from { transform: scaleX(0); opacity: 0; }
+  to   { transform: scaleX(1); opacity: 1; }
+}
+
+/* ── BODY ──────────────────────────────────────────────────── */
+#gate-body {
+  text-align: center;
+  padding: 0 clamp(20px, 5vw, 80px);
+  width: 100%;
+  max-width: 1400px;
+  position: relative;
+  z-index: 1;
+}
+
+/* ── EYEBROW ─────────────────────────────────────────────── */
+.g-eyebrow {
+  display: block;
+  font-family: 'Courier New', monospace;
+  font-size: clamp(9px, 0.75vw, 12px);
+  font-weight: 600;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: rgba(248,244,236,0.40);
+  margin-bottom: clamp(28px, 4vh, 52px);
+
+  opacity: 0;
+  transform: translateY(10px);
+  animation: breatheUp 1.8s cubic-bezier(0.16,1,0.3,1) var(--t-eyebrow) forwards;
+}
+
+/* ── MY BREAD ───────────────────────────────────────────── */
+.g-mybread {
+  display: block;
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-weight: 700;
+  font-size: clamp(2.2rem, 5.5vw, 5.2rem);
+  letter-spacing: -0.02em;
+  line-height: 1;
+  text-transform: uppercase;
+  color: rgba(248,244,236,0.80);
+  margin-bottom: clamp(4px, 0.6vw, 8px);
+
+  opacity: 0;
+  transform: translateY(16px) scaleY(0.97);
+  transform-origin: bottom center;
+  animation: doughRise 2.4s cubic-bezier(0.16,1,0.3,1) var(--t-mybread) forwards;
+}
+
+/* ── PANEM (line 1) ──────────────────────────────────────── */
+.g-panem-1 {
+  display: block;
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-weight: 900;
+  font-size: clamp(3.6rem, 8.5vw, 9rem);
+  letter-spacing: -0.03em;
+  line-height: 0.93;
+  text-transform: uppercase;
+  color: var(--cream);
+
+  opacity: 0;
+  transform: translateY(22px) scaleY(0.96);
+  transform-origin: bottom center;
+  animation: doughRise 2.8s cubic-bezier(0.16,1,0.3,1) var(--t-panem) forwards;
+}
+
+/* ── COTIDIANUM (line 2) — slight delay, feels like dough finding its full height */
+.g-panem-2 {
+  display: block;
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-weight: 900;
+  font-size: clamp(3.6rem, 8.5vw, 9rem);
+  letter-spacing: -0.03em;
+  line-height: 0.93;
+  text-transform: uppercase;
+  color: var(--cream);
+
+  opacity: 0;
+  transform: translateY(22px) scaleY(0.96);
+  transform-origin: bottom center;
+  animation: doughRise 2.8s cubic-bezier(0.16,1,0.3,1) calc(var(--t-panem) + 0.22s) forwards;
+}
+
+/* ── TRANSLATION ─────────────────────────────────────────── */
+.g-translation {
+  display: block;
+  font-family: 'Courier New', monospace;
+  font-size: clamp(0.7rem, 1.2vw, 1rem);
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(248,244,236,0.38);
+  line-height: 1.6;
+  margin-top: clamp(20px, 3vh, 36px);
+
+  opacity: 0;
+  transform: translateY(8px);
+  animation: breatheUp 2s cubic-bezier(0.16,1,0.3,1) var(--t-translation) forwards;
+}
+
+/* ── — THE PRAYER — ──────────────────────────────────────── */
+.g-prayer {
+  display: block;
+  font-family: 'Courier New', monospace;
+  font-size: clamp(9px, 0.75vw, 12px);
+  font-weight: 600;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: rgba(248,244,236,0.40);
+  margin-top: clamp(16px, 2.5vh, 28px);
+
+  opacity: 0;
+  transform: translateY(8px);
+  animation: breatheUp 1.8s cubic-bezier(0.16,1,0.3,1) var(--t-prayer) forwards;
+}
+
+/* ── SHARED KEYFRAMES ──────────────────────────────────────── */
+
+/* Organic rise — weight settling upward, like dough */
+@keyframes doughRise {
+  0%   { opacity: 0; transform: translateY(22px) scaleY(0.96); }
+  30%  { opacity: 1; }
+  100% { opacity: 1; transform: translateY(0)    scaleY(1);    }
+}
+
+/* Gentle surface — lighter elements breathe in */
+@keyframes breatheUp {
+  0%   { opacity: 0; transform: translateY(10px); }
+  100% { opacity: 1; transform: translateY(0);    }
+}
+
+/* ── REDUCED MOTION ────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .g-eyebrow, .g-mybread, .g-panem-1, .g-panem-2,
+  .g-translation, .g-prayer {
+    animation-duration: 0.1s !important;
+    animation-delay: 0.1s !important;
+  }
+  #gate {
+    animation-duration: 0.3s !important;
+    animation-delay: calc(var(--t-lift) * 0.3) !important;
+  }
+}
+</style>
 </head>
 <body>
-<a href="#main" class="skip-link">Skip to content</a>
 
-<!-- CURSOR -->
-<div id="cur-dot" aria-hidden="true"></div>
-<div id="cur-ring" aria-hidden="true"></div>
-<!-- GRAIN -->
-<div id="grain" aria-hidden="true"></div>
-<!-- PROGRESS -->
-<div id="prog" aria-hidden="true"></div>
+<div id="gate" role="img" aria-label="PNC — Panem Nostrum Cotidianum. Our daily bread give us this day.">
+  <div id="gate-rule-l" aria-hidden="true"></div>
+  <div id="gate-rule-r" aria-hidden="true"></div>
 
-<!-- NAV -->
-<nav id="site-nav" style="background:rgba(248,244,236,0.97)!important">
-  <a href="/" class="nav-logo">PNC</a>
-  <div class="nav-links">
-    <a href="/" class="nav-link active">Home</a>
-    <a href="/bread" class="nav-link">Bread</a>
-    <a href="/brew" class="nav-link">Brew</a>
-  </div>
-  <button class="nav-hamburger" id="nav-hamburger" aria-label="Toggle navigation" aria-expanded="false">
-    <span></span><span></span><span></span>
-  </button>
-</nav>
+  <div id="gate-body" aria-hidden="true">
+    <span class="g-eyebrow">— The Baker's Blessing —</span>
 
-<!-- MOBILE NAV DRAWER -->
-<div class="nav-drawer" id="nav-drawer" role="dialog" aria-modal="true" aria-label="Navigation menu">
-  <div class="nav-drawer-links">
-    <a href="/" class="nav-drawer-link">Home</a>
-    <a href="/bread" class="nav-drawer-link">Bread</a>
-    <a href="/brew" class="nav-drawer-link">Brew</a>
-  </div>
-  <div class="nav-drawer-bottom">
-    <p class="nav-drawer-sub">Panem Nostrum Cotidianum · Fiat panis.</p>
-    <a href="/bread#order" class="nav-drawer-cta">Order Now</a>
+    <span class="g-mybread">My Bread.</span>
+
+    <span class="g-panem-1">Panem Nostrum</span>
+    <span class="g-panem-2">Cotidianum.</span>
+
+    <span class="g-translation">Our daily bread give us this day.</span>
+    <span class="g-prayer">— The Prayer —</span>
   </div>
 </div>
 
-<!-- HERO -->
-<section id="main" class="hero" aria-label="Hero">
-  <div class="hero-watermark" aria-hidden="true">
-    <div class="hero-watermark-text">PNC</div>
-  </div>
-  <div class="hero-top">
-    <div class="hero-eyebrow">Bread and Coffee</div>
-  </div>
-  <div class="hero-bottom">
-    <h1 class="hero-headline">
-      THE BEST THINGS<br>IN LIFE.
-      <span>Bread and Coffee. In the simplest form imaginable.</span>
-    </h1>
-    <p class="hero-decree">The finest thing in its category. Stripped to its essence. Priced for everyone.</p>
-    <div class="hero-products">
-      <a href="/bread" class="hero-product hero-product--bread">
-        <span class="hp-tag">Daily · Bread</span>
-        <div class="hp-price-anchor" aria-hidden="true">€ 3<span>/ loaf</span></div>
-        <div class="hp-body">
-        <div class="hp-name">OUR DAILY<br>BREAD.</div>
-        <div class="hp-origin">Buckwheat · Alps · 3 Ingredients</div>
-        <p class="hp-desc">Buckwheat flour. Psyllium husk. Alpine salt. Three named sources. Pre-weighed, pre-blended, shipped to you. 55 minutes in your oven. The world's best bread, in under an hour.</p>
-        <div class="hp-stats">
-          <div><span class="hp-stat-val">3</span><span class="hp-stat-key">Ingredients</span></div>
-          <div><span class="hp-stat-val">5</span><span class="hp-stat-key">Loaves / Box</span></div>
-          <div><span class="hp-stat-val">55</span><span class="hp-stat-key">Min · Bake</span></div>
-        </div>
-        <div class="hp-footer">
-          <div class="hp-price">€ 3 <span>/ loaf</span></div>
-          <span class="hp-cta">Explore Bread →</span>
-        </div>
-        </div><!-- /hp-body -->
-      </a>
-      <a href="/brew" class="hero-product hero-product--brew">
-        <span class="hp-tag">Daily · Brew</span>
-        <div class="hp-price-anchor" aria-hidden="true">€ 1<span>/ cup</span></div>
-        <div class="hp-body">
-        <div class="hp-name">OUR DAILY<br>BREW.</div>
-        <div class="hp-origin">Kochere · Ethiopia · 2,400 m — the highest coffee altitude on Earth</div>
-        <p class="hp-desc">Ethiopia is where coffee was discovered. Every cup on Earth traces back here. This is the source — at 2,400 metres, the highest altitude it grows. One&nbsp;pad.&nbsp;One&nbsp;cup. €1.</p>
-        <div class="hp-stats">
-          <div><span class="hp-stat-val">G1</span><span class="hp-stat-key">Grade</span></div>
-          <div><span class="hp-stat-val">85+</span><span class="hp-stat-key">SCA Score</span></div>
-          <div><span class="hp-stat-val">2400</span><span class="hp-stat-key">m · Altitude</span></div>
-        </div>
-        <div class="hp-footer">
-          <div class="hp-price">€ 1 <span>/ cup</span></div>
-          <span class="hp-cta">Explore Brew →</span>
-        </div>
-        </div><!-- /hp-body -->
-      </a>
-    </div>
-  </div>
-  <div class="hero-accent" aria-hidden="true">
-    <div class="hero-accent-num">01</div>
-    <div class="hero-accent-line"></div>
-    <div class="hero-accent-meta">MMXXVI · Panem Nostrum</div>
-  </div>
-  <div class="hero-scroll" aria-hidden="true">
-    <div class="hero-scroll-line"></div>
-    Explore
-  </div>
-</section>
+<script>
+// Redirect after gate lift completes
+// t-lift (7.4s) + lift-dur (1.4s) + small buffer = 9.0s
+var REDIRECT_DELAY = 9000;
 
-<!-- SHIPPING BADGE -->
-<div class="ship-badge" data-dark aria-label="Rapid global shipping">
-  <div class="ship-badge-inner">
-    <div class="ship-rule"></div>
-    <div class="ship-badge-content">
-      <svg class="ship-globe" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
-      <span class="ship-text">Rapid Global Shipping</span>
-      
-    </div>
-    <div class="ship-rule r"></div>
-  </div>
-</div>
+// Respect reduced-motion: compress timing
+if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+  REDIRECT_DELAY = 1200;
+}
 
-<!-- TICKER -->
-<div class="ticker" data-dark aria-hidden="true">
-  <div class="ticker-inner">
-    <span class="ticker-item hl">Panem Nostrum Cotidianum</span>
-    <span class="ticker-item">·</span>
-    <span class="ticker-item">Buckwheat · Alps · 3 Ingredients</span>
-    <span class="ticker-item">·</span>
-    <span class="ticker-item hl">Kochere G1 · Ethiopia · 2,400 m</span>
-    <span class="ticker-item">·</span>
-    <span class="ticker-item">€ 3 per loaf · € 1 per cup</span>
-    <span class="ticker-item">·</span>
-    <span class="ticker-item hl">Roasted to order · Ships in 7 days</span>
-    <span class="ticker-item">·</span>
-    <span class="ticker-item">85+ SCA · Grade 1 · Direct Source</span>
-    <span class="ticker-item">·</span>
-    <span class="ticker-item hl">Panem Nostrum Cotidianum</span>
-    <span class="ticker-item">·</span>
-    <span class="ticker-item">Buckwheat · Alps · 3 Ingredients</span>
-    <span class="ticker-item">·</span>
-    <span class="ticker-item hl">Kochere G1 · Ethiopia · 2,400 m</span>
-    <span class="ticker-item">·</span>
-    <span class="ticker-item">€ 3 per loaf · € 1 per cup</span>
-    <span class="ticker-item">·</span>
-    <span class="ticker-item hl">Roasted to order · Ships in 7 days</span>
-    <span class="ticker-item">·</span>
-    <span class="ticker-item">85+ SCA · Grade 1 · Direct Source</span>
-    <span class="ticker-item">·</span>
-  </div>
-</div>
+setTimeout(function() {
+  window.location.replace('/home.html');
+}, REDIRECT_DELAY);
 
-<!-- PHILOSOPHY -->
-<section class="section philosophy" data-dark>
-  <div class="phil-accent-num" aria-hidden="true">02</div>
-  <div class="philosophy-inner">
-    <div>
-      <span class="eyebrow reveal" style="color:var(--cocoa-mid)">Our Belief</span>
-      <div class="phil-quote reveal">
-        "The finest things.<br>Priced for everyone."
-        <em>— Panem Nostrum Cotidianum · MMXXVI</em>
-      </div>
-    </div>
-    <div class="phil-right">
-      <p class="phil-text reveal">Every product here is priced at what it costs to make it right — not at what the market will bear. The bread: buckwheat grown in Lausitz, milled on stone wheels that have not stopped since 1772, baked in your oven in 55 minutes, for €3 a loaf. The coffee: discovered in Ethiopia, grown at 2,400 metres — the highest altitude a coffee plant will reach — roasted to order in the Alps, for €1 a cup. Both things. One belief. Every table.</p>
-      <p class="phil-attr reveal">Fiat panis. · MMXXVI</p>
-    </div>
-  </div>
-</section>
+// Skip gate on repeat visit within the session
+// (so returning visitors aren't always gated)
+if (sessionStorage.getItem('pnc_gate_seen')) {
+  window.location.replace('/home.html');
+} else {
+  sessionStorage.setItem('pnc_gate_seen', '1');
+}
+</script>
 
-<!-- FOOTER -->
-<footer data-dark>
-  <p class="footer-copy">© MMXXVI PNC — PANEM NOSTRUM COTIDIANUM · ADVENTUS INCEPTUS EST.</p>
-  <nav class="footer-links" aria-label="Footer navigation">
-    <a href="/bread" class="footer-link">Bread</a>
-    <a href="/brew" class="footer-link">Brew</a>
-    <a href="/privacy.html" class="footer-link">Privacy</a>
-    <a href="/terms.html" class="footer-link">Terms</a>
-    <a href="/shipping.html" class="footer-link">Shipping</a>
-    <a href="/imprint.html" class="footer-link">Imprint</a>
-  </nav>
-</footer>
-
-<!-- CURSOR SCRIPT -->
-
-<!-- LENIS + PROGRESS -->
-
-<!-- REVEAL -->
-
-<!-- MOBILE NAV SCRIPT -->
-
-
-<!-- COOKIE CONSENT — Content AC-03 -->
-<div id="cookie-bar" role="region" aria-label="Cookie consent" aria-live="polite">
-  <p><strong>Essential cookies only.</strong> No tracking unless you say so. <a href="/privacy" style="color:rgba(248,244,236,0.55);text-decoration:underline;font-size:11px;">Privacy policy</a></p>
-  <div class="cookie-btns">
-    <button class="cookie-btn" id="cookie-essential" aria-label="Accept essential cookies only">Essential only</button>
-    <button class="cookie-btn primary" id="cookie-accept" aria-label="Accept all cookies">That's fine</button>
-  </div>
-</div>
-
-<!-- COOKIE CONSENT SCRIPT -->
-  <script src="script.js"></script>
 </body>
 </html>
