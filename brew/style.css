@@ -797,27 +797,53 @@ input,select,textarea{cursor:none!important;caret-color:transparent}
   text-transform:uppercase;
 }
 .sr-grid{
-  display:grid;grid-template-columns:1fr 1fr 1fr;
-  gap:0;border-top:1px solid rgba(248,244,236,0.07);
+  display:grid;
+  grid-template-columns:1fr 1fr 1fr 1fr;
+  gap:0;
+  border-top:1px solid rgba(248,244,236,0.07);
 }
-@media(max-width:700px){.sr-grid{grid-template-columns:1fr;}}
-.sr-item{
-  padding:clamp(32px,4vw,56px) clamp(20px,3vw,44px) clamp(32px,4vw,56px) 0;
+/* Hero item spans all 4 columns */
+.sr-item--hero{
+  grid-column:1 / -1;
+}
+/* The 4 bottom items sit in one row */
+.sr-item:not(.sr-item--hero){
+  padding:clamp(32px,4vw,52px) clamp(16px,2.2vw,36px) clamp(32px,4vw,52px) 0;
   border-right:1px solid rgba(248,244,236,0.07);
-  border-bottom:1px solid rgba(248,244,236,0.07);
+  border-bottom:none;
 }
-.sr-item:nth-child(3n){border-right:none;padding-right:0;}
-.sr-item:nth-child(3n+2),.sr-item:nth-child(3n){padding-left:clamp(20px,3vw,44px);}
-.sr-item:nth-child(4),.sr-item:nth-child(5),.sr-item:nth-child(6){border-bottom:none;}
-/* Hero card overrides — it spans full-width, no column rules apply */
-.sr-item--hero{border-right:none;padding-left:0;padding-right:0;}
-.sr-item--hero + .sr-item{padding-left:0;border-right:1px solid rgba(248,244,236,0.07);}
-/* Cards 2-4 = children 2,3,4 — top row of 3-col sub-grid */
-/* Cards 5-6 = children 5,6 — bottom row, no bottom border */
-@media(max-width:700px){
-  .sr-item{padding:28px 0;border-right:none;border-bottom:1px solid rgba(248,244,236,0.07);}
-  .sr-item:nth-child(3n+2),.sr-item:nth-child(3n){padding-left:0;}
-  .sr-item:last-child{border-bottom:none;}
+.sr-item:not(.sr-item--hero):first-of-type,
+.sr-item:not(.sr-item--hero):nth-of-type(2){
+  padding-left:0;
+}
+/* first non-hero item has no left padding, others get some */
+.sr-item:not(.sr-item--hero) + .sr-item:not(.sr-item--hero){
+  padding-left:clamp(16px,2.2vw,36px);
+}
+/* last item no right border */
+.sr-item:not(.sr-item--hero):last-child{
+  border-right:none;
+  padding-right:0;
+}
+@media(max-width:900px){
+  .sr-grid{grid-template-columns:1fr 1fr;}
+  .sr-item:not(.sr-item--hero){
+    border-bottom:1px solid rgba(248,244,236,0.07);
+    padding-left:0 !important;
+    padding-right:0 !important;
+    border-right:none;
+  }
+  .sr-item:not(.sr-item--hero):nth-child(even){
+    padding-left:clamp(16px,3vw,28px) !important;
+    border-left:1px solid rgba(248,244,236,0.07);
+  }
+  .sr-item:not(.sr-item--hero):nth-last-child(-n+2){border-bottom:none;}
+}
+@media(max-width:540px){
+  .sr-grid{grid-template-columns:1fr;}
+  .sr-item:not(.sr-item--hero){border-right:none;padding-left:0 !important;padding-right:0 !important;}
+  .sr-item:not(.sr-item--hero):nth-child(even){border-left:none;padding-left:0 !important;}
+  .sr-item:not(.sr-item--hero):last-child{border-bottom:none;}
 }
 .sr-num{
   font-family:'Courier New',monospace;font-weight:600;font-size:11px;
@@ -1059,11 +1085,12 @@ input,select,textarea{cursor:none!important;caret-color:transparent}
 .form-row input::placeholder{color:rgba(248,244,236,0.2)}
 .form-row select option{background:var(--dark);color:var(--cream)}
 .form-note{
-  font-family:'Courier New',monospace;font-size:13px;font-weight:600;
-  letter-spacing:0.22em;text-transform:uppercase;
-  color:rgba(248,244,236,0.28);margin-bottom:24px;line-height:2;
+  font-family:'Courier New',monospace;font-size:11px;font-weight:600;
+  letter-spacing:0.26em;text-transform:uppercase;
+  color:rgba(248,244,236,0.22);margin-bottom:24px;line-height:2;
   padding-bottom:20px;
   border-bottom:1px solid rgba(248,244,236,0.06);
+  text-align:right;
 }
 .btn-order{
   font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;
