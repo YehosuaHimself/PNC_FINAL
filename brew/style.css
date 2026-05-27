@@ -803,6 +803,11 @@ input,select,textarea{cursor:none!important;caret-color:transparent}
 .sr-item:nth-child(3n){border-right:none;padding-right:0;}
 .sr-item:nth-child(3n+2),.sr-item:nth-child(3n){padding-left:clamp(20px,3vw,44px);}
 .sr-item:nth-child(4),.sr-item:nth-child(5),.sr-item:nth-child(6){border-bottom:none;}
+/* Hero card overrides — it spans full-width, no column rules apply */
+.sr-item--hero{border-right:none;padding-left:0;padding-right:0;}
+.sr-item--hero + .sr-item{padding-left:0;border-right:1px solid rgba(248,244,236,0.07);}
+/* Cards 2-4 = children 2,3,4 — top row of 3-col sub-grid */
+/* Cards 5-6 = children 5,6 — bottom row, no bottom border */
 @media(max-width:700px){
   .sr-item{padding:28px 0;border-right:none;border-bottom:1px solid rgba(248,244,236,0.07);}
   .sr-item:nth-child(3n+2),.sr-item:nth-child(3n){padding-left:0;}
@@ -824,6 +829,53 @@ input,select,textarea{cursor:none!important;caret-color:transparent}
   color:rgba(248,244,236,0.40);line-height:1.80;
 }
 .sr-text strong{color:rgba(248,244,236,0.72);font-weight:600;}
+
+/* ── YCFCU hero card — full-width, horizontal layout ── */
+.sr-item--hero{
+  grid-column:1 / -1;
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:0;
+  padding:clamp(40px,5vw,72px) 0;
+  border-right:none;
+}
+.sr-item--hero .sr-hero-left{
+  padding-right:clamp(32px,4vw,64px);
+  border-right:1px solid rgba(248,244,236,0.07);
+  display:flex;flex-direction:column;justify-content:space-between;
+}
+.sr-item--hero .sr-title{
+  font-size:clamp(28px,3.5vw,52px);
+  letter-spacing:-0.03em;line-height:0.90;
+  margin-bottom:0;
+}
+.sr-hero-right{
+  padding-left:clamp(32px,4vw,64px);
+  display:flex;flex-direction:column;justify-content:space-between;
+  gap:clamp(24px,3vw,36px);
+}
+.sr-hero-right .sr-text{
+  font-size:clamp(14px,1.4vw,16px);
+  color:rgba(248,244,236,0.52);
+}
+.sr-hero-link{
+  display:inline-block;
+  font-family:'Courier New',monospace;font-size:13px;font-weight:600;
+  letter-spacing:0.22em;text-transform:uppercase;
+  color:var(--cocoa-mid);
+  border-bottom:1px solid rgba(122,85,68,0.35);
+  padding-bottom:3px;
+  transition:color .18s,border-color .18s;
+  align-self:flex-start;
+}
+.sr-hero-link:hover{color:rgba(248,244,236,0.85);border-color:rgba(248,244,236,0.25);}
+
+@media(max-width:700px){
+  .sr-item--hero{grid-template-columns:1fr;gap:clamp(24px,4vw,36px);}
+  .sr-item--hero .sr-hero-left{border-right:none;padding-right:0;border-bottom:1px solid rgba(248,244,236,0.07);padding-bottom:clamp(24px,4vw,36px);}
+  .sr-hero-right{padding-left:0;}
+  .sr-item--hero .sr-title{font-size:clamp(24px,7vw,38px);}
+}
 
 
 /* ── ORDER ────────────────────────────────────────────────────────── */
