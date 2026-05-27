@@ -246,7 +246,7 @@ input,select,textarea{cursor:none!important;caret-color:transparent}
   font-size:clamp(12px,1.2vw,16px);font-weight:600;
   letter-spacing:0.28em;text-transform:uppercase;
   color:var(--cocoa-mid);
-  margin-bottom:clamp(28px,4vh,52px);
+  margin-bottom:clamp(14px,1.8vh,22px);
   animation:fadeUp .9s cubic-bezier(.16,1,.3,1) .1s both;
   opacity:1;
   position:relative;z-index:2;
@@ -328,7 +328,7 @@ input,select,textarea{cursor:none!important;caret-color:transparent}
 /* ── TICKER ────────────────────────────────────────────────────────── */
 .ticker{
   background:var(--cocoa);overflow:hidden;
-  padding:28px 0;white-space:nowrap;
+  padding:16px 0;white-space:nowrap;
 }
 .ticker-inner{
   display:inline-flex;
@@ -1270,7 +1270,7 @@ footer::before{
 
   /* Ticker — slower on mobile, taller */
   .ticker-inner{animation-duration:55s}
-  .ticker{padding:24px 0}
+  .ticker{padding:14px 0}
 
   /* Buttons — full width on mobile */
   .btn-primary,.btn-ghost,.btn-light,.btn-cream{width:100%;text-align:center;justify-content:center}
