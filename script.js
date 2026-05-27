@@ -148,13 +148,14 @@
 
 document.addEventListener('DOMContentLoaded',function(){
   if(typeof Lenis==='undefined')return;
-  if(window.matchMedia('(pointer:coarse)').matches) return;
   if(window.matchMedia('(prefers-reduced-motion:reduce)').matches) return;
 
   var lenis = new Lenis({
-    duration: 1.2,
-    easing: function(t){ return Math.min(1, 1.001 - Math.pow(2, -10*t)); },
-    smoothWheel: true
+    duration: 1.1,
+    easing: function(t){ return t===1?1:1-Math.pow(2,-10*t); },
+    smoothWheel: true,
+    wheelMultiplier: 0.9,
+    touchMultiplier: 1.8,
   });
   window.PNC_LENIS = lenis;
 
@@ -187,7 +188,7 @@ document.addEventListener('DOMContentLoaded',function(){
 (function(){
   const obs=new IntersectionObserver(function(entries){
     entries.forEach(function(e){if(e.isIntersecting){e.target.classList.add('visible');obs.unobserve(e.target);}});
-  },{threshold:0.08,rootMargin:'0px 0px -32px 0px'});
+  },{threshold:0.05,rootMargin:'0px 0px -16px 0px'});
   document.querySelectorAll('.reveal').forEach(function(el){obs.observe(el);});
 })();
 
