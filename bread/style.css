@@ -1903,14 +1903,15 @@ body.cookie-visible #mobile-cta{bottom:var(--cookie-h,80px);}
   font-weight:700;
   line-height:1.15;
   color:var(--cream);
-  letter-spacing:-.02em;
+  letter-spacing:.06em;
+  text-transform:uppercase;
   font-style:normal;
   margin-bottom:clamp(20px,3vw,32px);
 }
 .blessing-sub{
-  font-size:.8rem;
-  letter-spacing:.12em;
+  font-size:.7rem;
+  letter-spacing:.25em;
   text-transform:uppercase;
-  color:rgba(248,244,236,0.38);
+  color:rgba(248,244,236,0.35);
   line-height:1.8;
 }
