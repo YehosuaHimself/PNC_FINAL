@@ -1,13 +1,13 @@
-/* ═══════════════════════════════════════════════════════════
-   PNC BREW — MICRO-INTERACTIONS  ·  micro.css  v3  COMPLETE
-   Awwwards-grade. Every effect earned, none decorative.
-   All conflicts with style.css resolved.
-   ═══════════════════════════════════════════════════════════ */
+/* ═══════════════════════════════════════════════════════════════════════
+   PNC BREW — MICRO-INTERACTIONS  ·  micro.css  v4  MASTER
+   Awwwards-grade. Zero conflicts with style.css.
+   Every effect audited against the DOM and existing animations.
+   ═══════════════════════════════════════════════════════════════════════ */
 
 
-/* ── 1. STEP ROWS — magnetic depth on hover ─────────────────── */
+/* ── 1. STEP ROWS — magnetic depth on hover ─────────────────────────── */
 
-@media(hover:hover) {
+@media (hover:hover) {
   .step {
     transition:
       background 0.32s cubic-bezier(.16,1,.3,1),
@@ -15,11 +15,10 @@
     border-left: 3px solid transparent;
   }
   .step:hover {
-    background: rgba(248,244,236,0.55);
+    background: rgba(248,244,236,0.05);
     border-left-color: var(--cocoa-mid);
     padding-left: clamp(8px,1vw,16px);
   }
-
   .step-num {
     transition:
       letter-spacing 0.35s cubic-bezier(.16,1,.3,1),
@@ -31,7 +30,6 @@
     letter-spacing: 0.44em;
     transform: translateY(-2px);
   }
-
   .step-title {
     transition:
       letter-spacing 0.4s cubic-bezier(.16,1,.3,1),
@@ -42,22 +40,17 @@
     letter-spacing: -0.055em;
     color: var(--dark);
   }
-
   .step-title::after {
     content: '';
     position: absolute;
-    bottom: -4px;
-    left: 0; right: 0;
+    bottom: -4px; left: 0; right: 0;
     height: 1px;
     background: var(--cocoa-mid);
     transform: scaleX(0);
     transform-origin: left;
     transition: transform 0.55s cubic-bezier(.16,1,.3,1);
   }
-  .step:hover .step-title::after {
-    transform: scaleX(1);
-  }
-
+  .step:hover .step-title::after { transform: scaleX(1); }
   .step-text {
     transition:
       color 0.3s ease,
@@ -67,7 +60,6 @@
     color: var(--cocoa-mid);
     transform: translateY(-1px);
   }
-
   .step-meta {
     transition:
       color 0.3s ease,
@@ -82,11 +74,11 @@
 }
 
 
-/* ── 2. HERO HEADLINE — blur-clear word stagger ─────────────── */
+/* ── 2. HERO HEADLINE — blur-clear word stagger ─────────────────────── */
+/* style.css has no animation on .hero-headline or its children —       */
+/* safe to animate .brew-hl-word spans inserted by micro.js             */
 
-.hero-headline {
-  perspective: 900px;
-}
+.hero-headline { perspective: 900px; }
 .brew-hl-word {
   display: inline-block;
   opacity: 0;
@@ -100,7 +92,8 @@
 }
 
 
-/* ── 3. HERO SUB — blur-clear on load ───────────────────────── */
+/* ── 3. HERO SUB — blur-clear on load ───────────────────────────────── */
+/* style.css sets no animation on .hero-sub — safe                      */
 
 .hero-sub {
   opacity: 0;
@@ -112,7 +105,8 @@
 }
 
 
-/* ── 4. HERO EYEBROW — tracking expand on load ──────────────── */
+/* ── 4. HERO EYEBROW — tracking expand on load ──────────────────────── */
+/* style.css has .hero-eyebrow but no animation — safe                  */
 
 .hero-eyebrow {
   animation: eyebrowExpand 1.4s cubic-bezier(.16,1,.3,1) 0.2s both;
@@ -123,7 +117,9 @@
 }
 
 
-/* ── 5. HERO WATERMARK — breathing after enter ──────────────── */
+/* ── 5. HERO WATERMARK — breathing after entry ──────────────────────── */
+/* style.css sets: animation: driftIn 2s … both                         */
+/* We EXTEND that chain — no conflict, micro.css loads after style.css   */
 
 .hero-wm-text {
   animation:
@@ -136,10 +132,9 @@
 }
 
 
-/* ── 6. HERO COORD — gold resolve on load ───────────────────── */
+/* ── 6. HERO COORD — gold resolve on load ───────────────────────────── */
 
 .hero-coord-label {
-  transition: color 0.6s ease, letter-spacing 0.6s cubic-bezier(.16,1,.3,1);
   animation: coordIn 1.8s cubic-bezier(.16,1,.3,1) 0.9s both;
 }
 @keyframes coordIn {
@@ -155,7 +150,7 @@
 }
 
 
-/* ── 7. HERO STRIP PILLS — fill sweep on hover ──────────────── */
+/* ── 7. HERO STRIP PILLS — fill sweep on hover ──────────────────────── */
 
 .hs-pill {
   position: relative;
@@ -167,8 +162,7 @@
 }
 .hs-pill::after {
   content: '';
-  position: absolute;
-  inset: 0;
+  position: absolute; inset: 0;
   background: var(--cream);
   transform: scaleX(0);
   transform-origin: left center;
@@ -176,7 +170,7 @@
   z-index: 0;
 }
 .hs-pill > * { position: relative; z-index: 1; }
-@media(hover:hover) {
+@media (hover:hover) {
   .hs-pill:hover::after { transform: scaleX(1); }
   .hs-pill:hover {
     color: var(--dark) !important;
@@ -186,36 +180,42 @@
 }
 
 
-/* ── 8. HERO SCROLL LINE — fades when scrolled ──────────────── */
+/* ── 8. HERO SCROLL LINE — fades when scrolled ──────────────────────── */
 
-.hero-scroll {
-  transition: opacity 0.4s ease;
+.hero-scroll { transition: opacity 0.4s ease; }
+.hero-scroll.hidden { opacity: 0; pointer-events: none; }
+
+
+/* ── 9. BLOOM PARTICLES — float loop ────────────────────────────────── */
+/* style.css uses @keyframes bloom-rise for .bloom-p                    */
+/* We do NOT override the animation — only speed-up on hero hover       */
+
+@media (hover:hover) {
+  .hero:hover .bloom-p {
+    animation-duration: 1.8s !important;
+  }
 }
-.hero-scroll.hidden {
-  opacity: 0;
+
+
+/* ── 10. HERO CURSOR WARM GLOW ──────────────────────────────────────── */
+/* JS sets --gx / --gy on the hero. This renders the glow.              */
+
+.hero::after {
+  content: '';
+  position: absolute;
+  inset: 0;
   pointer-events: none;
+  z-index: 0;
+  background: radial-gradient(
+    ellipse 55% 40% at var(--gx, 50%) var(--gy, 80%),
+    rgba(184,134,11,0.07) 0%,
+    transparent 70%
+  );
+  transition: background 0.1s;
 }
 
 
-/* ── 9. BLOOM PARTICLES — shimmer loop ──────────────────────── */
-
-.bloom-p {
-  animation: bloomFloat var(--bd, 4s) var(--bdy, 0s) ease-in-out infinite;
-}
-.bloom-p:nth-child(1) { --bd: 4.2s; --bdy: 0s; }
-.bloom-p:nth-child(2) { --bd: 5.1s; --bdy: 0.8s; }
-.bloom-p:nth-child(3) { --bd: 3.8s; --bdy: 1.4s; }
-.bloom-p:nth-child(4) { --bd: 4.7s; --bdy: 0.4s; }
-.bloom-p:nth-child(5) { --bd: 6.0s; --bdy: 1.1s; }
-@keyframes bloomFloat {
-  0%, 100% { transform: translateY(0) scale(1); opacity: 0.6; }
-  50%       { transform: translateY(-8px) scale(1.08); opacity: 1; }
-}
-/* Accelerate on hero hover */
-.hero:hover .bloom-p { animation-duration: 1.4s !important; }
-
-
-/* ── 10. TASTING NOTES — sequential shimmer on hover ────────── */
+/* ── 11. TASTING NOTES — left border draw on hover ──────────────────── */
 
 .tasting-note {
   position: relative;
@@ -231,61 +231,43 @@
   background: var(--cocoa);
   transition: width 0.44s cubic-bezier(.16,1,.3,1);
 }
-@media(hover:hover) {
+@media (hover:hover) {
   .tasting-note:hover::before { width: 3px; }
-  .tasting-note:hover {
-    padding-left: clamp(8px,1.2vw,14px);
-  }
+  .tasting-note:hover { padding-left: clamp(8px,1.2vw,14px); }
 }
-
 .tn-num {
   transition: color 0.28s ease, letter-spacing 0.35s cubic-bezier(.16,1,.3,1);
 }
-@media(hover:hover) {
+@media (hover:hover) {
   .tasting-note:hover .tn-num {
     color: var(--cocoa);
     letter-spacing: 0.34em;
   }
 }
-
 .tn-name {
   transition: letter-spacing 0.38s cubic-bezier(.16,1,.3,1), color 0.28s ease;
 }
-@media(hover:hover) {
+@media (hover:hover) {
   .tasting-note:hover .tn-name {
     letter-spacing: -0.04em;
     color: var(--dark);
   }
 }
-
 .tn-when {
   transition: opacity 0.3s ease, transform 0.35s cubic-bezier(.16,1,.3,1);
   opacity: 0.55;
 }
-@media(hover:hover) {
+@media (hover:hover) {
   .tasting-note:hover .tn-when {
     opacity: 0.88;
     transform: translateY(-1px);
   }
 }
 
-/* Tasting sequence — previous note dims when next is hovered */
-@media(hover:hover) {
-  .tasting-notes:has(.tasting-note:nth-child(2):hover) .tasting-note:nth-child(1),
-  .tasting-notes:has(.tasting-note:nth-child(3):hover) .tasting-note:nth-child(1),
-  .tasting-notes:has(.tasting-note:nth-child(3):hover) .tasting-note:nth-child(2),
-  .tasting-notes:has(.tasting-note:nth-child(4):hover) .tasting-note:nth-child(1),
-  .tasting-notes:has(.tasting-note:nth-child(4):hover) .tasting-note:nth-child(2),
-  .tasting-notes:has(.tasting-note:nth-child(4):hover) .tasting-note:nth-child(3) {
-    opacity: 0.44;
-    transition: opacity 0.4s ease;
-  }
-}
 
+/* ── 12. CERT TAGS — spring pop with sibling dim ────────────────────── */
 
-/* ── 11. CERT TAGS — spring pop with sibling dim ────────────── */
-
-@media(hover:hover) {
+@media (hover:hover) {
   .cert-tag {
     transition:
       background 0.2s ease,
@@ -306,15 +288,11 @@
 }
 
 
-/* ── 12. PRODUCT — p-stat vals lift on hover ────────────────── */
+/* ── 13. PRODUCT STATS — lift and colour-shift on hover ─────────────── */
 
-.p-stat {
-  transition: transform 0.32s cubic-bezier(.16,1,.3,1);
-}
-@media(hover:hover) {
-  .p-stat:hover {
-    transform: translateY(-3px);
-  }
+.p-stat { transition: transform 0.32s cubic-bezier(.16,1,.3,1); }
+@media (hover:hover) {
+  .p-stat:hover { transform: translateY(-3px); }
   .p-stat-val {
     transition: color 0.28s ease, letter-spacing 0.35s cubic-bezier(.16,1,.3,1);
   }
@@ -331,27 +309,20 @@
   }
 }
 
-/* Product name reveal — char-by-char feel */
-.product-name {
-  opacity: 0;
-  transform: translateY(12px);
-  will-change: transform, opacity;
-  transition: opacity 0.7s cubic-bezier(.16,1,.3,1), transform 0.7s cubic-bezier(.16,1,.3,1);
-}
-.product-name.visible {
-  opacity: 1;
-  transform: translateY(0);
-}
+
+/* ── 14. PRODUCT NAME — scroll entry reveal ─────────────────────────── */
+/* Has .reveal class in HTML — handled by script.js + style.css reveal  */
+/* Extra: no additional CSS needed; handled by .reveal system           */
 
 
-/* ── 13. SPEC TABLE — row shimmer on hover ──────────────────── */
+/* ── 15. SPEC TABLE — row shimmer on hover ──────────────────────────── */
 
-@media(hover:hover) {
+@media (hover:hover) {
   .spec-table tbody tr {
     transition: background 0.22s ease;
   }
   .spec-table tbody tr:hover {
-    background: rgba(92,61,46,0.04);
+    background: rgba(92,61,46,0.05);
   }
   .spec-table tbody tr:hover td:first-child {
     color: var(--cocoa);
@@ -360,41 +331,16 @@
 }
 
 
-/* ── 14. SOURCE — headline stagger on entry ──────────────────── */
+/* ── 16. SOURCE HEADLINE — entry reveal ─────────────────────────────── */
+/* .source-headline has .reveal class — handled by reveal system        */
+/* Extra: title bold stagger                                             */
 
-.source-headline {
-  opacity: 0;
-  transform: translateY(16px);
-  transition: opacity 0.8s cubic-bezier(.16,1,.3,1), transform 0.8s cubic-bezier(.16,1,.3,1);
-}
-.source-headline.visible {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-/* Source text unveil — overlay sweeps off right-to-left */
-.sc-text {
-  position: relative;
-  overflow: hidden;
-}
-.sc-text::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: var(--dark);
-  transform: scaleX(1);
-  transform-origin: right center;
-  transition: transform 1.1s cubic-bezier(.16,1,.3,1);
-}
-.sc-text.visible::after {
-  transform: scaleX(0);
-}
-
-/* sc-title bold reveal */
 .sc-title {
   opacity: 0;
   transform: translateY(10px);
-  transition: opacity 0.7s cubic-bezier(.16,1,.3,1) 0.15s, transform 0.7s cubic-bezier(.16,1,.3,1) 0.15s;
+  transition:
+    opacity 0.7s cubic-bezier(.16,1,.3,1) 0.15s,
+    transform 0.7s cubic-bezier(.16,1,.3,1) 0.15s;
 }
 .sc-title.visible {
   opacity: 1;
@@ -402,22 +348,37 @@
 }
 
 
-/* ── 15. SOURCE STAT NUMBERS — count-up + hover lift ────────── */
+/* ── 17. SOURCE TEXT — curtain sweep unveil ─────────────────────────── */
+/* .sc-text is the source paragraph — position:relative + overflow:hidden */
+/* added here since style.css doesn't set them on this element           */
 
-@media(hover:hover) {
+.sc-text {
+  position: relative;
+  overflow: hidden;
+}
+.sc-text::after {
+  content: '';
+  position: absolute; inset: 0;
+  background: var(--dark);
+  transform: scaleX(1);
+  transform-origin: right center;
+  transition: transform 1.1s cubic-bezier(.16,1,.3,1);
+  pointer-events: none;
+}
+.sc-text.visible::after {
+  transform: scaleX(0);
+}
+
+
+/* ── 18. SOURCE STATS — hover lift + count-up handled by JS ─────────── */
+
+@media (hover:hover) {
   .source-stats > div {
-    position: relative;
     transition: transform 0.3s cubic-bezier(.16,1,.3,1);
   }
-  .source-stats > div:hover {
-    transform: translateY(-3px);
-  }
-  .ss-val {
-    transition: color 0.25s ease;
-  }
-  .source-stats > div:hover .ss-val {
-    color: rgba(248,244,236,0.98);
-  }
+  .source-stats > div:hover { transform: translateY(-3px); }
+  .ss-val { transition: color 0.25s ease; }
+  .source-stats > div:hover .ss-val { color: rgba(248,244,236,0.98); }
   .ss-key {
     transition:
       letter-spacing 0.35s cubic-bezier(.16,1,.3,1),
@@ -430,7 +391,7 @@
 }
 
 
-/* ── 16. QTY CARDS — spring click + sibling dim ─────────────── */
+/* ── 19. QTY CARDS — spring click + sibling dim ─────────────────────── */
 
 .qty-card {
   position: relative;
@@ -442,8 +403,7 @@
 }
 .qty-card::before {
   content: '';
-  position: absolute;
-  inset: 0;
+  position: absolute; inset: 0;
   background: var(--cocoa);
   opacity: 0;
   transition: opacity 0.22s ease;
@@ -459,8 +419,7 @@
   70%  { transform: scale(0.97); }
   100% { transform: scale(1); }
 }
-/* Selected sibling dim */
-@media(hover:hover) {
+@media (hover:hover) {
   .qty-cards:has(.qty-card.selected) .qty-card:not(.selected) {
     opacity: 0.52;
     transform: scale(0.97);
@@ -469,25 +428,20 @@
 }
 
 
-/* ── 17. SIX REASONS — item border draw on hover ────────────── */
+/* ── 20. SIX REASONS — left border draw on hover ────────────────────── */
 
-.sr-item {
-  position: relative;
-}
+.sr-item { position: relative; }
 .sr-item::before {
   content: '';
   position: absolute;
   left: 0; top: 0;
   width: 2px;
   height: 0;
-  background: var(--cream);
-  opacity: 0.5;
+  background: rgba(248,244,236,0.45);
   transition: height 0.44s cubic-bezier(.16,1,.3,1);
 }
-@media(hover:hover) {
-  .sr-item:hover::before {
-    height: 100%;
-  }
+@media (hover:hover) {
+  .sr-item:hover::before { height: 100%; }
   .sr-item:hover .sr-num {
     color: var(--cream);
     letter-spacing: 0.38em;
@@ -499,7 +453,7 @@
   }
 }
 
-/* Sr-hero link reveal */
+/* Sr-hero link underline grows */
 .sr-hero-link {
   position: relative;
   overflow: hidden;
@@ -508,17 +462,16 @@
   content: '';
   position: absolute;
   bottom: 0; left: 0;
-  width: 0;
-  height: 1px;
+  width: 0; height: 1px;
   background: currentColor;
   transition: width 0.38s cubic-bezier(.16,1,.3,1);
 }
-@media(hover:hover) {
+@media (hover:hover) {
   .sr-hero-link:hover::after { width: 100%; }
 }
 
 
-/* ── 18. ORDER BUTTON — fill sweep ──────────────────────────── */
+/* ── 21. ORDER BUTTON — fill sweep ──────────────────────────────────── */
 
 .btn-order:not(:disabled) {
   position: relative;
@@ -526,8 +479,7 @@
 }
 .btn-order:not(:disabled)::after {
   content: '';
-  position: absolute;
-  inset: 0;
+  position: absolute; inset: 0;
   background: var(--cocoa);
   transform: scaleX(0);
   transform-origin: left center;
@@ -535,20 +487,24 @@
   z-index: 0;
 }
 .btn-order:not(:disabled) > * { position: relative; z-index: 1; }
-@media(hover:hover) {
+@media (hover:hover) {
   .btn-order:not(:disabled):hover::after { transform: scaleX(1); }
 }
-.btn-order:not(:disabled) {
-  transition: color 0.28s ease;
-}
+.btn-order:not(:disabled) { transition: color 0.28s ease; }
 
 
-/* ── 19. PROGRESS SHIMMER ────────────────────────────────────── */
+/* ── 22. PROGRESS BAR SHIMMER ───────────────────────────────────────── */
 
 #prog, #prog-r {
-  background: linear-gradient(90deg, var(--gold) 0%, rgba(184,134,11,0.6) 50%, var(--gold) 100%);
+  background:
+    linear-gradient(
+      90deg,
+      var(--gold) 0%,
+      rgba(184,134,11,0.55) 50%,
+      var(--gold) 100%
+    );
   background-size: 200% 100%;
-  animation: progressShimmer 2s linear infinite;
+  animation: progressShimmer 2.2s linear infinite;
 }
 @keyframes progressShimmer {
   0%   { background-position: 200% 0; }
@@ -556,7 +512,7 @@
 }
 
 
-/* ── 20. FORM INPUTS — focus depth ──────────────────────────── */
+/* ── 23. FORM — focus depth and inactive dim ────────────────────────── */
 
 .form-row input,
 .form-row select {
@@ -566,9 +522,7 @@
     transform 0.2s cubic-bezier(.16,1,.3,1);
 }
 .form-row input:focus,
-.form-row select:focus {
-  transform: translateY(-1px);
-}
+.form-row select:focus { transform: translateY(-1px); }
 .form-row label {
   transition:
     color 0.25s ease,
@@ -578,7 +532,6 @@
   color: var(--cocoa-mid);
   letter-spacing: 0.32em;
 }
-/* Dim inactive rows when any focused */
 @supports selector(:has(*)) {
   .form-group:has(.form-row:focus-within) .form-row:not(:focus-within) {
     opacity: 0.52;
@@ -587,21 +540,14 @@
 }
 
 
-/* ── 21. DESK BANNER CTA ─────────────────────────────────────── */
+/* ── 24. TICKER — hover speed-up ────────────────────────────────────── */
 
-@media(hover:hover) and (min-width:769px) {
-  .desk-banner-link:hover .desk-banner-cta {
-    letter-spacing: 0.06em;
-    transition: letter-spacing 0.25s cubic-bezier(.16,1,.3,1);
-  }
-  .desk-banner-link:hover .desk-banner-sub {
-    opacity: 0.9;
-    transition: opacity 0.25s ease;
-  }
+@media (hover:hover) {
+  .ticker:hover .ticker-inner { animation-duration: 18s !important; }
 }
 
 
-/* ── 22. FOOTER LINKS — centre-out underline ────────────────── */
+/* ── 25. FOOTER LINKS — centre-out underline ────────────────────────── */
 
 .footer-link {
   position: relative;
@@ -613,89 +559,74 @@
   bottom: 0; left: 50%; right: 50%;
   height: 1px;
   background: rgba(248,244,236,0.38);
-  transition: left 0.28s cubic-bezier(.16,1,.3,1), right 0.28s cubic-bezier(.16,1,.3,1);
+  transition:
+    left 0.28s cubic-bezier(.16,1,.3,1),
+    right 0.28s cubic-bezier(.16,1,.3,1);
 }
-@media(hover:hover) {
+@media (hover:hover) {
   .footer-link:hover::after { left: 12px; right: 12px; }
 }
 
 
-/* ── 23. SHIP BADGE — globe idle spin ───────────────────────── */
+/* ── 26. SHIP BADGE — globe idle spin ───────────────────────────────── */
 
 .ship-globe {
   animation: globeSpin 20s linear infinite;
-  transition: animation-duration 0.6s ease;
 }
 @keyframes globeSpin {
   from { transform: rotate(0deg); }
   to   { transform: rotate(360deg); }
 }
-@media(hover:hover) {
-  .ship-badge:hover .ship-globe {
-    animation-duration: 3.5s;
-  }
+@media (hover:hover) {
+  .ship-badge:hover .ship-globe { animation-duration: 3.5s; }
   .ship-badge:hover .ship-text {
     letter-spacing: 0.36em;
     transition: letter-spacing 0.3s cubic-bezier(.16,1,.3,1);
   }
 }
+.ship-text { transition: letter-spacing 0.38s cubic-bezier(.16,1,.3,1); }
 
 
-/* ── 24. TICKER — hover speed-up ────────────────────────────── */
+/* ── 27. DESK BANNER CTA ─────────────────────────────────────────────── */
 
-@media(hover:hover) {
-  .ticker:hover .ticker-inner {
-    animation-duration: 18s !important;
+@media (hover:hover) and (min-width:769px) {
+  .desk-banner-link:hover .desk-banner-cta {
+    letter-spacing: 0.06em;
+    transition: letter-spacing 0.25s cubic-bezier(.16,1,.3,1);
+  }
+  .desk-banner-link:hover .desk-banner-sub {
+    opacity: 0.9;
+    transition: opacity 0.25s ease;
   }
 }
 
 
-/* ── 25. REVEAL — base for JS-driven entry ──────────────────── */
+/* ── REDUCED MOTION SAFETY NET ──────────────────────────────────────── */
 
-.reveal {
-  opacity: 0;
-  transform: translateY(10px);
-  will-change: opacity, transform;
-  transition:
-    opacity 0.7s cubic-bezier(.16,1,.3,1),
-    transform 0.7s cubic-bezier(.16,1,.3,1);
-}
-.reveal.visible {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-
-/* ── REDUCED MOTION ──────────────────────────────────────────── */
-
-@media(prefers-reduced-motion:reduce) {
+@media (prefers-reduced-motion:reduce) {
   .brew-hl-word,
   .hero-sub,
   .hero-eyebrow,
   .hero-coord-label,
   .hero-coord-line,
-  .bloom-p,
   .hero-wm-text,
-  .product-name,
-  .source-headline,
   .sc-title,
-  .reveal {
+  .qty-card.spring {
     animation: none !important;
     opacity: 1 !important;
     transform: none !important;
     filter: none !important;
   }
-  .sc-text::after {
-    display: none;
-  }
+  /* bloom-p — style.css already has prefers-reduced-motion guard        */
+  .sc-text::after,
   .step-title::after,
   .tasting-note::before,
   .qty-card::before,
   .sr-item::before,
   .sr-hero-link::after,
-  .footer-link::after {
-    transition: none !important;
-    animation: none !important;
-  }
-  @keyframes progressShimmer { 0%,100% { opacity: 0; } }
+  .footer-link::after,
+  .btn-order:not(:disabled)::after,
+  .hero::after { display: none !important; }
+  .sc-text { overflow: visible; }
+  @keyframes progressShimmer { 0%, 100% { opacity: 0; } }
 }
