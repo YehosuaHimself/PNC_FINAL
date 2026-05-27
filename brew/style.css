@@ -350,7 +350,7 @@ input,select,textarea{cursor:none!important;caret-color:transparent}
   background:var(--cream);
 }
 .ship-badge[data-dark]{
-  background:transparent;
+  background:var(--dark);
   border-top-color:rgba(248,244,236,0.08);
   border-bottom-color:rgba(248,244,236,0.08);
 }
@@ -411,7 +411,7 @@ input,select,textarea{cursor:none!important;caret-color:transparent}
 .eyebrow{
   font-family:'Courier New',monospace;font-size:13px;font-weight:600;
   letter-spacing:0.36em;text-transform:uppercase;color:var(--cocoa);
-  display:block;margin-bottom:20px;
+  display:block;margin-bottom:32px;
 }
 .h2{
   font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;
@@ -616,6 +616,7 @@ input,select,textarea{cursor:none!important;caret-color:transparent}
   font-weight:900;font-size:clamp(52px,8vw,130px);
   letter-spacing:-0.04em;line-height:0.88;
   color:rgba(248,244,236,0.92);
+  text-transform:uppercase;
   margin-bottom:clamp(40px,5vh,72px);
   max-width:65%;
 }
