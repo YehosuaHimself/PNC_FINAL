@@ -48,6 +48,7 @@ a,a:hover,a:active,a:focus{cursor:none!important}
 }
 .skip-link:focus{top:1rem;outline:2px solid var(--cream);outline-offset:2px;}
 
+html,body{cursor:none!important}
 /* ── CURSOR ─────────────────────────────────────────────────── */
 *,*::before,*::after{cursor:none!important}
 a,button,[role=button]{cursor:none!important}

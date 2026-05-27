@@ -74,6 +74,7 @@ a,a:hover,a:active,a:focus{cursor:none!important}
   #mobile-cta{position:sticky;transform:none!important}
 }
 
+html,body{cursor:none!important}
 /* ── CURSOR ────────────────────────────────────────────────────────── */
 *,*::before,*::after{cursor:none!important}
 a,button,[role=button]{cursor:none!important}
