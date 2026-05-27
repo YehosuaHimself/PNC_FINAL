@@ -5,13 +5,13 @@
 
   var C_DARK  = '#2A1810';
   var C_LIGHT = '#F8F4EC';
-  var DOT_R   = 6;
-  var RING_RX = 24, RING_RY = 26;
+  var DOT_R   = 9;
+  var RING_RX = 29, RING_RY = 32;
   var LERP    = 0.18;
-  var BEAN_W  = '12px', BEAN_H = '13px';
+  var BEAN_W  = '18px', BEAN_H = '20px';
   var BEAN_BR = 'none';
-  var BEAN_CP = 'polygon(50% 2%, 97% 78%, 84% 98%, 16% 98%, 3% 78%)';
-  var BEAN_ROT = '12deg';
+  var BEAN_CP = 'polygon(50% 0%, 100% 72%, 82% 100%, 18% 100%, 0% 72%)';
+  var BEAN_ROT = '-10deg';
 
   var mx = -9999, my = -9999;
   var rx = -9999, ry = -9999;
@@ -91,12 +91,12 @@
 
   document.querySelectorAll('a,button,[role=button],select').forEach(function(el) {
     el.addEventListener('mouseenter', function() {
-      ring.style.width = '64px'; ring.style.height = '70px';
+      ring.style.width = '76px'; ring.style.height = '84px';
       ring.style.opacity = currentDark ? '0.40' : '0.35';
       startLoop();
     });
     el.addEventListener('mouseleave', function() {
-      ring.style.width = '48px'; ring.style.height = '52px';
+      ring.style.width = '58px'; ring.style.height = '64px';
       ring.style.opacity = currentDark ? '0.55' : '0.60';
       startLoop();
     });
@@ -128,10 +128,11 @@
     dot.style.clipPath     = BEAN_CP;
     dot.style.background   = currentDark ? C_LIGHT : C_DARK;
     rx = mx - RING_RX; ry = my - RING_RY;
+    ring.style.borderRadius = '48% 48% 44% 44% / 52% 52% 48% 48%';
     ring.style.transform   = 'translate3d(' + Math.round(rx) + 'px,' + Math.round(ry) + 'px,0) rotate(' + BEAN_ROT + ')';
     ring.style.opacity     = currentDark ? '0.55' : '0.60';
-    ring.style.width       = '48px';
-    ring.style.height      = '52px';
+    ring.style.width       = '58px';
+    ring.style.height      = '64px';
     startLoop();
   }
 
