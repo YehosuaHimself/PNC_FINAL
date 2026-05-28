@@ -481,11 +481,17 @@ input,select,textarea{cursor:none!important;caret-color:var(--ink,#4A3018)}
   display:flex;align-items:center;gap:clamp(10px,1.5vw,18px);
   flex-shrink:0;
 }
+@keyframes globeSpin{
+  from{transform:rotate(0deg)}
+  to{transform:rotate(360deg)}
+}
 .ship-globe{
   width:clamp(20px,2vw,26px);height:clamp(20px,2vw,26px);
   opacity:1;flex-shrink:0;
   /* gold tint via CSS filter — hue-rotate to amber */
   filter:sepia(1) saturate(2.5) hue-rotate(5deg) brightness(0.85);
+  animation:globeSpin 8s linear infinite;
+  transform-origin:center center;
 }
 .ship-badge[data-dark] .ship-globe{opacity:1;filter:sepia(1) saturate(2.5) hue-rotate(5deg) brightness(0.95);}
 .ship-text{
