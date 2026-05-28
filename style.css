@@ -1137,10 +1137,12 @@ section[id="origins"] {
   z-index:1;
 }
 .proof-num{
-  font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;
+  font-family:'Fraunces',Georgia,serif;
   font-weight:900;
+  font-style:italic;
+  font-variation-settings:'opsz' 144,'WONK' 1;
   font-size:clamp(48px,7vw,104px);
-  letter-spacing:-0.04em;
+  letter-spacing:-0.03em;
   line-height:1;
   color:var(--cream);
   margin-bottom:clamp(10px,1.5vh,16px);
