@@ -2006,20 +2006,7 @@ body.cookie-visible #mobile-cta{bottom:var(--cookie-h,80px);}
   transition: border-color 0.25s ease, background-color 0.25s ease;
 }
 
-/* ── Fraunces variable serif — display headlines only ─────────────
-   Applied to all weight-900 display text above 36px.
-   Helvetica kept for body, stats, UI elements.                      */
-.hero-headline,
-.h2,
-.nutr-headline,
-.sum-label,
-.order-h2,
-.formats-h2,
-.wc-headline,
-.process-headline {
-  font-family: 'Fraunces', 'Helvetica Neue', Helvetica, Arial, sans-serif !important;
-  font-variation-settings: 'opsz' 144, 'WONK' 1;
-}
+/* ── Watermark text — decorative Fraunces accent (non-header) ─── */
 .hero-wm-text {
   font-family: 'Fraunces', 'Helvetica Neue', Helvetica, Arial, sans-serif !important;
   font-variation-settings: 'opsz' 144, 'WONK' 0;
