@@ -163,3 +163,99 @@
   }
 
 })();
+
+
+/* ── 3D CARD TILT — spring physics mousemove ──────────────────────────
+   Each card tilts toward the cursor with spring-smoothed rotation.
+   Custom props --rx / --ry drive the CSS transform.
+   Separate spring per axis for organic feel.
+────────────────────────────────────────────────────────────────────── */
+(function () {
+  'use strict';
+  if (window.matchMedia('(pointer:coarse)').matches) return;
+  if (window.matchMedia('(prefers-reduced-motion:reduce)').matches) return;
+
+  var MAX_TILT = 7;    /* degrees */
+  var MAX_TZ   = 8;    /* translateZ px when hovering */
+  var SPRING_K = 0.12; /* stiffness */
+  var SPRING_D = 0.72; /* damping */
+
+  var cards = document.querySelectorAll('.hero-product');
+  if (!cards.length) return;
+
+  cards.forEach(function (card) {
+    /* Spring state per card per axis */
+    var state = {
+      rx: 0, ry: 0, tz: 0,
+      vx: 0, vy: 0, vz: 0,
+      targetRx: 0, targetRy: 0, targetTz: 0,
+      cx: 50, cy: 120, /* cursor pct within card */
+      hovering: false,
+      raf: null
+    };
+
+    function tick() {
+      /* Spring toward target */
+      state.vx += (state.targetRx - state.rx) * SPRING_K;
+      state.vy += (state.targetRy - state.ry) * SPRING_K;
+      state.vz += (state.targetTz - state.tz) * SPRING_K;
+      state.vx *= SPRING_D;
+      state.vy *= SPRING_D;
+      state.vz *= SPRING_D;
+      state.rx += state.vx;
+      state.ry += state.vy;
+      state.tz += state.vz;
+
+      card.style.setProperty('--rx', state.rx.toFixed(3) + 'deg');
+      card.style.setProperty('--ry', state.ry.toFixed(3) + 'deg');
+      card.style.setProperty('--tz', state.tz.toFixed(3) + 'px');
+      card.style.setProperty('--cx', state.cx.toFixed(1) + '%');
+      card.style.setProperty('--cy', state.cy.toFixed(1) + '%');
+
+      var moving = Math.abs(state.vx) + Math.abs(state.vy) + Math.abs(state.vz);
+      if (moving > 0.001 || state.hovering) {
+        state.raf = requestAnimationFrame(tick);
+      } else {
+        state.raf = null;
+      }
+    }
+
+    function startRaf() {
+      if (!state.raf) state.raf = requestAnimationFrame(tick);
+    }
+
+    card.addEventListener('mousemove', function (e) {
+      var rect = card.getBoundingClientRect();
+      var mx   = e.clientX - rect.left;
+      var my   = e.clientY - rect.top;
+      var nx   = (mx / rect.width  - 0.5) * 2; /* -1 … +1 */
+      var ny   = (my / rect.height - 0.5) * 2;
+
+      /* Invert Y: cursor top → tilt back = negative rotateX */
+      state.targetRx = -ny * MAX_TILT;
+      state.targetRy =  nx * MAX_TILT;
+      state.targetTz = MAX_TZ;
+
+      /* Cursor spotlight position */
+      state.cx = (mx / rect.width  * 100);
+      state.cy = (my / rect.height * 100);
+      state.hovering = true;
+
+      startRaf();
+    }, { passive: true });
+
+    card.addEventListener('mouseenter', function () {
+      state.hovering = true;
+      startRaf();
+    });
+
+    card.addEventListener('mouseleave', function () {
+      state.hovering    = false;
+      state.targetRx    = 0;
+      state.targetRy    = 0;
+      state.targetTz    = 0;
+      startRaf();
+    });
+  });
+
+})();
