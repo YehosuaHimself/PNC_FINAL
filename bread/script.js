@@ -347,7 +347,7 @@ document.addEventListener('DOMContentLoaded',function(){
   var hidden = false;
   var bannerLink = banner.querySelector('a');
 
-  var showObs = new IntersectionObserver(function(entries){\
+  var showObs = new IntersectionObserver(function(entries){
     entries.forEach(function(e){
       if(e.isIntersecting && !shown){
         shown = true;
