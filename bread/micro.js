@@ -10,39 +10,26 @@
   const RAF = requestAnimationFrame;
 
   /* ── 1. HERO HEADLINE — word-split stagger ──────────────────────── */
-  // Split each word in the headline into an animatable span
-  function splitHeadline() {
-    const hl = document.querySelector('.hero-headline');
-    if (!hl) return;
-    // Only the first text node (not the span subtitle)
-    const walker = document.createTreeWalker(hl, NodeFilter.SHOW_TEXT);
-    const textNodes = [];
-    let node;
-    while ((node = walker.nextNode())) {
-      // Skip text inside the subtitle span
-      if (node.parentElement && node.parentElement.tagName === 'SPAN') continue;
-      textNodes.push(node);
-    }
-    textNodes.forEach(tn => {
-      const words = tn.textContent.split(/(\s+)/);
-      const frag = document.createDocumentFragment();
-      words.forEach((w, i) => {
-        if (/^\s+$/.test(w)) {
-          frag.appendChild(document.createTextNode(w));
-        } else {
-          const span = document.createElement('span');
-          span.className = 'hero-hl-word';
-          span.textContent = w;
-          // Each word gets its delay
-          const delay = 0.18 + i * 0.06;
-          span.style.animationDelay = delay + 's';
-          frag.appendChild(span);
-        }
-      });
-      tn.parentNode.replaceChild(frag, tn);
+  /* ── 1. HERO HEADLINE — GSAP clip-mask wipe (matches home page) ── */
+  (function heroHeadline() {
+    if (REDUCED) return;
+    if (typeof gsap === 'undefined') return;
+    var inners = document.querySelectorAll('.hero-headline .hl-inner');
+    if (!inners.length) return;
+    gsap.set(inners, { yPercent: 108, opacity: 0 });
+    gsap.to(inners, {
+      yPercent: 0, opacity: 1,
+      duration: 1.15, ease: 'expo.out',
+      stagger: 0.13, delay: 0.05,
+      clearProps: 'transform,opacity'
     });
-  }
-  if (!REDUCED) splitHeadline();
+    var sub = document.querySelector('.hero-headline .hl-sub');
+    if (sub) {
+      gsap.set(sub, { opacity: 0, y: 16 });
+      gsap.to(sub, { opacity: 1, y: 0, duration: 1.2, ease: 'expo.out', delay: 0.44, clearProps: 'transform,opacity' });
+    }
+  })();
+
 
   /* ── 2. ING-STAT VALS COUNT-UP ─────────────────────────────────── */
   // Animates numeric stat values to their final number on intersection

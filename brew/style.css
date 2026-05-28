@@ -1672,3 +1672,49 @@ body.cookie-visible #mobile-cta{bottom:var(--cookie-h,80px);}
   letter-spacing: -0.06em;
 }
 .btn-order > span { position:relative; z-index:1; }
+
+/* ── Hero headline clip-mask wipe (matches home page) ──────────────
+   GSAP drives the actual animation. This is the base state.          */
+.hero-headline .hl-clip {
+  display: block;
+  overflow: hidden;
+  line-height: 0.88;
+  padding-bottom: 0.06em;
+}
+.hero-headline .hl-inner {
+  display: block;
+  transform: translateY(108%);
+  opacity: 0;
+  will-change: transform, opacity;
+}
+.hero-headline .hl-clip:nth-child(1) .hl-inner {
+  animation: hlRise 1.1s cubic-bezier(.16,1,.3,1) 0.05s forwards;
+}
+.hero-headline .hl-clip:nth-child(2) .hl-inner {
+  animation: hlRise 1.1s cubic-bezier(.16,1,.3,1) 0.18s forwards;
+}
+@keyframes hlRise {
+  to { transform: translateY(0); opacity: 1; }
+}
+.hero-headline .hl-sub {
+  display: block;
+  font-weight: 300;
+  font-size: clamp(13px, 1.3vw, 17px);
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  line-height: 1.3;
+  color: var(--cocoa-lt);
+  margin-top: clamp(18px, 2.5vh, 28px);
+  opacity: 0;
+  transform: translateY(12px);
+  animation: hlSubFade 1.2s cubic-bezier(.16,1,.3,1) 0.32s forwards;
+}
+@keyframes hlSubFade {
+  to { opacity: 1; transform: translateY(0); }
+}
+@media (prefers-reduced-motion:reduce) {
+  .hero-headline .hl-inner,
+  .hero-headline .hl-sub {
+    animation: none !important; opacity: 1 !important; transform: none !important;
+  }
+}

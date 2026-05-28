@@ -14,36 +14,26 @@
 
   /* ── 1. HERO HEADLINE — word-split stagger ─────────────────────── */
 
-  function splitHeroHeadline() {
-    var hl = document.querySelector('.hero-headline');
-    if (!hl) return;
-    var walker = document.createTreeWalker(hl, NodeFilter.SHOW_TEXT);
-    var nodes  = [];
-    var node;
-    while ((node = walker.nextNode())) {
-      if (node.parentElement && node.parentElement.tagName === 'SPAN') continue;
-      nodes.push(node);
-    }
-    nodes.forEach(function (tn) {
-      var parts   = tn.textContent.split(/(\s+)/);
-      var frag    = document.createDocumentFragment();
-      var wordIdx = 0;
-      parts.forEach(function (w) {
-        if (/^\s+$/.test(w)) {
-          frag.appendChild(document.createTextNode(w));
-        } else {
-          var span = document.createElement('span');
-          span.className = 'brew-hl-word';
-          span.textContent = w;
-          span.style.animationDelay = (0.2 + wordIdx * 0.065) + 's';
-          frag.appendChild(span);
-          wordIdx++;
-        }
-      });
-      tn.parentNode.replaceChild(frag, tn);
+  /* ── 1. HERO HEADLINE — GSAP clip-mask wipe (matches home page) ── */
+  (function heroHeadline() {
+    if (REDUCED) return;
+    if (typeof gsap === 'undefined') return;
+    var inners = document.querySelectorAll('.hero-headline .hl-inner');
+    if (!inners.length) return;
+    gsap.set(inners, { yPercent: 108, opacity: 0 });
+    gsap.to(inners, {
+      yPercent: 0, opacity: 1,
+      duration: 1.15, ease: 'expo.out',
+      stagger: 0.13, delay: 0.05,
+      clearProps: 'transform,opacity'
     });
-  }
-  if (!REDUCED) splitHeroHeadline();
+    var sub = document.querySelector('.hero-headline .hl-sub');
+    if (sub) {
+      gsap.set(sub, { opacity: 0, y: 16 });
+      gsap.to(sub, { opacity: 1, y: 0, duration: 1.2, ease: 'expo.out', delay: 0.38, clearProps: 'transform,opacity' });
+    }
+  })();
+
 
 
   /* ── 2. HERO SCROLL HIDE ───────────────────────────────────────── */
