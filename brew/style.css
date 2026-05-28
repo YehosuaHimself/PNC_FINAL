@@ -82,7 +82,7 @@ a,button,[role=button]{cursor:none!important}
 input,select,textarea{cursor:none!important;caret-color:var(--ink,#2A1810)}
 @media(pointer:coarse){*{cursor:auto!important}a,button,[role=button]{cursor:pointer!important}input,select,textarea{cursor:text!important;caret-color:auto!important}}
 #cur-dot{
-  position:fixed;top:0;left:0;width:13px;height:9px;
+  position:fixed;top:0;left:0;width:26px;height:18px;
   background:var(--cocoa);pointer-events:none;z-index:9998;
   /* Coffee bean — asymmetric oval, wider one side like real bean anatomy */
   border-radius:52% 48% 48% 52% / 58% 58% 42% 42%;
@@ -90,7 +90,7 @@ input,select,textarea{cursor:none!important;caret-color:var(--ink,#2A1810)}
   transition:background 0ms, opacity 160ms ease;
 }
 #cur-ring{
-  position:fixed;top:0;left:0;width:56px;height:38px;
+  position:fixed;top:0;left:0;width:112px;height:76px;
   border:1.5px solid var(--cocoa);pointer-events:none;z-index:9997;
   /* Coffee bean ring — elongated asymmetric oval, clear bean silhouette */
   border-radius:52% 48% 48% 52% / 58% 58% 42% 42%;

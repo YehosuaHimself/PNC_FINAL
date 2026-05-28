@@ -97,12 +97,12 @@
   /* ── Button / link hover ── */
   document.querySelectorAll('a,button,[role=button],select').forEach(function(el) {
     el.addEventListener('mouseenter', function() {
-      ring.style.width = '72px'; ring.style.height = '50px';
+      ring.style.width = '144px'; ring.style.height = '100px';
       ring.style.opacity = currentDark ? '0.40' : '0.35';
       startLoop();
     });
     el.addEventListener('mouseleave', function() {
-      ring.style.width = '56px'; ring.style.height = '38px';
+      ring.style.width = '112px'; ring.style.height = '76px';
       ring.style.opacity = currentDark ? '0.55' : '0.60';
       startLoop();
     });
@@ -136,8 +136,8 @@
     rx = mx - RING_RX; ry = my - RING_RY;
     ring.style.transform   = 'translate3d(' + Math.round(rx) + 'px,' + Math.round(ry) + 'px,0) rotate(' + BEAN_ROT + ')';
     ring.style.opacity     = currentDark ? '0.55' : '0.60';
-    ring.style.width       = '56px';
-    ring.style.height      = '38px';
+    ring.style.width       = '112px';
+    ring.style.height      = '76px';
     startLoop();
   }
 
