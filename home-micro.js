@@ -391,3 +391,76 @@
   }
 
 })();
+
+
+/* ── HERO PRICE ANCHORS — count-up on load ───────────────────────────
+   The price numbers in the top-right of each card count from 0
+   on page load — subtle but adds life to the hero.
+────────────────────────────────────────────────────────────────────── */
+(function heroPriceCount() {
+  'use strict';
+  if (window.matchMedia('(prefers-reduced-motion:reduce)').matches) return;
+
+  /* Find the two hp-price-anchor elements */
+  var anchors = document.querySelectorAll('.hp-price-anchor');
+  if (!anchors.length) return;
+
+  var targets = [3, 1]; /* € 3 and € 1 */
+  var currencies = ['€', '€'];
+
+  anchors.forEach(function (anchor, i) {
+    var sub = anchor.querySelector('span');
+    var subText = sub ? sub.textContent : '';
+    var target = targets[i];
+    var prefix = currencies[i] + '\u00A0';
+    var start  = null;
+    var dur    = 900 + i * 300;
+    var delay  = 600 + i * 200;
+
+    setTimeout(function () {
+      function tick(now) {
+        if (!start) start = now;
+        var p = Math.min((now - start) / dur, 1);
+        var ease = 1 - Math.pow(1 - p, 4); /* easeOutQuart */
+        var val = Math.ceil(ease * target);
+        /* Rebuild: number + original span */
+        anchor.childNodes[0] && anchor.childNodes[0].nodeType === 3
+          ? (anchor.childNodes[0].textContent = prefix + val)
+          : (anchor.insertBefore(document.createTextNode(prefix + val), anchor.firstChild));
+
+        /* Remove extra text nodes */
+        while (anchor.childNodes.length > 2) anchor.removeChild(anchor.firstChild);
+
+        if (p < 1) requestAnimationFrame(tick);
+        else {
+          anchor.childNodes[0].textContent = prefix + target;
+        }
+      }
+      requestAnimationFrame(tick);
+    }, delay);
+  });
+
+})();
+
+
+/* ── ORIGIN MAP MOUSEMOVE — spotlight tracks cursor ─────────────────
+   The warm radial light on the map follows the mouse.
+────────────────────────────────────────────────────────────────────── */
+(function originMapCursor() {
+  'use strict';
+  if (window.matchMedia('(pointer:coarse)').matches) return;
+
+  var cards = document.querySelectorAll('.origin-card');
+  cards.forEach(function (card) {
+    var map = card.querySelector('.origin-map');
+    if (!map) return;
+    card.addEventListener('mousemove', function (e) {
+      var rect = map.getBoundingClientRect();
+      var x = ((e.clientX - rect.left) / rect.width  * 100).toFixed(1) + '%';
+      var y = ((e.clientY - rect.top)  / rect.height * 100).toFixed(1) + '%';
+      map.style.setProperty('--mx', x);
+      map.style.setProperty('--my', y);
+    }, { passive: true });
+  });
+
+})();
