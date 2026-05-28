@@ -416,8 +416,14 @@ document.addEventListener('DOMContentLoaded',function(){
     if(y>40){nav.classList.add('scrolled')}else{nav.classList.remove('scrolled')}
     if(mcta&&hero){
       var heroBottom=hero.getBoundingClientRect().bottom;
-      if(heroBottom<0){mcta.classList.add('visible');mcta.removeAttribute('aria-hidden');}
-      else{mcta.classList.remove('visible');mcta.setAttribute('aria-hidden','true');}
+      var mctaLink = mcta.querySelector('a');
+      if(heroBottom<0){
+        mcta.classList.add('visible');
+        if(mctaLink) mctaLink.removeAttribute('tabindex');
+      }else{
+        mcta.classList.remove('visible');
+        if(mctaLink) mctaLink.setAttribute('tabindex','-1');
+      }
     }
   },{passive:true});
 
