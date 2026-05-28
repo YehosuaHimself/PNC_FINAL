@@ -54,7 +54,7 @@ html,body{cursor:none!important}
 *,*::before,*::after{cursor:none!important}
 a,button,[role=button]{cursor:none!important}
 input,select,textarea{cursor:none!important;caret-color:transparent}
-@media(pointer:coarse){*{cursor:auto!important}a,button,[role=button]{cursor:pointer!important}}
+@media(pointer:coarse){*{cursor:auto!important}a,button,[role=button]{cursor:pointer!important}input,select,textarea{caret-color:auto!important}}
 #cur-dot{
   position:fixed;top:0;left:0;width:10px;height:10px;
   background:var(--cocoa);pointer-events:none;z-index:9998;

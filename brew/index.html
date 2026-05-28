@@ -432,23 +432,23 @@
       <span class="order-eyebrow reveal">— Place Your Order</span>
       <h2 class="order-h2 reveal">€1<br>PER<br>CUP.</h2>
       <p class="order-sub reveal">Kochere G1 · Ethiopia · 85+ SCA<br>Roasted to Order · Ships within 7 Days</p>
-      <div class="qty-grid" id="qty-grid">
-        <div class="qty-card reveal" data-qty="7" data-sku="brew-7" data-price="7.00">
+      <div class="qty-grid" id="qty-grid" role="group" aria-label="Select quantity">
+        <div class="qty-card reveal" data-qty="7" data-sku="brew-7" data-price="7.00" tabindex="0" role="button" aria-pressed="false">
           <span class="qty-tag">7 Pads</span>
           <span class="qty-num">7</span>
           <div class="qty-price">€7</div>
         </div>
-        <div class="qty-card reveal reveal-d1" data-qty="30" data-sku="brew-30" data-price="30.00">
+        <div class="qty-card reveal reveal-d1 selected" data-qty="30" data-sku="brew-30" data-price="30.00" tabindex="0" role="button" aria-pressed="true">
           <span class="qty-tag">30 Pads</span>
           <span class="qty-num">30</span>
           <div class="qty-price">€30</div>
         </div>
-        <div class="qty-card reveal reveal-d2" data-qty="60" data-sku="brew-60" data-price="60.00">
+        <div class="qty-card reveal reveal-d2" data-qty="60" data-sku="brew-60" data-price="60.00" tabindex="0" role="button" aria-pressed="false">
           <span class="qty-tag">60 Pads</span>
           <span class="qty-num">60</span>
           <div class="qty-price">€60</div>
         </div>
-        <div class="qty-card reveal reveal-d3" data-qty="90" data-sku="brew-90" data-price="90.00">
+        <div class="qty-card reveal reveal-d3" data-qty="90" data-sku="brew-90" data-price="90.00" tabindex="0" role="button" aria-pressed="false">
           <span class="qty-tag">90 Pads</span>
           <span class="qty-num">90</span>
           <div class="qty-price">€90</div>
@@ -628,6 +628,7 @@
     <a href="/bread" class="footer-link">Bread</a>
     <a href="/brew" class="footer-link">Brew</a>
     <a href="/privacy.html" class="footer-link">Privacy</a>
+    <a href="/terms.html" class="footer-link">Terms</a>
     <a href="/shipping.html" class="footer-link">Shipping &amp; Cancellation</a>
     <a href="/imprint.html" class="footer-link">Imprint</a>
   </nav>
@@ -648,7 +649,7 @@
 
 <!-- COOKIE CONSENT — Content AC-03 -->
 <div id="cookie-bar" role="region" aria-label="Cookie consent" aria-live="polite">
-  <p><strong>Essential cookies only.</strong> No tracking unless you say so. <a href="/privacy" style="color:rgba(248,244,236,0.55);text-decoration:underline;font-size:11px;">Privacy policy</a></p>
+  <p><strong>Essential cookies only.</strong> No tracking unless you say so. <a href="/privacy.html" style="color:rgba(248,244,236,0.55);text-decoration:underline;font-size:11px;">Privacy policy</a></p>
   <div class="cookie-btns">
     <button class="cookie-btn" id="cookie-essential" aria-label="Accept essential cookies only">Essential only</button>
     <button class="cookie-btn primary" id="cookie-accept" aria-label="Accept all cookies">That's fine</button>

@@ -187,6 +187,23 @@ document.addEventListener('DOMContentLoaded',function(){
   var SUPA_URL  = 'https://ktigsrojpkvioamldvrp.supabase.co';
   var SUPA_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imt0aWdzcm9qcGt2aW9hbWxkdnJwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzc4OTUwMDksImV4cCI6MjA5MzQ3MTAwOX0.lRYGhJqn8AGQfVRmFNFNAj8H7iv7vMXKij8l8_YWmtA';
 
+  /* ── QTY CARD SELECTION — wired here unconditionally so EUR users
+     and exchange-API-fail users can always change quantity.
+     The currency callback adds local price display on top of this. ── */
+  var _qtyMap = {'5':'From € 15 per box · 5 to 50 loaves · Gluten Free','10':'€ 30 per box · 10 loaves · Gluten Free','20':'€ 60 per box · 20 loaves · Gluten Free','50':'€ 150 per box · 50 loaves · Gluten Free'};
+  var _priceNote = document.querySelector('.price-note');
+  var _qtyHidden = document.getElementById('bread-qty');
+  document.querySelectorAll('.bread-qty-card').forEach(function(card){
+    card.addEventListener('click', function(){
+      document.querySelectorAll('.bread-qty-card').forEach(function(c){
+        c.classList.remove('selected'); c.setAttribute('aria-pressed','false');
+      });
+      card.classList.add('selected'); card.setAttribute('aria-pressed','true');
+      if(_qtyHidden) _qtyHidden.value = card.dataset.sku;
+      if(_priceNote) _priceNote.innerHTML = (_qtyMap[card.dataset.sku] || _qtyMap['5']) + '<br>Ships in 3–5 business days';
+    });
+  });
+
   var btn     = document.getElementById('bread-submit');
   var nameEl  = document.getElementById('bread-name');
   var emailEl = document.getElementById('bread-email');
@@ -223,6 +240,14 @@ document.addEventListener('DOMContentLoaded',function(){
     btn.disabled = true;
     btn.textContent = 'Connecting…';
 
+    /* Client-side timeout guard — if edge function takes >15s, restore button */
+    var timeoutId = setTimeout(function(){
+      btn.disabled = false;
+      btn.textContent = orig;
+      btn.style.minWidth = '';
+      setErr('Taking too long — please check your connection and try again, or email hello@pncbread.love');
+    }, 15000);
+
     try {
       var res = await fetch(SUPA_URL + '/functions/v1/preorder', {
         method: 'POST',
@@ -241,8 +266,10 @@ document.addEventListener('DOMContentLoaded',function(){
       });
       var data = await res.json();
       if(!res.ok || !data.url) throw new Error(data.error || 'no_checkout_url');
+      clearTimeout(timeoutId);
       window.location.href = data.url;
     } catch(err) {
+      clearTimeout(timeoutId);
       console.error('bread checkout error:', err);
       btn.disabled = false;
       btn.textContent = orig;
@@ -480,16 +507,17 @@ document.addEventListener('DOMContentLoaded',function(){
   var el = document.getElementById('bread-77');
   if(!el) return;
   // Appear at exactly 55 seconds
+  var hideTimer = null;
   var showTimer = setTimeout(function(){
     el.classList.add('visible');
-    // Disappear after 7 seconds
-    var hideTimer = setTimeout(function(){
+    hideTimer = setTimeout(function(){
       el.classList.add('gone');
     }, 7000);
   }, 55000);
-  // Clean up if user leaves
+  // Clean up both timers if user leaves
   window.addEventListener('pagehide', function(){
     clearTimeout(showTimer);
+    clearTimeout(hideTimer);
   });
 })();
 
@@ -969,22 +997,18 @@ document.addEventListener('DOMContentLoaded',function(){
         if(sb) sb.insertAdjacentHTML('afterend',
           '<span class="pship">Order in EUR · Stripe converts to your currency · ships worldwide</span>');
 
-        /* Qty card grid — update hidden input + price-note on click (US2-AC1) */
-        var priceNote = document.querySelector('.price-note');
-        var qtyHidden = document.getElementById('bread-qty');
-        var qtyMap = {'5':'From € 15 per box · 5 to 50 loaves · Gluten Free','10':'€ 30 per box · 10 loaves · Gluten Free','20':'€ 60 per box · 20 loaves · Gluten Free','50':'€ 150 per box · 50 loaves · Gluten Free'};
+        /* Qty price-note local currency update — selection is handled above,
+           this only enriches the price display with local currency equivalent */
         var localMap = {'5':fmtLocal(15),'10':fmtLocal(30),'20':fmtLocal(60),'50':fmtLocal(150)};
+        var eurQtyMap = {'5':'From € 15 per box · 5 to 50 loaves · Gluten Free','10':'€ 30 per box · 10 loaves · Gluten Free','20':'€ 60 per box · 20 loaves · Gluten Free','50':'€ 150 per box · 50 loaves · Gluten Free'};
+        var priceNoteEl = document.querySelector('.price-note');
+        /* Re-patch click handlers to include local currency in price note */
         document.querySelectorAll('.bread-qty-card').forEach(function(card){
           card.addEventListener('click', function(){
-            document.querySelectorAll('.bread-qty-card').forEach(function(c){
-              c.classList.remove('selected'); c.setAttribute('aria-pressed','false');
-            });
-            card.classList.add('selected'); card.setAttribute('aria-pressed','true');
-            if(qtyHidden) qtyHidden.value = card.dataset.sku;
             var v = card.dataset.sku;
-            var label = qtyMap[v] || qtyMap['5'];
+            var label = eurQtyMap[v] || eurQtyMap['5'];
             var loc = localMap[v];
-            if(priceNote) priceNote.innerHTML = label + (loc ? ' · ≈ ' + loc : '') + '<br>Ships in 3–5 business days';
+            if(priceNoteEl) priceNoteEl.innerHTML = label + (loc ? ' · ≈ ' + loc : '') + '<br>Ships in 3–5 business days';
           });
         });
       }

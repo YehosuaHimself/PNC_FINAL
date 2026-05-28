@@ -393,12 +393,21 @@ document.addEventListener('DOMContentLoaded',function(){
 
   if(currency === 'EUR') return; /* EUR visitors see nothing extra */
 
-  /* ── 2. FETCH RATE ──────────────────────────────────────────────── */
-  fetch('https://open.er-api.com/v6/latest/EUR')
-    .then(function(r){ return r.json(); })
-    .then(function(data){
-      if(!data || !data.rates || !data.rates[currency]) return;
-      var rate = data.rates[currency];
+  /* ── 2. FETCH RATE — 24h localStorage cache reduces API dependency ── */
+  var _CACHE_KEY = 'pnc_fx_' + currency;
+  var _CACHE_TTL = 86400000; /* 24 hours */
+  var _cachedRate = null;
+  try {
+    var _raw = localStorage.getItem(_CACHE_KEY);
+    if (_raw) {
+      var _c = JSON.parse(_raw);
+      if (_c && _c.ts && (Date.now() - _c.ts < _CACHE_TTL) && _c.rate) {
+        _cachedRate = _c.rate;
+      }
+    }
+  } catch(e) {}
+
+  function _doWithRate(rate) {
 
       /* ── 3. FORMAT ──────────────────────────────────────────────── */
       /* Smart decimal: if €1 * rate < 5, show 2 dp; else round to int */
@@ -516,5 +525,28 @@ document.addEventListener('DOMContentLoaded',function(){
           ' · <span style="opacity:0.75">Priced in EUR — your card converts automatically.</span>');
       }
 
-    }).catch(function(){});
+  }
+
+  function _fetchRate() {
+    fetch('https://open.er-api.com/v6/latest/EUR')
+      .then(function(r){ return r.json(); })
+      .then(function(data){
+        if(!data || !data.rates || !data.rates[currency]) return;
+        var rate = data.rates[currency];
+        try { localStorage.setItem(_CACHE_KEY, JSON.stringify({rate:rate, ts:Date.now()})); } catch(e) {}
+        _doWithRate(rate);
+      }).catch(function(){
+        if (_cachedRate) _doWithRate(_cachedRate); /* fallback to stale cache on API failure */
+      });
+  }
+
+  if (_cachedRate) {
+    _doWithRate(_cachedRate); /* instant render from cache */
+    /* Background refresh if cache older than 12h */
+    try {
+      if ((Date.now() - JSON.parse(localStorage.getItem(_CACHE_KEY)).ts) > 43200000) _fetchRate();
+    } catch(e) {}
+  } else {
+    _fetchRate();
+  }
 })();

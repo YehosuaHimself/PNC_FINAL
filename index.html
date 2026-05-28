@@ -254,6 +254,34 @@ html, body {
   100% { opacity: 1; transform: translateY(0);    }
 }
 
+/* ── SKIP ANIMATION BUTTON ─────────────────────────────────── */
+#gate-skip {
+  position: fixed;
+  bottom: clamp(20px, 4vh, 36px);
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10000;
+  background: transparent;
+  border: 1px solid rgba(248,244,236,0.25);
+  color: rgba(248,244,236,0.50);
+  font-family: 'Courier New', monospace;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  padding: 10px 20px;
+  cursor: pointer !important;
+  opacity: 0;
+  animation: breatheUp 1.5s cubic-bezier(0.16,1,0.3,1) 2.0s forwards;
+  transition: color 0.2s, border-color 0.2s;
+}
+#gate-skip:hover, #gate-skip:focus {
+  color: rgba(248,244,236,0.90);
+  border-color: rgba(248,244,236,0.55);
+  outline: 2px solid rgba(248,244,236,0.40);
+  outline-offset: 3px;
+}
+
 /* ── REDUCED MOTION ────────────────────────────────────────── */
 @media (prefers-reduced-motion: reduce) {
   .g-eyebrow, .g-mybread, .g-panem-1, .g-panem-2,
@@ -265,8 +293,13 @@ html, body {
     animation-duration: 0.3s !important;
     animation-delay: calc(var(--t-lift) * 0.3) !important;
   }
+  #gate-skip {
+    animation-duration: 0.1s !important;
+    animation-delay: 0.1s !important;
+  }
 }
 </style>
+  <noscript><meta http-equiv="refresh" content="0;url=/home.html"></noscript>
 </head>
 <body>
 
@@ -274,6 +307,7 @@ html, body {
   <div id="gate-rule-l" aria-hidden="true"></div>
   <div id="gate-rule-r" aria-hidden="true"></div>
 
+  <button id="gate-skip">Skip →</button>
   <div id="gate-body" aria-hidden="true">
     <span class="g-eyebrow">— The Baker's Blessing —</span>
 
@@ -288,8 +322,16 @@ html, body {
 </div>
 
 <script>
+// Skip animation button
+document.getElementById('gate-skip').addEventListener('click', function() {
+  window.location.replace('/home.html');
+});
+document.getElementById('gate-skip').addEventListener('keydown', function(e) {
+  if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); window.location.replace('/home.html'); }
+});
+
 // Redirect after gate lift completes
-// t-lift (7.4s) + lift-dur (1.4s) + small buffer = 9.0s
+// t-lift (8.0s) + lift-dur (2.2s) + small buffer = 11s
 var REDIRECT_DELAY = 11000;
 
 // Respect reduced-motion: compress timing

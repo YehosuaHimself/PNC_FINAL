@@ -201,19 +201,27 @@ document.addEventListener('DOMContentLoaded',function(){
   var SUPA_URL  = 'https://ktigsrojpkvioamldvrp.supabase.co';
   var SUPA_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imt0aWdzcm9qcGt2aW9hbWxkdnJwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzc4OTUwMDksImV4cCI6MjA5MzQ3MTAwOX0.lRYGhJqn8AGQfVRmFNFNAj8H7iv7vMXKij8l8_YWmtA';
 
-  // Qty card selection
+  // Qty card selection — also syncs aria-pressed
+  // Supports keyboard (Enter/Space) since cards are divs with role=button
   var selectedSku = 'brew-30';
   var cards = document.querySelectorAll('.qty-card');
+  function selectCard(card) {
+    cards.forEach(function(c){c.classList.remove('selected'); c.setAttribute('aria-pressed','false');});
+    card.classList.add('selected');
+    card.setAttribute('aria-pressed','true');
+    selectedSku = card.dataset.sku || card.dataset.qty;
+  }
   cards.forEach(function(card){
+    card.addEventListener('keydown', function(e){
+      if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); selectCard(card); }
+    });
     card.addEventListener('click', function(){
-      cards.forEach(function(c){c.classList.remove('selected')});
-      card.classList.add('selected');
-      selectedSku = card.dataset.sku || card.dataset.qty;
+      selectCard(card);
     });
   });
-  // Set brew-30 as default
+  // Set brew-30 as default (HTML also has .selected on it, this is a belt-and-suspenders sync)
   var def = document.querySelector('[data-sku="brew-30"],[data-qty="30"]');
-  if(def){ cards.forEach(function(c){c.classList.remove('selected')}); def.classList.add('selected'); selectedSku = def.dataset.sku || '30'; }
+  if(def){ cards.forEach(function(c){c.classList.remove('selected'); c.setAttribute('aria-pressed','false');}); def.classList.add('selected'); def.setAttribute('aria-pressed','true'); selectedSku = def.dataset.sku || 'brew-30'; }
 
   var btn     = document.getElementById('brew-submit');
   var nameEl  = document.getElementById('brew-name');
@@ -248,6 +256,14 @@ document.addEventListener('DOMContentLoaded',function(){
     btn.disabled = true;
     btn.textContent = 'Connecting…';
 
+    /* Client-side timeout guard — if edge function takes >15s, restore button */
+    var timeoutId = setTimeout(function(){
+      btn.disabled = false;
+      btn.textContent = orig;
+      btn.style.minWidth = '';
+      setErr('Taking too long — please check your connection and try again, or email hello@pncbread.love');
+    }, 15000);
+
     try {
       var res = await fetch(SUPA_URL + '/functions/v1/preorder', {
         method: 'POST',
@@ -266,8 +282,10 @@ document.addEventListener('DOMContentLoaded',function(){
       });
       var data = await res.json();
       if(!res.ok || !data.url) throw new Error(data.error || 'no_checkout_url');
+      clearTimeout(timeoutId);
       window.location.href = data.url;
     } catch(err) {
+      clearTimeout(timeoutId);
       console.error('brew checkout error:', err);
       btn.disabled = false;
       btn.textContent = orig;
