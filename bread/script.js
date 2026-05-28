@@ -345,13 +345,14 @@ document.addEventListener('DOMContentLoaded',function(){
 
   var shown  = false;
   var hidden = false;
+  var bannerLink = banner.querySelector('a');
 
-  var showObs = new IntersectionObserver(function(entries){
+  var showObs = new IntersectionObserver(function(entries){\
     entries.forEach(function(e){
       if(e.isIntersecting && !shown){
         shown = true;
         banner.classList.add('visible');
-        banner.removeAttribute('aria-hidden');
+        if(bannerLink) bannerLink.removeAttribute('tabindex');
       }
     });
   }, { threshold: 0.15 });
@@ -360,12 +361,12 @@ document.addEventListener('DOMContentLoaded',function(){
     entries.forEach(function(e){
       if(e.isIntersecting){
         banner.classList.remove('visible');
-        banner.setAttribute('aria-hidden','true');
+        if(bannerLink) bannerLink.setAttribute('tabindex','-1');
         hidden = true;
       } else {
         if(shown && hidden){
           banner.classList.add('visible');
-          banner.removeAttribute('aria-hidden');
+          if(bannerLink) bannerLink.removeAttribute('tabindex');
           hidden = false;
         }
       }
