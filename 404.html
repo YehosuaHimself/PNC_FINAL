@@ -8,7 +8,24 @@
 <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 32 32%22><rect width=%2232%22 height=%2232%22 fill=%22%232A1810%22/><text x=%2216%22 y=%2222%22 font-size=%2210%22 font-family=%22Helvetica Neue,Helvetica,Arial,sans-serif%22 font-weight=%22900%22 fill=%22%23F8F4EC%22 text-anchor=%22middle%22 letter-spacing=%22-0.5%22>PNC</text></svg>">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-html,body{height:100%;background:#2A1810;color:#F8F4EC;-webkit-font-smoothing:antialiased}
+html,body{height:100%;background:#2A1810;color:#F8F4EC;-webkit-font-smoothing:antialiased;cursor:none}
+*{cursor:none!important}
+a,button{cursor:none!important}
+@media(pointer:coarse){*{cursor:auto!important}a,button{cursor:pointer!important}}
+#cur-dot-404{
+  position:fixed;top:0;left:0;width:10px;height:10px;
+  border-radius:50%;background:#F8F4EC;
+  pointer-events:none;z-index:9999;
+  transform:translate(-9999px,-9999px);
+  transition:transform 40ms linear,opacity 160ms ease;
+}
+#cur-ring-404{
+  position:fixed;top:0;left:0;width:32px;height:32px;
+  border-radius:50%;border:1.5px solid rgba(248,244,236,0.5);
+  pointer-events:none;z-index:9998;
+  transform:translate(-9999px,-9999px);
+  transition:opacity 200ms ease;
+}
 body{
   font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;
   display:flex;flex-direction:column;align-items:center;justify-content:center;
@@ -78,6 +95,8 @@ body::before{
 </style>
 </head>
 <body>
+<div id="cur-dot-404" aria-hidden="true"></div>
+<div id="cur-ring-404" aria-hidden="true"></div>
 <p class="eyebrow">— Error 404 —</p>
 <div class="num" aria-hidden="true">404</div>
 <h1 class="headline">This page<br>is not here.</h1>
@@ -89,5 +108,35 @@ body::before{
 </div>
 <div class="rule"></div>
 <p class="foot">Panem Nostrum Cotidianum · MMXXVI</p>
+<script>
+(function(){
+  var dot = document.getElementById('cur-dot-404');
+  var ring = document.getElementById('cur-ring-404');
+  if (!dot || window.matchMedia('(pointer:coarse)').matches) return;
+  var mx=-9999,my=-9999,rx=-9999,ry=-9999,raf=null,s=0;
+  var LERP=0.14, DR=5, RR=16;
+  dot.style.willChange='transform';
+  ring.style.willChange='transform';
+  function loop(){
+    var dx=(mx-RR)-rx, dy=(my-RR)-ry;
+    rx+=dx*LERP; ry+=dy*LERP;
+    dot.style.transform='translate3d('+(mx-DR)+'px,'+(my-DR)+'px,0)';
+    ring.style.transform='translate3d('+rx+'px,'+ry+'px,0)';
+    if(Math.abs(dx)<0.3&&Math.abs(dy)<0.3){if(++s>4){raf=null;return;}}else{s=0;}
+    raf=requestAnimationFrame(loop);
+  }
+  function go(){s=0;if(raf===null)raf=requestAnimationFrame(loop);}
+  document.addEventListener('mousemove',function(e){mx=e.clientX;my=e.clientY;go();},{passive:true});
+  document.addEventListener('mouseleave',function(){
+    mx=-9999;my=-9999;
+    dot.style.transform='translate3d(-9999px,-9999px,0)';
+    ring.style.transform='translate3d(-9999px,-9999px,0)';
+  });
+  document.querySelectorAll('a,button').forEach(function(el){
+    el.addEventListener('mouseenter',function(){ring.style.width='44px';ring.style.height='44px';ring.style.marginLeft='-6px';ring.style.marginTop='-6px';ring.style.opacity='0.8';go();});
+    el.addEventListener('mouseleave',function(){ring.style.width='32px';ring.style.height='32px';ring.style.marginLeft='';ring.style.marginTop='';ring.style.opacity='';go();});
+  });
+})();
+</script>
 </body>
 </html>

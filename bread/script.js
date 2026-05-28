@@ -1,5 +1,6 @@
 (function(){
   var dot  = document.getElementById('cur-dot');
+  var ring = document.getElementById('cur-ring');
   if (!dot || window.matchMedia('(pointer:coarse)').matches) return;
 
   var C_DARK  = '#2A1810';
@@ -18,7 +19,8 @@
   var currentDark = false;
   var inTextField = false;
 
-  dot.style.willChange  = 'transform, background';
+  dot.style.willChange  = 'transform, color';
+  if (ring) ring.style.willChange = 'transform, color';
   // SVG dot — no clipPath needed
 
   /* ── Color detection via elementFromPoint — zero stale cache ── */
@@ -38,8 +40,7 @@
   function applyColor(dark) {
     var c = dark ? C_LIGHT : C_DARK;
     dot.style.color   = c;
-    // ring removed
-
+    if (ring) ring.style.color = c;
   }
 
   function loop() {
@@ -48,6 +49,7 @@
     rx += dx * LERP;
     ry += dy * LERP;
     dot.style.transform  = 'translate3d(' + (mx - DOT_R) + 'px,' + (my - DOT_R) + 'px,0) rotate(' + BEAN_ROT + ')';
+    if (ring) ring.style.transform = 'translate3d(' + rx + 'px,' + ry + 'px,0) rotate(' + BEAN_ROT + ')';
 
     if (Math.abs(dx) < 0.3 && Math.abs(dy) < 0.3) {
       if (++settled > 4) { rafId = null; return; }
@@ -70,27 +72,28 @@
   document.addEventListener('mouseleave', function() {
     mx = -9999; my = -9999;
     dot.style.transform  = 'translate3d(-9999px,-9999px,0)';
+    if (ring) ring.style.transform = 'translate3d(-9999px,-9999px,0)';
   });
 
   document.addEventListener('mousedown', function() {
     if (inTextField) return;
     dot.style.transform  = 'translate3d(' + (mx - DOT_R) + 'px,' + (my - DOT_R) + 'px,0) rotate(' + BEAN_ROT + ') scale(0.8)';
-
+    if (ring) ring.style.transform = 'translate3d(' + rx + 'px,' + ry + 'px,0) rotate(' + BEAN_ROT + ') scale(0.85)';
   }, {passive:true});
 
   document.addEventListener('mouseup', function() {
     if (inTextField) return;
     dot.style.transform  = 'translate3d(' + (mx - DOT_R) + 'px,' + (my - DOT_R) + 'px,0) rotate(' + BEAN_ROT + ')';
-
+    if (ring) ring.style.transform = 'translate3d(' + rx + 'px,' + ry + 'px,0) rotate(' + BEAN_ROT + ')';
   }, {passive:true});
 
   document.querySelectorAll('a,button,[role=button],select').forEach(function(el) {
     el.addEventListener('mouseenter', function() {
-
+      if (ring) { ring.style.width = '96px'; ring.style.height = '106px'; ring.style.opacity = '0.65'; }
       startLoop();
     });
     el.addEventListener('mouseleave', function() {
-
+      if (ring) { ring.style.width = '80px'; ring.style.height = '88px'; ring.style.opacity = '0.45'; }
       startLoop();
     });
   });

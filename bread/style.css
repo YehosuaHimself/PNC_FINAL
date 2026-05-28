@@ -91,6 +91,18 @@ input,select,textarea{cursor:none!important;caret-color:var(--ink,#2A1810)}
   transition:color 160ms ease, opacity 160ms ease;
   overflow:visible;
 }
+#cur-ring{
+  position:fixed;top:0;left:0;
+  width:80px;height:88px;
+  border:1.5px solid currentColor;
+  color:var(--cocoa);
+  border-radius:50% 50% 50% 50% / 60% 60% 40% 40%;
+  pointer-events:none;z-index:9997;
+  transform:translate(-9999px,-9999px) rotate(175deg);
+  opacity:0.45;
+  transition:color 160ms ease, opacity 200ms ease, width 180ms ease, height 180ms ease;
+  will-change:transform;
+}
 /* Text insertion cursor blink — matches system caret rhythm */
 @keyframes textCursorBlink{
   0%,100%{opacity:1}
