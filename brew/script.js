@@ -97,12 +97,22 @@
   /* ── Button / link hover ── */
   document.querySelectorAll('a,button,[role=button],select').forEach(function(el) {
     el.addEventListener('mouseenter', function() {
-      ring.style.width = '144px'; ring.style.height = '100px';
-      ring.style.opacity = currentDark ? '0.40' : '0.35';
+      // Dot: shrink and fade — only the ring outline shows
+      dot.style.transition = 'opacity 120ms ease, transform 120ms ease';
+      dot.style.opacity = '0';
+      // Ring: morph to a clean circle, slightly larger
+      ring.style.width = '52px'; ring.style.height = '52px';
+      ring.style.borderRadius = '50%';
+      ring.style.opacity = currentDark ? '0.65' : '0.70';
       startLoop();
     });
     el.addEventListener('mouseleave', function() {
+      // Restore dot
+      dot.style.transition = 'opacity 160ms ease';
+      dot.style.opacity = '1';
+      // Restore bean ring
       ring.style.width = '112px'; ring.style.height = '76px';
+      ring.style.borderRadius = '50% 50% 50% 50% / 60% 60% 40% 40%';
       ring.style.opacity = currentDark ? '0.55' : '0.60';
       startLoop();
     });
