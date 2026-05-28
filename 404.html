@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>404 — Not Found · PNC</title>
+<meta name="robots" content="noindex">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 32 32%22><rect width=%2232%22 height=%2232%22 fill=%22%232A1810%22/><text x=%2216%22 y=%2222%22 font-size=%2210%22 font-family=%22Helvetica Neue,Helvetica,Arial,sans-serif%22 font-weight=%22900%22 fill=%22%23F8F4EC%22 text-anchor=%22middle%22 letter-spacing=%22-0.5%22>PNC</text></svg>">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;background:#2A1810;color:#F8F4EC;-webkit-font-smoothing:antialiased}
+body{
+  font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  min-height:100vh;padding:clamp(40px,8vw,80px) clamp(24px,5vw,80px);
+  text-align:center;position:relative;overflow:hidden;
+}
+/* Grid overlay */
+body::before{
+  content:'';position:absolute;inset:0;
+  background-image:
+    linear-gradient(rgba(248,220,160,0.05) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(180,130,60,0.12) 1px,transparent 1px);
+  background-size:100% 80px,calc(100%/7) 100%;
+  pointer-events:none;
+}
+.eyebrow{
+  font-family:'Courier New',monospace;
+  font-size:11px;font-weight:600;letter-spacing:0.30em;text-transform:uppercase;
+  color:rgba(248,244,236,0.35);
+  margin-bottom:clamp(20px,3vh,36px);
+}
+.num{
+  font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;
+  font-weight:900;
+  font-size:clamp(120px,22vw,280px);
+  letter-spacing:-0.06em;line-height:0.85;
+  color:rgba(248,244,236,0.08);
+  user-select:none;
+  margin-bottom:clamp(16px,2.5vh,28px);
+}
+.headline{
+  font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;
+  font-weight:900;font-size:clamp(28px,4.5vw,56px);
+  letter-spacing:-0.035em;line-height:0.95;
+  color:#F8F4EC;
+  margin-bottom:clamp(16px,2.5vh,28px);
+}
+.body{
+  font-size:clamp(14px,1.4vw,17px);font-weight:300;
+  color:rgba(248,244,236,0.55);line-height:1.75;
+  max-width:420px;
+  margin-bottom:clamp(32px,5vh,56px);
+}
+.cta-row{display:flex;gap:14px;flex-wrap:wrap;justify-content:center;}
+.btn-back{
+  font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;
+  font-weight:700;font-size:12px;letter-spacing:0.20em;text-transform:uppercase;
+  background:#F8F4EC;color:#2A1810;padding:14px 28px;
+  text-decoration:none;display:inline-block;
+  transition:background .2s,color .2s;
+}
+.btn-back:hover{background:rgba(248,244,236,0.85)}
+.btn-ghost{
+  font-family:'Courier New',monospace;
+  font-weight:600;font-size:11px;letter-spacing:0.22em;text-transform:uppercase;
+  border:1px solid rgba(248,244,236,0.25);color:rgba(248,244,236,0.65);
+  padding:14px 24px;text-decoration:none;display:inline-block;
+  transition:border-color .2s,color .2s;
+}
+.btn-ghost:hover{border-color:rgba(248,244,236,0.55);color:#F8F4EC;}
+.rule{width:40px;height:1px;background:rgba(248,244,236,0.12);margin:clamp(32px,5vh,56px) auto 0;}
+.foot{
+  margin-top:clamp(16px,2.5vh,28px);
+  font-family:'Courier New',monospace;font-size:10px;letter-spacing:0.24em;
+  text-transform:uppercase;color:rgba(248,244,236,0.22);
+}
+</style>
+</head>
+<body>
+<p class="eyebrow">— Error 404 —</p>
+<div class="num" aria-hidden="true">404</div>
+<h1 class="headline">This page<br>is not here.</h1>
+<p class="body">The bread is still baking. The coffee is still brewing. But whatever you were looking for has moved, or perhaps never existed.</p>
+<div class="cta-row">
+  <a href="/home.html" class="btn-back">Back to PNC →</a>
+  <a href="/bread" class="btn-ghost">Bread</a>
+  <a href="/brew" class="btn-ghost">Brew</a>
+</div>
+<div class="rule"></div>
+<p class="foot">Panem Nostrum Cotidianum · MMXXVI</p>
+</body>
+</html>

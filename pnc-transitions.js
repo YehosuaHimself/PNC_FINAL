@@ -30,7 +30,7 @@
     'position:absolute',
     'top:50%','left:50%',
     'transform:translate(-50%,-50%)',
-    'font-family:"Fraunces",Georgia,serif',
+    'font-family:"Helvetica Neue","Fraunces",Arial,sans-serif',
     'font-weight:900',
     'font-variation-settings:"opsz" 144,"WONK" 1',
     'font-style:italic!important',
