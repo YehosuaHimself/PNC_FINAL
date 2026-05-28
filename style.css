@@ -911,6 +911,18 @@ a:focus-visible,button:focus-visible{
   body:not(.ready){animation:none;opacity:1}
 }
 
+/* ── PAINT PERFORMANCE — content-visibility on heavy off-screen sections ── */
+/* Defers rendering of sections below the fold until they're near viewport.
+   contain-intrinsic-size prevents layout shift when the section is skipped. */
+.ritual-section,
+.principles-section,
+.manifesto,
+.philosophy,
+section[id="origins"] {
+  content-visibility: auto;
+  contain-intrinsic-size: 0 600px;
+}
+
 /* Print — hide decorative elements */
 @media print{
   #grain,#prog,#prog-r,#cur-dot,#cur-ring,nav,.ticker{display:none!important}
