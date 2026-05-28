@@ -105,11 +105,11 @@
   }
 
   /* ── 5. FORMAT CARD — time number countdown on hover ─────────────── */
-  // When you hover a format-card the big time number counts down to 1
+  // When you hover a format-row the big time number counts down to 1
   // like a timer running. Resets on mouse leave.
   if (!REDUCED) {
-    document.querySelectorAll('.format-card').forEach(card => {
-      const timeEl = card.querySelector('.format-time');
+    document.querySelectorAll('.format-row').forEach(card => {
+      const timeEl = card.querySelector('.fr-num');
       if (!timeEl) return;
       const original = parseInt(timeEl.textContent, 10);
       if (isNaN(original)) return;

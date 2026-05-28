@@ -113,24 +113,24 @@
   }
 
 
-  /* ── 5. TASTING NOTES — sequential attention (JS fallback) ─────── */
+  /* ── 5. TASTING ROWS — sequential attention ─────────────────── */
 
   if (FINE && !REDUCED) {
-    var notes = document.querySelectorAll('.tasting-note');
-    notes.forEach(function (note) {
-      note.addEventListener('mouseenter', function () {
-        var idx = Array.from(notes).indexOf(note);
-        notes.forEach(function (n, i) {
-          if (i < idx) {
-            n.style.opacity   = '0.38';
-            n.style.transition = 'opacity 0.35s ease';
+    var rows = document.querySelectorAll('.tl-row');
+    rows.forEach(function (row) {
+      row.addEventListener('mouseenter', function () {
+        var idx = Array.from(rows).indexOf(row);
+        rows.forEach(function (r, i) {
+          if (i !== idx) {
+            r.style.opacity   = '0.38';
+            r.style.transition = 'opacity 0.35s ease';
           }
         });
       });
-      note.addEventListener('mouseleave', function () {
-        notes.forEach(function (n) {
-          n.style.opacity   = '';
-          n.style.transition = 'opacity 0.4s ease';
+      row.addEventListener('mouseleave', function () {
+        rows.forEach(function (r) {
+          r.style.opacity   = '';
+          r.style.transition = 'opacity 0.4s ease';
         });
       });
     });
