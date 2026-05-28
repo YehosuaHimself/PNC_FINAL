@@ -743,3 +743,51 @@
   });
 
 })();
+
+
+/* ── PRINCIPLES — staggered slide-in + line draw ─────────────────────
+   Each principle item slides in from the left with a delay.
+   The horizontal rule draws outward from left.
+────────────────────────────────────────────────────────────────────── */
+(function principlesReveal() {
+  if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') return;
+
+  var items = document.querySelectorAll('.principle-item');
+  items.forEach(function (item, i) {
+    item.classList.remove('reveal', 'reveal-d1', 'reveal-d2');
+
+    gsap.fromTo(item,
+      { opacity: 0, x: -40 },
+      {
+        opacity: 1, x: 0,
+        duration: 1.0, ease: 'expo.out',
+        delay: i * 0.10,
+        clearProps: 'transform,opacity',
+        scrollTrigger: {
+          trigger: item,
+          start: 'top 85%',
+          toggleActions: 'play none none none'
+        }
+      }
+    );
+
+    var line = item.querySelector('.pi-line');
+    if (line) {
+      gsap.fromTo(line,
+        { scaleX: 0 },
+        {
+          scaleX: 1,
+          duration: 1.4, ease: 'expo.out',
+          delay: i * 0.10 + 0.2,
+          transformOrigin: 'left center',
+          scrollTrigger: {
+            trigger: item,
+            start: 'top 85%',
+            toggleActions: 'play none none none'
+          }
+        }
+      );
+    }
+  });
+
+})();
