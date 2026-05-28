@@ -2134,3 +2134,29 @@ body.cookie-visible #mobile-cta{bottom:var(--cookie-h,80px);}
     linear-gradient(rgba(74,48,24,0.06) 1px, transparent 1px),
     linear-gradient(90deg, rgba(74,48,24,0.06) 1px, transparent 1px);
 }
+
+/* ── SUMMARY (ritual summary) — sand background text fix ─────────── */
+.summary .sum-label          { color: var(--ink) }
+.summary .sum-val            { color: rgba(74,48,24,0.55) }
+.summary .sum-desc           { color: rgba(74,48,24,0.38) }
+.summary .sum-item           { border-right-color: rgba(74,48,24,0.12) }
+.summary .sum-alt            { border-color: rgba(74,48,24,0.12); background: rgba(74,48,24,0.06) }
+.summary .sum-alt-primary    { border-color: rgba(74,48,24,0.2); background: rgba(74,48,24,0.1) }
+.summary .sum-alt-primary .sum-alt-time { color: var(--ink) }
+.summary .sum-alt-primary .sum-alt-label { color: rgba(74,48,24,0.5) }
+.summary .sum-alt-time       { color: rgba(74,48,24,0.8) }
+.summary .sum-alt-label      { color: rgba(74,48,24,0.45) }
+.summary .sum-steps          { border-top-color: rgba(74,48,24,0.12) }
+.summary .sum-step           { border-bottom-color: rgba(74,48,24,0.08) }
+.summary .sum-step-num       { color: rgba(74,48,24,0.3) }
+.summary .sum-step-title     { color: var(--ink) }
+.summary .sum-step-text      { color: rgba(74,48,24,0.4) }
+.summary .sum-step-meta      { color: rgba(74,48,24,0.25) }
+.summary .sum-break-quote    { border-top-color: rgba(74,48,24,0.12) }
+.summary .sum-break-line     { color: rgba(74,48,24,0.6) }
+.summary .sum-break-body     { color: rgba(74,48,24,0.38) }
+.summary::before             {
+  background-image:
+    linear-gradient(rgba(74,48,24,0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(74,48,24,0.05) 1px, transparent 1px);
+}
