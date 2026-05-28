@@ -449,7 +449,7 @@ input,select,textarea{cursor:none!important;caret-color:var(--ink,#2A1810)}
   pointer-events:none;user-select:none;
 }
 .tn-name{
-  font-family:'Fraunces',Georgia,serif;
+  font-family:'Fraunces','Helvetica Neue',Helvetica,Arial,sans-serif;
   font-weight:900;
   font-style:italic;
   font-variation-settings:'opsz' 72,'WONK' 1;
