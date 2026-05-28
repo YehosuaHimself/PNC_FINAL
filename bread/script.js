@@ -41,6 +41,8 @@
 
   function applyColor(dark) {
     var c = dark ? C_LIGHT : C_DARK;
+    dot.style.transition  = 'color 0ms';
+    if (ring) ring.style.transition = 'color 0ms, opacity 200ms ease, width 180ms ease, height 180ms ease';
     dot.style.color   = c;
     if (ring) ring.style.color = c;
   }

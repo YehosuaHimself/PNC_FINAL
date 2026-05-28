@@ -41,6 +41,8 @@
 
   function applyColor(dark) {
     var c = dark ? C_LIGHT : C_DARK;
+    dot.style.transition   = 'background 0ms';
+    ring.style.transition  = 'border-color 0ms, width .22s cubic-bezier(.16,1,.3,1), height .22s cubic-bezier(.16,1,.3,1), opacity 160ms ease';
     dot.style.background   = c;
     ring.style.borderColor = c;
     if (!inTextField) ring.style.opacity = dark ? '0.55' : '0.60';

@@ -91,7 +91,7 @@ input,select,textarea{cursor:none!important;caret-color:var(--ink,#4A3018)}
   color:var(--cocoa);pointer-events:none;z-index:9998;
   /* tip at bottom: grain rotated so Spitze points downward */
   transform:translate(-9999px,-9999px) rotate(175deg);
-  transition:color 160ms ease, opacity 160ms ease;
+  transition:color 0ms, opacity 160ms ease;
   overflow:visible;
 }
 #cur-ring{
@@ -103,7 +103,7 @@ input,select,textarea{cursor:none!important;caret-color:var(--ink,#4A3018)}
   pointer-events:none;z-index:9997;
   transform:translate(-9999px,-9999px) rotate(175deg);
   opacity:0.45;
-  transition:color 160ms ease, opacity 200ms ease, width 180ms ease, height 180ms ease;
+  transition:color 0ms, opacity 200ms ease, width 180ms ease, height 180ms ease;
   will-change:transform;
 }
 /* Text insertion cursor blink — matches system caret rhythm */
