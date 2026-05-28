@@ -293,3 +293,63 @@
   .hp-desc,
   .hp-cta .hp-arrow { transition: none !important; }
 }
+
+
+/* ── HEADLINE CLIP REVEAL ─────────────────────────────────────────── */
+/* Each line lives in an overflow:hidden container.                    */
+/* The .hl-inner slides up from below — cinema-style wipe.            */
+
+.hero-headline .hl-clip {
+  display: block;
+  overflow: hidden;
+  line-height: 0.88;
+  /* Give each clip a tiny bottom gap so descenders don't clip */
+  padding-bottom: 0.06em;
+}
+
+.hero-headline .hl-inner {
+  display: block;
+  transform: translateY(108%);
+  opacity: 0;
+  will-change: transform, opacity;
+}
+
+/* Staggered CSS animation (GSAP overrides if available) */
+.hero-headline .hl-clip:nth-child(1) .hl-inner {
+  animation: hlRise 1.1s cubic-bezier(.16,1,.3,1) 0.05s forwards;
+}
+.hero-headline .hl-clip:nth-child(2) .hl-inner {
+  animation: hlRise 1.1s cubic-bezier(.16,1,.3,1) 0.18s forwards;
+}
+.hero-headline .hl-clip:nth-child(3) .hl-inner {
+  animation: hlRise 1.1s cubic-bezier(.16,1,.3,1) 0.30s forwards;
+}
+
+@keyframes hlRise {
+  to { transform: translateY(0); opacity: 1; }
+}
+
+.hero-headline .hl-sub {
+  display: block;
+  font-weight: 300;
+  font-size: clamp(16px, 1.8vw, 28px);
+  letter-spacing: -0.01em;
+  line-height: 1.3;
+  color: var(--cocoa-lt);
+  margin-top: clamp(20px, 3vh, 36px);
+  opacity: 0;
+  transform: translateY(14px);
+  animation: hlSubFade 1.2s cubic-bezier(.16,1,.3,1) 0.55s forwards;
+}
+@keyframes hlSubFade {
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@media (prefers-reduced-motion:reduce) {
+  .hero-headline .hl-inner,
+  .hero-headline .hl-sub {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}

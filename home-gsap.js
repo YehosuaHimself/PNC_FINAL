@@ -74,56 +74,35 @@
     return el.querySelectorAll('.gsap-word > span');
   }
 
-  /* ── 1. HERO HEADLINE — char stagger rise ───────────────────────
-     "THE BEST THINGS IN LIFE." — each char lifts from below
-     with a warm, weighted organic feel.
+  /* ── 1. HERO HEADLINE — clip-mask wipe ─────────────────────────
+     Each .hl-inner slides up from its overflow:hidden parent.
+     CSS animation handles it; GSAP enhances with smoother control.
   ───────────────────────────────────────────────────────────────── */
   (function heroHeadline() {
-    var headline = document.querySelector('.hero-headline');
-    if (!headline) return;
+    var inners = document.querySelectorAll('.hero-headline .hl-inner');
+    if (!inners.length) return;
 
-    /* Split the headline text nodes only (not the <span> sub-line) */
-    var inner = headline.querySelector('.hero-headline-inner') || headline;
-    var textNodes = [];
-    inner.childNodes.forEach(function (node) {
-      if (node.nodeType === Node.TEXT_NODE && node.textContent.trim()) {
-        textNodes.push(node);
-      }
-    });
-
-    /* Wrap each line's text in a split wrapper */
-    var charGroups = [];
-    textNodes.forEach(function (node) {
-      var wrapper = document.createElement('span');
-      wrapper.style.display = 'inline';
-      wrapper.textContent = node.textContent;
-      node.parentNode.replaceChild(wrapper, node);
-      var chars = splitChars(wrapper);
-      charGroups.push(chars);
-    });
-
-    /* Flatten all chars */
-    var allChars = [];
-    charGroups.forEach(function (g) {
-      g.forEach(function (c) { allChars.push(c); });
-    });
-
-    if (!allChars.length) return;
-
-    /* Set initial state */
-    gsap.set(allChars, { y: '110%', opacity: 0, rotateX: -18 });
-
-    /* Animate — staggered rise */
-    gsap.to(allChars, {
-      y: '0%',
+    /* Override CSS animation with GSAP for better control */
+    gsap.set(inners, { yPercent: 108, opacity: 0 });
+    gsap.to(inners, {
+      yPercent: 0,
       opacity: 1,
-      rotateX: 0,
-      duration: 1.1,
+      duration: 1.15,
       ease: 'expo.out',
-      stagger: { each: 0.022, from: 'start' },
-      delay: 0.1,
-      clearProps: 'transform,opacity,rotateX'
+      stagger: 0.13,
+      delay: 0.05,
+      clearProps: 'transform,opacity'
     });
+
+    var sub = document.querySelector('.hero-headline .hl-sub');
+    if (sub) {
+      gsap.set(sub, { opacity: 0, y: 16 });
+      gsap.to(sub, {
+        opacity: 1, y: 0,
+        duration: 1.2, ease: 'expo.out', delay: 0.52,
+        clearProps: 'transform,opacity'
+      });
+    }
   })();
 
   /* ── 2. HERO DECREE — word-by-word blur rise ────────────────────
