@@ -1038,3 +1038,140 @@ a:focus-visible,button:focus-visible{
   .proof-divider{display:none}
   .proof-item{flex:1 1 calc(50% - 20px)}
 }
+
+
+/* ── HORIZONTAL MANIFESTO ────────────────────────────────────────── */
+.manifesto {
+  position: relative;
+  background: var(--ink);
+  overflow: hidden;
+}
+
+.manifesto-track {
+  display: flex;
+  width: 300vw; /* 3 panels × 100vw */
+  will-change: transform;
+}
+
+.manifesto-panel {
+  width: 100vw;
+  min-height: 100vh;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  padding: clamp(60px,10vw,140px) var(--g);
+  position: relative;
+  border-right: 1px solid rgba(248,244,236,0.06);
+}
+
+/* Fine grid on panels */
+.manifesto-panel::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(248,220,160,0.03) 1px, transparent 1px),
+    linear-gradient(90deg,rgba(248,220,160,0.03) 1px, transparent 1px);
+  background-size: 80px 80px;
+  pointer-events: none;
+}
+
+.mp-num {
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-weight: 900;
+  font-size: clamp(180px, 25vw, 380px);
+  letter-spacing: -0.06em;
+  line-height: 1;
+  color: rgba(248,244,236,0.04);
+  position: absolute;
+  bottom: clamp(20px,4vh,60px);
+  right: var(--g);
+  user-select: none;
+}
+
+.mp-body {
+  position: relative;
+  z-index: 1;
+  max-width: 680px;
+}
+
+.mp-label {
+  font-family: 'Courier New', monospace;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.36em;
+  text-transform: uppercase;
+  color: rgba(248,244,236,0.32);
+  margin-bottom: clamp(20px,3vh,36px);
+}
+
+.mp-claim {
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-weight: 900;
+  font-size: clamp(52px,8vw,120px);
+  letter-spacing: -0.04em;
+  line-height: 0.88;
+  color: var(--cream);
+  margin-bottom: clamp(28px,4vh,52px);
+}
+
+.mp-detail {
+  font-size: clamp(14px,1.4vw,18px);
+  color: rgba(248,244,236,0.52);
+  line-height: 1.8;
+  max-width: 480px;
+}
+
+.mp-mid {
+  background: rgba(255,255,255,0.012);
+}
+
+/* Progress bar */
+.manifesto-progress {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: rgba(248,244,236,0.08);
+}
+.manifesto-progress-bar {
+  height: 100%;
+  width: 0;
+  background: var(--gold);
+  transition: width 0.05s linear;
+  will-change: width;
+}
+
+/* SCROLL hint */
+.manifesto-hint {
+  position: absolute;
+  bottom: clamp(24px,4vh,48px);
+  left: var(--g);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-family: 'Courier New', monospace;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: rgba(248,244,236,0.28);
+  z-index: 2;
+  transition: opacity 0.4s;
+}
+.manifesto-hint.hidden { opacity: 0; }
+.manifesto-hint-arrow {
+  animation: arrowPulse 2s ease-in-out infinite;
+}
+@keyframes arrowPulse {
+  0%,100% { transform: translateX(0); opacity: 0.28; }
+  50%      { transform: translateX(8px); opacity: 0.7; }
+}
+
+@media (max-width:640px) {
+  .manifesto-track { width: 100%; flex-direction: column; }
+  .manifesto-panel { width: 100%; min-height:auto; padding: clamp(60px,10vw,100px) var(--g); }
+  .mp-num { font-size: clamp(100px,20vw,160px); }
+  .manifesto-hint { display:none; }
+}

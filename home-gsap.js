@@ -365,3 +365,97 @@
     }
   });
 })();
+
+
+/* ── HORIZONTAL MANIFESTO — ScrollTrigger pinned ─────────────────────
+   On desktop: pins the section, translates the track horizontally
+   as user scrolls. On mobile: stacked vertically (CSS).
+────────────────────────────────────────────────────────────────────── */
+(function manifestoScroll() {
+  if (!window.matchMedia('(min-width: 641px)').matches) return;
+
+  var section = document.querySelector('.manifesto');
+  var track   = document.querySelector('.manifesto-track');
+  var bar     = document.querySelector('.manifesto-progress-bar');
+  var hint    = document.querySelector('.manifesto-hint');
+  if (!section || !track) return;
+
+  var panels = document.querySelectorAll('.manifesto-panel');
+  var totalPanels = panels.length;
+  /* The track moves left by (totalPanels-1) × 100vw */
+  var travelPct   = (totalPanels - 1) * 100;
+
+  gsap.to(track, {
+    xPercent: -travelPct / totalPanels * (totalPanels - 1) / (totalPanels - 1),
+    ease: 'none',
+    scrollTrigger: {
+      trigger: section,
+      pin: true,
+      scrub: 1.2,
+      start: 'top top',
+      end: '+=' + (travelPct / 100 * window.innerHeight * 2.2) + 'px',
+      onUpdate: function (self) {
+        var p = self.progress;
+        if (bar) bar.style.width = (p * 100) + '%';
+        if (hint) {
+          if (p > 0.05) hint.classList.add('hidden');
+          else hint.classList.remove('hidden');
+        }
+      }
+    }
+  });
+
+  /* Animate panel text on enter — GSAP scrub */
+  panels.forEach(function (panel, i) {
+    var claim  = panel.querySelector('.mp-claim');
+    var detail = panel.querySelector('.mp-detail');
+    var lbl    = panel.querySelector('.mp-label');
+
+    if (lbl) {
+      gsap.fromTo(lbl,
+        { opacity: 0, y: 20, letterSpacing: '0.12em' },
+        {
+          opacity: 1, y: 0, letterSpacing: '0.36em',
+          duration: 0.8, ease: 'expo.out',
+          scrollTrigger: {
+            trigger: panel,
+            containerAnimation: gsap.getById && null, /* use global scroll */
+            start: 'top 80%',
+            toggleActions: 'play none none none'
+          }
+        }
+      );
+    }
+
+    if (claim) {
+      var claimWords = claim.querySelectorAll('br');
+      gsap.fromTo(claim,
+        { opacity: 0, y: 40 },
+        {
+          opacity: 1, y: 0,
+          duration: 1.0, ease: 'expo.out', delay: i === 0 ? 0 : 0.1,
+          scrollTrigger: {
+            trigger: panel,
+            start: 'top 80%',
+            toggleActions: 'play none none none'
+          }
+        }
+      );
+    }
+
+    if (detail) {
+      gsap.fromTo(detail,
+        { opacity: 0, y: 24 },
+        {
+          opacity: 1, y: 0,
+          duration: 1.0, ease: 'expo.out', delay: 0.2,
+          scrollTrigger: {
+            trigger: panel,
+            start: 'top 80%',
+            toggleActions: 'play none none none'
+          }
+        }
+      );
+    }
+  });
+})();
