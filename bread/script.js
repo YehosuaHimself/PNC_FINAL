@@ -379,7 +379,7 @@ document.addEventListener('DOMContentLoaded',function(){
 
 /* ========== */
 
-(function(){
+document.addEventListener('DOMContentLoaded', function(){
   const obs=new IntersectionObserver(function(entries){
     entries.forEach(function(e){if(e.isIntersecting){e.target.classList.add('visible');obs.unobserve(e.target);}});
   },{threshold:0.05,rootMargin:'0px 0px -16px 0px'});
@@ -390,7 +390,7 @@ document.addEventListener('DOMContentLoaded',function(){
     entries.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in-view');}});
   },{threshold:0.25});
   document.querySelectorAll('.ing-row').forEach(function(el){rowObs.observe(el);});
-})();
+});
 
 /* ========== */
 
