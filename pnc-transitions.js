@@ -33,7 +33,7 @@
     'font-family:"Fraunces",Georgia,serif',
     'font-weight:900',
     'font-variation-settings:"opsz" 144,"WONK" 1',
-    'font-style:italic',
+    'font-style:italic!important',
     'font-size:clamp(40px,7vw,96px)',
     'letter-spacing:0.12em',
     'text-transform:uppercase',
