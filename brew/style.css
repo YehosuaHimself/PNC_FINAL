@@ -79,8 +79,8 @@ html,body{cursor:none!important}
 /* ── CURSOR ────────────────────────────────────────────────────────── */
 *,*::before,*::after{cursor:none!important}
 a,button,[role=button]{cursor:none!important}
-input,select,textarea{cursor:none!important;caret-color:transparent}
-@media(pointer:coarse){*{cursor:auto!important}a,button,[role=button]{cursor:pointer!important}input,select,textarea{caret-color:auto!important}}
+input,select,textarea{cursor:none!important;caret-color:var(--ink,#2A1810)}
+@media(pointer:coarse){*{cursor:auto!important}a,button,[role=button]{cursor:pointer!important}input,select,textarea{cursor:text!important;caret-color:auto!important}}
 #cur-dot{
   position:fixed;top:0;left:0;width:13px;height:9px;
   background:var(--cocoa);pointer-events:none;z-index:9998;
@@ -1077,7 +1077,7 @@ input,select,textarea{cursor:none!important;caret-color:transparent}
   font-size:14px;padding:14px 16px;
   outline:none;transition:border-color .2s,background .2s;
   -webkit-appearance:none;appearance:none;border-radius:0;
-  caret-color:transparent;
+  caret-color:rgba(248,244,236,0.85);
 }
 .form-row input:focus,.form-row select:focus{
   border-color:rgba(92,61,46,0.55);background:rgba(248,244,236,0.07);
