@@ -40,8 +40,17 @@
 <!-- CURSOR -->
 <div id="cur-dot" aria-hidden="true"></div>
 <div id="cur-ring" aria-hidden="true"></div>
-<!-- GRAIN -->
-<div id="grain" aria-hidden="true"></div>
+<!-- GRAIN — animated turbulence filter -->
+<div id="grain" aria-hidden="true">
+  <svg id="grain-svg" xmlns="http://www.w3.org/2000/svg" style="position:fixed;inset:0;width:100%;height:100%;pointer-events:none;opacity:0.042;z-index:9999" aria-hidden="true">
+    <filter id="grain-filter">
+      <feTurbulence type="fractalNoise" baseFrequency="0.72" numOctaves="4" seed="2" stitchTiles="stitch" result="noise"/>
+      <feColorMatrix type="saturate" values="0" in="noise" result="grayNoise"/>
+      <feBlend in="SourceGraphic" in2="grayNoise" mode="screen"/>
+    </filter>
+    <rect width="100%" height="100%" filter="url(#grain-filter)"/>
+  </svg>
+</div>
 <!-- PROGRESS -->
 <div id="prog" aria-hidden="true"></div>
 <div id="prog-r" aria-hidden="true"></div>
@@ -313,5 +322,16 @@
   <script src="/pnc-transitions.js"></script>
   <script src="hero-canvas.js" defer></script>
   <script src="cursor-magnetic.js" defer></script>
+
+  <script>
+  /* Animate grain seed for living film effect */
+  (function(){
+    if(window.matchMedia('(prefers-reduced-motion:reduce)').matches) return;
+    var turb = document.querySelector('#grain-filter feTurbulence');
+    if(!turb) return;
+    var s = 0;
+    setInterval(function(){ turb.setAttribute('seed', ++s % 99); }, 80);
+  })();
+  </script>
 </body>
 </html>

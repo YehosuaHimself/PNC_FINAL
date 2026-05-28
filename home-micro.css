@@ -353,3 +353,12 @@
     transform: none !important;
   }
 }
+
+
+/* ── ANIMATED GRAIN — seed change via JS animation ───────────────── */
+/* The JS below animates the seed to make grain feel alive            */
+#grain { position: fixed; inset: 0; pointer-events: none; z-index: 9999; }
+#grain-svg { display: block; }
+@media (prefers-reduced-motion: reduce) {
+  #grain-svg { display: none; }
+}
