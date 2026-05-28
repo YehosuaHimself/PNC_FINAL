@@ -12,17 +12,20 @@ em,i,cite,address,b,strong{font-style:normal}
 :root{
   --cream:      #F8F4EC;
   --cream-deep: #EDE5D4;
-  --cocoa:      #5C3D2E;
-  --cocoa-mid:  #7A5544;
-  --cocoa-lt:   rgba(92,61,46,0.55);
-  --cocoa-mu:   rgba(92,61,46,0.32);
-  --cocoa-fa:   rgba(92,61,46,0.09);
-  --ink:        #2A1810;
+  --cocoa:      #8B6840;
+  --cocoa-mid:  #A8885A;
+  --cocoa-lt:   rgba(139,104,64,0.55);
+  --cocoa-mu:   rgba(139,104,64,0.32);
+  --cocoa-fa:   rgba(139,104,64,0.09);
+  --ink:        #4A3018;
   --err:        #C0533A;
   --teal:       #4A7C6F;
   --amber:      #8B6914;
-  --gold:       #B8860B;
-  --dark:       #180E08;
+  --gold:       #C4950A;
+  --dark:       #6B4E2A;
+  --sand:       #C8A97A;
+  --sand-mid:   #D4B98A;
+  --sand-deep:  #B8956A;
   --g:          clamp(20px,5vw,80px);
   --max:        1320px;
   --nav-h:      62px;
@@ -520,7 +523,7 @@ input,select,textarea{cursor:none!important;caret-color:var(--ink,#2A1810)}
 }
 
 /* ── INGREDIENTS ─────────────────────────────────────────────────── */
-.ingredients{background:var(--ink);position:relative;overflow:hidden}
+.ingredients{background:var(--sand);position:relative;overflow:hidden}
 .ingredients::after{
   content:'';position:absolute;bottom:0;left:0;right:0;height:1px;
   background:rgba(248,244,236,0.06);
@@ -729,7 +732,7 @@ input,select,textarea{cursor:none!important;caret-color:var(--ink,#2A1810)}
 }
 
 /* ── RITUAL ─────────────────────────────────────────────────── */
-.ritual{background:var(--dark)}
+.ritual{background:var(--sand-mid)}
 .ritual-inner{max-width:var(--max);margin:0 auto}
 .ritual-eyebrow{
   font-family:'Courier New',monospace;font-size:13px;font-weight:600;
@@ -892,7 +895,7 @@ input,select,textarea{cursor:none!important;caret-color:var(--ink,#2A1810)}
 }
 
 /* ── ORIGINS ─────────────────────────────────────────────────── */
-.origins{background:var(--ink);position:relative;overflow:hidden}
+.origins{background:var(--sand);position:relative;overflow:hidden}
 .origins::before{
   content:'';position:absolute;inset:0;pointer-events:none;
   background-image:
@@ -2073,4 +2076,61 @@ body.cookie-visible #mobile-cta{bottom:var(--cookie-h,80px);}
   .hero-headline .hl-sub {
     animation: none !important; opacity: 1 !important; transform: none !important;
   }
+}
+
+/* ── SAND PALETTE OVERRIDES — ingredients / ritual / origins ─────── */
+/* These sections now use warm sand backgrounds; flip cream text to ink */
+
+/* ingredients */
+.ingredients .ing-header-h2         { color: var(--ink) }
+.ingredients .ing-decree            { color: rgba(74,48,24,0.38) }
+.ingredients .ing-header            { border-bottom-color: rgba(74,48,24,0.1) }
+.ingredients .ing-row               { border-bottom-color: rgba(74,48,24,0.1) }
+.ingredients .ing-row::before       { background: var(--cocoa); opacity: 0.18 }
+.ingredients .ing-row:hover         { background: rgba(74,48,24,0.04) }
+.ingredients .ing-axis              { border-right-color: rgba(74,48,24,0.1) }
+.ingredients .ing-axis-num          { color: rgba(74,48,24,0.22) }
+.ingredients .ing-tag               { color: rgba(74,48,24,0.55) }
+.ingredients .ing-tag::after        { background: rgba(74,48,24,0.18) }
+.ingredients .ing-subregion         { color: rgba(74,48,24,0.3) }
+.ingredients .ing-name              { color: var(--ink) }
+.ingredients .ing-row:hover .ing-name { color: var(--ink) }
+.ingredients .ing-desc              { color: rgba(74,48,24,0.5) }
+.ingredients .ing-row:hover .ing-desc { color: rgba(74,48,24,0.7) }
+.ingredients .ing-terroir           { color: rgba(74,48,24,0.4); border-top-color: rgba(74,48,24,0.1) }
+.ingredients .ing-row:hover .ing-terroir { color: rgba(74,48,24,0.55) }
+.ingredients .ing-data              { border-left-color: rgba(74,48,24,0.1) }
+.ingredients .ing-coords            { color: rgba(74,48,24,0.28) }
+.ingredients .ing-coords span       { color: rgba(74,48,24,0.2) }
+.ingredients .ing-stat-val          { color: rgba(74,48,24,0.65) }
+.ingredients .ing-stat-label        { color: rgba(74,48,24,0.22) }
+.ingredients .ing-bar-label         { color: rgba(74,48,24,0.22) }
+.ingredients .ing-bar               { background: rgba(74,48,24,0.1) }
+.ingredients .ing-bar-fill          { background: var(--cocoa); opacity: 0.8 }
+.ingredients::after                 { background: rgba(74,48,24,0.08) }
+
+/* ritual */
+.ritual .ritual-h2                  { color: var(--ink) }
+.ritual .step                       { background: rgba(74,48,24,0.04); border-color: rgba(74,48,24,0.08) }
+.ritual .step:hover                 { background: rgba(74,48,24,0.08) }
+.ritual .step-num                   { color: rgba(74,48,24,0.25) }
+.ritual .step-meta                  { color: rgba(74,48,24,0.3) }
+.ritual .step-title                 { color: var(--ink) }
+.ritual .step-text                  { color: rgba(74,48,24,0.5) }
+.ritual .step-alts                  { border-top-color: rgba(74,48,24,0.08) }
+.ritual .step-alt                   { border-color: rgba(74,48,24,0.1); background: rgba(74,48,24,0.04) }
+.ritual .step-alt-time              { color: rgba(74,48,24,0.7) }
+.ritual .step-alt-label             { color: rgba(74,48,24,0.3) }
+
+/* origins */
+.origins .origins-h2                { color: var(--ink) }
+.origins .origin-item               { border-bottom-color: rgba(74,48,24,0.08) }
+.origins .oi-num                    { color: rgba(74,48,24,0.22) }
+.origins .oi-name                   { color: var(--ink) }
+.origins .oi-geo                    { color: rgba(74,48,24,0.28) }
+.origins .oi-quote                  { color: rgba(74,48,24,0.5) }
+.origins::before                    {
+  background-image:
+    linear-gradient(rgba(74,48,24,0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(74,48,24,0.06) 1px, transparent 1px);
 }
