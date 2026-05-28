@@ -2182,246 +2182,201 @@ body.cookie-visible #mobile-cta{bottom:var(--cookie-h,80px);}
    Full-viewport typographic monument. Helvetica Neue, wall-to-wall.
    ═══════════════════════════════════════════════════════════════════ */
 
-/* ══════════════════════════════════════════════════════════════════
-   STATEMENT HERO — GOD-TIER TYPOGRAPHIC MONUMENT
-   One section. One viewport. No noise. Pure presence.
-══════════════════════════════════════════════════════════════════ */
-
 .statement-hero {
   position: relative;
   min-height: 100svh;
   display: flex;
-  flex-direction: column;
-  align-items: stretch;
+  align-items: center;
   justify-content: center;
   background: var(--ink);
   overflow: hidden;
-  padding: clamp(5rem,10vw,9rem) clamp(1.8rem,5vw,5rem) clamp(4rem,8vw,7rem);
+  padding: clamp(4rem,8vw,7rem) clamp(1.5rem,4vw,4rem);
 }
 
-/* Cinematic film grain — ultra subtle */
-.stmt-film {
+/* Subtle grid atmosphere */
+.statement-hero::before {
+  content: '';
   position: absolute;
   inset: 0;
+  background-image:
+    linear-gradient(rgba(248,244,236,0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(248,244,236,0.03) 1px, transparent 1px);
+  background-size: 80px 80px;
   pointer-events: none;
-  z-index: 1;
-  opacity: 0.025;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
-  background-size: 200px 200px;
 }
 
-/* Deep amber light source — centred, emanates from behind the word */
+/* Warm amber glow from below */
 .statement-hero::after {
   content: '';
   position: absolute;
-  bottom: 8%;
+  bottom: -20%;
   left: 50%;
   transform: translateX(-50%);
-  width: 90%;
-  height: 55%;
-  background: radial-gradient(ellipse 70% 50% at 50% 80%, rgba(196,149,10,0.14) 0%, transparent 70%);
+  width: 80%;
+  height: 60%;
+  background: radial-gradient(ellipse at center, rgba(196,149,10,0.12) 0%, transparent 70%);
   pointer-events: none;
-  z-index: 1;
 }
 
-/* Vertical coordinate marker — right edge */
-.stmt-coord-mark {
-  position: absolute;
-  right: clamp(1.2rem, 3vw, 3rem);
-  top: 50%;
-  transform: translateY(-50%);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 1rem;
-  z-index: 3;
-  opacity: 0;
-  transition: opacity 1.2s ease 1s;
-}
-.statement-hero.is-visible .stmt-coord-mark { opacity: 1; }
-
-.stmt-coord-text {
-  font: 400 8px/1 'Helvetica Neue', Arial, sans-serif;
-  letter-spacing: 0.25em;
-  text-transform: uppercase;
-  color: rgba(196,149,10,0.5);
-  writing-mode: vertical-rl;
-  text-orientation: mixed;
-}
-.stmt-coord-line {
-  display: block;
-  width: 1px;
-  height: clamp(40px, 6vw, 80px);
-  background: linear-gradient(to bottom, rgba(196,149,10,0.4), transparent);
-}
-
-/* Edition marker — left edge */
-.stmt-edition {
-  position: absolute;
-  left: clamp(1.2rem, 3vw, 3rem);
-  bottom: clamp(5rem, 9vw, 8rem);
-  z-index: 3;
-  opacity: 0;
-  transition: opacity 1s ease 1.1s;
-}
-.statement-hero.is-visible .stmt-edition { opacity: 1; }
-.stmt-edition span {
-  font: 400 8px/1 'Helvetica Neue', Arial, sans-serif;
-  letter-spacing: 0.3em;
-  text-transform: uppercase;
-  color: rgba(248,244,236,0.2);
-  writing-mode: vertical-rl;
-}
-
-/* Inner — full width, left-anchored */
 .stmt-inner {
   position: relative;
   z-index: 2;
   width: 100%;
+  max-width: 100%;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: clamp(1rem, 2.5vw, 2.2rem);
+  gap: clamp(1.5rem, 3vw, 3rem);
 }
 
-/* Eyebrow — latin, minimal, razor small */
+/* Eyebrow line */
 .stmt-eyebrow {
   display: flex;
   align-items: center;
+  gap: 1.2rem;
   opacity: 0;
-  transform: translateY(16px);
+  transform: translateY(20px);
   transition: opacity 0.8s ease, transform 0.8s ease;
 }
 .statement-hero.is-visible .stmt-eyebrow {
   opacity: 1;
   transform: translateY(0);
-  transition-delay: 0.05s;
-}
-.stmt-eye-text {
-  font: 300 9px/1 'Helvetica Neue', Arial, sans-serif;
-  letter-spacing: 0.38em;
-  text-transform: uppercase;
-  color: rgba(248,244,236,0.28);
+  transition-delay: 0.1s;
 }
 
-/* The monument headline */
+.stmt-rule {
+  display: block;
+  height: 1px;
+  width: clamp(30px, 5vw, 60px);
+  background: linear-gradient(90deg, transparent, var(--sand));
+}
+.stmt-rule:last-child {
+  background: linear-gradient(90deg, var(--sand), transparent);
+}
+
+.stmt-eye-text {
+  font: 400 10px/1 'Helvetica Neue', Arial, sans-serif;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--sand);
+  opacity: 0.7;
+}
+
+/* The headline — the wall */
 .stmt-headline {
   display: flex;
   flex-direction: column;
   gap: 0;
   margin: 0;
-  width: 100%;
   line-height: 0.88;
   color: var(--cream);
 }
 
-.stmt-line { display: block; overflow: hidden; }
+.stmt-line {
+  display: block;
+  overflow: hidden;
+}
 
-/* "OUR DAILY" — hairline weight, top row */
 .stmt-line--sm {
   display: flex;
-  align-items: baseline;
-  gap: 0.22em;
-  margin-bottom: clamp(0.3rem, 1vw, 0.8rem);
+  gap: 0.3em;
 }
+
+/* "OUR DAILY" — medium weight, generous tracking */
 .stmt-line--sm .stmt-word {
   display: inline-block;
-  font: 100 clamp(2.4rem, 6.5vw, 8rem)/0.88 'Helvetica Neue', Helvetica, Arial, sans-serif;
-  letter-spacing: 0.08em;
+  font: 300 clamp(3rem, 8.5vw, 9rem)/0.88 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  letter-spacing: 0.05em;
   text-transform: uppercase;
-  color: rgba(248,244,236,0.38);
+  color: rgba(248,244,236,0.55);
   transform: translateY(110%);
-  transition: transform 1s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-/* Gold divider line between OUR DAILY and BREAD. */
-.stmt-divider-line {
-  height: 1px;
-  width: 100%;
-  background: linear-gradient(90deg, rgba(196,149,10,0.55), rgba(196,149,10,0.08) 60%, transparent);
-  margin-bottom: clamp(0.2rem, 0.8vw, 0.6rem);
-  opacity: 0;
-  transform: scaleX(0);
-  transform-origin: left;
-  transition: opacity 0.6s ease, transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
-}
-.statement-hero.is-visible .stmt-divider-line {
-  opacity: 1;
-  transform: scaleX(1);
-  transition-delay: 0.35s;
-}
-
-/* "BREAD." — wall-to-wall, 900, cream */
-.stmt-line--lg { overflow: hidden; }
+/* "BREAD." — wall-to-wall, 900 weight */
 .stmt-line--lg .stmt-word {
-  display: block;
+  display: inline-block;
   font-weight: 900;
   font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-  font-size: clamp(5rem, 23.5vw, 30rem);
-  line-height: 0.86;
-  letter-spacing: -0.025em;
+  font-size: clamp(6rem, 22.5vw, 26rem);
+  line-height: 0.88;
+  letter-spacing: -0.02em;
   text-transform: uppercase;
   color: var(--cream);
+  transform: translateY(110%);
+  transition: transform 1.1s cubic-bezier(0.16, 1, 0.3, 1);
+  /* Fluid fill: scale to viewport */
+  width: 100%;
+  display: block;
   white-space: nowrap;
-  transform: translateY(105%);
-  transition: transform 1.15s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-/* Reveals */
-.statement-hero.is-visible .stmt-line--sm .stmt-word { transform: translateY(0); }
-.statement-hero.is-visible .stmt-line--sm .stmt-word:last-child { transition-delay: 0.07s; }
+/* When in view: letters rise */
+.statement-hero.is-visible .stmt-line--sm .stmt-word {
+  transform: translateY(0);
+}
+.statement-hero.is-visible .stmt-line--sm .stmt-word:nth-child(2) {
+  transition-delay: 0.08s;
+}
 .statement-hero.is-visible .stmt-line--lg .stmt-word {
   transform: translateY(0);
-  transition-delay: 0.22s;
+  transition-delay: 0.18s;
 }
 
-/* Bottom data strip — absolute, pinned to base */
-.stmt-data-strip {
+/* Fluid font-size that truly fills the viewport width */
+@supports (font-size: clamp(1px, 1vw, 100px)) {
+  .stmt-line--lg .stmt-word {
+    font-size: clamp(5rem, 23.5vw, 30rem);
+  }
+}
+
+/* Footer — small sub-copy beneath the headline */
+.stmt-footer {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  flex-wrap: wrap;
+  opacity: 0;
+  transform: translateY(14px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+.statement-hero.is-visible .stmt-footer {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 0.7s;
+}
+
+.stmt-foot-item {
+  font: 400 9px/1 'Helvetica Neue', Arial, sans-serif;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: rgba(248,244,236,0.38);
+}
+.stmt-foot-sep {
+  color: rgba(248,244,236,0.18);
+  font-size: 8px;
+}
+
+/* Horizontal rule at bottom */
+.stmt-bg-rule {
   position: absolute;
   bottom: 0;
   left: 0;
   right: 0;
-  z-index: 3;
-  display: flex;
-  align-items: center;
-  gap: clamp(1rem, 2.5vw, 2.5rem);
-  padding: clamp(1rem, 2vw, 1.6rem) clamp(1.8rem, 5vw, 5rem);
-  border-top: 1px solid rgba(248,244,236,0.07);
-  opacity: 0;
-  transform: translateY(10px);
-  transition: opacity 0.9s ease, transform 0.9s ease;
-  transition-delay: 0.8s;
-}
-.statement-hero.is-visible .stmt-data-strip {
-  opacity: 1;
-  transform: translateY(0);
-}
-.stmt-data-item {
-  font: 400 8.5px/1 'Helvetica Neue', Arial, sans-serif;
-  letter-spacing: 0.28em;
-  text-transform: uppercase;
-  color: rgba(248,244,236,0.3);
-  white-space: nowrap;
-}
-.stmt-data-item.stmt-data-hl {
-  color: rgba(196,149,10,0.7);
-}
-.stmt-data-dot {
-  display: block;
-  width: 2px;
-  height: 2px;
-  border-radius: 50%;
-  background: rgba(248,244,236,0.15);
-  flex-shrink: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(196,149,10,0.4), transparent);
 }
 
-/* Mobile */
+/* Mobile tightening */
 @media (max-width: 600px) {
-  .stmt-line--sm .stmt-word { font-size: clamp(2rem, 8.5vw, 3.5rem); }
-  .stmt-coord-mark, .stmt-edition { display: none; }
-  .stmt-data-strip { gap: 0.8rem; flex-wrap: nowrap; overflow: hidden; }
-  .stmt-data-item:not(.stmt-data-hl) { display: none; }
-  .stmt-data-dot { display: none; }
+  .stmt-line--sm .stmt-word {
+    font-size: clamp(2.2rem, 9vw, 4rem);
+  }
+  .stmt-line--lg .stmt-word {
+    font-size: clamp(4.5rem, 24vw, 8rem);
+  }
+  .stmt-footer { gap: 0.5rem; }
+  .stmt-foot-sep { display: none; }
 }
 
 /* ══════════════════════════════════════════════════════════════════

@@ -6,26 +6,22 @@
   if (!section) return;
 
   /* ── Fluid font scaling: make BREAD. literally fill viewport width ── */
-  const bigWord = section.querySelector('#stmt-big-word') || section.querySelector('.stmt-line--lg .stmt-word');
+  const bigWord = section.querySelector('.stmt-line--lg .stmt-word');
 
   function fitBigWord() {
     if (!bigWord) return;
     bigWord.style.fontSize = '10px'; // reset
-    const containerW = section.offsetWidth
-      - parseFloat(getComputedStyle(section).paddingLeft)
-      - parseFloat(getComputedStyle(section).paddingRight)
-      // leave room for coord marker on desktop
-      - (window.innerWidth > 600 ? clamp(30, window.innerWidth * 0.04, 80) : 0);
+    const containerW = section.offsetWidth - (parseFloat(getComputedStyle(section).paddingLeft) + parseFloat(getComputedStyle(section).paddingRight));
     const wordW = bigWord.scrollWidth;
     if (wordW === 0) return;
     const scale = containerW / wordW;
-    bigWord.style.fontSize = (10 * scale * 0.975) + 'px';
+    bigWord.style.fontSize = (10 * scale * 0.97) + 'px'; // 97% fill — tiny breath on edges
   }
 
-  function clamp(min, val, max) { return Math.min(Math.max(val, min), max); }
-
+  // Run on load and resize
   fitBigWord();
   window.addEventListener('resize', fitBigWord, { passive: true });
+  // Re-run after fonts load
   if (document.fonts && document.fonts.ready) {
     document.fonts.ready.then(fitBigWord);
   }
@@ -38,7 +34,8 @@
         io.unobserve(section);
       }
     });
-  }, { threshold: 0.1 });
+  }, { threshold: 0.15 });
 
   io.observe(section);
+
 })();
