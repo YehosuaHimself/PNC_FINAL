@@ -1086,9 +1086,15 @@ section[id="origins"] {
   display:flex;align-items:center;gap:clamp(10px,1.5vw,18px);
   flex-shrink:0;
 }
+@keyframes globeSpin{
+  from{transform:rotate(0deg)}
+  to{transform:rotate(360deg)}
+}
 .ship-globe{
   width:clamp(20px,2vw,26px);height:clamp(20px,2vw,26px);
   opacity:0.45;flex-shrink:0;
+  animation:globeSpin 8s linear infinite;
+  transform-origin:center center;
 }
 .ship-badge[data-dark] .ship-globe{opacity:0.50;filter:invert(1);}
 .ship-text{
