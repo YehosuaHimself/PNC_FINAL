@@ -462,16 +462,20 @@ input,select,textarea{cursor:none!important;caret-color:var(--ink,#4A3018)}
 }
 .ship-rule{
   flex:1;max-width:200px;height:1px;
-  background:linear-gradient(to right,transparent,rgba(92,61,46,0.18));
+  background:linear-gradient(to right,transparent,#C4950A);
+  opacity:0.6;
 }
 .ship-rule.r{
-  background:linear-gradient(to left,transparent,rgba(92,61,46,0.18));
+  background:linear-gradient(to left,transparent,#C4950A);
+  opacity:0.6;
 }
 .ship-badge[data-dark] .ship-rule{
-  background:linear-gradient(to right,transparent,rgba(248,244,236,0.14));
+  background:linear-gradient(to right,transparent,#C4950A);
+  opacity:0.6;
 }
 .ship-badge[data-dark] .ship-rule.r{
-  background:linear-gradient(to left,transparent,rgba(248,244,236,0.14));
+  background:linear-gradient(to left,transparent,#C4950A);
+  opacity:0.6;
 }
 .ship-badge-content{
   display:flex;align-items:center;gap:clamp(10px,1.5vw,18px);
@@ -479,29 +483,35 @@ input,select,textarea{cursor:none!important;caret-color:var(--ink,#4A3018)}
 }
 .ship-globe{
   width:clamp(20px,2vw,26px);height:clamp(20px,2vw,26px);
-  opacity:0.45;flex-shrink:0;
+  opacity:1;flex-shrink:0;
+  /* gold tint via CSS filter — hue-rotate to amber */
+  filter:sepia(1) saturate(2.5) hue-rotate(5deg) brightness(0.85);
 }
-.ship-badge[data-dark] .ship-globe{opacity:0.45;filter:none;}
+.ship-badge[data-dark] .ship-globe{opacity:1;filter:sepia(1) saturate(2.5) hue-rotate(5deg) brightness(0.95);}
 .ship-text{
   font-family:'Courier New',monospace;font-size:13px;font-weight:600;
   letter-spacing:0.28em;text-transform:uppercase;
-  color:var(--cocoa);
+  background:linear-gradient(90deg,#8B6914,#C4950A,#8B6914);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  background-clip:text;
   white-space:nowrap;
 }
 .ship-badge[data-dark] .ship-text{
-  color:var(--cocoa);
+  background:linear-gradient(90deg,#C4950A,#E8B840,#C4950A);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  background-clip:text;
 }
 .ship-dot{
   width:3px;height:3px;border-radius:50%;
-  background:var(--cocoa-mu);flex-shrink:0;opacity:0.5;
+  background:#C4950A;flex-shrink:0;opacity:0.8;
 }
-.ship-badge[data-dark] .ship-dot{background:rgba(248,244,236,0.4);}
+.ship-badge[data-dark] .ship-dot{background:#C4950A;opacity:0.8;}
 .ship-sub{
   font-family:'Courier New',monospace;font-size:12px;font-weight:600;
   letter-spacing:0.20em;text-transform:uppercase;
-  color:rgba(92,61,46,0.42);white-space:nowrap;
+  color:rgba(139,105,20,0.60);white-space:nowrap;
 }
-.ship-badge[data-dark] .ship-sub{color:rgba(248,244,236,0.38);}
+.ship-badge[data-dark] .ship-sub{color:rgba(196,149,10,0.55);}
 @media(max-width:600px){
   .ship-rule{display:none}
   .ship-text{font-size:12px;letter-spacing:0.20em}
