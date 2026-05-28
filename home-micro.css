@@ -421,3 +421,298 @@
     linear-gradient(90deg,rgba(248,244,236,0.028) 1px, transparent 1px);
   background-size: 100% 100%, 40px 40px, 40px 40px;
 }
+
+
+/* ═══════════════════════════════════════════════════════════════════
+   ORIGIN SECTION
+   Two source cards: Ethiopia (coffee) + Lausitz (bread).
+   Map SVG + flag + stats. Dark cards on cream ground.
+═══════════════════════════════════════════════════════════════════ */
+
+.origin-section {
+  padding: clamp(80px,12vw,160px) var(--g);
+  background: var(--cream);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Subtle grid overlay — printed matter quality */
+.origin-section::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(92,61,46,0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(92,61,46,0.03) 1px, transparent 1px);
+  background-size: 80px 80px;
+  pointer-events: none;
+}
+
+.origin-inner {
+  max-width: var(--max);
+  margin: 0 auto;
+  position: relative;
+}
+
+.origin-header {
+  margin-bottom: clamp(48px, 7vw, 96px);
+}
+
+.origin-eyebrow {
+  display: block;
+  margin-bottom: 16px;
+}
+
+.origin-headline {
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-weight: 900;
+  font-size: clamp(42px, 6.5vw, 96px);
+  letter-spacing: -0.04em;
+  line-height: 0.90;
+  color: var(--ink);
+}
+
+.origin-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(16px, 2.5vw, 32px);
+}
+
+@media (max-width: 720px) {
+  .origin-grid { grid-template-columns: 1fr; }
+}
+
+
+/* ── ORIGIN CARD ──────────────────────────────────────────────── */
+
+.origin-card {
+  background: var(--ink);
+  border: 1px solid rgba(248,244,236,0.07);
+  padding: clamp(28px, 4vw, 52px);
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow: hidden;
+  border-radius: 1px;
+  transition:
+    border-color .45s cubic-bezier(.16,1,.3,1),
+    transform .45s cubic-bezier(.16,1,.3,1),
+    box-shadow .45s cubic-bezier(.16,1,.3,1);
+}
+
+@media (hover:hover) {
+  .origin-card:hover {
+    border-color: rgba(248,244,236,0.18);
+    transform: translateY(-4px);
+    box-shadow: 0 16px 64px rgba(0,0,0,0.32);
+  }
+}
+
+/* Corner bracket */
+.origin-card::before {
+  content: '';
+  position: absolute;
+  top: 0; right: 0;
+  width: 44px; height: 44px;
+  border-top: 1px solid rgba(248,244,236,0.18);
+  border-right: 1px solid rgba(248,244,236,0.18);
+  pointer-events: none;
+  transition: width .4s cubic-bezier(.16,1,.3,1), height .4s cubic-bezier(.16,1,.3,1);
+}
+
+@media (hover:hover) {
+  .origin-card:hover::before { width: 72px; height: 72px; }
+}
+
+/* Fine grid */
+.origin-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(248,244,236,0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(248,244,236,0.025) 1px, transparent 1px);
+  background-size: 40px 40px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.origin-card > * { position: relative; z-index: 1; }
+
+.origin-card-num {
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-weight: 900;
+  font-size: clamp(60px, 9vw, 120px);
+  letter-spacing: -0.05em;
+  line-height: 1;
+  color: rgba(248,244,236,0.05);
+  position: absolute;
+  top: clamp(16px, 2.5vw, 28px);
+  right: clamp(20px, 3vw, 36px);
+  z-index: 1 !important;
+  pointer-events: none;
+  user-select: none;
+}
+
+/* ── MAP SVG ──────────────────────────────────────────────────── */
+
+.origin-map {
+  margin-bottom: clamp(24px, 3.5vw, 40px);
+  height: clamp(140px, 18vw, 220px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.origin-svg {
+  width: 100%;
+  height: 100%;
+  max-height: 220px;
+}
+
+/* Continent fill */
+.oc-continent {
+  fill: rgba(248,244,236,0.04);
+  stroke: rgba(248,244,236,0.08);
+  stroke-width: 0.5;
+}
+
+/* Country highlight */
+.oc-country {
+  fill: rgba(184,134,11,0.18);
+  stroke: rgba(184,134,11,0.55);
+  stroke-width: 0.8;
+  transition: fill .4s;
+}
+
+@media (hover:hover) {
+  .origin-card:hover .oc-country {
+    fill: rgba(184,134,11,0.30);
+    stroke: rgba(184,134,11,0.80);
+  }
+}
+
+/* Location dot */
+.oc-dot {
+  fill: rgba(184,134,11,0.9);
+  filter: drop-shadow(0 0 4px rgba(184,134,11,0.5));
+}
+
+/* Pulse ring animation */
+.oc-pulse {
+  fill: none;
+  stroke: rgba(184,134,11,0.5);
+  stroke-width: 1;
+  animation: originPulse 2.8s ease-in-out infinite;
+  transform-origin: center;
+}
+
+@keyframes originPulse {
+  0%   { r: 5; opacity: 0.8; }
+  100% { r: 18; opacity: 0; }
+}
+
+@media (prefers-reduced-motion:reduce) {
+  .oc-pulse { animation: none; }
+}
+
+/* Labels and lines */
+.oc-label {
+  font-family: 'Courier New', monospace;
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  fill: rgba(248,244,236,0.45);
+  text-transform: uppercase;
+}
+
+.oc-line {
+  stroke: rgba(248,244,236,0.2);
+  stroke-width: 0.5;
+}
+
+/* ── FLAG STRIPES ──────────────────────────────────────────────── */
+
+.origin-card-flag {
+  display: flex;
+  gap: 0;
+  margin-bottom: 16px;
+  height: 3px;
+  width: 36px;
+  overflow: hidden;
+  border-radius: 1px;
+}
+
+.ocf {
+  flex: 1;
+  display: block;
+}
+
+/* Ethiopia */
+.ocf-green  { background: #009A44; }
+.ocf-yellow { background: #FCDD09; }
+.ocf-red    { background: #EF3340; }
+
+/* Germany */
+.ocf-black  { background: #000000; }
+.ocf-red2   { background: #DD0000; }
+.ocf-gold   { background: #FFCE00; }
+
+/* ── CARD BODY TEXT ───────────────────────────────────────────── */
+
+.origin-card-place {
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-weight: 900;
+  font-size: clamp(32px, 4.5vw, 60px);
+  letter-spacing: -0.03em;
+  line-height: 0.90;
+  color: rgba(248,244,236,0.95);
+  margin-bottom: 8px;
+}
+
+.origin-card-coords {
+  font-family: 'Courier New', monospace;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.20em;
+  text-transform: uppercase;
+  color: rgba(248,244,236,0.28);
+  margin-bottom: clamp(16px, 2.5vw, 24px);
+}
+
+.origin-card-text {
+  font-size: clamp(13px, 1.2vw, 15px);
+  color: rgba(248,244,236,0.52);
+  line-height: 1.75;
+  margin-bottom: clamp(24px, 3.5vw, 36px);
+  max-width: 380px;
+}
+
+/* Stats row */
+.origin-card-stat {
+  display: flex;
+  gap: clamp(20px, 3vw, 36px);
+  padding-top: clamp(16px, 2.5vw, 24px);
+  border-top: 1px solid rgba(248,244,236,0.08);
+}
+
+.ocs-val {
+  display: block;
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-weight: 900;
+  font-size: clamp(20px, 2.5vw, 30px);
+  letter-spacing: -0.03em;
+  color: rgba(248,244,236,0.92);
+  line-height: 1;
+}
+
+.ocs-key {
+  display: block;
+  font-family: 'Courier New', monospace;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(248,244,236,0.28);
+  margin-top: 4px;
+}
