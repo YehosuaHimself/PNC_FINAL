@@ -791,3 +791,48 @@
   });
 
 })();
+
+
+/* ── PHILOSOPHY BORDER — gold fill trigger on scroll ─────────────────
+   Adds .border-filled class when the section enters viewport.
+   CSS transition handles the upward gold draw.
+────────────────────────────────────────────────────────────────────── */
+(function philBorder() {
+  if (typeof ScrollTrigger === 'undefined') return;
+
+  var quote = document.querySelector('.phil-quote');
+  if (!quote) return;
+
+  ScrollTrigger.create({
+    trigger: quote,
+    start: 'top 75%',
+    onEnter: function () {
+      quote.classList.add('border-filled');
+    }
+  });
+
+})();
+
+
+/* ── PHILOSOPHY ACCENT NUMBER — scroll parallax ─────────────────────
+   The large background "03" drifts slower than the section scroll.
+────────────────────────────────────────────────────────────────────── */
+(function philAccentParallax() {
+  if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') return;
+  if (window.matchMedia('(prefers-reduced-motion:reduce)').matches) return;
+
+  var num = document.querySelector('.phil-accent-num');
+  if (!num) return;
+
+  gsap.to(num, {
+    y: -60,
+    ease: 'none',
+    scrollTrigger: {
+      trigger: '.philosophy',
+      start: 'top bottom',
+      end: 'bottom top',
+      scrub: 2.0
+    }
+  });
+
+})();
