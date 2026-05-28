@@ -39,15 +39,16 @@ a,a:hover,a:active,a:focus{cursor:none!important}
 
 /* ── SKIP LINK ───────────────────────────────────────────────── */
 .skip-link{
-  position:absolute;top:-100px;left:1rem;
+  position:fixed;top:0;left:1rem;
   background:var(--ink);color:var(--cream);
   font:700 11px/1 "Helvetica Neue",Arial,sans-serif;
   letter-spacing:.12em;text-transform:uppercase;
   padding:.6rem 1rem;z-index:99999;
-  transition:top .15s;
+  transform:translateY(-120%);
+  transition:transform .15s;
   border:1px solid var(--cocoa);
 }
-.skip-link:focus{top:1rem;outline:2px solid var(--cream);outline-offset:2px;}
+.skip-link:focus{transform:translateY(0);outline:2px solid var(--cream);outline-offset:2px;}
 
 html,body{cursor:none!important}
 /* ── CURSOR ─────────────────────────────────────────────────── */

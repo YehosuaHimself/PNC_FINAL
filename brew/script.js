@@ -603,6 +603,7 @@ document.addEventListener('DOMContentLoaded',function(){
 
       var c1  = fmtLocal(1);   /* €1  → local */
       var c3  = fmtLocal(3);   /* €3  → local */
+      var c12 = fmtLocal(12);  /* €12 → local */
       var c15 = fmtLocal(15);  /* €15 → local */
 
       /* ── 4. CSS ─────────────────────────────────────────────────── */
@@ -665,7 +666,7 @@ document.addEventListener('DOMContentLoaded',function(){
         /* order-h2 = the big "€1 PER CUP." headline in the order section */
         var oh2 = document.querySelector('.order-h2');
         if(oh2) oh2.insertAdjacentHTML('beforeend',
-          '<span class="pl" style="font-size:13px;margin-top:10px;">≈ '+c1+' per cup</span>');
+          '<span class="pl" style="font-size:13px;margin-top:10px;">≈ '+c1+' per cup · '+c12+' per box</span>');
 
         /* qty-price cards — add local inline to each */
         var qtyPrices = document.querySelectorAll('.qty-price');

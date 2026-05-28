@@ -322,33 +322,32 @@ html, body {
 </div>
 
 <script>
-// Skip animation button
-document.getElementById('gate-skip').addEventListener('click', function() {
-  window.location.replace('/home.html');
-});
-document.getElementById('gate-skip').addEventListener('keydown', function(e) {
-  if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); window.location.replace('/home.html'); }
-});
-
-// Redirect after gate lift completes
-// t-lift (8.0s) + lift-dur (2.2s) + small buffer = 11s
-var REDIRECT_DELAY = 11000;
-
-// Respect reduced-motion: compress timing
-if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-  REDIRECT_DELAY = 1200;
-}
-
-setTimeout(function() {
-  window.location.replace('/home.html');
-}, REDIRECT_DELAY);
-
-// Skip gate on repeat visit within the session
-// (so returning visitors aren't always gated)
+// Skip gate immediately on repeat visits within the session
 if (sessionStorage.getItem('pnc_gate_seen')) {
   window.location.replace('/home.html');
 } else {
   sessionStorage.setItem('pnc_gate_seen', '1');
+
+  // Skip animation button
+  document.getElementById('gate-skip').addEventListener('click', function() {
+    window.location.replace('/home.html');
+  });
+  document.getElementById('gate-skip').addEventListener('keydown', function(e) {
+    if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); window.location.replace('/home.html'); }
+  });
+
+  // Redirect after gate lift completes
+  // t-lift (8.0s) + lift-dur (2.2s) + small buffer = 11s
+  var REDIRECT_DELAY = 11000;
+
+  // Respect reduced-motion: compress timing
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    REDIRECT_DELAY = 1200;
+  }
+
+  setTimeout(function() {
+    window.location.replace('/home.html');
+  }, REDIRECT_DELAY);
 }
 </script>
 
