@@ -2142,3 +2142,84 @@ body.cookie-visible #mobile-cta{bottom:var(--cookie-h,80px);}
   background: transparent !important;
   border: 1px solid rgba(92,61,46,0.15) !important;
 }
+
+/* ══════════════════════════════════════════════════════════════════
+   MANIFESTO SECTION (BREW)
+   Editorial bridge: large copy, three altitude numbers, one CTA.
+   Dark treatment — continuous from photo hero.
+   ══════════════════════════════════════════════════════════════════ */
+.manifesto {
+  padding: clamp(100px, 13vw, 180px) var(--g);
+  background: var(--cream);
+  color: var(--ink);
+}
+.manifesto--dark {
+  background: var(--dark);
+  color: var(--cream);
+}
+.manifesto-inner {
+  max-width: var(--max);
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: clamp(60px, 8vw, 104px);
+}
+.manifesto-copy {
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-weight: 300;
+  font-size: clamp(22px, 3vw, 46px);
+  line-height: 1.44;
+  letter-spacing: -0.02em;
+  color: inherit;
+  max-width: 880px;
+  opacity: 0.9;
+}
+.manifesto-foot {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: clamp(32px, 4vw, 64px);
+  border-top: 1px solid rgba(248,244,236,0.1);
+  padding-top: clamp(40px, 5vw, 64px);
+}
+.manifesto-stats {
+  display: flex;
+  gap: clamp(40px, 6vw, 96px);
+}
+.ms-item {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.ms-num {
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-weight: 900;
+  font-size: clamp(36px, 4.5vw, 64px);
+  letter-spacing: -0.05em;
+  line-height: 1;
+  color: inherit;
+}
+.ms-label {
+  font-family: 'Courier New', monospace;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: inherit;
+  opacity: 0.4;
+}
+.manifesto-actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  flex-shrink: 0;
+}
+@media (max-width: 640px) {
+  .manifesto-foot {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .manifesto-actions { justify-content: flex-start; }
+  .manifesto-stats { gap: clamp(28px, 8vw, 56px); }
+}
