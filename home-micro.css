@@ -1106,3 +1106,42 @@
   .press-dot { display: none; }
   .press-item { white-space: normal; }
 }
+
+
+/* ── HERO CARD: bottom-right corner bracket ────────────────────────
+   A second corner bracket appears at bottom-right on hover,
+   completing the four-corner frame. Pure CSS, no extra markup.       */
+.hero-product {
+  isolation: isolate;
+}
+/* We reuse the existing tag element as anchor */
+.hp-tag {
+  position: relative;
+}
+/* Bottom-right bracket via box-decoration on the card itself */
+.hero-product::after {
+  /* Augment existing grid with a bottom-right corner */
+}
+/* We add a pseudo to hp-body for the BR corner */
+.hp-body {
+  position: relative;
+}
+.hp-body::after {
+  content: '';
+  position: absolute;
+  bottom: 0; right: 0;
+  width: 52px; height: 52px;
+  border-bottom: 1px solid rgba(248,244,236,0.10);
+  border-right: 1px solid rgba(248,244,236,0.10);
+  pointer-events: none;
+  transition:
+    width .45s cubic-bezier(.16,1,.3,1),
+    height .45s cubic-bezier(.16,1,.3,1),
+    border-color .4s;
+}
+@media (hover:hover) {
+  .hero-product:hover .hp-body::after {
+    width: 84px; height: 84px;
+    border-color: rgba(248,244,236,0.36);
+  }
+}
