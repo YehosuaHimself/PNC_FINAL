@@ -385,15 +385,20 @@
   /* The track moves left by (totalPanels-1) × 100vw */
   var travelPct   = (totalPanels - 1) * 100;
 
+  /* xPercent moves the 300vw track: -100/3 per panel means each 33.3% = 100vw */
+  /* We want to end at -200/3 * 100 ... simpler: move by -(totalPanels-1)*100 vw
+     but xPercent is relative to element width (300vw), so -(200/300)*100 = -66.6% */
+  var xEnd = -((totalPanels - 1) / totalPanels) * 100;
+
   gsap.to(track, {
-    xPercent: -travelPct / totalPanels * (totalPanels - 1) / (totalPanels - 1),
+    xPercent: xEnd,
     ease: 'none',
     scrollTrigger: {
       trigger: section,
       pin: true,
       scrub: 1.2,
       start: 'top top',
-      end: '+=' + (travelPct / 100 * window.innerHeight * 2.2) + 'px',
+      end: '+=' + ((totalPanels - 1) * window.innerHeight * 1.6) + 'px',
       onUpdate: function (self) {
         var p = self.progress;
         if (bar) bar.style.width = (p * 100) + '%';
