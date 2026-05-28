@@ -86,70 +86,62 @@
   </div>
 </div>
 
-<!-- HERO -->
+<!-- HERO — GOD-TIER -->
 <section id="main" class="hero" aria-label="Hero">
-  <div class="hero-watermark" aria-hidden="true">
-    <div class="hero-watermark-text">PNC</div>
+
+  <!-- Top bar: eyebrow left, coordinates right -->
+  <div class="hero-topbar" aria-hidden="true">
+    <span class="hero-eyebrow">Panem Nostrum Cotidianum</span>
+    <span class="hero-topbar-right">48°N · 12°E · MMXXVI</span>
   </div>
-  <div class="hero-top">
-    <div class="hero-eyebrow">Bread and Coffee</div>
-  </div>
-  <div class="hero-bottom">
-    <h1 class="hero-headline" aria-label="The best things in life. Bread and Coffee. In the simplest form imaginable.">
-      <span class="hl-clip"><span class="hl-inner">THE BEST</span></span>
-      <span class="hl-clip"><span class="hl-inner">THINGS IN</span></span>
-      <span class="hl-clip"><span class="hl-inner">LIFE.</span></span>
-      <span class="hl-sub">Bread and Coffee. In the simplest form imaginable.</span>
+
+  <!-- The headline — fills viewport width -->
+  <div class="hero-title-wrap">
+    <h1 class="hero-headline" aria-label="The best things in life.">
+      <span class="hl-clip"><span class="hl-inner hl-sm">THE BEST</span></span>
+      <span class="hl-clip"><span class="hl-inner hl-sm">THINGS IN</span></span>
+      <div class="hero-divider-line" aria-hidden="true"></div>
+      <span class="hl-clip"><span class="hl-inner hl-lg" id="hero-big-word">LIFE.</span></span>
     </h1>
-    <p class="hero-decree">The finest thing in its category. Stripped to its essence. Priced for everyone.</p>
-    <div class="hero-products">
-      <a href="/bread" class="hero-product hero-product--bread">
-        <span class="hp-tag">Daily · Bread</span>
-        <div class="hp-price-anchor" aria-hidden="true">€ 3<span>/ loaf</span></div>
-        <div class="hp-body">
-        <div class="hp-name">OUR DAILY<br>BREAD.</div>
-        <div class="hp-origin">Buckwheat · Alps · 3 Ingredients</div>
-        <p class="hp-desc">Buckwheat flour. Psyllium husk. Alpine salt. Three named sources. Pre-weighed, pre-blended, shipped to you. 55 minutes in your oven. The world's best bread, in under an hour.</p>
-        <div class="hp-stats">
-          <div><span class="hp-stat-val">3</span><span class="hp-stat-key">Ingredients</span></div>
-          <div><span class="hp-stat-val">5</span><span class="hp-stat-key">Loaves / Box</span></div>
-          <div><span class="hp-stat-val">55</span><span class="hp-stat-key">Min · Bake</span></div>
-        </div>
-        <div class="hp-footer">
-          <div class="hp-price">€ 3 <span>/ loaf</span></div>
-          <span class="hp-cta">Explore Bread →</span>
-        </div>
-        </div><!-- /hp-body -->
-      </a>
-      <a href="/brew" class="hero-product hero-product--brew">
-        <span class="hp-tag">Daily · Brew</span>
-        <div class="hp-price-anchor" aria-hidden="true">€ 1<span>/ cup</span></div>
-        <div class="hp-body">
-        <div class="hp-name">OUR DAILY<br>BREW.</div>
-        <div class="hp-origin">Kochere · Ethiopia · 2,400 m — the highest coffee altitude on Earth</div>
-        <p class="hp-desc">Ethiopia is where coffee was discovered. Every cup on Earth traces back here. This is the source — at 2,400 metres, the highest altitude it grows. One&nbsp;pad.&nbsp;One&nbsp;cup. €1.</p>
-        <div class="hp-stats">
-          <div><span class="hp-stat-val">G1</span><span class="hp-stat-key">Grade</span></div>
-          <div><span class="hp-stat-val">85+</span><span class="hp-stat-key">SCA Score</span></div>
-          <div><span class="hp-stat-val">2400</span><span class="hp-stat-key">m · Altitude</span></div>
-        </div>
-        <div class="hp-footer">
-          <div class="hp-price">€ 1 <span>/ cup</span></div>
-          <span class="hp-cta">Explore Brew →</span>
-        </div>
-        </div><!-- /hp-body -->
-      </a>
-    </div>
+    <p class="hero-decree">Bread and Coffee. In the simplest form imaginable.</p>
   </div>
-  <div class="hero-accent" aria-hidden="true">
-    <div class="hero-accent-num">01</div>
-    <div class="hero-accent-line"></div>
-    <div class="hero-accent-meta">MMXXVI · Panem Nostrum</div>
+
+  <!-- Split panels — the two products, full-bleed photography -->
+  <div class="hero-panels" aria-label="Our products">
+    <a href="/bread" class="hero-panel hero-panel--bread">
+      <div class="hp2-img" aria-hidden="true"></div>
+      <div class="hp2-overlay" aria-hidden="true"></div>
+      <div class="hp2-content">
+        <div class="hp2-label">Daily · Bread</div>
+        <div class="hp2-name">OUR DAILY<br>BREAD.</div>
+        <div class="hp2-meta">
+          <span>3 Ingredients · 55 min</span>
+          <span class="hp2-price">€ 3 / loaf</span>
+        </div>
+      </div>
+      <span class="hp2-cta">Explore →</span>
+    </a>
+    <a href="/brew" class="hero-panel hero-panel--brew">
+      <div class="hp2-img" aria-hidden="true"></div>
+      <div class="hp2-overlay" aria-hidden="true"></div>
+      <div class="hp2-content">
+        <div class="hp2-label">Daily · Brew</div>
+        <div class="hp2-name">OUR DAILY<br>BREW.</div>
+        <div class="hp2-meta">
+          <span>Kochere · G1 · 2,400 m</span>
+          <span class="hp2-price">€ 1 / cup</span>
+        </div>
+      </div>
+      <span class="hp2-cta">Explore →</span>
+    </a>
   </div>
+
+  <!-- Scroll indicator -->
   <div class="hero-scroll" aria-hidden="true">
     <div class="hero-scroll-line"></div>
     Explore
   </div>
+
 </section>
 
 <!-- SHIPPING BADGE -->
@@ -492,6 +484,24 @@
   <script src="hero-canvas.js" defer></script>
   <script src="cursor-magnetic.js" defer></script>
 
+  <script>
+  /* Fluid fill: LIFE. fills viewport width */
+  (function(){
+    var el = document.getElementById('hero-big-word');
+    if(!el) return;
+    function fit(){
+      el.style.fontSize = '10px';
+      var pad = parseFloat(getComputedStyle(document.querySelector('.hero-title-wrap')||document.body).paddingLeft||0) * 2;
+      var w = window.innerWidth - pad - 2;
+      var sw = el.scrollWidth;
+      if(!sw) return;
+      el.style.fontSize = (10 * (w / sw) * 0.975) + 'px';
+    }
+    fit();
+    window.addEventListener('resize', fit, {passive:true});
+    if(document.fonts && document.fonts.ready) document.fonts.ready.then(fit);
+  })();
+  </script>
   <script>
   /* Animate grain seed for living film effect */
   (function(){
