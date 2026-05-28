@@ -464,3 +464,65 @@
   });
 
 })();
+
+
+/* ── SECTION COUNTER — 01/07 fixed indicator ─────────────────────────
+   Tracks the 7 main sections via IntersectionObserver.
+   Counter fades in after first scroll, updates on each section entry.
+────────────────────────────────────────────────────────────────────── */
+(function sectionCounter() {
+  'use strict';
+
+  var counter = document.getElementById('sec-counter');
+  var curEl   = document.getElementById('sec-cur');
+  if (!counter || !curEl || typeof IntersectionObserver === 'undefined') return;
+
+  /* The 7 narrative sections in reading order */
+  var SECTIONS = [
+    '#main',             /* 01 Hero */
+    '.proof-strip',      /* 02 Proof */
+    '.ritual-section',   /* 03 Ritual */
+    '.principles-section', /* 04 Principles */
+    '#origins',          /* 05 Origins */
+    '#manifesto',        /* 06 Manifesto */
+    '#philosophy',       /* 07 Philosophy */
+  ];
+
+  var total = SECTIONS.length;
+  document.getElementById('sec-tot').textContent =
+    total < 10 ? '0' + total : '' + total;
+
+  var active = 0; /* index of the section most in view */
+
+  var obs = new IntersectionObserver(function (entries) {
+    entries.forEach(function (entry) {
+      if (entry.isIntersecting) {
+        var idx = parseInt(entry.target.dataset.secIdx, 10);
+        if (!isNaN(idx)) active = idx;
+        var n = active + 1;
+        curEl.style.opacity = '0';
+        setTimeout(function () {
+          curEl.textContent = n < 10 ? '0' + n : '' + n;
+          curEl.style.opacity = '1';
+        }, 120);
+        counter.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.25 });
+
+  SECTIONS.forEach(function (sel, i) {
+    var el = document.querySelector(sel);
+    if (!el) return;
+    el.dataset.secIdx = i;
+    obs.observe(el);
+  });
+
+  /* Hide counter when at very top */
+  var hideObs = new IntersectionObserver(function (entries) {
+    if (entries[0].isIntersecting) counter.classList.remove('visible');
+    else counter.classList.add('visible');
+  }, { threshold: 0.98 });
+  var hero = document.querySelector('#main');
+  if (hero) hideObs.observe(hero);
+
+})();
