@@ -145,7 +145,7 @@ input,select,textarea{cursor:none!important;caret-color:var(--ink)}
 }
 .hero-watermark-text{
   font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;
-  font-weight:900;font-size:clamp(160px,30vw,520px);
+  font-weight:900;font-size:clamp(180px,34vw,600px);
   letter-spacing:-0.05em;line-height:1;
   color:rgba(42,24,16,0.065);white-space:nowrap;
   transform:translateX(42%);
@@ -175,11 +175,10 @@ input,select,textarea{cursor:none!important;caret-color:var(--ink)}
 }
 .hero-headline{
   font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;
-  font-weight:900;font-size:clamp(58px,9.5vw,152px);
-  letter-spacing:-0.04em;line-height:0.86;color:var(--ink);
-  margin-bottom:clamp(24px,3.5vh,48px);
-  /* Reserve space for the 01 accent — clamp(180px,14vw,240px) is its footprint */
-  max-width:calc(100% - clamp(180px,14vw,240px));
+  font-weight:900;font-size:clamp(64px,10.5vw,168px);
+  letter-spacing:-0.045em;line-height:0.84;color:var(--ink);
+  margin-bottom:clamp(28px,4vh,56px);
+  max-width:calc(100% - clamp(160px,13vw,220px));
 }
 .hero-headline-inner{display:block}
 .hero-headline span{
@@ -215,7 +214,7 @@ input,select,textarea{cursor:none!important;caret-color:var(--ink)}
   border:1px solid rgba(248,244,236,0.07);
   display:flex;flex-direction:column;
   position:relative;overflow:hidden;
-  min-height:clamp(480px,55vh,680px);
+  min-height:clamp(520px,60vh,760px);
   background:var(--ink);
   transform:translateZ(0);
   will-change:transform,box-shadow;
