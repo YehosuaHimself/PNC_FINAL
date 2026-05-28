@@ -310,3 +310,84 @@
   }, { passive: true });
 
 })();
+
+
+/* ── TEXT SCRAMBLE — chars randomise before settling ─────────────────
+   Applied to .hp-stat-val on card hover, and .ocs-val on origin
+   card enter. Classic hacker-text but warm — uses bread/grain chars.
+────────────────────────────────────────────────────────────────────── */
+(function () {
+  'use strict';
+
+  var CHARS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789·—';
+
+  function scramble(el, finalText, duration) {
+    duration = duration || 600;
+    var frames   = Math.round(duration / 40);
+    var frame    = 0;
+    var orig     = finalText || el.textContent;
+
+    if (el._scrambleRaf) cancelAnimationFrame(el._scrambleRaf);
+
+    function tick() {
+      frame++;
+      var progress = frame / frames;
+      var result   = '';
+      for (var i = 0; i < orig.length; i++) {
+        if (orig[i] === ' ' || orig[i] === '\u00A0') {
+          result += orig[i];
+          continue;
+        }
+        if (progress > i / orig.length + 0.1) {
+          result += orig[i];
+        } else {
+          result += CHARS[Math.floor(Math.random() * CHARS.length)];
+        }
+      }
+      el.textContent = result;
+      if (frame < frames) {
+        el._scrambleRaf = requestAnimationFrame(tick);
+      } else {
+        el.textContent = orig;
+      }
+    }
+    tick();
+  }
+
+  /* Apply to product card stat values on card hover */
+  if (!window.matchMedia('(prefers-reduced-motion:reduce)').matches) {
+    document.querySelectorAll('.hero-product').forEach(function (card) {
+      var entered = false;
+      card.addEventListener('mouseenter', function () {
+        if (entered) return;
+        entered = true;
+        card.querySelectorAll('.hp-stat-val').forEach(function (el, i) {
+          setTimeout(function () {
+            scramble(el, el.textContent, 480);
+          }, i * 80);
+        });
+        setTimeout(function () { entered = false; }, 1400);
+      });
+    });
+
+    /* Apply to origin card stat values on viewport enter */
+    var originCards = document.querySelectorAll('.origin-card');
+    if (typeof IntersectionObserver !== 'undefined') {
+      originCards.forEach(function (card) {
+        var done = false;
+        var io = new IntersectionObserver(function (entries) {
+          if (entries[0].isIntersecting && !done) {
+            done = true;
+            card.querySelectorAll('.ocs-val').forEach(function (el, i) {
+              setTimeout(function () {
+                scramble(el, el.textContent, 560);
+              }, i * 120);
+            });
+          }
+        }, { threshold: 0.4 });
+        io.observe(card);
+      });
+    }
+  }
+
+})();
