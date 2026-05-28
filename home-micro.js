@@ -259,3 +259,54 @@
   });
 
 })();
+
+
+/* ── TICKER VELOCITY SKEW — scroll speed bends the tape ─────────────
+   As the user scrolls fast, the ticker text skews like magnetic tape.
+   Snaps back to neutral when scroll slows.
+────────────────────────────────────────────────────────────────────── */
+(function () {
+  'use strict';
+  if (window.matchMedia('(prefers-reduced-motion:reduce)').matches) return;
+
+  var ticker = document.querySelector('.ticker-inner');
+  if (!ticker) return;
+
+  var lastY   = window.scrollY;
+  var vel     = 0;
+  var skew    = 0;
+  var targetSkew = 0;
+  var raf     = null;
+
+  var MAX_SKEW = 12; /* degrees */
+  var SKEW_K   = 0.08;
+  var SKEW_D   = 0.78;
+
+  function tick() {
+    skew += (targetSkew - skew) * SKEW_K;
+    skew *= SKEW_D + 0.18; /* sticky return */
+    skew = skew * 0.82; /* decay */
+
+    ticker.style.transform = 'skewX(' + skew.toFixed(3) + 'deg)';
+    ticker.style.willChange = 'transform';
+
+    if (Math.abs(skew) > 0.01) {
+      raf = requestAnimationFrame(tick);
+    } else {
+      ticker.style.transform = '';
+      raf = null;
+    }
+  }
+
+  window.addEventListener('scroll', function () {
+    var y = window.scrollY;
+    vel = y - lastY;
+    lastY = y;
+
+    targetSkew = Math.max(-MAX_SKEW, Math.min(MAX_SKEW, -vel * 0.6));
+    skew = skew + vel * 0.3;
+
+    if (!raf) raf = requestAnimationFrame(tick);
+  }, { passive: true });
+
+})();
