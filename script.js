@@ -3,10 +3,10 @@
   var ring = document.getElementById('cur-ring');
   if (!dot || !ring || window.matchMedia('(pointer:coarse)').matches) return;
 
-  var C_DARK  = '#2A1810';
+  var C_DARK  = '#4A3018';
   var C_LIGHT = '#F8F4EC';
   var DOT_R   = 5;
-  var RING_RX = 40, RING_RY = 40;
+  var RING_RX = 48, RING_RY = 48;
   var LERP    = 0.10;
   var SQ_W    = '10px', SQ_H = '10px';
   var SQ_BR   = '0';
@@ -38,6 +38,8 @@
 
   function applyColor(dark) {
     var c = dark ? C_LIGHT : C_DARK;
+    dot.style.transition   = 'background 0ms';
+    ring.style.transition  = 'border-color 0ms, width .22s cubic-bezier(.16,1,.3,1), height .22s cubic-bezier(.16,1,.3,1), opacity 160ms ease';
     dot.style.background   = c;
     ring.style.borderColor = c;
     if (!inTextField) ring.style.opacity = dark ? '0.55' : '0.60';
@@ -93,7 +95,7 @@
       startLoop();
     });
     el.addEventListener('mouseleave', function() {
-      ring.style.width = '80px'; ring.style.height = '80px';
+      ring.style.width = '96px'; ring.style.height = '96px';
       ring.style.opacity = currentDark ? '0.55' : '0.60';
       startLoop();
     });
@@ -125,8 +127,8 @@
     rx = mx - RING_RX; ry = my - RING_RY;
     ring.style.transform   = 'translate3d(' + Math.round(rx) + 'px,' + Math.round(ry) + 'px,0) rotate(' + SQ_ROT + ')';
     ring.style.opacity     = currentDark ? '0.55' : '0.60';
-    ring.style.width       = '80px';
-    ring.style.height      = '80px';
+    ring.style.width       = '96px';
+    ring.style.height      = '96px';
     startLoop();
   }
 
