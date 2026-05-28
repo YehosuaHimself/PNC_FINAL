@@ -715,3 +715,31 @@
   });
 
 })();
+
+
+/* ── RITUAL IMAGES — clip-path scrub reveal ──────────────────────────
+   Both images wipe open from bottom, staggered.
+────────────────────────────────────────────────────────────────────── */
+(function ritualClip() {
+  if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') return;
+  if (window.matchMedia('(prefers-reduced-motion:reduce)').matches) return;
+
+  var images = document.querySelectorAll('.ritual-image');
+  images.forEach(function (img, i) {
+    gsap.fromTo(img,
+      { clipPath: 'inset(100% 0 0 0)' },
+      {
+        clipPath: 'inset(0% 0 0 0)',
+        duration: 1.4,
+        ease: 'expo.inOut',
+        delay: i * 0.18,
+        scrollTrigger: {
+          trigger: img,
+          start: 'top 82%',
+          toggleActions: 'play none none none'
+        }
+      }
+    );
+  });
+
+})();
