@@ -1643,3 +1643,18 @@ body.cookie-visible #mobile-cta{bottom:var(--cookie-h,80px);}
   padding-right: 38px;
   transition: border-color 0.25s ease;
 }
+
+/* ── Fraunces variable serif — display headlines only ─────────────
+   Applied to all weight-900 display text above 36px.
+   Helvetica kept for body, stats, UI elements.                      */
+.hero-headline,
+.h2,
+.order-h2 {
+  font-family: 'Fraunces', 'Helvetica Neue', Helvetica, Arial, sans-serif !important;
+  font-variation-settings: 'opsz' 144, 'WONK' 1;
+}
+.hero-wm-text {
+  font-family: 'Fraunces', 'Helvetica Neue', Helvetica, Arial, sans-serif !important;
+  font-variation-settings: 'opsz' 144, 'WONK' 0;
+  letter-spacing: -0.06em;
+}
