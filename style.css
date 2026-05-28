@@ -82,8 +82,16 @@ input,select,textarea{cursor:none!important;caret-color:var(--ink)}
 }
 
 /* ── PROGRESS ─────────────────────────────────────────────────── */
-#prog{position:fixed;top:0;left:0;width:4px;height:0;background:var(--gold);z-index:9996}
-#prog-r{position:fixed;top:0;right:0;width:4px;height:0;background:var(--gold);z-index:9996}
+#prog{
+  position:fixed;top:0;left:0;width:1px;height:0;
+  background:linear-gradient(to bottom, rgba(248,244,236,0.0) 0%, rgba(248,244,236,0.55) 40%, rgba(184,134,11,0.7) 100%);
+  z-index:9996;
+}
+#prog-r{
+  position:fixed;top:0;right:0;width:1px;height:0;
+  background:linear-gradient(to bottom, rgba(248,244,236,0.0) 0%, rgba(248,244,236,0.55) 40%, rgba(184,134,11,0.7) 100%);
+  z-index:9996;
+}
 
 /* ── NAV ─────────────────────────────────────────────────── */
 #site-nav{
@@ -843,8 +851,8 @@ a:focus-visible,button:focus-visible{
 .nav-drawer.open .nav-drawer-link{opacity:1;transform:translateX(0)}
 
 /* Scroll progress — rounded cap */
-#prog{border-radius:0 1px 1px 0}
-#prog-r{border-radius:1px 0 0 1px}
+#prog{border-radius:0}
+#prog-r{border-radius:0}
 
 /* Order form inputs — focus ring matches brand */
 .form-row input:focus,.form-row select:focus{
