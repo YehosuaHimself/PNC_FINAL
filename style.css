@@ -375,10 +375,9 @@ input,select,textarea{cursor:none!important;caret-color:var(--ink)}
   padding-top:clamp(80px,14vh,160px);
 }
 .hp-name{
-  font-family:'Fraunces','Helvetica Neue',Helvetica,Arial,sans-serif;
+  font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;
   font-weight:900;font-size:clamp(40px,5vw,72px);
-  font-variation-settings:'opsz' 144,'WONK' 1;
-  letter-spacing:-0.045em;line-height:0.88;color:var(--cream);
+  letter-spacing:-0.05em;line-height:0.88;color:var(--cream);
   margin-bottom:14px;
 }
 .hp-origin{
