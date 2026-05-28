@@ -396,9 +396,10 @@
     scrollTrigger: {
       trigger: section,
       pin: true,
-      scrub: 1.2,
+      anticipatePin: 1,
+      scrub: 1.0,
       start: 'top top',
-      end: '+=' + ((totalPanels - 1) * window.innerHeight * 1.6) + 'px',
+      end: () => '+=' + ((totalPanels - 1) * window.innerHeight * 1.5) + 'px',
       onUpdate: function (self) {
         var p = self.progress;
         if (bar) bar.style.width = (p * 100) + '%';
@@ -541,15 +542,15 @@
   cards.forEach(function (card, i) {
     card.classList.remove('reveal', 'reveal-d2');
     gsap.fromTo(card,
-      { opacity: 0, y: 52, rotateX: 6 },
+      { opacity: 0, y: 40 },
       {
-        opacity: 1, y: 0, rotateX: 0,
-        duration: 1.1, ease: 'expo.out',
-        delay: i * 0.14,
+        opacity: 1, y: 0,
+        duration: 0.9, ease: 'expo.out',
+        delay: i * 0.12,
         clearProps: 'transform,opacity',
         scrollTrigger: {
           trigger: card,
-          start: 'top 82%',
+          start: 'top 85%',
           toggleActions: 'play none none none'
         }
       }

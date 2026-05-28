@@ -7,8 +7,8 @@ html,html.lenis,html.lenis body{height:auto}
 .lenis.lenis-smooth{scroll-behavior:auto!important}
 em,i,cite,address,b,strong{font-style:normal}
 /* Preserve Fraunces italic for selective swash accents; normalise everything else */
-*:not(.fraunces-italic):not(.tn-name):not(.hl-sub):not(.proof-num){font-style:normal!important}
-.g-mybread,.fraunces-italic,.tn-name,.proof-num{font-style:italic!important}
+*:not(.fraunces-italic):not(.tn-name):not(.hl-sub){font-style:normal!important}
+.g-mybread,.fraunces-italic,.tn-name{font-style:italic!important}
 
 /* ── TOKENS ─────────────────────────────────────────────────── */
 :root{
@@ -644,10 +644,9 @@ footer::before{
 }
 .ft-statement-line{
   display:block;
-  font-family:'Fraunces','Helvetica Neue',Helvetica,Arial,sans-serif;
+  font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;
   font-size:clamp(42px,7vw,96px);
   font-weight:900;
-  font-variation-settings:'opsz' 144,'WONK' 1;
   letter-spacing:-0.02em;
   line-height:0.95;
   color:rgba(248,244,236,0.07);
@@ -1137,10 +1136,9 @@ section[id="origins"] {
   z-index:1;
 }
 .proof-num{
-  font-family:'Fraunces','Helvetica Neue',Helvetica,Arial,sans-serif;
+  font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;
   font-weight:900;
   font-style:italic;
-  font-variation-settings:'opsz' 144,'WONK' 1;
   font-size:clamp(48px,7vw,104px);
   letter-spacing:-0.03em;
   line-height:1;
@@ -1192,7 +1190,6 @@ section[id="origins"] {
 .manifesto {
   position: relative;
   background: var(--ink);
-  overflow: hidden;
 }
 
 /* ── Subliminal Latin text layer — scrolls opposite to panels ── */
@@ -1202,10 +1199,9 @@ section[id="origins"] {
   bottom: clamp(24px, 4vh, 48px);
   left: 0;
   width: max-content;
-  font-family: 'Fraunces', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
   font-weight: 900;
   font-style: italic;
-  font-variation-settings: 'opsz' 144, 'WONK' 1;
   font-size: clamp(11px, 1.1vw, 16px);
   letter-spacing: 0.28em;
   text-transform: uppercase;
@@ -1223,6 +1219,7 @@ section[id="origins"] {
   display: flex;
   width: 300vw; /* 3 panels × 100vw */
   will-change: transform;
+  overflow: hidden;
 }
 
 .manifesto-panel {
