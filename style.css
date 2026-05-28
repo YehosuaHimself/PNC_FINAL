@@ -1195,6 +1195,30 @@ section[id="origins"] {
   overflow: hidden;
 }
 
+/* ── Subliminal Latin text layer — scrolls opposite to panels ── */
+.manifesto::after {
+  content: 'PANEM · NOSTRUM · COTIDIANUM · DA · NOBIS · HODIE · PANEM · NOSTRUM · COTIDIANUM · DA · NOBIS · HODIE · PANEM · NOSTRUM · COTIDIANUM';
+  position: absolute;
+  bottom: clamp(24px, 4vh, 48px);
+  left: 0;
+  width: max-content;
+  font-family: 'Fraunces', Georgia, serif;
+  font-weight: 900;
+  font-style: italic;
+  font-variation-settings: 'opsz' 144, 'WONK' 1;
+  font-size: clamp(11px, 1.1vw, 16px);
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: rgba(248,244,236,0.045);
+  pointer-events: none;
+  white-space: nowrap;
+  will-change: transform;
+  z-index: 0;
+  /* JS will drive translateX via --mp-scroll custom property */
+  transform: translateX(var(--mp-offset, 0px));
+  transition: transform 0.05s linear;
+}
+
 .manifesto-track {
   display: flex;
   width: 300vw; /* 3 panels × 100vw */

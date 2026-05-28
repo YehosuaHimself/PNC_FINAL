@@ -415,6 +415,9 @@
           if (i === activeIdx) panel.classList.add('mp-active');
           else panel.classList.remove('mp-active');
         });
+        /* Counter-scroll the subliminal Latin text layer */
+        /* Moves opposite direction: right as panels scroll left */
+        section.style.setProperty('--mp-offset', (p * 180) + 'px');
       }
     }
   });
