@@ -514,3 +514,68 @@
     );
   });
 })();
+
+
+/* ── ORIGIN SECTION — staggered card entrance ────────────────────────
+   Cards slide up from below on scroll enter.
+   Map SVG country path draws its stroke.
+────────────────────────────────────────────────────────────────────── */
+(function originReveal() {
+  if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') return;
+
+  var cards = document.querySelectorAll('.origin-card');
+  if (!cards.length) return;
+
+  cards.forEach(function (card, i) {
+    card.classList.remove('reveal', 'reveal-d2');
+    gsap.fromTo(card,
+      { opacity: 0, y: 52, rotateX: 6 },
+      {
+        opacity: 1, y: 0, rotateX: 0,
+        duration: 1.1, ease: 'expo.out',
+        delay: i * 0.14,
+        clearProps: 'transform,opacity',
+        scrollTrigger: {
+          trigger: card,
+          start: 'top 82%',
+          toggleActions: 'play none none none'
+        }
+      }
+    );
+  });
+
+  /* Origin headline clip-up */
+  var headline = document.querySelector('.origin-headline');
+  if (headline) {
+    headline.classList.remove('reveal');
+    gsap.fromTo(headline,
+      { opacity: 0, y: 36 },
+      {
+        opacity: 1, y: 0,
+        duration: 1.1, ease: 'expo.out',
+        clearProps: 'transform,opacity',
+        scrollTrigger: {
+          trigger: headline,
+          start: 'top 85%',
+          toggleActions: 'play none none none'
+        }
+      }
+    );
+  }
+
+  /* Pulse rings scale up dramatically on card hover */
+  cards.forEach(function (card) {
+    var pulses = card.querySelectorAll('.oc-pulse');
+    card.addEventListener('mouseenter', function () {
+      pulses.forEach(function (p) {
+        p.style.animationDuration = '1.4s';
+      });
+    });
+    card.addEventListener('mouseleave', function () {
+      pulses.forEach(function (p) {
+        p.style.animationDuration = '2.8s';
+      });
+    });
+  });
+
+})();
