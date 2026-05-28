@@ -270,11 +270,23 @@ document.addEventListener('DOMContentLoaded',function(){
       window.location.href = data.url;
     } catch(err) {
       clearTimeout(timeoutId);
-      console.error('bread checkout error:', err);
       btn.disabled = false;
       btn.textContent = orig;
       btn.style.minWidth = '';
       setErr('Something went wrong — please try again or email hello@pncbread.love');
+      /* Best-effort lead capture: save to waitlist even if checkout fails */
+      try {
+        fetch(SUPA_URL + '/rest/v1/waitlist', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'apikey': SUPA_ANON,
+            'Authorization': 'Bearer ' + SUPA_ANON,
+            'Prefer': 'return=minimal'
+          },
+          body: JSON.stringify({ email: email, name: name, sku: sku, country: country, product: 'bread' })
+        }).catch(function(){});
+      } catch(e2) {}
     }
   });
 })();
