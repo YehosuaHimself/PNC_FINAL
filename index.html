@@ -243,10 +243,22 @@ html, body {
   text-transform: uppercase;
   color: rgba(248,244,236,0.40);
   margin-top: clamp(16px, 2.5vh, 28px);
+  position: relative;
+  padding-top: clamp(12px, 1.8vh, 20px);
 
   opacity: 0;
   transform: translateY(8px);
   animation: breatheUp 2.8s cubic-bezier(0.16,1,0.3,1) var(--t-prayer) forwards;
+}
+.g-prayer::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 40px;
+  height: 1px;
+  background: rgba(248,244,236,0.18);
 }
 
 /* ── SHARED KEYFRAMES ──────────────────────────────────────── */
