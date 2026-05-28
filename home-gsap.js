@@ -669,3 +669,49 @@
   });
 
 })();
+
+
+/* ── MANIFESTO CLAIM — char-by-char color fill on scroll ─────────────
+   As the user scrolls through each panel, the claim text chars
+   light up from left to right — like words becoming real.
+────────────────────────────────────────────────────────────────────── */
+(function manifestoClaims() {
+  if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') return;
+  if (!window.matchMedia('(min-width: 641px)').matches) return;
+  if (window.matchMedia('(prefers-reduced-motion:reduce)').matches) return;
+
+  var claims = document.querySelectorAll('.mp-claim');
+  claims.forEach(function (claim) {
+    /* Split into chars */
+    var text = claim.innerText;
+    claim.innerHTML = '';
+    claim.setAttribute('aria-label', text);
+
+    text.split('').forEach(function (ch) {
+      var s = document.createElement('span');
+      s.setAttribute('aria-hidden', 'true');
+      s.style.cssText = 'display:inline-block;color:rgba(248,244,236,0.10);transition:none;';
+      s.textContent = ch === '\n' ? '\u00A0' : ch;
+      if (ch === '\n') { claim.appendChild(document.createElement('br')); return; }
+      claim.appendChild(s);
+    });
+
+    var chars = claim.querySelectorAll('span');
+
+    gsap.to(chars, {
+      color: 'rgba(248,244,236,1)',
+      duration: 0.01,
+      stagger: {
+        each: 0.025,
+        from: 'start'
+      },
+      scrollTrigger: {
+        trigger: claim,
+        start: 'top 70%',
+        end: 'top 20%',
+        scrub: 0.8
+      }
+    });
+  });
+
+})();
