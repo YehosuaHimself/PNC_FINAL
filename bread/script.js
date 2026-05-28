@@ -26,8 +26,10 @@
   /* ── Color detection via elementFromPoint — zero stale cache ── */
   function isDarkUnder(x, y) {
     dot.style.display  = 'none';
+    if (ring) ring.style.display = 'none';
     var el = document.elementFromPoint(x, y);
     dot.style.display  = '';
+    if (ring) ring.style.display = '';
     if (!el) return false;
     var node = el;
     while (node && node !== document.documentElement) {
