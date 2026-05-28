@@ -594,6 +594,52 @@ footer::before{
   pointer-events:none;z-index:0;
 }
 .footer-links,.footer-logo,.footer-copy{position:relative;z-index:1;}
+
+/* ── FOOTER EDITORIAL STATEMENT ─────────────────────────────────────── */
+.ft-statement{
+  position:relative;z-index:1;
+  text-align:center;
+  margin-bottom:clamp(12px,2vw,20px);
+  overflow:hidden;
+}
+.ft-statement-line{
+  display:block;
+  font-family:'Fraunces',Georgia,serif;
+  font-size:clamp(42px,7vw,96px);
+  font-weight:900;
+  font-variation-settings:'opsz' 144,'WONK' 1;
+  letter-spacing:-0.02em;
+  line-height:0.95;
+  color:rgba(248,244,236,0.07);
+  text-transform:none;
+  user-select:none;
+  transition:color 1.2s ease;
+}
+footer:hover .ft-statement-line{
+  color:rgba(248,244,236,0.11);
+}
+.ft-creed{
+  position:relative;z-index:1;
+  font-family:'Courier New',monospace;
+  font-size:clamp(10px,0.85vw,13px);
+  font-weight:600;
+  letter-spacing:0.32em;
+  text-transform:uppercase;
+  color:rgba(248,244,236,0.28);
+  text-align:center;
+  margin-bottom:clamp(18px,2.5vw,28px);
+}
+.ft-coords{
+  position:relative;z-index:1;
+  font-family:'Courier New',monospace;
+  font-size:10px;
+  font-weight:600;
+  letter-spacing:0.22em;
+  text-transform:uppercase;
+  color:rgba(248,244,236,0.10);
+  text-align:center;
+  margin-top:16px;
+}
 .footer-logo{
   font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;
   font-weight:900;font-size:13px;letter-spacing:0.24em;text-transform:uppercase;
