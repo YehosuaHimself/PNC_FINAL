@@ -430,6 +430,24 @@ input,select,textarea{cursor:none!important;caret-color:var(--ink)}
 .ticker{
   background:var(--cocoa);overflow:hidden;
   padding:28px 0;white-space:nowrap;
+  position:relative;
+}
+/* Fade edges — left and right vignette */
+.ticker::before,
+.ticker::after {
+  content:'';
+  position:absolute;top:0;bottom:0;
+  width:clamp(40px,6vw,100px);
+  z-index:2;
+  pointer-events:none;
+}
+.ticker::before {
+  left:0;
+  background:linear-gradient(90deg, var(--cocoa) 0%, transparent 100%);
+}
+.ticker::after {
+  right:0;
+  background:linear-gradient(270deg, var(--cocoa) 0%, transparent 100%);
 }
 .ticker-inner{
   display:inline-flex;
@@ -441,8 +459,11 @@ input,select,textarea{cursor:none!important;caret-color:var(--ink)}
   font-family:'Courier New',monospace;font-size:15px;font-weight:600;
   letter-spacing:0.28em;text-transform:uppercase;
   color:rgba(248,244,236,0.55);padding:0 44px;
+  transition:color 0.3s ease;
 }
 .ticker-item.hl{color:rgba(248,244,236,0.95)}
+.ticker:hover .ticker-item { color:rgba(248,244,236,0.70); }
+.ticker:hover .ticker-item.hl { color:rgba(248,244,236,1); }
 
 /* ── SECTION BASE ─────────────────────────────────────────────────── */
 .section{padding:clamp(80px,12vw,160px) var(--g);contain:layout paint}
