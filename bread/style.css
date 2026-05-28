@@ -2558,3 +2558,72 @@ body.cookie-visible #mobile-cta{bottom:var(--cookie-h,80px);}
 @keyframes scrollFade {
   to { opacity: 1; }
 }
+
+/* ══════════════════════════════════════════════════════════════════
+   SECTION 2 — EDITORIAL DECOMPRESSION
+   Strip border-grid density, breathe, let typography lead
+   ══════════════════════════════════════════════════════════════════ */
+
+/* Larger section padding — more air entering the page */
+.formats-section {
+  padding: clamp(120px, 16vw, 200px) var(--g) !important;
+}
+
+/* Header: remove bottom border, increase gap */
+.formats-header {
+  border-bottom: none !important;
+  padding-bottom: 0 !important;
+  margin-bottom: clamp(80px, 10vw, 140px) !important;
+  gap: clamp(32px, 4vw, 64px) !important;
+}
+
+/* Single editorial rule line between header and grid */
+.formats-header::after {
+  content: '';
+  display: block;
+  grid-column: 1 / -1;
+  height: 1px;
+  background: rgba(248,244,236,0.1);
+  margin-top: clamp(32px, 4vw, 56px);
+}
+
+/* Grid: switch to gap-based breathing, no borders */
+.formats-grid {
+  gap: 0 clamp(32px, 4vw, 64px) !important;
+}
+
+/* Cards: no borders, more padding, let whitespace divide */
+.format-card {
+  border-right: none !important;
+  border-bottom: none !important;
+  border-top: 1px solid rgba(248,244,236,0.08) !important;
+  padding: clamp(32px, 4vw, 56px) 0 !important;
+  gap: 24px !important;
+}
+
+/* Formats note — more air above */
+.formats-note {
+  margin-top: clamp(60px, 8vw, 100px) !important;
+  border-top: 1px solid rgba(248,244,236,0.08) !important;
+}
+
+/* Responsive: keep border only on top */
+@media(max-width:1100px) {
+  .format-card:nth-child(1),
+  .format-card:nth-child(2),
+  .format-card:nth-child(3) {
+    border-bottom: none !important;
+  }
+}
+@media(max-width:768px) {
+  .format-card:nth-child(1),
+  .format-card:nth-child(2),
+  .format-card:nth-child(3),
+  .format-card:nth-child(4) {
+    border-bottom: none !important;
+  }
+  .format-card { border-right: none !important; }
+}
+@media(max-width:580px) {
+  .format-card { border-bottom: none !important; }
+}

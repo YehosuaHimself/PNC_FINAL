@@ -2090,3 +2090,55 @@ body.cookie-visible #mobile-cta{bottom:var(--cookie-h,80px);}
   color: rgba(248,244,236,0.3);
   margin: 0;
 }
+
+/* ══════════════════════════════════════════════════════════════════
+   TASTING SECTION — EDITORIAL DECOMPRESSION
+   Transparent cards, air-based grid, borders stripped, type leads
+   ══════════════════════════════════════════════════════════════════ */
+
+/* More section padding */
+.tasting {
+  padding: clamp(120px, 16vw, 200px) var(--g) !important;
+}
+.tasting-inner { padding: 0; }
+
+/* Header — more air below */
+.tasting-header {
+  margin-bottom: clamp(80px, 10vw, 140px) !important;
+}
+
+/* Grid: generous gap, no box borders */
+.tasting-grid {
+  gap: 0 clamp(48px, 6vw, 96px) !important;
+}
+
+/* Cards: transparent, no background boxes, just a top rule */
+.tasting-note {
+  background: transparent !important;
+  border: none !important;
+  border-top: 1px solid rgba(92,61,46,0.12) !important;
+  padding: clamp(40px, 5vw, 64px) 0 !important;
+  transform: none !important;
+  transition: none !important;
+}
+.tasting-note:hover {
+  background: transparent !important;
+  transform: none !important;
+}
+
+/* tn-when border — lighten to match new open feel */
+.tn-when {
+  border-top: 1px solid rgba(92,61,46,0.08) !important;
+}
+
+/* Certs strip — more space above, no tile borders */
+.tasting-certs {
+  margin-top: clamp(60px, 8vw, 100px) !important;
+  border-top: 1px solid rgba(92,61,46,0.1) !important;
+  padding-top: clamp(32px, 4vw, 56px) !important;
+  gap: 6px !important;
+}
+.cert-tag {
+  background: transparent !important;
+  border: 1px solid rgba(92,61,46,0.15) !important;
+}
