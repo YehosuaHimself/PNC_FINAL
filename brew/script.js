@@ -336,7 +336,7 @@ document.addEventListener('DOMContentLoaded',function(){
             'Authorization': 'Bearer ' + SUPA_ANON,
             'Prefer': 'return=minimal'
           },
-          body: JSON.stringify({ email: email, name: name, sku: sku, country: country, product: 'brew' })
+          body: JSON.stringify({ email: email, name: name, sku: selectedSku, country: country, product: 'brew' })
         }).catch(function(){});
       } catch(e2) {}
     }
