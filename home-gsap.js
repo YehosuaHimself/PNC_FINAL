@@ -579,3 +579,93 @@
   });
 
 })();
+
+
+/* ── HERO WATERMARK — deep parallax scroll drift ─────────────────────
+   The giant PNC watermark drifts at a different rate than the hero,
+   creating a parallax depth illusion. Combined with slight scale.
+────────────────────────────────────────────────────────────────────── */
+(function watermarkParallax() {
+  if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') return;
+  if (window.matchMedia('(prefers-reduced-motion:reduce)').matches) return;
+
+  var wm = document.querySelector('.hero-watermark-text');
+  if (!wm) return;
+
+  gsap.to(wm, {
+    yPercent: -18,
+    scale: 1.04,
+    ease: 'none',
+    scrollTrigger: {
+      trigger: '.hero',
+      start: 'top top',
+      end: 'bottom top',
+      scrub: 1.4
+    }
+  });
+
+})();
+
+
+/* ── HERO PRODUCTS — parallax depth scroll ───────────────────────────
+   The two cards drift at slightly different speeds on scroll,
+   creating a depth separation between bread and coffee.
+────────────────────────────────────────────────────────────────────── */
+(function heroProductsParallax() {
+  if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') return;
+  if (window.matchMedia('(prefers-reduced-motion:reduce)').matches) return;
+  if (!window.matchMedia('(hover:hover) and (min-width:768px)').matches) return;
+
+  var cards = document.querySelectorAll('.hero-product');
+  if (cards.length < 2) return;
+
+  /* Card 1: bread — slower parallax (feels heavier) */
+  gsap.to(cards[0], {
+    y: -32,
+    ease: 'none',
+    scrollTrigger: {
+      trigger: '.hero-products',
+      start: 'top bottom',
+      end: 'bottom top',
+      scrub: 1.6
+    }
+  });
+
+  /* Card 2: brew — faster parallax (feels lighter) */
+  gsap.to(cards[1], {
+    y: -52,
+    ease: 'none',
+    scrollTrigger: {
+      trigger: '.hero-products',
+      start: 'top bottom',
+      end: 'bottom top',
+      scrub: 1.0
+    }
+  });
+
+})();
+
+
+/* ── PROOF STRIP NUMBERS — letter-spacing expand on enter ────────────
+   Numbers expand their tracking as they count up for extra drama.
+────────────────────────────────────────────────────────────────────── */
+(function proofTracking() {
+  if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') return;
+
+  var nums = document.querySelectorAll('.proof-num');
+  nums.forEach(function (el) {
+    gsap.fromTo(el,
+      { letterSpacing: '-0.06em', opacity: 0, y: 20 },
+      {
+        letterSpacing: '-0.03em', opacity: 1, y: 0,
+        duration: 1.0, ease: 'expo.out',
+        scrollTrigger: {
+          trigger: el,
+          start: 'top 80%',
+          toggleActions: 'play none none none'
+        }
+      }
+    );
+  });
+
+})();
