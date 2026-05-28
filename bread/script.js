@@ -3,7 +3,7 @@
   var ring = document.getElementById('cur-ring');
   if (!dot || window.matchMedia('(pointer:coarse)').matches) return;
 
-  var C_DARK  = '#2A1810';
+  var C_DARK  = '#4A3018';
   var C_LIGHT = '#F8F4EC';
   var DOT_R   = 32;
   var RING_RX = 32, RING_RY = 35;
