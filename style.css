@@ -992,7 +992,7 @@ a:focus-visible,button:focus-visible{
 .proof-num{
   font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;
   font-weight:900;
-  font-size:clamp(36px,5.5vw,80px);
+  font-size:clamp(48px,7vw,104px);
   letter-spacing:-0.04em;
   line-height:1;
   color:var(--cream);
@@ -1007,7 +1007,7 @@ a:focus-visible,button:focus-visible{
 }
 .proof-label{
   font-family:'Courier New',monospace;
-  font-size:clamp(9px,0.75vw,12px);
+  font-size:clamp(10px,0.9vw,13px);
   font-weight:600;
   letter-spacing:0.22em;
   text-transform:uppercase;
