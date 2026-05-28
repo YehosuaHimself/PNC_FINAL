@@ -2861,3 +2861,12 @@ body.cookie-visible #mobile-cta{bottom:var(--cookie-h,80px);}
     grid-template-columns: 1fr !important;
   }
 }
+
+/* SS4: Remove gold divider line in statement-hero */
+.stmt-divider-line {
+  display: none !important;
+}
+/* SS4: MY BREAD italic */
+.blessing-quote:first-of-type {
+  font-style: italic !important;
+}
