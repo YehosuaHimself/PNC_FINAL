@@ -771,3 +771,142 @@
 .hero-headline .hl-clip {
   padding-bottom: 0.04em;
 }
+
+
+/* ═══════════════════════════════════════════════════════════════════
+   PRINCIPLES SECTION
+   Three rules. Expand on hover. Numbered. Editorial.
+═══════════════════════════════════════════════════════════════════ */
+
+.principles-section {
+  padding: clamp(80px,12vw,140px) var(--g);
+  background: var(--dark);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Grid overlay */
+.principles-section::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(248,220,160,0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(248,220,160,0.025) 1px, transparent 1px);
+  background-size: 80px 80px;
+  pointer-events: none;
+}
+
+.principles-inner {
+  max-width: var(--max);
+  margin: 0 auto;
+  position: relative;
+}
+
+.principles-header {
+  margin-bottom: clamp(40px, 6vw, 72px);
+  border-top: 1px solid rgba(248,244,236,0.07);
+  padding-top: clamp(20px, 3vw, 32px);
+}
+
+.principles-eyebrow {
+  color: rgba(248,244,236,0.32) !important;
+}
+
+/* ── LIST ITEMS ──────────────────────────────────────────────── */
+
+.principle-item {
+  display: grid;
+  grid-template-columns: clamp(40px, 5vw, 80px) 1fr auto;
+  align-items: start;
+  gap: clamp(16px, 2.5vw, 32px);
+  padding: clamp(24px, 3.5vw, 40px) 0;
+  position: relative;
+  overflow: hidden;
+}
+
+.pi-line {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: rgba(248,244,236,0.07);
+  transform-origin: left;
+}
+
+/* Line draw in on hover */
+@media (hover:hover) {
+  .principle-item:hover .pi-line {
+    background: rgba(248,244,236,0.14);
+  }
+}
+
+.pi-num {
+  font-family: 'Courier New', monospace;
+  font-size: clamp(10px, 1vw, 13px);
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  color: rgba(248,244,236,0.20);
+  padding-top: 0.25em;
+  user-select: none;
+}
+
+.pi-body {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.pi-rule {
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-weight: 900;
+  font-size: clamp(20px, 2.8vw, 40px);
+  letter-spacing: -0.025em;
+  line-height: 1.0;
+  color: rgba(248,244,236,0.90);
+  transition: color 0.3s;
+}
+
+@media (hover:hover) {
+  .principle-item:hover .pi-rule {
+    color: rgba(248,244,236,1);
+  }
+}
+
+.pi-expand {
+  font-size: clamp(13px, 1.2vw, 15px);
+  color: rgba(248,244,236,0.40);
+  line-height: 1.75;
+  max-width: 560px;
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  transition:
+    max-height 0.6s cubic-bezier(.16,1,.3,1),
+    opacity 0.5s cubic-bezier(.16,1,.3,1),
+    margin-top 0.4s cubic-bezier(.16,1,.3,1);
+  margin-top: 0;
+}
+
+@media (hover:hover) {
+  .principle-item:hover .pi-expand {
+    max-height: 200px;
+    opacity: 1;
+    margin-top: clamp(12px, 1.8vw, 20px);
+  }
+}
+
+/* Always show on mobile */
+@media (pointer:coarse) {
+  .pi-expand {
+    max-height: none;
+    opacity: 1;
+    margin-top: 12px;
+    color: rgba(248,244,236,0.42);
+  }
+}
+
+@media (prefers-reduced-motion:reduce) {
+  .pi-expand { transition: none; }
+}
