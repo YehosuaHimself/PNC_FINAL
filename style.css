@@ -957,3 +957,84 @@ a:focus-visible,button:focus-visible{
   background:var(--cocoa-mu);flex-shrink:0;opacity:0.5;
 }
 .ship-badge[data-dark] .ship-dot{background:rgba(248,244,236,0.4);}
+
+/* ── PROOF STRIP ─────────────────────────────────────────────── */
+.proof-strip{
+  background:var(--ink);
+  padding:clamp(60px,8vh,100px) var(--g);
+  overflow:hidden;
+  position:relative;
+}
+.proof-strip::before{
+  content:'';
+  position:absolute;
+  inset:0;
+  background-image:
+    linear-gradient(rgba(248,220,160,0.04) 1px, transparent 1px),
+    linear-gradient(90deg,rgba(248,220,160,0.04) 1px, transparent 1px);
+  background-size:100% 72px, 72px 100%;
+  pointer-events:none;
+}
+.proof-inner{
+  max-width:var(--max);
+  margin:0 auto;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:clamp(20px,3vw,48px);
+  flex-wrap:wrap;
+}
+.proof-item{
+  flex:1 1 140px;
+  text-align:center;
+  position:relative;
+  z-index:1;
+}
+.proof-num{
+  font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;
+  font-weight:900;
+  font-size:clamp(36px,5.5vw,80px);
+  letter-spacing:-0.04em;
+  line-height:1;
+  color:var(--cream);
+  margin-bottom:clamp(10px,1.5vh,16px);
+  /* Initial state for GSAP */
+  opacity:0;
+  transform:translateY(30px);
+}
+.proof-num.visible{
+  opacity:1;
+  transform:translateY(0);
+}
+.proof-label{
+  font-family:'Courier New',monospace;
+  font-size:clamp(9px,0.75vw,12px);
+  font-weight:600;
+  letter-spacing:0.22em;
+  text-transform:uppercase;
+  color:rgba(248,244,236,0.35);
+  line-height:1.7;
+  opacity:0;
+  transform:translateY(12px);
+  transition:opacity 0.8s ease, transform 0.8s ease;
+}
+.proof-label.visible{
+  opacity:1;
+  transform:translateY(0);
+}
+.proof-divider{
+  width:1px;
+  height:clamp(40px,6vh,80px);
+  background:rgba(248,244,236,0.10);
+  flex-shrink:0;
+  transform:scaleY(0);
+  transform-origin:top center;
+  transition:transform 1s cubic-bezier(0.16,1,0.3,1);
+}
+.proof-divider.visible{
+  transform:scaleY(1);
+}
+@media(max-width:640px){
+  .proof-divider{display:none}
+  .proof-item{flex:1 1 calc(50% - 20px)}
+}

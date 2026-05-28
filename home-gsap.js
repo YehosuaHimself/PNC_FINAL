@@ -315,3 +315,74 @@
   })();
 
 })();
+
+/* ── 8. PROOF STRIP — staggered number count-up + line draw ─────
+   Numbers count up from 0 as each enters viewport.
+   Column dividers draw down. Labels fade in with stagger.
+───────────────────────────────────────────────────────────────── */
+(function proofStrip() {
+  var nums = document.querySelectorAll('.proof-num');
+  var labels = document.querySelectorAll('.proof-label');
+  var dividers = document.querySelectorAll('.proof-divider');
+  if (!nums.length) return;
+
+  function easeOutExpo(t) {
+    return t === 1 ? 1 : 1 - Math.pow(2, -10 * t);
+  }
+
+  function countUp(el, target, prefix, suffix, duration, delay) {
+    setTimeout(function () {
+      var start = null;
+      var isFloat = !Number.isInteger(target);
+      function tick(now) {
+        if (!start) start = now;
+        var progress = Math.min((now - start) / duration, 1);
+        var eased = easeOutExpo(progress);
+        var current = Math.round(target * eased);
+        el.textContent = (prefix || '') + current.toLocaleString() + (suffix || '');
+        if (progress < 1) requestAnimationFrame(tick);
+        else el.textContent = (prefix || '') + target.toLocaleString() + (suffix || '');
+      }
+      requestAnimationFrame(tick);
+    }, delay || 0);
+  }
+
+  var triggered = false;
+  var strip = document.querySelector('.proof-strip');
+  if (!strip) return;
+
+  ScrollTrigger.create({
+    trigger: strip,
+    start: 'top 75%',
+    onEnter: function () {
+      if (triggered) return;
+      triggered = true;
+
+      /* Draw dividers */
+      dividers.forEach(function (d, i) {
+        setTimeout(function () { d.classList.add('visible'); }, i * 80);
+      });
+
+      /* Animate numbers */
+      nums.forEach(function (el, i) {
+        var target = parseInt(el.dataset.target, 10);
+        var prefix = el.dataset.prefix || '';
+        var suffix = el.dataset.suffix || '';
+        var delay = i * 90;
+
+        /* GSAP fade-up */
+        gsap.to(el, {
+          opacity: 1, y: 0, duration: 0.9, ease: 'expo.out', delay: delay / 1000
+        });
+
+        /* Count-up */
+        countUp(el, target, prefix, suffix, 1200, delay);
+      });
+
+      /* Fade labels */
+      labels.forEach(function (el, i) {
+        setTimeout(function () { el.classList.add('visible'); }, i * 90 + 300);
+      });
+    }
+  });
+})();
