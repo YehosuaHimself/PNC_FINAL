@@ -1493,3 +1493,39 @@ section[id="origins"] {
   letter-spacing: 0.52em;
   color: rgba(248,244,236,0.58);
 }
+
+/* ── HOME PAGE — SAND-WARM ADJUSTMENTS ─────────────────────────────── */
+/* Align home hero with the new sand-brown bread identity.              */
+/* Brew card and dark sections (manifesto, proof-strip) stay unchanged. */
+
+/* Hero watermark — richer warm sand-brown instead of near-black        */
+.hero-watermark-text {
+  color: rgba(139,104,64,0.07);
+}
+
+/* Hero product container — warm sand border/bg tint */
+.hero-products {
+  background: rgba(139,104,64,0.06);
+  border-color: rgba(139,104,64,0.2);
+}
+
+/* Bread card — updated overlay to match new ink #4A3018 */
+.hero-product--bread {
+  background-image:
+    linear-gradient(to top,
+      rgba(74,48,24,0.97) 0%,
+      rgba(74,48,24,0.72) 38%,
+      rgba(74,48,24,0.18) 68%,
+      rgba(74,48,24,0.10) 100%),
+    url('/img/bread-hero.webp');
+}
+
+/* Proof-strip — slightly warmer dark tone */
+.proof-strip {
+  background: var(--dark);
+}
+
+/* Press strip border — warm sand tint */
+.press-strip {
+  border-color: rgba(139,104,64,0.12);
+}
