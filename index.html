@@ -36,21 +36,21 @@
 
   /* ── Sequence timing ──────────────────────────────────────────
      0.0s  page loads
-     0.6s  eyebrow surfaces
-     2.0s  MY BREAD rises
-     3.4s  PANEM NOSTRUM begins expanding
-     5.2s  translation whispers in
-     6.4s  — THE PRAYER — appears
-     8.0s  gate begins lifting
-     9.8s  redirect fires
+     0.3s  eyebrow surfaces
+     1.1s  MY BREAD rises
+     2.0s  PANEM NOSTRUM begins expanding
+     3.2s  translation whispers in
+     3.9s  — THE PRAYER — appears
+     4.8s  gate begins lifting
+     6.5s  redirect fires
   ─────────────────────────────────────────────────────────────── */
-  --t-eyebrow:     0.6s;
-  --t-mybread:     2.0s;
-  --t-panem:       3.4s;
-  --t-translation: 5.2s;
-  --t-prayer:      6.4s;
-  --t-lift:        8.0s;
-  --lift-dur:      2.2s;
+  --t-eyebrow:     0.3s;
+  --t-mybread:     1.1s;
+  --t-panem:       2.0s;
+  --t-translation: 3.2s;
+  --t-prayer:      3.9s;
+  --t-lift:        4.8s;
+  --lift-dur:      1.8s;
 }
 
 html, body {
@@ -275,7 +275,7 @@ html, body {
   padding: 10px 20px;
   cursor: pointer !important;
   opacity: 0;
-  animation: breatheUp 1.5s cubic-bezier(0.16,1,0.3,1) 2.0s forwards;
+  animation: breatheUp 1.5s cubic-bezier(0.16,1,0.3,1) 0.5s forwards;
   transition: color 0.2s, border-color 0.2s;
 }
 #gate-skip:hover, #gate-skip:focus {
@@ -340,8 +340,8 @@ if (sessionStorage.getItem('pnc_gate_seen')) {
   });
 
   // Redirect after gate lift completes
-  // t-lift (8.0s) + lift-dur (2.2s) + small buffer = 11s
-  var REDIRECT_DELAY = 11000;
+  // t-lift (4.8s) + lift-dur (1.8s) + small buffer = 7s
+  var REDIRECT_DELAY = 7000;
 
   // Respect reduced-motion: compress timing
   if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
