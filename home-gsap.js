@@ -406,6 +406,15 @@
           if (p > 0.05) hint.classList.add('hidden');
           else hint.classList.remove('hidden');
         }
+        /* Mark the active panel for breathing animation */
+        var activeIdx = Math.min(
+          Math.floor(p * totalPanels),
+          totalPanels - 1
+        );
+        panels.forEach(function (panel, i) {
+          if (i === activeIdx) panel.classList.add('mp-active');
+          else panel.classList.remove('mp-active');
+        });
       }
     }
   });
