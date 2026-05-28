@@ -1175,3 +1175,12 @@ a:focus-visible,button:focus-visible{
   .mp-num { font-size: clamp(100px,20vw,160px); }
   .manifesto-hint { display:none; }
 }
+
+
+/* ── PHILOSOPHY CTA ROW ──────────────────────────────────────────── */
+.phil-cta-row {
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+  margin-bottom: clamp(24px,3vh,40px);
+}
