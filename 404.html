@@ -12,19 +12,17 @@ html,body{height:100%;background:#2A1810;color:#F8F4EC;-webkit-font-smoothing:an
 *{cursor:none!important}
 a,button{cursor:none!important}
 @media(pointer:coarse){*{cursor:auto!important}a,button{cursor:pointer!important}}
-#cur-dot-404{
+#cur-dot{
   position:fixed;top:0;left:0;width:10px;height:10px;
-  border-radius:50%;background:#F8F4EC;
+  border-radius:0;background:#F8F4EC;
   pointer-events:none;z-index:9999;
   transform:translate(-9999px,-9999px);
-  transition:transform 40ms linear,opacity 160ms ease;
 }
-#cur-ring-404{
-  position:fixed;top:0;left:0;width:32px;height:32px;
-  border-radius:50%;border:1.5px solid rgba(248,244,236,0.5);
+#cur-ring{
+  position:fixed;top:0;left:0;width:96px;height:96px;
+  border-radius:0;border:1.5px solid rgba(248,244,236,0.6);
   pointer-events:none;z-index:9998;
   transform:translate(-9999px,-9999px);
-  transition:opacity 200ms ease;
 }
 body{
   font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;
@@ -95,8 +93,8 @@ body::before{
 </style>
 </head>
 <body>
-<div id="cur-dot-404" aria-hidden="true"></div>
-<div id="cur-ring-404" aria-hidden="true"></div>
+<div id="cur-dot" aria-hidden="true"></div>
+<div id="cur-ring" aria-hidden="true"></div>
 <p class="eyebrow">— Error 404 —</p>
 <div class="num" aria-hidden="true">404</div>
 <h1 class="headline">This page<br>is not here.</h1>
@@ -108,35 +106,6 @@ body::before{
 </div>
 <div class="rule"></div>
 <p class="foot">Panem Nostrum Cotidianum · MMXXVI</p>
-<script>
-(function(){
-  var dot = document.getElementById('cur-dot-404');
-  var ring = document.getElementById('cur-ring-404');
-  if (!dot || window.matchMedia('(pointer:coarse)').matches) return;
-  var mx=-9999,my=-9999,rx=-9999,ry=-9999,raf=null,s=0;
-  var LERP=0.14, DR=5, RR=16;
-  dot.style.willChange='transform';
-  ring.style.willChange='transform';
-  function loop(){
-    var dx=(mx-RR)-rx, dy=(my-RR)-ry;
-    rx+=dx*LERP; ry+=dy*LERP;
-    dot.style.transform='translate3d('+(mx-DR)+'px,'+(my-DR)+'px,0)';
-    ring.style.transform='translate3d('+rx+'px,'+ry+'px,0)';
-    if(Math.abs(dx)<0.3&&Math.abs(dy)<0.3){if(++s>4){raf=null;return;}}else{s=0;}
-    raf=requestAnimationFrame(loop);
-  }
-  function go(){s=0;if(raf===null)raf=requestAnimationFrame(loop);}
-  document.addEventListener('mousemove',function(e){mx=e.clientX;my=e.clientY;go();},{passive:true});
-  document.addEventListener('mouseleave',function(){
-    mx=-9999;my=-9999;
-    dot.style.transform='translate3d(-9999px,-9999px,0)';
-    ring.style.transform='translate3d(-9999px,-9999px,0)';
-  });
-  document.querySelectorAll('a,button').forEach(function(el){
-    el.addEventListener('mouseenter',function(){ring.style.width='44px';ring.style.height='44px';ring.style.marginLeft='-6px';ring.style.marginTop='-6px';ring.style.opacity='0.8';go();});
-    el.addEventListener('mouseleave',function(){ring.style.width='32px';ring.style.height='32px';ring.style.marginLeft='';ring.style.marginTop='';ring.style.opacity='';go();});
-  });
-})();
-</script>
+<script src="/cursor-square.js"></script>
 </body>
 </html>
