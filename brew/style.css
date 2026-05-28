@@ -1910,3 +1910,183 @@ body.cookie-visible #mobile-cta{bottom:var(--cookie-h,80px);}
   .stmt-footer { gap: 0.5rem; }
   .stmt-foot-sep { display: none; }
 }
+
+/* ═══════════════════════════════════════════════
+   CLOSED BATCH — ORDER SECTION OVERRIDES
+   ═══════════════════════════════════════════════ */
+
+/* Dimmed, non-interactive qty cards */
+.qty-grid--closed { pointer-events: none; }
+.qty-card--closed {
+  opacity: 0.28;
+  filter: grayscale(0.5);
+  cursor: default;
+  border-color: rgba(248,244,236,0.08) !important;
+}
+.qty-card--closed.selected,
+.qty-card--closed:focus { box-shadow: none; outline: none; }
+
+/* Closed order form container */
+.order-form--closed {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+  padding: 2.5rem 2rem;
+}
+
+/* Freshness seal — circular SVG badge */
+.freshness-seal { display: flex; flex-direction: column; align-items: center; }
+.freshness-ring {
+  position: relative;
+  width: 160px;
+  height: 160px;
+}
+.freshness-arc {
+  width: 160px;
+  height: 160px;
+  animation: sealSpin 20s linear infinite;
+  transform-origin: center;
+}
+@keyframes sealSpin { to { transform: rotate(360deg); } }
+.arc-text {
+  font-family: 'Courier New', monospace;
+  font-size: 9.5px;
+  letter-spacing: 0.14em;
+  fill: rgba(196,149,10,0.7);
+  text-transform: uppercase;
+}
+.freshness-core {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.2rem;
+}
+.freshness-icon {
+  font-size: 1.6rem;
+  line-height: 1;
+}
+.freshness-days {
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  font-weight: 900;
+  font-size: 2.4rem;
+  line-height: 1;
+  color: var(--cream, #F8F4EC);
+  text-align: center;
+}
+.freshness-days small {
+  display: block;
+  font-size: 0.55rem;
+  letter-spacing: 0.3em;
+  font-weight: 400;
+  opacity: 0.6;
+  margin-top: 0.1rem;
+}
+
+/* Batch notice block */
+.batch-notice {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+}
+.batch-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  background: rgba(196,149,10,0.1);
+  border: 1px solid rgba(196,149,10,0.25);
+  border-radius: 99px;
+  padding: 0.35rem 0.9rem;
+  width: fit-content;
+}
+.batch-badge-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #C4950A;
+  animation: pulseDot 2.4s ease-in-out infinite;
+}
+@keyframes pulseDot {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.35; transform: scale(0.7); }
+}
+.batch-badge-label {
+  font-family: 'Courier New', monospace;
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #C4950A;
+}
+.batch-headline {
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  font-weight: 700;
+  font-size: clamp(1.6rem, 3.5vw, 2.2rem);
+  line-height: 1.1;
+  color: var(--cream, #F8F4EC);
+  margin: 0;
+}
+.batch-body {
+  font-family: 'Courier New', monospace;
+  font-size: 11.5px;
+  line-height: 1.7;
+  letter-spacing: 0.06em;
+  color: rgba(248,244,236,0.65);
+  margin: 0;
+}
+.batch-email-row {
+  display: flex;
+  gap: 0.5rem;
+  width: 100%;
+}
+.batch-email-row input[type="email"] {
+  flex: 1;
+  background: rgba(248,244,236,0.06);
+  border: 1px solid rgba(248,244,236,0.2);
+  border-radius: 4px;
+  color: var(--cream, #F8F4EC);
+  font-family: 'Courier New', monospace;
+  font-size: 12px;
+  letter-spacing: 0.06em;
+  padding: 0.75rem 1rem;
+  outline: none;
+  transition: border-color 0.2s;
+}
+.batch-email-row input[type="email"]:focus {
+  border-color: rgba(196,149,10,0.7);
+}
+.batch-email-row input[type="email"]::placeholder { opacity: 0.4; }
+.batch-notify-btn {
+  background: #C4950A;
+  color: #1A0C00;
+  border: none;
+  border-radius: 4px;
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  font-weight: 700;
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  padding: 0.75rem 1.2rem;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: opacity 0.2s;
+}
+.batch-notify-btn:hover { opacity: 0.85; }
+.batch-confirmed {
+  font-family: 'Courier New', monospace;
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  color: #C4950A;
+  padding: 0.75rem 0;
+}
+.batch-note {
+  font-family: 'Courier New', monospace;
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(248,244,236,0.3);
+  margin: 0;
+}
