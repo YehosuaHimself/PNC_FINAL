@@ -231,6 +231,42 @@ document.addEventListener('DOMContentLoaded',function(){
   if(!btn) return;
 
   function emailValid(e){return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(e)}
+
+  /* ── Live inline validation ──────────────────────────────────── */
+  function setFieldValid(el){ el.setAttribute('aria-invalid','false'); el.classList.remove('field-error'); el.classList.add('field-ok'); }
+  function setFieldError(el){ el.setAttribute('aria-invalid','true'); el.classList.add('field-error'); el.classList.remove('field-ok'); }
+  function clearField(el){ el.setAttribute('aria-invalid','false'); el.classList.remove('field-error','field-ok'); }
+
+  if(nameEl){
+    nameEl.addEventListener('input', function(){
+      if(this.value.trim().length >= 2) setFieldValid(this);
+      else if(this.value.trim().length > 0) setFieldError(this);
+      else clearField(this);
+    });
+    nameEl.addEventListener('blur', function(){
+      if(this.value.trim().length < 2 && this.value.trim().length > 0) setFieldError(this);
+    });
+  }
+  if(emailEl){
+    emailEl.addEventListener('input', function(){
+      var v = this.value.trim();
+      if(emailValid(v)) setFieldValid(this);
+      else if(v.length > 5) setFieldError(this);
+      else clearField(this);
+    });
+    emailEl.addEventListener('blur', function(){
+      var v = this.value.trim();
+      if(v.length > 0 && !emailValid(v)) setFieldError(this);
+    });
+  }
+  if(cntryEl){
+    cntryEl.addEventListener('change', function(){
+      if(this.value) setFieldValid(this);
+      else setFieldError(this);
+    });
+  }
+  /* ── end live validation ─────────────────────────────────────── */
+
   function setErr(msg,fieldEl){
     msgEl.className='err';msgEl.textContent=msg;
     [nameEl,emailEl,cntryEl].forEach(function(el){if(el)el.setAttribute('aria-invalid','false');});
