@@ -93,6 +93,47 @@ input,select,textarea{cursor:none!important;caret-color:var(--ink)}
   z-index:9996;
 }
 
+/* ── SECTION COUNTER ─────────────────────────────────────── */
+#sec-counter{
+  position:fixed;
+  bottom:clamp(24px,3vw,40px);
+  right:clamp(16px,2.5vw,32px);
+  z-index:9995;
+  display:flex;
+  align-items:baseline;
+  gap:4px;
+  font-family:'Courier New',monospace;
+  font-size:11px;
+  font-weight:600;
+  letter-spacing:0.18em;
+  color:rgba(248,244,236,0.0);
+  pointer-events:none;
+  transition:color 0.5s ease, opacity 0.5s ease;
+  user-select:none;
+  mix-blend-mode:normal;
+}
+#sec-counter.visible{
+  color:rgba(248,244,236,0.22);
+}
+#sec-cur{
+  font-size:13px;
+  letter-spacing:0.14em;
+  transition:opacity 0.25s ease;
+}
+.sec-div{
+  color:rgba(248,244,236,0.10);
+  font-size:10px;
+  letter-spacing:0;
+}
+#sec-tot{
+  font-size:10px;
+  letter-spacing:0.14em;
+  color:rgba(248,244,236,0.12);
+}
+@media(max-width:600px){
+  #sec-counter{display:none}
+}
+
 /* ── NAV ─────────────────────────────────────────────────── */
 #site-nav{
   position:fixed;top:0;left:0;right:0;height:var(--nav-h);z-index:200;
