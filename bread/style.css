@@ -2378,3 +2378,183 @@ body.cookie-visible #mobile-cta{bottom:var(--cookie-h,80px);}
   .stmt-footer { gap: 0.5rem; }
   .stmt-foot-sep { display: none; }
 }
+
+/* ══════════════════════════════════════════════════════════════════
+   HERO — AWWWARDS ELEVATION
+   Cinema-grade: full-bleed immersion, light leak, scan pulse,
+   split-axis depth, editorial coordinate drama, parallax hint
+   ══════════════════════════════════════════════════════════════════ */
+
+/* ── 1. Full-bleed cinematic backdrop ─────────────────────────── */
+.hero {
+  background-position: 60% 38% !important;
+  background-attachment: fixed;
+}
+
+/* Vignette — corners recede, draws eye to copy */
+.hero::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    ellipse 90% 90% at 50% 50%,
+    transparent 42%,
+    rgba(42,24,16,0.38) 100%
+  );
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Horizontal scan line — subtle, just barely perceptible */
+.hero::before {
+  background:
+    linear-gradient(to bottom,
+      rgba(42,24,16,0.55) 0%,
+      rgba(42,24,16,0.08) 14%,
+      rgba(248,244,236,0.28) 55%,
+      rgba(248,244,236,0.91) 78%,
+      rgba(248,244,236,0.99) 100%
+    ),
+    linear-gradient(to right,
+      rgba(248,244,236,0.98) 0%,
+      rgba(248,244,236,0.91) 22%,
+      rgba(248,244,236,0.22) 48%,
+      rgba(248,244,236,0.0) 64%
+    ) !important;
+}
+
+/* ── 2. Light leak — top-left amber bloom, fires once on load ── */
+.hero-light-leak {
+  position: absolute;
+  top: -10%;
+  left: -8%;
+  width: 55vw;
+  height: 55vw;
+  background: radial-gradient(
+    circle,
+    rgba(196,149,10,0.09) 0%,
+    rgba(196,149,10,0.03) 45%,
+    transparent 72%
+  );
+  pointer-events: none;
+  z-index: 0;
+  animation: leakPulse 8s ease-in-out infinite alternate;
+}
+@keyframes leakPulse {
+  from { transform: scale(1) translate(0,0); opacity: 0.6; }
+  to   { transform: scale(1.12) translate(2%,1.5%); opacity: 1; }
+}
+
+/* ── 3. Floating rule lines — left-edge editorial marks ─────── */
+.hero-edge-marks {
+  position: absolute;
+  left: var(--g);
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  pointer-events: none;
+  z-index: 1;
+  overflow: hidden;
+}
+.hero-edge-marks::before,
+.hero-edge-marks::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  width: 1px;
+  background: linear-gradient(to bottom, transparent, rgba(196,149,10,0.5), transparent);
+  animation: markSlide 3.5s cubic-bezier(.16,1,.3,1) forwards;
+}
+.hero-edge-marks::before {
+  top: 18%;
+  height: 0;
+  animation-delay: 0.6s;
+}
+.hero-edge-marks::after {
+  top: 44%;
+  height: 0;
+  animation-delay: 0.9s;
+}
+@keyframes markSlide {
+  from { height: 0; }
+  to   { height: clamp(40px, 6vh, 80px); }
+}
+
+/* ── 4. Coord element — upgraded dramatic positioning ────────── */
+.hero-coord {
+  left: var(--g) !important;
+  bottom: clamp(140px, 18vh, 200px) !important;
+  top: auto !important;
+  opacity: 0;
+  animation: coordAppear 1.4s cubic-bezier(.16,1,.3,1) 1.1s forwards;
+}
+@keyframes coordAppear {
+  from { opacity: 0; transform: translateY(14px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── 5. Hero headline — pushed harder, more dramatic scale ────── */
+.hero-headline {
+  font-size: clamp(72px, 12vw, 200px) !important;
+  letter-spacing: -0.05em !important;
+  line-height: 0.84 !important;
+}
+
+/* ── 6. Hero watermark — larger, slower drift ─────────────────── */
+.hero-wm-text {
+  font-size: clamp(160px, 36vw, 600px) !important;
+  opacity: 0;
+  animation: wmDrift 2.4s cubic-bezier(.16,1,.3,1) 0.3s forwards;
+}
+@keyframes wmDrift {
+  from { opacity: 0; transform: scale(1.08) translateY(2%); }
+  to   { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+/* ── 7. Grain count — right-axis, now with appear + pulse ─────── */
+.hero-grain-count {
+  animation: grainFade 1.8s 1.4s cubic-bezier(.16,1,.3,1) both,
+             grainFloat 6s 3.5s ease-in-out infinite alternate !important;
+}
+@keyframes grainFloat {
+  from { transform: rotate(90deg) translateY(-50%) translateX(0); }
+  to   { transform: rotate(90deg) translateY(-50%) translateX(-6px); }
+}
+
+/* ── 8. Hero sub — refined opacity, slight blur reveals ──────── */
+.hero-sub {
+  animation: subReveal 1.4s cubic-bezier(.16,1,.3,1) 0.55s both !important;
+}
+@keyframes subReveal {
+  from { opacity: 0; filter: blur(4px); transform: translateY(10px); }
+  to   { opacity: 1; filter: blur(0); transform: translateY(0); }
+}
+
+/* ── 9. Pills — staggered float-up ──────────────────────────── */
+.hero-strip {
+  opacity: 0;
+  animation: pillsFade 1s cubic-bezier(.16,1,.3,1) 0.7s forwards;
+}
+@keyframes pillsFade {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── 10. CTA row — last to appear ────────────────────────────── */
+.hero-cta-row {
+  opacity: 0;
+  animation: ctaRise 1s cubic-bezier(.16,1,.3,1) 0.9s forwards;
+}
+@keyframes ctaRise {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── 11. Scroll indicator — refined ──────────────────────────── */
+.hero-scroll {
+  opacity: 0;
+  animation: scrollFade 1.2s ease 1.4s forwards;
+}
+@keyframes scrollFade {
+  to { opacity: 1; }
+}
