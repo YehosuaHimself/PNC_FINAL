@@ -578,12 +578,8 @@ document.addEventListener('DOMContentLoaded',function(){
 
   if(currency === 'EUR') return; /* EUR visitors see nothing extra */
 
-  /* ── 2. FETCH RATE ──────────────────────────────────────────────── */
-  fetch('https://open.er-api.com/v6/latest/EUR')
-    .then(function(r){ return r.json(); })
-    .then(function(data){
-      if(!data || !data.rates || !data.rates[currency]) return;
-      var rate = data.rates[currency];
+  /* ── 2. FETCH RATE — primary: open.er-api.com, secondary: frankfurter.app ── */
+  function _applyRate(rate) {
 
       /* ── 3. FORMAT ──────────────────────────────────────────────── */
       /* Smart decimal: if €1 * rate < 5, show 2 dp; else round to int */
@@ -691,7 +687,20 @@ document.addEventListener('DOMContentLoaded',function(){
           '<span class="pship">Order in EUR · Stripe converts to your currency · ships worldwide</span>');
       }
 
-    }).catch(function(){});
+  }
+
+  fetch('https://open.er-api.com/v6/latest/EUR')
+    .then(function(r){ return r.json(); })
+    .then(function(data){
+      if(!data || !data.rates || !data.rates[currency]) throw new Error('no_rate');
+      _applyRate(data.rates[currency]);
+    }).catch(function(){
+      fetch('https://api.frankfurter.app/latest?from=EUR&to=' + currency)
+        .then(function(r){ return r.json(); })
+        .then(function(data2){
+          if(data2 && data2.rates && data2.rates[currency]) _applyRate(data2.rates[currency]);
+        }).catch(function(){});
+    });
 })();
 
 /* ========== */

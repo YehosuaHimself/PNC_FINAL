@@ -528,15 +528,28 @@ document.addEventListener('DOMContentLoaded',function(){
   }
 
   function _fetchRate() {
+    /* Primary: open.er-api.com. Secondary: frankfurter.app. Final: stale cache. */
+    function trySecondary() {
+      fetch('https://api.frankfurter.app/latest?from=EUR&to=' + currency)
+        .then(function(r){ return r.json(); })
+        .then(function(data){
+          if(!data || !data.rates || !data.rates[currency]) throw new Error('no_rate');
+          var rate = data.rates[currency];
+          try { localStorage.setItem(_CACHE_KEY, JSON.stringify({rate:rate, ts:Date.now()})); } catch(e) {}
+          _doWithRate(rate);
+        }).catch(function(){
+          if (_cachedRate) _doWithRate(_cachedRate); /* final fallback: stale cache */
+        });
+    }
     fetch('https://open.er-api.com/v6/latest/EUR')
       .then(function(r){ return r.json(); })
       .then(function(data){
-        if(!data || !data.rates || !data.rates[currency]) return;
+        if(!data || !data.rates || !data.rates[currency]) throw new Error('no_rate');
         var rate = data.rates[currency];
         try { localStorage.setItem(_CACHE_KEY, JSON.stringify({rate:rate, ts:Date.now()})); } catch(e) {}
         _doWithRate(rate);
       }).catch(function(){
-        if (_cachedRate) _doWithRate(_cachedRate); /* fallback to stale cache on API failure */
+        trySecondary();
       });
   }
 
