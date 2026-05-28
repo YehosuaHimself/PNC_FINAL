@@ -42,9 +42,12 @@
   function applyColor(dark) {
     var c = dark ? C_LIGHT : C_DARK;
     dot.style.transition  = 'color 0ms';
-    if (ring) ring.style.transition = 'color 0ms, opacity 200ms ease, width 180ms ease, height 180ms ease';
+    if (ring) ring.style.transition = 'color 0ms, opacity 200ms ease';
     dot.style.color   = c;
-    if (ring) ring.style.color = c;
+    if (ring) {
+      ring.style.color = c;
+      ring.style.opacity = dark ? '0.50' : '0.35';
+    }
   }
 
   function loop() {
@@ -93,11 +96,11 @@
 
   document.querySelectorAll('a,button,[role=button],select').forEach(function(el) {
     el.addEventListener('mouseenter', function() {
-      if (ring) { ring.style.width = '96px'; ring.style.height = '106px'; ring.style.opacity = '0.65'; }
+      if (ring) { ring.style.opacity = '0.75'; }
       startLoop();
     });
     el.addEventListener('mouseleave', function() {
-      if (ring) { ring.style.width = '80px'; ring.style.height = '88px'; ring.style.opacity = '0.45'; }
+      if (ring) { ring.style.opacity = currentDark ? '0.50' : '0.35'; }
       startLoop();
     });
   });
