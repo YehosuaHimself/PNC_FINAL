@@ -1,91 +1,128 @@
-/* ─────────────────────────────────────────────────────────────────────────
-   PNC · pnc-transitions.js
-   Page transition curtain — cream panel sweeps up on enter, down on exit.
-   Works across all PNC pages. No dependencies.
-───────────────────────────────────────────────────────────────────────── */
+/* ─────────────────────────────────────────────────────────────────────
+   PNC · pnc-transitions.js v2
+   Full-screen ink wipe on internal navigation.
+   A dark panel covers the screen, then lifts revealing the next page.
+   Works with Lenis. Zero dependencies beyond GSAP (optional fallback).
+────────────────────────────────────────────────────────────────────── */
 (function () {
   'use strict';
+
   if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
-  /* ── Inject curtain ──────────────────────────────────────────── */
-  var curtain = document.createElement('div');
-  curtain.id = 'pnc-curtain';
-  curtain.setAttribute('aria-hidden', 'true');
-  curtain.style.cssText = [
+  /* ── Build the transition overlay ───────────────────────────── */
+  var overlay = document.createElement('div');
+  overlay.id = 'pnc-transition';
+  overlay.setAttribute('aria-hidden', 'true');
+  overlay.style.cssText = [
     'position:fixed',
     'inset:0',
     'background:var(--ink,#2A1810)',
     'z-index:99998',
     'pointer-events:none',
-    'transform:translateY(100%)',
-    'will-change:transform',
-    'transition:transform 0.65s cubic-bezier(0.76,0,0.24,1)'
+    'transform:translateY(100%)', /* starts below screen */
+    'will-change:transform'
   ].join(';');
+  document.body.appendChild(overlay);
 
-  /* Logo inside curtain */
-  var logo = document.createElement('div');
-  logo.style.cssText = [
+  /* Build PNC monogram in the overlay */
+  var mono = document.createElement('div');
+  mono.style.cssText = [
     'position:absolute',
-    'top:50%',
-    'left:50%',
+    'top:50%','left:50%',
     'transform:translate(-50%,-50%)',
     'font-family:"Helvetica Neue",Helvetica,Arial,sans-serif',
     'font-weight:900',
-    'font-size:clamp(28px,5vw,56px)',
-    'letter-spacing:-0.03em',
-    'color:rgba(248,244,236,0.12)',
+    'font-size:clamp(40px,6vw,80px)',
+    'letter-spacing:0.28em',
     'text-transform:uppercase',
+    'color:rgba(248,244,236,0.06)',
     'user-select:none',
-    'pointer-events:none'
+    'opacity:0',
+    'transition:opacity 0.2s'
   ].join(';');
-  logo.textContent = 'PNC';
-  curtain.appendChild(logo);
-  document.body.appendChild(curtain);
+  mono.textContent = 'PNC';
+  overlay.appendChild(mono);
 
-  /* ── Reveal page (curtain exits upward) ─────────────────────── */
-  function revealPage() {
-    requestAnimationFrame(function () {
-      curtain.style.transition = 'transform 0.7s cubic-bezier(0.76,0,0.24,1)';
-      curtain.style.transform = 'translateY(-100%)';
+  var EASE_IN  = 'cubic-bezier(0.76, 0, 0.24, 1)';
+  var EASE_OUT = 'cubic-bezier(0.16, 1, 0.3, 1)';
+  var DUR_IN   = 520; /* ms */
+  var DUR_OUT  = 560;
+
+  function animTo(el, props, duration, easing, delay) {
+    return new Promise(function (resolve) {
+      setTimeout(function () {
+        el.style.transition = 'transform ' + duration + 'ms ' + easing;
+        Object.keys(props).forEach(function (k) { el.style[k] = props[k]; });
+        setTimeout(resolve, duration);
+      }, delay || 0);
     });
   }
 
-  /* Page enter — from bottom */
-  curtain.style.transform = 'translateY(0%)';
-  curtain.style.transition = 'none';
+  /* ── Wipe in (covers screen) ─────────────────────────────────── */
+  function wipeIn() {
+    overlay.style.transition = 'none';
+    overlay.style.transform  = 'translateY(100%)';
+    mono.style.opacity = '0';
+    /* Force reflow */
+    overlay.offsetHeight;
+    overlay.style.transition = 'transform ' + DUR_IN + 'ms ' + EASE_IN;
+    overlay.style.transform  = 'translateY(0)';
+    setTimeout(function () { mono.style.opacity = '1'; }, DUR_IN * 0.6);
+    return new Promise(function (r) { setTimeout(r, DUR_IN); });
+  }
 
-  /* Small delay so paint settles */
-  setTimeout(revealPage, 60);
+  /* ── Wipe out (reveals new page) ────────────────────────────── */
+  function wipeOut() {
+    mono.style.opacity = '0';
+    overlay.style.transition = 'transform ' + DUR_OUT + 'ms ' + EASE_OUT;
+    overlay.style.transform  = 'translateY(-100%)';
+    return new Promise(function (r) { setTimeout(r, DUR_OUT); });
+  }
 
   /* ── Intercept internal links ────────────────────────────────── */
   document.addEventListener('click', function (e) {
-    var a = e.target.closest('a[href]');
-    if (!a) return;
+    var link = e.target.closest('a[href]');
+    if (!link) return;
 
-    var href = a.getAttribute('href');
+    var href = link.getAttribute('href');
+    /* Skip: external, hash-only, mailto, tel, download, noTransition */
     if (!href) return;
-
-    /* Skip: external, hash, new-tab, mailto, tel */
-    if (
-      href.startsWith('http') ||
-      href.startsWith('//') ||
-      href.startsWith('#') ||
-      href.startsWith('mailto') ||
-      href.startsWith('tel') ||
-      a.target === '_blank' ||
-      e.ctrlKey || e.metaKey || e.shiftKey
-    ) return;
+    if (href.startsWith('http') || href.startsWith('//')) return;
+    if (href.startsWith('#')) return;
+    if (href.startsWith('mailto:') || href.startsWith('tel:')) return;
+    if (link.hasAttribute('download')) return;
+    if (link.hasAttribute('data-no-transition')) return;
+    if (link.target === '_blank') return;
 
     e.preventDefault();
-    var dest = href;
 
-    /* Curtain drops from top */
-    curtain.style.transition = 'transform 0.55s cubic-bezier(0.76,0,0.24,1)';
-    curtain.style.transform = 'translateY(0%)';
+    wipeIn().then(function () {
+      window.location.href = href;
+    });
+  });
 
-    setTimeout(function () {
-      window.location.href = dest;
-    }, 560);
+  /* ── Reveal on page load (wipe out from top) ────────────────── */
+  (function revealOnLoad() {
+    /* If we arrived via internal nav, overlay starts at 0 (covering screen) */
+    /* Otherwise start from below — nothing to reveal */
+    var came = sessionStorage.getItem('pnc_transitioning');
+    if (came) {
+      sessionStorage.removeItem('pnc_transitioning');
+      overlay.style.transition = 'none';
+      overlay.style.transform  = 'translateY(0)';
+      overlay.offsetHeight; /* reflow */
+      setTimeout(function () {
+        wipeOut();
+      }, 60);
+    }
+  })();
+
+  /* Flag before navigation so next page knows */
+  document.addEventListener('click', function (e) {
+    var link = e.target.closest('a[href]');
+    if (link && !link.href.startsWith('http') && !link.href.startsWith('//')) {
+      sessionStorage.setItem('pnc_transitioning', '1');
+    }
   });
 
 })();
