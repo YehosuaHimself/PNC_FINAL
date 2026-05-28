@@ -1204,3 +1204,100 @@ a:focus-visible,button:focus-visible{
   text-transform: uppercase;
   color: var(--cocoa-mu);
 }
+
+
+/* ── DAILY RITUAL SECTION ────────────────────────────────────────── */
+.ritual-section {
+  background: var(--dark);
+  padding: clamp(80px,12vw,160px) var(--g);
+  overflow: hidden;
+  position: relative;
+}
+
+.ritual-section::before {
+  content: '';
+  position: absolute; inset: 0;
+  background-image:
+    linear-gradient(rgba(248,220,160,0.025) 1px, transparent 1px),
+    linear-gradient(90deg,rgba(248,220,160,0.025) 1px, transparent 1px);
+  background-size: 80px 80px;
+  pointer-events: none;
+}
+
+.ritual-inner {
+  max-width: var(--max);
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(48px,8vw,120px);
+  align-items: center;
+  position: relative;
+  z-index: 1;
+}
+
+@media (max-width: 768px) {
+  .ritual-inner { grid-template-columns: 1fr; gap: 40px; }
+}
+
+.ritual-text .eyebrow { color: var(--cocoa-mid); }
+
+.ritual-headline {
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-weight: 900;
+  font-size: clamp(40px, 5.5vw, 80px);
+  letter-spacing: -0.04em;
+  line-height: 0.88;
+  color: var(--cream);
+  margin-bottom: clamp(20px,3vh,36px);
+}
+
+.ritual-body {
+  font-size: clamp(14px,1.4vw,18px);
+  color: rgba(248,244,236,0.58);
+  line-height: 1.8;
+  max-width: 480px;
+  margin-bottom: clamp(24px,4vh,44px);
+}
+
+.ritual-cta-row {
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+/* Image stack */
+.ritual-image-wrap {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.ritual-image {
+  aspect-ratio: 3/4;
+  background-size: cover;
+  background-position: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.ritual-image--brew {
+  background-position: center 30%;
+  transform: translateY(-8px);
+}
+
+.ritual-image--bread {
+  background-position: center 35%;
+  transform: translateY(8px);
+}
+
+.ritual-caption {
+  display: flex;
+  justify-content: space-between;
+  font-family: 'Courier New', monospace;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(248,244,236,0.22);
+}

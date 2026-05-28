@@ -464,3 +464,53 @@
     }
   });
 })();
+
+
+/* ── RITUAL SECTION — staggered reveals ─────────────────────────── */
+(function ritualReveal() {
+  var section = document.querySelector('.ritual-section');
+  if (!section) return;
+
+  var headline = section.querySelector('.ritual-headline');
+  var body     = section.querySelector('.ritual-body');
+  var ctaRow   = section.querySelector('.ritual-cta-row');
+  var images   = section.querySelectorAll('.ritual-image');
+  var caption  = section.querySelector('.ritual-caption');
+
+  if (headline) {
+    gsap.fromTo(headline,
+      { opacity: 0, y: 36 },
+      { opacity: 1, y: 0, duration: 1.1, ease: 'expo.out',
+        scrollTrigger: { trigger: headline, start: 'top 80%', toggleActions: 'play none none none' }
+      }
+    );
+  }
+
+  if (body) {
+    gsap.fromTo(body,
+      { opacity: 0, y: 24 },
+      { opacity: 1, y: 0, duration: 1.0, ease: 'expo.out', delay: 0.15,
+        scrollTrigger: { trigger: body, start: 'top 82%', toggleActions: 'play none none none' }
+      }
+    );
+  }
+
+  if (ctaRow) {
+    gsap.fromTo(ctaRow,
+      { opacity: 0, y: 20 },
+      { opacity: 1, y: 0, duration: 0.9, ease: 'expo.out', delay: 0.25,
+        scrollTrigger: { trigger: ctaRow, start: 'top 85%', toggleActions: 'play none none none' }
+      }
+    );
+  }
+
+  images.forEach(function (img, i) {
+    gsap.fromTo(img,
+      { opacity: 0, scale: 0.94, y: i === 0 ? -20 : 20 },
+      { opacity: 1, scale: 1, y: i === 0 ? -8 : 8,
+        duration: 1.3, ease: 'expo.out', delay: i * 0.1,
+        scrollTrigger: { trigger: img, start: 'top 85%', toggleActions: 'play none none none' }
+      }
+    );
+  });
+})();
