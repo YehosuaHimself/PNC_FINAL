@@ -2223,3 +2223,147 @@ body.cookie-visible #mobile-cta{bottom:var(--cookie-h,80px);}
   .manifesto-actions { justify-content: flex-start; }
   .manifesto-stats { gap: clamp(28px, 8vw, 56px); }
 }
+
+/* ══════════════════════════════════════════════════════════════════
+   SECTION 2 — EDITORIAL LIST REDESIGN (BREW)
+   Tasting notes: card grid → typographic tasting sequence.
+   Philosophy: big Fraunces names, open rows, no boxes.
+   ══════════════════════════════════════════════════════════════════ */
+
+/* — Manifesto: breathe more — */
+.manifesto {
+  padding: clamp(140px, 18vw, 240px) var(--g) !important;
+}
+.manifesto-inner {
+  gap: clamp(80px, 11vw, 140px) !important;
+}
+.manifesto-copy {
+  font-size: clamp(24px, 3.2vw, 50px) !important;
+  line-height: 1.46 !important;
+  max-width: 960px !important;
+}
+.manifesto-foot {
+  border-top: none !important;
+  padding-top: 0 !important;
+}
+.manifesto-stats {
+  gap: clamp(64px, 9vw, 140px) !important;
+  align-items: flex-end !important;
+}
+.ms-num {
+  font-size: clamp(48px, 6vw, 80px) !important;
+  letter-spacing: -0.06em !important;
+}
+
+/* — Tasting section: air — */
+.tasting {
+  padding: clamp(120px, 16vw, 200px) var(--g) !important;
+}
+.tasting-inner { padding: 0; }
+.tasting-header {
+  margin-bottom: clamp(80px, 10vw, 130px) !important;
+}
+
+/* — Editorial tasting list — */
+.tasting-list {
+  display: flex;
+  flex-direction: column;
+  border-top: 1px solid rgba(42,24,16,0.1);
+}
+.tl-row {
+  display: grid;
+  grid-template-columns: clamp(52px,6vw,80px) 1fr 1fr;
+  gap: 0 clamp(36px, 5vw, 72px);
+  align-items: center;
+  padding: clamp(44px, 6vw, 80px) 0;
+  border-bottom: 1px solid rgba(42,24,16,0.07);
+  transition: background .28s cubic-bezier(.16,1,.3,1);
+}
+@media(hover:hover) {
+  .tl-row:hover {
+    background: rgba(42,24,16,0.02);
+  }
+  .tl-row:hover .tl-name {
+    letter-spacing: -0.025em;
+  }
+  .tl-row:hover .tl-num {
+    color: var(--cocoa);
+  }
+}
+.tl-num {
+  font: 600 11px/1 'Courier New',monospace;
+  letter-spacing: .22em;
+  color: rgba(42,24,16,0.22);
+  padding-top: 4px;
+  align-self: start;
+  transition: color .28s;
+}
+.tl-name {
+  font-family: 'Fraunces','Helvetica Neue',Helvetica,Arial,sans-serif;
+  font-weight: 900;
+  font-style: italic;
+  font-variation-settings: 'opsz' 72,'WONK' 1;
+  font-size: clamp(36px, 5vw, 72px);
+  letter-spacing: -0.02em;
+  line-height: 0.9;
+  color: var(--ink);
+  transition: letter-spacing .32s cubic-bezier(.16,1,.3,1);
+}
+.tl-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.tl-type {
+  font: 700 10px/1 'Courier New',monospace;
+  letter-spacing: .24em;
+  text-transform: uppercase;
+  color: var(--cocoa-mu);
+}
+.tl-when {
+  font: 400 13px/1.65 'Helvetica Neue',Arial,sans-serif;
+  color: rgba(42,24,16,0.48);
+  max-width: 340px;
+}
+
+/* — Cert strip: inline, spaced, minimal — */
+.tasting-certs {
+  display: flex !important;
+  flex-wrap: wrap !important;
+  gap: 8px !important;
+  margin-top: clamp(64px, 9vw, 110px) !important;
+  border-top: 1px solid rgba(42,24,16,0.08) !important;
+  padding-top: clamp(36px, 4vw, 52px) !important;
+}
+.cert-tag {
+  font: 600 10px/1 'Courier New',monospace !important;
+  letter-spacing: .24em !important;
+  text-transform: uppercase !important;
+  color: rgba(42,24,16,0.4) !important;
+  background: transparent !important;
+  border: 1px solid rgba(42,24,16,0.1) !important;
+  padding: 10px 16px !important;
+  transition: color .22s, border-color .22s;
+}
+@media(hover:hover) {
+  .cert-tag:hover {
+    color: var(--cocoa) !important;
+    border-color: var(--cocoa-mu) !important;
+  }
+}
+
+/* Responsive */
+@media(max-width:860px) {
+  .tl-row {
+    grid-template-columns: clamp(40px,8vw,60px) 1fr;
+    grid-template-rows: auto auto;
+  }
+  .tl-num { grid-row: 1; }
+  .tl-name { grid-row: 1; }
+  .tl-meta { grid-column: 1/-1; padding-left: clamp(40px,8vw,60px); margin-top: -8px; }
+}
+@media(max-width:480px) {
+  .tl-row {
+    grid-template-columns: 40px 1fr;
+  }
+}

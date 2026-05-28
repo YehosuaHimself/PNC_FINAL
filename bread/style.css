@@ -2709,3 +2709,155 @@ body.cookie-visible #mobile-cta{bottom:var(--cookie-h,80px);}
   .manifesto-actions { justify-content: flex-start; }
   .manifesto-stats { gap: clamp(28px, 8vw, 56px); }
 }
+
+/* ══════════════════════════════════════════════════════════════════
+   SECTION 2 — EDITORIAL LIST REDESIGN
+   Formats: card grid → typographic schedule.
+   Philosophy: big numbers, open rows, no boxes. Like a design archive.
+   ══════════════════════════════════════════════════════════════════ */
+
+/* — Manifesto: breathe more —— */
+.manifesto {
+  padding: clamp(140px, 18vw, 240px) var(--g) !important;
+}
+.manifesto-inner {
+  gap: clamp(80px, 11vw, 140px) !important;
+}
+.manifesto-copy {
+  font-size: clamp(24px, 3.2vw, 50px) !important;
+  line-height: 1.46 !important;
+  max-width: 960px !important;
+}
+.manifesto-foot {
+  border-top: none !important;
+  padding-top: 0 !important;
+}
+.manifesto-stats {
+  gap: clamp(64px, 9vw, 140px) !important;
+  align-items: flex-end !important;
+}
+.ms-num {
+  font-size: clamp(48px, 6vw, 80px) !important;
+  letter-spacing: -0.06em !important;
+}
+
+/* — Formats section: header redesign — */
+.formats-section {
+  padding: clamp(120px, 15vw, 200px) var(--g) !important;
+}
+.formats-header {
+  grid-template-columns: 1fr 1fr !important;
+  gap: 0 clamp(40px, 5vw, 80px) !important;
+  margin-bottom: clamp(60px, 8vw, 100px) !important;
+  border-bottom: 1px solid rgba(248,244,236,0.1) !important;
+  padding-bottom: clamp(48px, 6vw, 80px) !important;
+  align-items: end !important;
+}
+.formats-h2 {
+  font-size: clamp(48px, 6.5vw, 96px) !important;
+  line-height: 1 !important;
+}
+
+/* — Editorial formats list — */
+.formats-list {
+  display: flex;
+  flex-direction: column;
+  border-top: 1px solid rgba(248,244,236,0.1);
+}
+.format-row {
+  display: grid;
+  grid-template-columns: clamp(100px,11vw,160px) 1fr auto;
+  gap: 0 clamp(40px, 5vw, 80px);
+  align-items: start;
+  padding: clamp(40px,5vw,72px) 0;
+  border-bottom: 1px solid rgba(248,244,236,0.08);
+  transition: background .28s cubic-bezier(.16,1,.3,1);
+}
+@media(hover:hover) {
+  .format-row:hover {
+    background: rgba(248,244,236,0.025);
+  }
+  .format-row:hover .fr-num {
+    opacity: 0.55;
+    letter-spacing: -0.06em;
+  }
+  .format-row:hover .fr-name {
+    letter-spacing: 0.18em;
+  }
+}
+.fr-time {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+}
+.fr-num {
+  font: 900 clamp(64px,8vw,104px)/1 'Helvetica Neue',Arial,sans-serif;
+  letter-spacing: -0.05em;
+  color: var(--cream);
+  display: block;
+  transition: opacity .35s cubic-bezier(.16,1,.3,1), letter-spacing .35s cubic-bezier(.16,1,.3,1);
+}
+.fr-unit {
+  font: 700 11px/1 'Courier New',monospace;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+  color: rgba(248,244,236,0.3);
+  align-self: flex-end;
+  padding-bottom: 8px;
+}
+.fr-body {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding-top: 14px;
+}
+.fr-name {
+  font: 900 clamp(13px,1.4vw,17px)/1.2 'Helvetica Neue',Arial,sans-serif;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--cream);
+  transition: letter-spacing .28s cubic-bezier(.16,1,.3,1);
+}
+.fr-method {
+  font: 700 10px/1 'Courier New',monospace;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: rgba(248,244,236,0.3);
+}
+.fr-desc {
+  font: 400 13px/1.72 'Helvetica Neue',Arial,sans-serif;
+  color: rgba(248,244,236,0.52);
+  max-width: 520px;
+  margin-top: 6px;
+}
+.fr-spec {
+  font: 700 10px/1.8 'Courier New',monospace;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: rgba(248,244,236,0.25);
+  text-align: right;
+  padding-top: 16px;
+  white-space: nowrap;
+}
+
+/* Responsive */
+@media(max-width:860px) {
+  .format-row {
+    grid-template-columns: clamp(80px,14vw,120px) 1fr;
+  }
+  .fr-spec {
+    display: none;
+  }
+}
+@media(max-width:540px) {
+  .format-row {
+    grid-template-columns: 80px 1fr;
+    gap: 0 20px;
+  }
+  .fr-num {
+    font-size: clamp(52px,14vw,80px) !important;
+  }
+  .formats-header {
+    grid-template-columns: 1fr !important;
+  }
+}
