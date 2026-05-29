@@ -109,32 +109,64 @@
     setLabel('');
   }
 
+  /* Cache magnetic targets once on load + on any DOM mutation */
+  var magTargets = [];
+  var magTargetRects = [];
+
+  function buildMagCache() {
+    var selectors = '.hero-product,a,button,[role=button]';
+    var els = document.querySelectorAll(selectors);
+    magTargets = Array.prototype.slice.call(els);
+    magTargetRects = new Array(magTargets.length);
+  }
+
+  /* Build on load */
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', buildMagCache);
+  } else {
+    buildMagCache();
+  }
+
+  /* Rebuild on scroll (rects change) — throttled */
+  var rectRafPending = false;
+  window.addEventListener('scroll', function() {
+    if (!rectRafPending) {
+      rectRafPending = true;
+      requestAnimationFrame(function() {
+        magTargetRects = new Array(magTargets.length);
+        rectRafPending = false;
+      });
+    }
+  }, { passive: true });
+
+  /* Rebuild on resize */
+  window.addEventListener('resize', buildMagCache, { passive: true });
+
   /* Override the existing mousemove to add magnetic pull */
   document.addEventListener('mousemove', function (e) {
     mx = e.clientX;
     my = e.clientY;
 
-    /* Test magnetic attraction */
+    /* Test magnetic attraction against cached targets */
     var hit = null;
-    var selectors = ['.hero-product', 'a', 'button', '[role=button]'];
-    for (var si = 0; si < selectors.length; si++) {
-      var els = document.querySelectorAll(selectors[si]);
-      for (var i = 0; i < els.length; i++) {
-        var rect = els[i].getBoundingClientRect();
-        var cx = rect.left + rect.width  / 2;
-        var cy = rect.top  + rect.height / 2;
-        var dist = Math.sqrt((mx - cx) * (mx - cx) + (my - cy) * (my - cy));
-        var r = els[i].classList.contains('hero-product') ? MAG_RADIUS * 1.8 : MAG_RADIUS;
-        if (dist < r) { hit = els[i]; break; }
+    for (var i = 0; i < magTargets.length; i++) {
+      /* Lazily compute and cache rects */
+      if (!magTargetRects[i]) {
+        magTargetRects[i] = magTargets[i].getBoundingClientRect();
       }
-      if (hit) break;
+      var rect = magTargetRects[i];
+      var cx = rect.left + rect.width  / 2;
+      var cy = rect.top  + rect.height / 2;
+      var dist = Math.sqrt((mx - cx) * (mx - cx) + (my - cy) * (my - cy));
+      var r = magTargets[i].classList.contains('hero-product') ? MAG_RADIUS * 1.8 : MAG_RADIUS;
+      if (dist < r) { hit = magTargets[i]; break; }
     }
 
     if (hit) {
       enterMag(hit);
-      var rect = hit.getBoundingClientRect();
-      magCX = rect.left + rect.width  / 2;
-      magCY = rect.top  + rect.height / 2;
+      var hr = hit.getBoundingClientRect();
+      magCX = hr.left + hr.width  / 2;
+      magCY = hr.top  + hr.height / 2;
     } else {
       leaveMag();
     }
