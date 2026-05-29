@@ -6,129 +6,212 @@
 <title>404 — Not Found · PNC</title>
 <meta name="robots" content="noindex">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 32 32%22><rect width=%2232%22 height=%2232%22 fill=%22%232A1810%22/><text x=%2216%22 y=%2222%22 font-size=%2210%22 font-family=%22Helvetica Neue,Helvetica,Arial,sans-serif%22 font-weight=%22900%22 fill=%22%23F8F4EC%22 text-anchor=%22middle%22 letter-spacing=%22-0.5%22>PNC</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,100..900;1,9..144,100..900&display=swap">
+<noscript><style>html,body,*,*::before,*::after{cursor:auto!important}a,button{cursor:pointer!important}#cur-dot,#cur-ring{display:none!important}</style></noscript>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-html,body{height:100%;background:#2A1810;color:#F8F4EC;-webkit-font-smoothing:antialiased;cursor:none}
-*{cursor:none!important}
-a,button{cursor:none!important}
-@media(pointer:coarse){*{cursor:auto!important}a,button{cursor:pointer!important}}
-#cur-dot{
-  position:fixed;top:0;left:0;width:10px;height:10px;
-  border-radius:0;background:#F8F4EC;
-  pointer-events:none;z-index:9999;
-  transform:translate(-9999px,-9999px);
+html,body{height:100%;background:#2A1810;color:#F8F4EC;-webkit-font-smoothing:antialiased;cursor:none;overflow:hidden}
+@media(pointer:coarse){*{cursor:auto!important}a,button{cursor:pointer!important}html,body{cursor:auto!important}}
+
+/* Custom cursor */
+#cur-dot{position:fixed;top:0;left:0;width:10px;height:10px;border-radius:0;background:#F8F4EC;pointer-events:none;z-index:9999;transform:translate(-9999px,-9999px);will-change:transform}
+#cur-ring{position:fixed;top:0;left:0;width:96px;height:96px;border-radius:0;border:1.5px solid rgba(248,244,236,0.6);pointer-events:none;z-index:9998;transform:translate(-9999px,-9999px);will-change:transform}
+
+/* Grain overlay */
+#grain-svg{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;opacity:0.038;z-index:9997}
+
+/* Grid */
+body::before{
+  content:'';position:absolute;inset:0;
+  background-image:
+    linear-gradient(rgba(248,220,160,0.025) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(248,220,160,0.025) 1px,transparent 1px);
+  background-size:clamp(40px,6vw,80px) clamp(40px,6vw,80px);
+  pointer-events:none;
 }
-#cur-ring{
-  position:fixed;top:0;left:0;width:96px;height:96px;
-  border-radius:0;border:1.5px solid rgba(248,244,236,0.6);
-  pointer-events:none;z-index:9998;
-  transform:translate(-9999px,-9999px);
-}
+
 body{
   font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;
   display:flex;flex-direction:column;align-items:center;justify-content:center;
   min-height:100vh;padding:clamp(40px,8vw,80px) clamp(24px,5vw,80px);
-  text-align:center;position:relative;overflow:hidden;
+  text-align:center;position:relative;
 }
-/* Grid overlay */
-body::before{
-  content:'';position:absolute;inset:0;
-  background-image:
-    linear-gradient(rgba(248,220,160,0.05) 1px,transparent 1px),
-    linear-gradient(90deg,rgba(180,130,60,0.12) 1px,transparent 1px);
-  background-size:100% 80px,calc(100%/7) 100%;
-  pointer-events:none;
+
+/* Nav */
+nav{
+  position:fixed;top:0;left:0;right:0;
+  padding:clamp(16px,2.5vw,24px) clamp(24px,5vw,60px);
+  display:flex;align-items:center;justify-content:space-between;
+  z-index:100;
 }
-.eyebrow{
-  font-family:'Courier New',monospace;
-  font-size:11px;font-weight:600;letter-spacing:0.30em;text-transform:uppercase;
-  color:rgba(248,244,236,0.35);
-  margin-bottom:clamp(20px,3vh,36px);
+.nav-logo{
+  font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;
+  font-weight:900;font-size:13px;letter-spacing:0.22em;text-transform:uppercase;
+  color:#F8F4EC;text-decoration:none;opacity:0;
 }
+.nav-back{
+  font-family:'Courier New',monospace;font-size:10px;font-weight:600;
+  letter-spacing:0.24em;text-transform:uppercase;
+  color:rgba(248,244,236,0.40);text-decoration:none;
+  border-bottom:1px solid rgba(248,244,236,0.14);padding-bottom:2px;
+  transition:color 0.3s,border-color 0.3s;
+  opacity:0;
+}
+@media(hover:hover){.nav-back:hover{color:rgba(248,244,236,0.85);border-color:rgba(248,244,236,0.45);}}
+
+/* 404 watermark number */
+.num-wrap{position:relative;margin-bottom:clamp(8px,2vh,20px)}
 .num{
   font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;
   font-weight:900;
-  font-size:clamp(120px,22vw,280px);
-  letter-spacing:-0.06em;line-height:0.85;
-  color:rgba(248,244,236,0.08);
+  font-size:clamp(140px,26vw,320px);
+  letter-spacing:-0.06em;line-height:0.82;
+  background:linear-gradient(160deg,rgba(248,244,236,0.10) 0%,rgba(248,244,236,0.04) 100%);
+  -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
   user-select:none;
-  margin-bottom:clamp(16px,2.5vh,28px);
+  opacity:0;transform:translateY(40px) scale(0.92);
 }
+
+/* Eyebrow */
+.eyebrow{
+  font-family:'Courier New',monospace;
+  font-size:11px;font-weight:600;letter-spacing:0.30em;text-transform:uppercase;
+  color:rgba(248,244,236,0.32);
+  margin-bottom:clamp(20px,3vh,32px);
+  opacity:0;
+}
+
+/* Headline */
 .headline{
   font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;
   font-weight:900;font-size:clamp(28px,4.5vw,56px);
   letter-spacing:-0.035em;line-height:0.95;
-  color:#F8F4EC;
-  margin-bottom:clamp(16px,2.5vh,28px);
+  color:rgba(248,244,236,0.92);
+  margin-bottom:clamp(16px,2.5vh,24px);
+  opacity:0;transform:translateY(20px);
 }
-.body{
-  font-size:clamp(14px,1.4vw,17px);font-weight:300;
-  color:rgba(248,244,236,0.55);line-height:1.75;
-  max-width:420px;
-  margin-bottom:clamp(32px,5vh,56px);
+
+/* Body copy */
+.body-text{
+  font-family:'Fraunces',Georgia,serif;font-style:italic;
+  font-size:clamp(14px,1.4vw,18px);line-height:1.65;
+  color:rgba(248,244,236,0.42);
+  max-width:440px;
+  margin-bottom:clamp(32px,5vh,52px);
+  opacity:0;transform:translateY(16px);
 }
-.cta-row{display:flex;gap:14px;flex-wrap:wrap;justify-content:center;}
+
+/* CTAs */
+.cta-row{
+  display:flex;align-items:center;justify-content:center;
+  gap:clamp(10px,2vw,20px);flex-wrap:wrap;
+  opacity:0;
+}
 .btn-back{
   font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;
   font-weight:700;font-size:12px;letter-spacing:0.20em;text-transform:uppercase;
-  background:#F8F4EC;color:#2A1810;padding:14px 28px;
-  text-decoration:none;display:inline-block;
-  transition:background .2s,color .2s;
+  background:#F8F4EC;color:#2A1810!important;padding:13px 26px;
+  text-decoration:none;position:relative;overflow:hidden;
+  transition:letter-spacing 0.28s ease;
 }
-.btn-back:hover{background:rgba(248,244,236,0.85)}
+@media(hover:hover){.btn-back:hover{letter-spacing:0.28em;}}
 .btn-ghost{
-  font-family:'Courier New',monospace;
-  font-weight:600;font-size:11px;letter-spacing:0.22em;text-transform:uppercase;
-  border:1px solid rgba(248,244,236,0.25);color:rgba(248,244,236,0.65);
-  padding:14px 24px;text-decoration:none;display:inline-block;
-  transition:border-color .2s,color .2s;
+  font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;
+  font-weight:700;font-size:12px;letter-spacing:0.20em;text-transform:uppercase;
+  border:1px solid rgba(248,244,236,0.24);color:rgba(248,244,236,0.60)!important;padding:13px 22px;
+  text-decoration:none;
+  transition:border-color 0.25s,color 0.25s,letter-spacing 0.28s;
 }
-.btn-ghost:hover{border-color:rgba(248,244,236,0.55);color:#F8F4EC;}
-.rule{width:40px;height:1px;background:rgba(248,244,236,0.12);margin:clamp(32px,5vh,56px) auto 0;}
+@media(hover:hover){.btn-ghost:hover{border-color:rgba(248,244,236,0.55);color:#F8F4EC!important;letter-spacing:0.27em;}}
+
+/* Rule + foot */
+.rule{width:40px;height:1px;background:rgba(248,244,236,0.10);margin:clamp(32px,5vh,52px) auto 0;opacity:0;}
 .foot{
-  margin-top:clamp(16px,2.5vh,28px);
+  margin-top:clamp(16px,2.5vh,24px);
   font-family:'Courier New',monospace;font-size:10px;letter-spacing:0.24em;
-  text-transform:uppercase;color:rgba(248,244,236,0.22);
+  text-transform:uppercase;color:rgba(248,244,236,0.18);
+  opacity:0;
+}
+
+/* Reduced motion */
+@media(prefers-reduced-motion:reduce){
+  .num,.eyebrow,.headline,.body-text,.cta-row,.rule,.foot,.nav-logo,.nav-back{
+    opacity:1!important;transform:none!important;transition:none!important;
+  }
 }
 </style>
 </head>
 <body>
+
+<!-- Cursor -->
 <div id="cur-dot" aria-hidden="true"></div>
 <div id="cur-ring" aria-hidden="true"></div>
-<p class="eyebrow">— Error 404 —</p>
-<div class="num" aria-hidden="true">404</div>
+
+<!-- Grain -->
+<svg id="grain-svg" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+  <filter id="gf"><feTurbulence type="fractalNoise" baseFrequency="0.72" numOctaves="4" seed="2" stitchTiles="stitch" result="n"/><feColorMatrix type="saturate" values="0" in="n" result="g"/><feBlend in="SourceGraphic" in2="g" mode="screen"/></filter>
+  <rect width="100%" height="100%" filter="url(#gf)"/>
+</svg>
+
+<nav>
+  <a href="/home.html" class="nav-logo">PNC</a>
+  <a href="/home.html" class="nav-back">← Return</a>
+</nav>
+
+<p class="eyebrow" aria-hidden="true">— Error 404 —</p>
+<div class="num-wrap">
+  <div class="num" aria-hidden="true">404</div>
+</div>
 <h1 class="headline">This page<br>is not here.</h1>
-<p class="body">The bread is still baking. The coffee is still brewing. But whatever you were looking for has moved, or perhaps never existed.</p>
+<p class="body-text">The bread is still baking. The coffee is still brewing. But whatever you were looking for has moved — or perhaps never existed.</p>
 <div class="cta-row">
   <a href="/home.html" class="btn-back">Back to PNC →</a>
   <a href="/bread" class="btn-ghost">Bread</a>
   <a href="/brew" class="btn-ghost">Brew</a>
 </div>
-<div class="rule"></div>
+<div class="rule" aria-hidden="true"></div>
 <p class="foot">Panem Nostrum Cotidianum · MMXXVI</p>
+
 <script src="/cursor-square.js"></script>
+<script src="/pnc-transitions.js"></script>
 <script>
+/* Staggered entrance — no GSAP dependency on 404 page */
 (function(){
-  if(window.matchMedia('(prefers-reduced-motion:reduce)').matches)return;
-  var c=document.createElement('div');
-  c.style.cssText='position:fixed;inset:0;background:#2A1810;z-index:99998;pointer-events:none;transform:translateY(-100%);transition:transform 0.52s cubic-bezier(0.76,0,0.24,1);will-change:transform';
-  document.body.appendChild(c);
-  if(sessionStorage.getItem('pnc-nav')){
-    sessionStorage.removeItem('pnc-nav');
-    c.style.transform='translateY(0)';c.style.transition='none';
-    requestAnimationFrame(function(){requestAnimationFrame(function(){
-      c.style.transition='transform 0.62s cubic-bezier(0.76,0,0.24,1)';
-      c.style.transform='translateY(-100%)';
-    });});
-  }
-  document.addEventListener('click',function(e){
-    var l=e.target.closest('a[href]');if(!l)return;
-    var h=l.getAttribute('href');
-    if(!h||h.startsWith('#')||h.startsWith('http')||l.target==='_blank')return;
-    e.preventDefault();sessionStorage.setItem('pnc-nav','1');
-    c.style.transform='translateY(0)';
-    setTimeout(function(){window.location.href=h;},480);
-  },true);
+  if(window.matchMedia('(prefers-reduced-motion:reduce)').matches) return;
+
+  var REDUCED = false;
+  var els = [
+    { sel: '.nav-logo',   delay: 200,  props: { opacity: 1 } },
+    { sel: '.nav-back',   delay: 280,  props: { opacity: 1 } },
+    { sel: '.num',        delay: 180,  props: { opacity: 1, transform: 'translateY(0) scale(1)' } },
+    { sel: '.eyebrow',    delay: 420,  props: { opacity: 1 } },
+    { sel: '.headline',   delay: 500,  props: { opacity: 1, transform: 'translateY(0)' } },
+    { sel: '.body-text',  delay: 620,  props: { opacity: 1, transform: 'translateY(0)' } },
+    { sel: '.cta-row',    delay: 740,  props: { opacity: 1 } },
+    { sel: '.rule',       delay: 860,  props: { opacity: 1 } },
+    { sel: '.foot',       delay: 960,  props: { opacity: 1 } },
+  ];
+
+  els.forEach(function(item){
+    var el = document.querySelector(item.sel);
+    if(!el) return;
+    el.style.transition = 'opacity 0.7s cubic-bezier(0.16,1,0.3,1), transform 0.8s cubic-bezier(0.16,1,0.3,1)';
+    setTimeout(function(){
+      Object.keys(item.props).forEach(function(k){ el.style[k] = item.props[k]; });
+    }, item.delay);
+  });
+})();
+
+/* Grain animation */
+(function(){
+  if(window.matchMedia('(prefers-reduced-motion:reduce)').matches) return;
+  var turb = document.querySelector('#gf feTurbulence');
+  if(!turb) return;
+  var s=0, last=0, IV=80;
+  function tick(now){ if(now-last>=IV){turb.setAttribute('seed',++s%99);last=now;} requestAnimationFrame(tick); }
+  requestAnimationFrame(tick);
 })();
 </script>
 </body>

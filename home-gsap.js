@@ -1076,6 +1076,7 @@
    The OUR DAILY BREAD. / BREW. text warms from cream to gold
    as a gradient sweep when the panel is hovered.
    Uses CSS custom property driven by a tiny GSAP tween.
+   Base gradient set in CSS. On hover: shifts position for shimmer.
 ────────────────────────────────────────────────────────────────────── */
 (function heroPanelNameShimmer() {
   if (typeof gsap === 'undefined') return;
@@ -1086,47 +1087,17 @@
     var name = panel.querySelector('.hp2-name');
     if (!name) return;
 
-    var proxy = { t: 0 };
+    /* Use CSS transition on backgroundPosition for the shimmer —
+       much cheaper than JS onUpdate, GPU composited             */
+    name.style.backgroundSize = '200% 200%';
+    name.style.backgroundPosition = '0% 0%';
+    name.style.transition = 'background-position 0.7s cubic-bezier(0.16,1,0.3,1)';
 
     panel.addEventListener('mouseenter', function () {
-      gsap.to(proxy, {
-        t: 1, duration: 0.55, ease: 'expo.out',
-        onUpdate: function () {
-          var v = proxy.t;
-          /* Interpolate: cream → gold at top, amber at bottom */
-          name.style.backgroundImage =
-            'linear-gradient(160deg,' +
-            'rgba(248,244,236,1) ' + (100 - v * 30) + '%,' +
-            'rgba(209,155,64,' + (0.4 + v * 0.6) + ') ' + (100 - v * 10) + '%,' +
-            'rgba(184,100,20,' + (v * 0.7) + ') 100%)';
-          name.style.webkitBackgroundClip = 'text';
-          name.style.backgroundClip = 'text';
-          name.style.webkitTextFillColor = v > 0.05 ? 'transparent' : '';
-          name.style.color = v > 0.05 ? 'transparent' : '';
-        }
-      });
+      name.style.backgroundPosition = '100% 100%';
     });
-
     panel.addEventListener('mouseleave', function () {
-      gsap.to(proxy, {
-        t: 0, duration: 0.4, ease: 'power2.out',
-        onUpdate: function () {
-          var v = proxy.t;
-          if (v < 0.02) {
-            name.style.backgroundImage = '';
-            name.style.webkitBackgroundClip = '';
-            name.style.backgroundClip = '';
-            name.style.webkitTextFillColor = '';
-            name.style.color = '';
-          } else {
-            name.style.backgroundImage =
-              'linear-gradient(160deg,' +
-              'rgba(248,244,236,1) ' + (100 - v * 30) + '%,' +
-              'rgba(209,155,64,' + (0.4 + v * 0.6) + ') ' + (100 - v * 10) + '%,' +
-              'rgba(184,100,20,' + (v * 0.7) + ') 100%)';
-          }
-        }
-      });
+      name.style.backgroundPosition = '0% 0%';
     });
   });
 })();
