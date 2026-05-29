@@ -426,16 +426,16 @@ input,select,textarea{cursor:none!important;caret-color:var(--ink)}
   font-weight: 600;
   letter-spacing: 0.28em;
   text-transform: uppercase;
-  color: rgba(248,244,236,0.0);
+  color: rgba(248,244,236,0.28);
   z-index: 2;
   transition: color 0.3s ease, letter-spacing 0.3s ease;
-  border-bottom: 1px solid transparent;
+  border-bottom: 1px solid rgba(248,244,236,0.15);
   padding-bottom: 2px;
 }
 .hero-panel:hover .hp2-cta {
-  color: rgba(248,244,236,0.7);
-  letter-spacing: 0.36em;
-  border-bottom-color: rgba(248,244,236,0.3);
+  color: rgba(248,244,236,0.82);
+  letter-spacing: 0.38em;
+  border-bottom-color: rgba(248,244,236,0.45);
 }
 
 /* Corner bracket on panels */
