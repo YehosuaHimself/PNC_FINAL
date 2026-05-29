@@ -1126,3 +1126,60 @@ document.addEventListener('DOMContentLoaded',function(){
         }).catch(function(){});
     });
 })();
+/* ── BLESSING SECTION — word-stagger entrance ──────────────────────────
+   MY BREAD / PANEM NOSTRUM COTIDIANUM / OUR DAILY BREAD GIVE US THIS DAY
+   Three blockquotes reveal word by word as section scrolls into view.
+   Uses IntersectionObserver — no GSAP dependency here.
+──────────────────────────────────────────────────────────────────────── */
+(function blessingReveal() {
+  var quotes = document.querySelectorAll('.blessing-quote');
+  if (!quotes.length) return;
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+  /* Split each quote into word spans */
+  quotes.forEach(function (q) {
+    q.classList.remove('reveal');
+    var text = q.textContent.trim();
+    q.setAttribute('aria-label', text);
+    q.innerHTML = '';
+    text.split(/(\s+)/).forEach(function (chunk) {
+      if (!chunk) return;
+      var wrapper = document.createElement('span');
+      wrapper.style.cssText = 'display:inline-block;overflow:hidden;vertical-align:bottom;';
+      var inner = document.createElement('span');
+      inner.style.cssText = 'display:inline-block;transform:translateY(110%);will-change:transform;transition:transform 0.85s cubic-bezier(0.16,1,0.3,1);';
+      inner.textContent = /^\s+$/.test(chunk) ? '\u00A0' : chunk;
+      inner.setAttribute('aria-hidden', 'true');
+      wrapper.appendChild(inner);
+      q.appendChild(wrapper);
+    });
+  });
+
+  var triggered = false;
+  var section = document.querySelector('.blessing');
+  if (!section) return;
+
+  var obs = new IntersectionObserver(function (entries) {
+    if (triggered) return;
+    if (!entries[0].isIntersecting) return;
+    triggered = true;
+    obs.disconnect();
+
+    /* Stagger across all quotes — each subsequent quote waits longer */
+    var globalDelay = 0;
+    quotes.forEach(function (q, qi) {
+      var inners = q.querySelectorAll('span > span');
+      inners.forEach(function (inner, wi) {
+        var delay = globalDelay + wi * 55;
+        setTimeout(function () {
+          inner.style.transform = 'translateY(0)';
+        }, delay);
+      });
+      /* Next quote starts after all words of this one, plus 120ms gap */
+      globalDelay += inners.length * 55 + 120;
+    });
+
+  }, { threshold: 0.25 });
+
+  obs.observe(section);
+})();
