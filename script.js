@@ -199,6 +199,10 @@ document.addEventListener('DOMContentLoaded',function(){
 /* Scroll-aware nav */
 document.addEventListener('DOMContentLoaded',function(){
   document.body.classList.add('ready');
+  /* Return visits: no preloader — fire revealed immediately so CSS animations run */
+  if (sessionStorage.getItem('pnc_visited')) {
+    document.body.classList.add('pnc-revealed');
+  }
   var nav=document.getElementById('site-nav');
   if(!nav)return;
   window.addEventListener('scroll',function(){
