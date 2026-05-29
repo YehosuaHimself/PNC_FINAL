@@ -98,6 +98,14 @@
 
     e.preventDefault();
 
+    /* Set overlay colour to destination page background */
+    var destBg = '#2A1810'; /* default: ink */
+    if (href.indexOf('bread') !== -1) destBg = '#F8F4EC';
+    overlay.style.background = destBg;
+    mono.style.color = (destBg === '#F8F4EC')
+      ? 'rgba(74,48,24,0.08)'    /* ink-on-cream ghost */
+      : 'rgba(248,244,236,0.10)'; /* cream-on-ink ghost */
+
     wipeIn().then(function () {
       window.location.href = href;
     });
