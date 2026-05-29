@@ -1732,3 +1732,112 @@ section[id="origins"] {
     transition: color 0.3s;
   }
 }
+
+/* ── ORIGIN MAPS — SVG path stroke-draw on scroll reveal ────────────
+   The continent silhouettes, country highlights, and callout lines
+   draw their stroke when the card scrolls into view.
+   Uses stroke-dasharray/dashoffset technique — GPU-composited.
+   JS sets --path-len on each path after measuring getTotalLength().   */
+
+.origin-svg {
+  overflow: visible;
+  width: 100%;
+  height: auto;
+  max-height: 160px;
+}
+
+/* Continent fragment — muted, recedes */
+.oc-continent {
+  fill: none;
+  stroke: rgba(92,61,46,0.18);
+  stroke-width: 1.5;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+  stroke-dasharray: var(--path-len, 1200);
+  stroke-dashoffset: var(--path-len, 1200);
+  transition: stroke-dashoffset 1.4s cubic-bezier(0.16,1,0.3,1) 0.1s;
+}
+
+/* Country highlight — warm cocoa, leads the continent draw */
+.oc-country {
+  fill: rgba(196,149,10,0.07);
+  stroke: rgba(196,149,10,0.55);
+  stroke-width: 1.8;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+  stroke-dasharray: var(--path-len, 600);
+  stroke-dashoffset: var(--path-len, 600);
+  transition: stroke-dashoffset 1.0s cubic-bezier(0.16,1,0.3,1) 0.3s,
+              fill 0.6s ease 0.9s;
+}
+
+/* Draw state — JS adds .oc-drawn to the SVG */
+.origin-svg.oc-drawn .oc-continent { stroke-dashoffset: 0; }
+.origin-svg.oc-drawn .oc-country   { stroke-dashoffset: 0; }
+.origin-svg.oc-drawn .oc-country   { fill: rgba(196,149,10,0.13); }
+
+/* Marker dot */
+.oc-dot {
+  fill: var(--gold, #C4950A);
+  opacity: 0;
+  transform-origin: center;
+  transition: opacity 0.35s ease 1.0s, transform 0.5s cubic-bezier(0.34,1.56,0.64,1) 1.0s;
+  transform: scale(0);
+}
+.origin-svg.oc-drawn .oc-dot {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* Pulse ring */
+.oc-pulse {
+  fill: none;
+  stroke: rgba(196,149,10,0.5);
+  stroke-width: 1.2;
+  opacity: 0;
+  transform-origin: center;
+  transform: scale(1);
+}
+.origin-svg.oc-drawn .oc-pulse {
+  opacity: 1;
+  animation: ocPulseRing 2.8s ease-out 1.3s infinite;
+}
+@keyframes ocPulseRing {
+  0%   { transform: scale(1);   opacity: 0.7; }
+  70%  { transform: scale(2.4); opacity: 0; }
+  100% { transform: scale(2.4); opacity: 0; }
+}
+
+/* Callout line */
+.oc-line {
+  stroke: rgba(196,149,10,0.4);
+  stroke-width: 1;
+  stroke-dasharray: 20;
+  stroke-dashoffset: 20;
+  transition: stroke-dashoffset 0.4s ease 1.15s;
+}
+.origin-svg.oc-drawn .oc-line { stroke-dashoffset: 0; }
+
+/* Callout label */
+.oc-label {
+  fill: rgba(92,61,46,0.6);
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  font-size: 8.5px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  opacity: 0;
+  transition: opacity 0.5s ease 1.25s;
+}
+.origin-svg.oc-drawn .oc-label { opacity: 1; }
+
+/* Hover — country warms further */
+@media(hover:hover) {
+  .origin-card:hover .oc-country {
+    fill: rgba(196,149,10,0.22);
+    stroke: rgba(196,149,10,0.8);
+    transition: fill 0.3s ease, stroke 0.3s ease;
+  }
+  .origin-card:hover .oc-pulse {
+    animation-duration: 1.4s;
+  }
+}

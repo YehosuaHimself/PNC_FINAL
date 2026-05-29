@@ -663,18 +663,44 @@
     );
   }
 
-  /* Pulse rings scale up dramatically on card hover */
+  /* ── SVG PATH DRAW — measure getTotalLength, set CSS var, trigger on scroll ── */
+  cards.forEach(function (card, i) {
+    var svg = card.querySelector('.origin-svg');
+    if (!svg) return;
+
+    /* Measure each stroked path and set --path-len so CSS transition knows the full offset */
+    var paths = svg.querySelectorAll('.oc-continent, .oc-country');
+    paths.forEach(function (path) {
+      try {
+        var len = path.getTotalLength();
+        path.style.setProperty('--path-len', len);
+        path.style.strokeDasharray = len;
+        path.style.strokeDashoffset = len;
+      } catch(e) { /* SVG not yet in layout — fallback to CSS default */ }
+    });
+
+    /* ScrollTrigger to add .oc-drawn which fires all CSS transitions */
+    ScrollTrigger.create({
+      trigger: card,
+      start: 'top 82%',
+      once: true,
+      onEnter: function () {
+        /* Small delay so card slide-up GSAP finishes first */
+        setTimeout(function () {
+          svg.classList.add('oc-drawn');
+        }, i * 120 + 200);
+      }
+    });
+  });
+
+  /* Pulse rings accelerate on card hover */
   cards.forEach(function (card) {
     var pulses = card.querySelectorAll('.oc-pulse');
     card.addEventListener('mouseenter', function () {
-      pulses.forEach(function (p) {
-        p.style.animationDuration = '1.4s';
-      });
+      pulses.forEach(function (p) { p.style.animationDuration = '1.4s'; });
     });
     card.addEventListener('mouseleave', function () {
-      pulses.forEach(function (p) {
-        p.style.animationDuration = '2.8s';
-      });
+      pulses.forEach(function (p) { p.style.animationDuration = '2.8s'; });
     });
   });
 
