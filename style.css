@@ -1761,8 +1761,8 @@ section[id="origins"] {
   transition: letter-spacing 0.4s ease, color 0.4s ease;
 }
 .manifesto-panel.mp-active .mp-label {
-  letter-spacing: 0.52em;
-  color: rgba(248,244,236,0.58);
+  letter-spacing: -0.01em;
+  color: rgba(248,244,236,0.92);
 }
 
 /* ── MANIFESTO: mp-recede — panel that just became inactive ─────────
@@ -1775,7 +1775,7 @@ section[id="origins"] {
     font-variation-settings: 'WONK' 1, 'opsz' 48;
   }
   .manifesto-panel.mp-recede .mp-label {
-    letter-spacing: 0.18em;
+    letter-spacing: -0.02em;
     color: rgba(248,244,236,0.22);
   }
   .manifesto-panel.mp-recede .mp-num {
