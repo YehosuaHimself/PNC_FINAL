@@ -71,9 +71,11 @@ body{animation:bodyShow .4s .05s both}
 /* Focus */
 a:focus-visible{outline:2px solid var(--cocoa);outline-offset:3px}
 @media(prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none}body{animation:none}}
+.skip-link{position:absolute;left:-9999px;top:auto;width:1px;height:1px;overflow:hidden}.skip-link:focus{position:fixed;left:16px;top:16px;width:auto;height:auto;padding:8px 16px;background:var(--ink,#2A1810);color:var(--cream,#F8F4EC);font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;font-size:12px;font-weight:700;letter-spacing:0.12em;text-decoration:none;border-radius:2px;z-index:9999;outline:2px solid var(--gold,#C4950A);outline-offset:2px}
 </style>
 </head>
 <body>
+<a href="#main" class="skip-link">Skip to content</a>
 <div id="cur-dot" aria-hidden="true"></div>
 <div id="cur-ring" aria-hidden="true"></div>
 <div id="grain" aria-hidden="true"></div>
