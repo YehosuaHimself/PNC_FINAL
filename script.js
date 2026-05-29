@@ -287,8 +287,9 @@ document.addEventListener('DOMContentLoaded',function(){
   setTimeout(function(){bar.classList.add('visible');},800);
   function dismiss(val){
     localStorage.setItem('pnc_cookie_consent',val);
+    bar.classList.add('dismissing');
     bar.classList.remove('visible');
-    setTimeout(function(){bar.style.display='none';},500);
+    setTimeout(function(){bar.style.display='none';},480);
   }
   document.getElementById('cookie-essential').addEventListener('click',function(){dismiss('essential');});
   document.getElementById('cookie-accept').addEventListener('click',function(){dismiss('all');});
