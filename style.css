@@ -1520,10 +1520,12 @@ section[id="origins"] {
 }
 .manifesto-progress-bar {
   height: 100%;
-  width: 0;
+  width: 100%;
   background: var(--gold);
-  transition: width 0.05s linear;
-  will-change: width;
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 0.05s linear;
+  will-change: transform;
 }
 
 /* SCROLL hint */

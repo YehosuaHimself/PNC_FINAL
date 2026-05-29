@@ -492,7 +492,7 @@
       end: () => '+=' + ((totalPanels - 1) * window.innerHeight * 1.5) + 'px',
       onUpdate: function (self) {
         var p = self.progress;
-        if (bar) bar.style.width = (p * 100) + '%';
+        if (bar) bar.style.transform = 'scaleX(' + p + ')';
         if (hint) {
           if (p > 0.05) hint.classList.add('hidden');
           else hint.classList.remove('hidden');
