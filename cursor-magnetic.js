@@ -47,8 +47,8 @@
       /* Explicit data-cursor-label */
       if (node.dataset && node.dataset.cursorLabel) return node.dataset.cursorLabel;
       /* Product card */
-      if (node.classList && node.classList.contains('hero-product--bread')) return 'BREAD';
-      if (node.classList && node.classList.contains('hero-product--brew'))  return 'BREW';
+      if (node.classList && (node.classList.contains('hero-product--bread') || node.classList.contains('hero-panel--bread'))) return 'BREAD';
+      if (node.classList && (node.classList.contains('hero-product--brew')  || node.classList.contains('hero-panel--brew')))  return 'BREW';
       /* Nav links */
       if (node.classList && node.classList.contains('nav-link')) {
         return (node.textContent || '').trim().toUpperCase();
@@ -91,7 +91,7 @@
     magCY = rect.top  + rect.height / 2;
 
     /* Expand ring */
-    var isCard = el.classList.contains('hero-product');
+    var isCard = el.classList.contains('hero-product') || el.classList.contains('hero-panel');
     ring.style.width  = isCard ? '120px' : '72px';
     ring.style.height = isCard ? '120px' : '72px';
     ring.style.opacity = '0.55';
@@ -114,7 +114,7 @@
   var magTargetRects = [];
 
   function buildMagCache() {
-    var selectors = '.hero-product,a,button,[role=button]';
+    var selectors = '.hero-product,.hero-panel,a,button,[role=button]';
     var els = document.querySelectorAll(selectors);
     magTargets = Array.prototype.slice.call(els);
     magTargetRects = new Array(magTargets.length);
@@ -158,7 +158,7 @@
       var cx = rect.left + rect.width  / 2;
       var cy = rect.top  + rect.height / 2;
       var dist = Math.sqrt((mx - cx) * (mx - cx) + (my - cy) * (my - cy));
-      var r = magTargets[i].classList.contains('hero-product') ? MAG_RADIUS * 1.8 : MAG_RADIUS;
+      var r = (magTargets[i].classList.contains('hero-product') || magTargets[i].classList.contains('hero-panel')) ? MAG_RADIUS * 1.8 : MAG_RADIUS;
       if (dist < r) { hit = magTargets[i]; break; }
     }
 
