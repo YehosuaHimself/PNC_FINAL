@@ -516,6 +516,13 @@
     box-shadow: 0 16px 64px rgba(0,0,0,0.32);
   }
 }
+.origin-card:focus-visible {
+  border-color: rgba(248,244,236,0.18);
+  transform: translateY(-4px);
+  box-shadow: 0 16px 64px rgba(0,0,0,0.32);
+  outline: 2px solid rgba(196,168,84,0.5);
+  outline-offset: 4px;
+}
 
 /* Corner bracket */
 .origin-card::before {
@@ -532,6 +539,7 @@
 @media (hover:hover) {
   .origin-card:hover::before { width: 72px; height: 72px; }
 }
+.origin-card:focus-visible::before { width: 72px; height: 72px; }
 
 /* Fine grid */
 .origin-card::after {
@@ -599,6 +607,10 @@
     fill: rgba(184,134,11,0.30);
     stroke: rgba(184,134,11,0.80);
   }
+}
+.origin-card:focus-visible .oc-country {
+  fill: rgba(184,134,11,0.30);
+  stroke: rgba(184,134,11,0.80);
 }
 
 /* Location dot */
@@ -776,6 +788,9 @@
   .origin-card:hover .origin-map::after {
     opacity: 1;
   }
+}
+.origin-card:focus-visible .origin-map::after {
+  opacity: 1;
 }
 
 
