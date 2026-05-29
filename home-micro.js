@@ -484,7 +484,7 @@
 
   /* The 7 narrative sections in reading order */
   var SECTIONS = [
-    '#main',             /* 01 Hero */
+    '#main-content',     /* 01 Hero */
     '.proof-strip',      /* 02 Proof */
     '.ritual-section',   /* 03 Ritual */
     '.principles-section', /* 04 Principles */
@@ -527,7 +527,7 @@
     if (entries[0].isIntersecting) counter.classList.remove('visible');
     else counter.classList.add('visible');
   }, { threshold: 0.98 });
-  var hero = document.querySelector('#main');
+  var hero = document.querySelector('#main-content');
   if (hero) hideObs.observe(hero);
 
 })();
