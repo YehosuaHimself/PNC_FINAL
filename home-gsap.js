@@ -347,12 +347,14 @@
   function countUp(el, target, prefix, suffix, duration, delay) {
     setTimeout(function () {
       var start = null;
-      var isFloat = !Number.isInteger(target);
+      /* Zero targets count DOWN from a small number — the resolution
+         to 0 is the dramatic beat (no fillers, no additives, no shortcuts) */
+      var from = target === 0 ? 7 : 0;
       function tick(now) {
         if (!start) start = now;
         var progress = Math.min((now - start) / duration, 1);
         var eased = easeOutExpo(progress);
-        var current = Math.round(target * eased);
+        var current = Math.round(from + (target - from) * eased);
         el.textContent = (prefix || '') + current.toLocaleString() + (suffix || '');
         if (progress < 1) requestAnimationFrame(tick);
         else el.textContent = (prefix || '') + target.toLocaleString() + (suffix || '');

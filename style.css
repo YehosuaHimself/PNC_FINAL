@@ -458,6 +458,25 @@ input,select,textarea{cursor:none!important;caret-color:var(--ink)}
   border-bottom-color: rgba(248,244,236,0.45);
 }
 
+/* Keyboard focus — gold outline that works over photography */
+.hero-panel:focus-visible {
+  outline: none;
+}
+.hero-panel:focus-visible::after {
+  content: '';
+  position: absolute;
+  inset: 3px;
+  border: 2px solid var(--gold);
+  z-index: 4;
+  pointer-events: none;
+  border-radius: 2px;
+  animation: panelFocusPulse 1.8s ease-in-out infinite;
+}
+@keyframes panelFocusPulse {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.55; }
+}
+
 /* Corner bracket on panels */
 .hero-panel::before {
   content: '';
