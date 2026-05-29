@@ -889,18 +889,14 @@
 }
 
 .pi-rule {
-  font-family: 'Fraunces', Georgia, serif;
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
   font-weight: 900;
-  font-style: italic;
-  font-variation-settings: 'WONK' 1, 'opsz' 72;
+  font-style: normal;
   font-size: clamp(20px, 2.8vw, 40px);
-  letter-spacing: -0.015em;
+  letter-spacing: -0.025em;
   line-height: 1.0;
-  color: rgba(248,244,236,0.92);
+  color: #ffffff;
   transition: color 0.3s, letter-spacing 0.4s cubic-bezier(.16,1,.3,1);
-  background-size: 200% 100%;
-  background-clip: text;
-  -webkit-background-clip: text;
 }
 
 @keyframes piGoldSweep {
@@ -912,25 +908,8 @@
 
 @media (hover:hover) {
   .principle-item:hover .pi-rule {
-    color: rgba(248,244,236,1);
-    letter-spacing: -0.008em;
-    background-image: linear-gradient(
-      90deg,
-      rgba(248,244,236,0.92) 0%,
-      rgba(196,168,84,0.9) 30%,
-      rgba(248,220,140,1) 50%,
-      rgba(196,168,84,0.9) 70%,
-      rgba(248,244,236,1) 100%
-    );
-    animation: piGoldSweep 0.7s cubic-bezier(.16,1,.3,1) forwards;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .principle-item:hover .pi-rule {
-    animation: none;
-    background-image: none;
-    -webkit-text-fill-color: rgba(248,244,236,1);
+    color: #ffffff;
+    letter-spacing: -0.015em;
   }
 }
 
@@ -1217,29 +1196,15 @@
   letter-spacing: 0.30em;
 }
 
-/* .open: rule text settles bright — with the same gold sweep as hover */
+/* .open: rule text settles bright */
 .principle-item.open .pi-rule {
-  color: rgba(248,244,236,1);
-  letter-spacing: -0.008em;
-  background-image: linear-gradient(
-    90deg,
-    rgba(248,244,236,0.92) 0%,
-    rgba(196,168,84,0.9) 30%,
-    rgba(248,220,140,1) 50%,
-    rgba(196,168,84,0.9) 70%,
-    rgba(248,244,236,1) 100%
-  );
-  background-size: 200% 100%;
-  background-clip: text;
-  -webkit-background-clip: text;
-  animation: piGoldSweep 0.7s cubic-bezier(.16,1,.3,1) forwards;
+  color: #ffffff;
+  letter-spacing: -0.015em;
 }
 
 @media (prefers-reduced-motion: reduce) {
   .principle-item.open .pi-rule {
-    animation: none;
-    background-image: none;
-    -webkit-text-fill-color: rgba(248,244,236,1);
+    color: #ffffff;
   }
 }
 
