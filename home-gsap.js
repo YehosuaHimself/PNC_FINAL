@@ -917,3 +917,51 @@
   });
 
 })();
+
+
+/* ── PRE-FOOTER STATEMENT — letter-space prayer unfold ───────────────
+   "PANEM NOSTRUM COTIDIANUM DA NOBIS HODIE" expands its tracking
+   as the section enters the viewport — like a breath being taken.
+   The eyebrow surfaces first, then the main text unfolds outward.
+────────────────────────────────────────────────────────────────────── */
+(function preFooterReveal() {
+  if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') return;
+
+  var section = document.querySelector('.pre-footer-statement');
+  if (!section) return;
+
+  var eyebrow = section.querySelector('.pfs-eyebrow');
+  var main    = section.querySelector('.pfs-main');
+
+  if (eyebrow) {
+    gsap.fromTo(eyebrow,
+      { opacity: 0, letterSpacing: '0.12em' },
+      {
+        opacity: 1, letterSpacing: '0.32em',
+        duration: 1.4, ease: 'expo.out',
+        scrollTrigger: {
+          trigger: section,
+          start: 'top 78%',
+          toggleActions: 'play none none none'
+        }
+      }
+    );
+  }
+
+  if (main) {
+    gsap.fromTo(main,
+      { opacity: 0, letterSpacing: '-0.04em', y: 28 },
+      {
+        opacity: 1, letterSpacing: '-0.02em', y: 0,
+        duration: 1.8, ease: 'expo.out', delay: 0.2,
+        clearProps: 'transform',
+        scrollTrigger: {
+          trigger: section,
+          start: 'top 75%',
+          toggleActions: 'play none none none'
+        }
+      }
+    );
+  }
+
+})();
