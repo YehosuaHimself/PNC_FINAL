@@ -106,17 +106,20 @@
   /* ── Reveal on page load (wipe out from top) ────────────────── */
   (function revealOnLoad() {
     /* If we arrived via internal nav, overlay starts at 0 (covering screen) */
-    /* Otherwise start from below — nothing to reveal */
     var came = sessionStorage.getItem('pnc_transitioning');
-    if (came) {
-      sessionStorage.removeItem('pnc_transitioning');
-      overlay.style.transition = 'none';
-      overlay.style.transform  = 'translateY(0)';
-      overlay.offsetHeight; /* reflow */
-      setTimeout(function () {
-        wipeOut();
-      }, 60);
-    }
+    if (!came) return;
+    sessionStorage.removeItem('pnc_transitioning');
+
+    overlay.style.transition = 'none';
+    overlay.style.transform  = 'translateY(0)';
+    overlay.offsetHeight; /* reflow */
+
+    /* First visit in session: preloader runs for ~2060ms.
+       Delay wipeOut until after preloader lifts — no double curtain.
+       Return visits: no preloader, fire immediately. */
+    var isFirstVisit = !sessionStorage.getItem('pnc_visited');
+    var delay = isFirstVisit ? 2200 : 80;
+    setTimeout(function () { wipeOut(); }, delay);
   })();
 
   /* Flag before navigation so next page knows */
