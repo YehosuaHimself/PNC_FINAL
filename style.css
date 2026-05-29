@@ -1771,29 +1771,22 @@ section[id="origins"] {
   font-variation-settings: 'WONK' 1, 'opsz' 144;
   font-size: clamp(28px, 5.5vw, 88px);
   letter-spacing: -0.02em;
-  line-height: 1;
-  color: rgba(248,244,236,0.11);
+  line-height: 1.1;
+  color: rgba(248,244,236,0.88);
   user-select: none;
-  transition: color 1.4s ease;
 }
-.pre-footer-statement:hover .pfs-main {
-  color: rgba(248,244,236,0.22);
+/* Individual word spans created by GSAP inscription reveal */
+.pfs-word {
+  display: inline-block;
+  white-space: pre;
+  will-change: opacity, filter, transform;
+  /* warm hover: entire prayer breathes on parent hover */
+  transition: color 1.2s ease;
 }
-/* Scroll-driven: text breathes in as section enters viewport */
-@supports (animation-timeline: scroll()) {
-  .pfs-main {
-    animation: pfsReveal linear both;
-    animation-timeline: view();
-    animation-range: entry 10% entry 60%;
-  }
-  @keyframes pfsReveal {
-    from { letter-spacing: -0.06em; color: rgba(248,244,236,0.04); }
-    to   { letter-spacing: -0.02em; color: rgba(248,244,236,0.11); }
-  }
-  .pre-footer-statement:hover .pfs-main {
-    animation: none;
-    color: rgba(248,244,236,0.22);
-    letter-spacing: -0.01em;
+@media (hover: hover) {
+  .pre-footer-statement:hover .pfs-word {
+    color: rgba(196,168,84,0.72);
+    transition: color 1.8s ease;
   }
 }
 

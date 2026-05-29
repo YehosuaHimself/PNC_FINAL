@@ -1007,20 +1007,43 @@
     );
   }
 
+  /* ── INSCRIPTION REVEAL — word by word, like ink drying on vellum ── */
   if (main) {
-    gsap.fromTo(main,
-      { opacity: 0, letterSpacing: '-0.04em', y: 28 },
-      {
-        opacity: 1, letterSpacing: '-0.02em', y: 0,
-        duration: 1.8, ease: 'expo.out', delay: 0.2,
-        clearProps: 'transform',
-        scrollTrigger: {
-          trigger: section,
-          start: 'top 75%',
-          toggleActions: 'play none none none'
-        }
+    /* Split pfs-main text into individual word spans */
+    var rawText = main.textContent.trim();
+    var words = rawText.split(/\s+/);
+    main.innerHTML = words.map(function(w) {
+      return '<span class="pfs-word" aria-hidden="true" style="display:inline-block; white-space:pre;">' + w + ' </span>';
+    }).join('');
+    /* Accessibility: keep original text for screen readers */
+    main.setAttribute('aria-label', rawText);
+
+    /* Style each word to start invisible */
+    gsap.set('.pfs-word', {
+      opacity: 0,
+      filter: 'blur(6px)',
+      letterSpacing: '-0.06em',
+      y: 12
+    });
+
+    gsap.to('.pfs-word', {
+      opacity: 1,
+      filter: 'blur(0px)',
+      letterSpacing: '-0.02em',
+      y: 0,
+      duration: 1.4,
+      ease: 'expo.out',
+      stagger: {
+        each: 0.14,
+        from: 'start'
+      },
+      clearProps: 'transform,filter',
+      scrollTrigger: {
+        trigger: section,
+        start: 'top 72%',
+        toggleActions: 'play none none none'
       }
-    );
+    });
   }
 
 })();
