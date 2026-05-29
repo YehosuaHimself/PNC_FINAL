@@ -997,6 +997,34 @@
 })();
 
 
+/* ── HERO HEADLINE — scroll-out stone recession ──────────────────────
+   As the user scrolls past the hero, the headline drifts upward at
+   a rate slower than the page — as if carved into a wall you're
+   walking away from. The text doesn't chase; it stays where it was.
+   GPU-safe: yPercent only. Scope to desktop only (mobile scrolls
+   the hero off naturally without needing amplification).
+────────────────────────────────────────────────────────────────────── */
+(function heroHeadlineScrollOut() {
+  if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') return;
+  if (window.matchMedia('(prefers-reduced-motion:reduce)').matches) return;
+  if (!window.matchMedia('(min-width:640px)').matches) return;
+
+  var headline = document.querySelector('.hero-headline');
+  if (!headline) return;
+
+  gsap.to(headline, {
+    yPercent: -18,
+    ease: 'none',
+    scrollTrigger: {
+      trigger: '.hero',
+      start: 'top top',
+      end: 'bottom top',
+      scrub: 1.8    /* slower scrub than images — text is heavier */
+    }
+  });
+})();
+
+
 /* ── PRE-FOOTER STATEMENT — letter-space prayer unfold ───────────────
    "PANEM NOSTRUM COTIDIANUM DA NOBIS HODIE" expands its tracking
    as the section enters the viewport — like a breath being taken.

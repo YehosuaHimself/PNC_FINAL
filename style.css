@@ -1490,7 +1490,7 @@ section[id="origins"] {
   font-family: 'Fraunces', Georgia, serif;
   font-weight: 900;
   font-style: italic;
-  font-variation-settings: 'WONK' 1, 'opsz' 144;
+  font-variation-settings: 'WONK' 1, 'opsz' 72;
   font-size: clamp(52px,8vw,120px);
   letter-spacing: -0.03em;
   line-height: 0.88;
@@ -1721,11 +1721,13 @@ section[id="origins"] {
 /* ── MANIFESTO: mp-claim — settles into reading position on active ── */
 .mp-claim {
   transition: letter-spacing 0.9s cubic-bezier(.16,1,.3,1),
-              opacity 0.9s cubic-bezier(.16,1,.3,1);
+              opacity 0.9s cubic-bezier(.16,1,.3,1),
+              font-variation-settings 1.1s cubic-bezier(.16,1,.3,1);
 }
 .manifesto-panel.mp-active .mp-claim {
   letter-spacing: -0.022em;
   opacity: 1;
+  font-variation-settings: 'WONK' 1, 'opsz' 144;
 }
 
 /* ── MANIFESTO: mp-label — CSS var for JS-driven tracking ─────── */
@@ -1744,6 +1746,7 @@ section[id="origins"] {
   .manifesto-panel.mp-recede .mp-claim {
     letter-spacing: -0.035em;
     opacity: 0.38;
+    font-variation-settings: 'WONK' 1, 'opsz' 48;
   }
   .manifesto-panel.mp-recede .mp-label {
     letter-spacing: 0.18em;
@@ -1763,6 +1766,7 @@ section[id="origins"] {
   .manifesto-panel.mp-ahead .mp-claim {
     opacity: 0.55;
     letter-spacing: -0.028em;
+    font-variation-settings: 'WONK' 1, 'opsz' 88;
   }
   .manifesto-panel.mp-ahead .mp-num {
     opacity: 0.04;
