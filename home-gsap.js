@@ -74,6 +74,13 @@
     return el.querySelectorAll('.gsap-word > span');
   }
 
+  /* ── PRELOADER TIMING ─────────────────────────────────────────────
+     On first load the preloader holds for ~2.06s then lifts over 0.9s.
+     Hero elements should emerge AS the curtain rises (at ~1.8s).
+     On returning visits (pnc_visited set) — fire immediately.
+  ───────────────────────────────────────────────────────────────── */
+  var HERO_DELAY = sessionStorage.getItem('pnc_visited') ? 0 : 1.82;
+
   /* ── 1. HERO HEADLINE — clip-mask wipe ─────────────────────────
      Each .hl-inner slides up from its overflow:hidden parent.
      CSS animation handles it; GSAP enhances with smoother control.
@@ -90,7 +97,7 @@
       duration: 1.15,
       ease: 'expo.out',
       stagger: 0.13,
-      delay: 0.05,
+      delay: HERO_DELAY,
       clearProps: 'transform,opacity'
     });
 
@@ -99,7 +106,7 @@
       gsap.set(sub, { opacity: 0, y: 16 });
       gsap.to(sub, {
         opacity: 1, y: 0,
-        duration: 1.2, ease: 'expo.out', delay: 0.52,
+        duration: 1.2, ease: 'expo.out', delay: HERO_DELAY + 0.52,
         clearProps: 'transform,opacity'
       });
     }
@@ -116,10 +123,47 @@
       { opacity: 0, y: 18, filter: 'blur(6px)' },
       {
         opacity: 1, y: 0, filter: 'blur(0px)',
-        duration: 1.4, ease: 'expo.out', delay: 0.55,
+        duration: 1.4, ease: 'expo.out', delay: HERO_DELAY + 0.55,
         clearProps: 'filter,transform,opacity'
       }
     );
+  })();
+
+  /* ── 2b. HERO PANELS — clip-path wipe from below ─────────────────
+     The two product panels wipe up from below, staggered.
+     Bread first (left), brew follows 180ms later.
+     The hero topbar and scroll indicator fade in with the panels.
+  ───────────────────────────────────────────────────────────────── */
+  (function heroPanelEntrance() {
+    var panels  = document.querySelectorAll('.hero-panel');
+    var topbar  = document.querySelector('.hero-topbar');
+    var scroll  = document.querySelector('.hero-scroll');
+
+    if (panels.length) {
+      gsap.set(panels, { clipPath: 'inset(100% 0 0 0)', opacity: 1 });
+      gsap.to(panels, {
+        clipPath: 'inset(0% 0 0 0)',
+        duration: 1.2,
+        ease: 'expo.inOut',
+        stagger: 0.14,
+        delay: HERO_DELAY + 0.18,
+        clearProps: 'clipPath'
+      });
+    }
+
+    if (topbar) {
+      gsap.fromTo(topbar,
+        { opacity: 0, y: -10 },
+        { opacity: 1, y: 0, duration: 0.8, ease: 'expo.out', delay: HERO_DELAY + 0.05 }
+      );
+    }
+
+    if (scroll) {
+      gsap.fromTo(scroll,
+        { opacity: 0 },
+        { opacity: 1, duration: 0.7, ease: 'expo.out', delay: HERO_DELAY + 1.2 }
+      );
+    }
   })();
 
   /* ── 3. PHILOSOPHY SECTION — pinned horizontal text draw ─────────
