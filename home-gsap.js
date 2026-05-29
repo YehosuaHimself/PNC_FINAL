@@ -551,12 +551,9 @@
     }
   });
 
-  /* ── Panel text entrance: progress-driven, not viewport-triggered ──
-     Panels are inside a horizontal pin. Their viewport position never
-     changes as the user scrolls — only xPercent moves. Viewport-relative
-     ScrollTriggers (start: 'top 80%') only fire for panel 0.
-     Fix: set all text hidden up front, fire entrance tween from onUpdate
-     the moment a panel becomes active. Each panel fires exactly once.   */
+  /* ── Panel text entrance: driven by activeIdx change in onUpdate ──
+     All text starts hidden. When activeIdx changes, fire a one-shot
+     entrance tween. MutationObserver watches for mp-active class.     */
 
   var panelFired = [];
   panels.forEach(function (panel, i) {
@@ -564,13 +561,9 @@
     var lbl    = panel.querySelector('.mp-label');
     var claim  = panel.querySelector('.mp-claim');
     var detail = panel.querySelector('.mp-detail');
-    /* Hide everything except panel 0 label (visible immediately on pin entry) */
-    if (i === 0 && lbl)    { gsap.set(lbl,    { opacity: 0, y: 20 }); }
-    if (i === 0 && claim)  { gsap.set(claim,  { opacity: 0, y: 40 }); }
-    if (i === 0 && detail) { gsap.set(detail, { opacity: 0, y: 24 }); }
-    if (i > 0  && lbl)    { gsap.set(lbl,    { opacity: 0, y: 20 }); }
-    if (i > 0  && claim)  { gsap.set(claim,  { opacity: 0, y: 40 }); }
-    if (i > 0  && detail) { gsap.set(detail, { opacity: 0, y: 24 }); }
+    if (lbl)    gsap.set(lbl,    { opacity: 0, y: 20 });
+    if (claim)  gsap.set(claim,  { opacity: 0, y: 40 });
+    if (detail) gsap.set(detail, { opacity: 0, y: 24 });
   });
 
   function firePanelText(i) {
@@ -580,48 +573,22 @@
     var lbl    = panel.querySelector('.mp-label');
     var claim  = panel.querySelector('.mp-claim');
     var detail = panel.querySelector('.mp-detail');
-    if (lbl) {
-      gsap.to(lbl,    { opacity: 1, y: 0, letterSpacing: '0.36em',
-                        duration: 0.7, ease: 'expo.out', overwrite: true });
-    }
-    if (claim) {
-      gsap.to(claim,  { opacity: 1, y: 0,
-                        duration: 0.9, ease: 'expo.out', delay: 0.08, overwrite: true,
-                        clearProps: 'opacity,transform' });
-    }
-    if (detail) {
-      gsap.to(detail, { opacity: 1, y: 0,
-                        duration: 0.9, ease: 'expo.out', delay: 0.18, overwrite: true,
-                        clearProps: 'opacity,transform' });
-    }
+    if (lbl)    gsap.to(lbl,    { opacity: 1, y: 0, letterSpacing: '0.36em', duration: 0.7, ease: 'expo.out', overwrite: 'auto' });
+    if (claim)  gsap.to(claim,  { opacity: 1, y: 0, duration: 0.9, ease: 'expo.out', delay: 0.08, overwrite: 'auto' });
+    if (detail) gsap.to(detail, { opacity: 1, y: 0, duration: 0.9, ease: 'expo.out', delay: 0.18, overwrite: 'auto' });
   }
 
-  /* Fire panel 0 immediately — it's already visible when the pin starts */
+  /* Fire panel 0 immediately on pin entry */
   firePanelText(0);
 
-  /* Attach firePanelText to the onUpdate we already have on the main pin.
-     We patch it in by finding the existing onUpdate and extending it.
-     Since GSAP stores the ST instance, we add a second onUpdate via
-     ScrollTrigger.getAll and monkey-patch, or simpler: use a shared flag. */
-
-  /* The cleanest approach: re-read the ST and wrap onUpdate via a closure.
-     We store the active panel index in a shared var that the existing
-     onUpdate already tracks (activeIdx), so we just need a second listener.
-     Use ScrollTrigger's onToggle + onScrubComplete + direct progress check: */
-
-  /* Actually: add a MutationObserver on the panels to watch for mp-active class.
-     When mp-active is added to panel[i], fire the text entrance. This decouples
-     the text reveal from the ScrollTrigger wiring entirely — zero tight coupling. */
-
+  /* Watch for mp-active to fire subsequent panels */
   var textMO = new MutationObserver(function(mutations) {
     mutations.forEach(function(mut) {
-      if (mut.type !== 'attributes' || mut.attributeName !== 'class') return;
+      if (mut.attributeName !== 'class') return;
       var el = mut.target;
+      if (!el.classList.contains('mp-active')) return;
       var idx = Array.prototype.indexOf.call(panels, el);
-      if (idx === -1) return;
-      if (el.classList.contains('mp-active')) {
-        firePanelText(idx);
-      }
+      if (idx > 0) firePanelText(idx);
     });
   });
   panels.forEach(function(panel) {
@@ -865,46 +832,8 @@
    As the user scrolls through each panel, the claim text chars
    light up from left to right — like words becoming real.
 ────────────────────────────────────────────────────────────────────── */
-(function manifestoClaims() {
-  if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') return;
-  if (!window.matchMedia('(min-width: 641px)').matches) return;
-  if (window.matchMedia('(prefers-reduced-motion:reduce)').matches) return;
+/* manifestoClaims removed — char-color is driven by onUpdate progress in manifestoScroll above */
 
-  var claims = document.querySelectorAll('.mp-claim');
-  claims.forEach(function (claim) {
-    /* Split into chars */
-    var text = claim.innerText;
-    claim.innerHTML = '';
-    claim.setAttribute('aria-label', text);
-
-    text.split('').forEach(function (ch) {
-      var s = document.createElement('span');
-      s.setAttribute('aria-hidden', 'true');
-      s.style.cssText = 'display:inline-block;color:rgba(248,244,236,0.10);transition:none;';
-      s.textContent = ch === '\n' ? '\u00A0' : ch;
-      if (ch === '\n') { claim.appendChild(document.createElement('br')); return; }
-      claim.appendChild(s);
-    });
-
-    var chars = claim.querySelectorAll('span');
-
-    gsap.to(chars, {
-      color: 'rgba(248,244,236,1)',
-      duration: 0.01,
-      stagger: {
-        each: 0.025,
-        from: 'start'
-      },
-      scrollTrigger: {
-        trigger: claim,
-        start: 'top 70%',
-        end: 'top 20%',
-        scrub: 0.8
-      }
-    });
-  });
-
-})();
 
 
 /* ── RITUAL IMAGES — clip-path scrub reveal ──────────────────────────
