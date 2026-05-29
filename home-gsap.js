@@ -884,3 +884,36 @@
   });
 
 })();
+
+
+/* ── HERO PANEL IMAGES — scroll parallax depth ───────────────────────
+   The background images drift upward at different rates as user
+   scrolls past the hero, creating true photographic depth.
+   GPU-safe: only transforms animated, no background-position.
+────────────────────────────────────────────────────────────────────── */
+(function heroPanelParallax() {
+  if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') return;
+  if (window.matchMedia('(prefers-reduced-motion:reduce)').matches) return;
+  if (!window.matchMedia('(min-width:640px)').matches) return;
+
+  var imgs = document.querySelectorAll('.hp2-img');
+  if (!imgs.length) return;
+
+  imgs.forEach(function(img, i) {
+    /* bread (0) drifts slower — feels heavier, earthier */
+    /* brew (1) drifts faster — feels lighter, vaporous */
+    var yEnd = i === 0 ? '-12%' : '-18%';
+
+    gsap.to(img, {
+      yPercent: i === 0 ? -6 : -9,
+      ease: 'none',
+      scrollTrigger: {
+        trigger: '.hero',
+        start: 'top top',
+        end: 'bottom top',
+        scrub: 1.2
+      }
+    });
+  });
+
+})();
