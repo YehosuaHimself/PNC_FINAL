@@ -843,25 +843,6 @@
 })();
 
 
-/* ── PHILOSOPHY BORDER — gold fill trigger on scroll ─────────────────
-   Adds .border-filled class when the section enters viewport.
-   CSS transition handles the upward gold draw.
-────────────────────────────────────────────────────────────────────── */
-(function philBorder() {
-  if (typeof ScrollTrigger === 'undefined') return;
-
-  var quote = document.querySelector('.phil-quote');
-  if (!quote) return;
-
-  ScrollTrigger.create({
-    trigger: quote,
-    start: 'top 75%',
-    onEnter: function () {
-      quote.classList.add('border-filled');
-    }
-  });
-
-})();
 
 
 /* ── PHILOSOPHY ACCENT NUMBER — scroll parallax ─────────────────────

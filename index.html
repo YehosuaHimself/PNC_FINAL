@@ -343,16 +343,22 @@ html, body {
 <script>
 // Skip gate immediately on repeat visits within the session
 if (sessionStorage.getItem('pnc_gate_seen')) {
+  sessionStorage.setItem('pnc-nav', '1');
   window.location.replace('/home.html');
 } else {
   sessionStorage.setItem('pnc_gate_seen', '1');
 
   // Skip animation button
   document.getElementById('gate-skip').addEventListener('click', function() {
+    sessionStorage.setItem('pnc-nav', '1');
     window.location.replace('/home.html');
   });
   document.getElementById('gate-skip').addEventListener('keydown', function(e) {
-    if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); window.location.replace('/home.html'); }
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      sessionStorage.setItem('pnc-nav', '1');
+      window.location.replace('/home.html');
+    }
   });
 
   // Redirect after gate lift completes
@@ -365,6 +371,7 @@ if (sessionStorage.getItem('pnc_gate_seen')) {
   }
 
   setTimeout(function() {
+    sessionStorage.setItem('pnc-nav', '1');
     window.location.replace('/home.html');
   }, REDIRECT_DELAY);
 }

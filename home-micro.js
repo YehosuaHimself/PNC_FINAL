@@ -664,3 +664,62 @@
   }, { threshold: 0.3 });
   io.observe(quote);
 })();
+
+
+/* ── PAGE TRANSITION — dark curtain exit ────────────────────────────
+   On internal link click: ink curtain drops from top, then navigates.
+   On page load: curtain lifts away. Eliminates hard white flash.
+   Uses sessionStorage to track whether we came from an internal nav.
+──────────────────────────────────────────────────────────────────── */
+(function pageTransitions() {
+  if (window.matchMedia('(prefers-reduced-motion:reduce)').matches) return;
+
+  /* Create the curtain element */
+  var curtain = document.createElement('div');
+  curtain.id = 'page-curtain';
+  curtain.style.cssText = [
+    'position:fixed',
+    'inset:0',
+    'background:var(--ink,#2A1810)',
+    'z-index:99998',
+    'pointer-events:none',
+    'transform:translateY(-100%)',
+    'transition:transform 0.52s cubic-bezier(0.76,0,0.24,1)',
+    'will-change:transform'
+  ].join(';');
+  document.body.appendChild(curtain);
+
+  /* On page load: if we came from an internal nav, lift the curtain */
+  if (sessionStorage.getItem('pnc-nav')) {
+    sessionStorage.removeItem('pnc-nav');
+    curtain.style.transform = 'translateY(0)';
+    curtain.style.transition = 'none';
+    requestAnimationFrame(function() {
+      requestAnimationFrame(function() {
+        curtain.style.transition = 'transform 0.62s cubic-bezier(0.76,0,0.24,1)';
+        curtain.style.transform = 'translateY(-100%)';
+      });
+    });
+  }
+
+  /* Intercept internal link clicks */
+  document.addEventListener('click', function(e) {
+    var link = e.target.closest('a[href]');
+    if (!link) return;
+
+    var href = link.getAttribute('href');
+    /* Only internal, non-hash, non-external links */
+    if (!href || href.startsWith('#') || href.startsWith('http') ||
+        href.startsWith('mailto') || href.startsWith('tel') ||
+        link.target === '_blank') return;
+
+    e.preventDefault();
+    sessionStorage.setItem('pnc-nav', '1');
+
+    /* Drop the curtain, then navigate */
+    curtain.style.transform = 'translateY(0)';
+    setTimeout(function() {
+      window.location.href = href;
+    }, 480);
+  }, true);
+})();
