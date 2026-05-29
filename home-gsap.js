@@ -151,11 +151,46 @@
       );
     }
 
-    /* Quote — word stagger */
+    /* Quote — word stagger — preserve <em> attribution */
     if (quote) {
-      /* Remove the .reveal class so our GSAP handles it */
       quote.classList.remove('reveal');
-      var words = splitWords(quote);
+
+      /* Collect only direct text content (before the em tag) */
+      var emEl = quote.querySelector('em');
+      var mainText = '';
+      quote.childNodes.forEach(function(node) {
+        if (node.nodeType === 3) mainText += node.textContent;
+      });
+      mainText = mainText.trim();
+
+      /* Rebuild: word spans + preserved em */
+      var fullLabel = quote.getAttribute('aria-label') || quote.textContent;
+      quote.setAttribute('aria-label', fullLabel);
+
+      /* Clear text nodes but keep em */
+      var toRemove = [];
+      quote.childNodes.forEach(function(node) {
+        if (node.nodeType === 3) toRemove.push(node);
+      });
+      toRemove.forEach(function(n) { quote.removeChild(n); });
+
+      /* Insert word spans at the start */
+      var frag = document.createDocumentFragment();
+      mainText.split(/(\s+)/).forEach(function(w) {
+        if (!w) return;
+        var s = document.createElement('span');
+        s.className = 'gsap-word';
+        s.setAttribute('aria-hidden', 'true');
+        s.style.cssText = 'display:inline-block;overflow:hidden;vertical-align:bottom;';
+        var inner = document.createElement('span');
+        inner.style.cssText = 'display:inline-block;will-change:transform;';
+        inner.textContent = /^\s+$/.test(w) ? '\u00A0' : w;
+        s.appendChild(inner);
+        frag.appendChild(s);
+      });
+      quote.insertBefore(frag, quote.firstChild);
+
+      var words = quote.querySelectorAll('.gsap-word > span');
       gsap.set(words, { y: '105%' });
       gsap.to(words, {
         y: '0%',
