@@ -2489,3 +2489,53 @@ body.pnc-revealed .hero-headline .hl-sub {
 @media (prefers-reduced-motion: reduce) {
   .hero-light-leak { animation: none; }
 }
+
+/* ── PRE-FOOTER TYPOGRAPHIC STATEMENT ──────────────────────────────── */
+.pre-footer-statement {
+  background: var(--ink);
+  padding: clamp(80px, 12vw, 160px) var(--g) clamp(48px, 6vw, 80px);
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.pre-footer-statement::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse 80% 60% at 50% 100%, rgba(196,149,10,0.04) 0%, transparent 70%);
+  pointer-events: none;
+}
+.pfs-eyebrow {
+  display: block;
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-size: clamp(9px, 0.8vw, 11px);
+  font-weight: 700;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: rgba(248,244,236,0.22);
+  margin-bottom: clamp(20px, 3vw, 36px);
+}
+.pfs-main {
+  display: block;
+  font-family: 'Fraunces', Georgia, serif;
+  font-weight: 900;
+  font-style: italic;
+  font-variation-settings: 'WONK' 1, 'opsz' 144;
+  font-size: clamp(28px, 5.5vw, 88px);
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  color: rgba(248,244,236,0.88);
+  user-select: none;
+}
+.pfs-word {
+  display: inline-block;
+  white-space: pre;
+  will-change: opacity, filter, transform;
+  transition: color 1.2s ease;
+}
+@media (hover: hover) {
+  .pre-footer-statement:hover .pfs-word {
+    color: rgba(196,168,84,0.72);
+    transition: color 1.8s ease;
+  }
+}
