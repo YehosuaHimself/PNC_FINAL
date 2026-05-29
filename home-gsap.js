@@ -462,7 +462,31 @@
    as user scrolls. On mobile: stacked vertically (CSS).
 ────────────────────────────────────────────────────────────────────── */
 (function manifestoScroll() {
-  if (!window.matchMedia('(min-width: 641px)').matches) return;
+  /* ── MOBILE: vertical IntersectionObserver — same state dialogue
+     as desktop but triggered by vertical scroll position.
+     When a panel is 55%+ in viewport, it becomes mp-active.
+     Siblings receive mp-recede / mp-ahead exactly as desktop does. */
+  if (!window.matchMedia('(min-width: 641px)').matches) {
+    var mobilePanels = Array.from(document.querySelectorAll('.manifesto-panel'));
+    if (!mobilePanels.length) return;
+
+    var mobileIO = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
+        if (!entry.isIntersecting) return;
+        var idx = mobilePanels.indexOf(entry.target);
+        if (idx === -1) return;
+        mobilePanels.forEach(function(p, i) {
+          p.classList.remove('mp-active', 'mp-recede', 'mp-ahead');
+          if (i === idx)     p.classList.add('mp-active');
+          else if (i < idx)  p.classList.add('mp-recede');
+          else if (i === idx + 1) p.classList.add('mp-ahead');
+        });
+      });
+    }, { threshold: 0.55 });
+
+    mobilePanels.forEach(function(p) { mobileIO.observe(p); });
+    return;
+  }
 
   var section = document.querySelector('.manifesto');
   var track   = document.querySelector('.manifesto-track');

@@ -1505,6 +1505,37 @@ section[id="origins"] {
   }
 }
 
+/* ── MOBILE: mp- state dialogue — same visual grammar as desktop ────
+   Panels stacked vertically; IO fires when 55%+ in view.
+   The opsz shift is the soul — letterforms open as a panel activates. */
+@media (max-width: 640px) {
+  .manifesto-panel .mp-claim {
+    transition: opacity 0.7s cubic-bezier(.16,1,.3,1),
+                letter-spacing 0.7s cubic-bezier(.16,1,.3,1),
+                font-variation-settings 0.7s cubic-bezier(.16,1,.3,1);
+  }
+  .manifesto-panel:not(.mp-active):not(.mp-recede) .mp-claim {
+    opacity: 0.45;
+  }
+  .manifesto-panel.mp-active .mp-claim {
+    opacity: 1;
+    font-variation-settings: 'WONK' 1, 'opsz' 144;
+  }
+  .manifesto-panel.mp-recede .mp-claim {
+    opacity: 0.28;
+    font-variation-settings: 'WONK' 1, 'opsz' 48;
+  }
+  .manifesto-panel.mp-ahead .mp-claim {
+    opacity: 0.55;
+    font-variation-settings: 'WONK' 1, 'opsz' 88;
+  }
+  .manifesto-panel .mp-detail {
+    transition: opacity 0.7s cubic-bezier(.16,1,.3,1);
+  }
+  .manifesto-panel:not(.mp-active) .mp-detail { opacity: 0.3; }
+  .manifesto-panel.mp-active .mp-detail       { opacity: 1; }
+}
+
 .mp-detail {
   font-size: clamp(14px,1.4vw,18px);
   color: rgba(248,244,236,0.52);
