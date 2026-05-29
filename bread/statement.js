@@ -1,40 +1,60 @@
-/* statement.js — OUR DAILY BREAD. viewport reveal + fluid font fill */
+/* statement.js — OUR DAILY BREAD. viewport reveal + fluid font fill
+   v2: preloader-aware — delays reveal until after the curtain lifts
+   on first cold load, fires immediately on returning visits.
+*/
 (function() {
   'use strict';
 
-  const section = document.querySelector('.statement-hero');
+  var section = document.querySelector('.statement-hero');
   if (!section) return;
 
-  /* ── Fluid font scaling: make BREAD. literally fill viewport width ── */
-  const bigWord = section.querySelector('.stmt-line--lg .stmt-word');
+  /* ── Fluid font scaling: make BREAD./BREW. fill viewport width ── */
+  var bigWord = section.querySelector('.stmt-line--lg .stmt-word');
 
   function fitBigWord() {
     if (!bigWord) return;
-    bigWord.style.fontSize = '10px'; // reset
-    const containerW = section.offsetWidth - (parseFloat(getComputedStyle(section).paddingLeft) + parseFloat(getComputedStyle(section).paddingRight));
-    const wordW = bigWord.scrollWidth;
+    bigWord.style.fontSize = '10px';
+    var containerW = section.offsetWidth - (
+      parseFloat(getComputedStyle(section).paddingLeft) +
+      parseFloat(getComputedStyle(section).paddingRight)
+    );
+    var wordW = bigWord.scrollWidth;
     if (wordW === 0) return;
-    const scale = containerW / wordW;
-    bigWord.style.fontSize = (10 * scale * 0.97) + 'px'; // 97% fill — tiny breath on edges
+    bigWord.style.fontSize = (10 * (containerW / wordW) * 0.97) + 'px';
   }
 
-  // Run on load and resize
   fitBigWord();
   window.addEventListener('resize', fitBigWord, { passive: true });
-  // Re-run after fonts load
   if (document.fonts && document.fonts.ready) {
     document.fonts.ready.then(fitBigWord);
   }
 
-  /* ── Intersection Observer: class-based reveal ── */
-  const io = new IntersectionObserver(function(entries) {
+  /* ── Preloader-aware reveal ─────────────────────────────────────
+     On first visit (no pnc_visited flag) the preloader holds for
+     ~2.06s then lifts over 0.9s. The statement-hero sits at the
+     very top of the page, so IntersectionObserver fires immediately.
+     Without a delay the words reveal UNDER the preloader — wasted.
+     We delay by 1.9s on first load to sync with curtain lift.
+  ─────────────────────────────────────────────────────────────── */
+  var FIRST_LOAD = !sessionStorage.getItem('pnc_visited');
+  var REVEAL_DELAY = FIRST_LOAD ? 1900 : 0;
+
+  var revealed = false;
+
+  function reveal() {
+    if (revealed) return;
+    revealed = true;
+    section.classList.add('is-visible');
+  }
+
+  var io = new IntersectionObserver(function(entries) {
     entries.forEach(function(entry) {
       if (entry.isIntersecting) {
-        section.classList.add('is-visible');
+        setTimeout(reveal, REVEAL_DELAY);
         io.unobserve(section);
       }
     });
-  }, { threshold: 0.15 });
+  }, { threshold: 0.05 });
 
   io.observe(section);
 
