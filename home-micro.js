@@ -642,3 +642,25 @@
   /* Mark panels as JS-enhanced so CSS hover scale steps back */
   panels.forEach(function(p) { p.setAttribute('data-cursor-parallax', ''); });
 })();
+
+
+/* ── PHILOSOPHY GOLD MARK — scaleY draw on scroll entry ─────────────
+   The right-hand gold border on .phil-quote draws downward like a
+   deliberate editorial mark being made. Fires once, stays drawn.
+──────────────────────────────────────────────────────────────────── */
+(function philMarkDraw() {
+  var quote = document.querySelector('.phil-quote');
+  if (!quote) return;
+  if (window.matchMedia('(prefers-reduced-motion:reduce)').matches) {
+    quote.classList.add('mark-drawn');
+    return;
+  }
+  var io = new IntersectionObserver(function(entries) {
+    if (entries[0].isIntersecting) {
+      /* Small delay so the word-stagger fires first, then the mark seals */
+      setTimeout(function() { quote.classList.add('mark-drawn'); }, 320);
+      io.disconnect();
+    }
+  }, { threshold: 0.3 });
+  io.observe(quote);
+})();
