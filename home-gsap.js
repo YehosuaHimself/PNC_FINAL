@@ -998,3 +998,135 @@
   }
 
 })();
+
+
+/* ── FOOTER WATERMARK — staggered scale + opacity entrance ───────────
+   PANEM then NOSTRUM rise from 0.88 scale into full size.
+   Each line clips up from overflow:hidden parent.
+   The creed and coords fade in after the lines settle.
+────────────────────────────────────────────────────────────────────── */
+(function footerWatermark() {
+  if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') return;
+  if (window.matchMedia('(prefers-reduced-motion:reduce)').matches) return;
+
+  var lines  = document.querySelectorAll('.ft-statement-line');
+  var creed  = document.querySelector('.ft-creed');
+  var coords = document.querySelector('.ft-coords');
+  var footer = document.querySelector('footer[data-dark]');
+  if (!lines.length || !footer) return;
+
+  /* Wrap each line in overflow:hidden so it clips cleanly */
+  lines.forEach(function (line) {
+    var wrap = document.createElement('div');
+    wrap.style.overflow = 'hidden';
+    line.parentNode.insertBefore(wrap, line);
+    wrap.appendChild(line);
+  });
+
+  gsap.fromTo(lines,
+    { yPercent: 105, opacity: 0 },
+    {
+      yPercent: 0,
+      opacity: 1,
+      duration: 1.4,
+      ease: 'expo.out',
+      stagger: 0.18,
+      clearProps: 'transform,opacity',
+      scrollTrigger: {
+        trigger: footer,
+        start: 'top 88%',
+        toggleActions: 'play none none none'
+      }
+    }
+  );
+
+  if (creed) {
+    gsap.fromTo(creed,
+      { opacity: 0, y: 12 },
+      {
+        opacity: 1, y: 0,
+        duration: 1.0, ease: 'expo.out', delay: 0.32,
+        scrollTrigger: {
+          trigger: footer,
+          start: 'top 85%',
+          toggleActions: 'play none none none'
+        }
+      }
+    );
+  }
+
+  if (coords) {
+    gsap.fromTo(coords,
+      { opacity: 0 },
+      {
+        opacity: 1,
+        duration: 0.8, ease: 'expo.out', delay: 0.5,
+        scrollTrigger: {
+          trigger: footer,
+          start: 'top 80%',
+          toggleActions: 'play none none none'
+        }
+      }
+    );
+  }
+})();
+
+
+/* ── HERO PANEL NAMES — warm gold gradient shimmer on hover ──────────
+   The OUR DAILY BREAD. / BREW. text warms from cream to gold
+   as a gradient sweep when the panel is hovered.
+   Uses CSS custom property driven by a tiny GSAP tween.
+────────────────────────────────────────────────────────────────────── */
+(function heroPanelNameShimmer() {
+  if (typeof gsap === 'undefined') return;
+  if (window.matchMedia('(prefers-reduced-motion:reduce)').matches) return;
+  if (!window.matchMedia('(hover:hover)').matches) return;
+
+  document.querySelectorAll('.hero-panel').forEach(function (panel) {
+    var name = panel.querySelector('.hp2-name');
+    if (!name) return;
+
+    var proxy = { t: 0 };
+
+    panel.addEventListener('mouseenter', function () {
+      gsap.to(proxy, {
+        t: 1, duration: 0.55, ease: 'expo.out',
+        onUpdate: function () {
+          var v = proxy.t;
+          /* Interpolate: cream → gold at top, amber at bottom */
+          name.style.backgroundImage =
+            'linear-gradient(160deg,' +
+            'rgba(248,244,236,1) ' + (100 - v * 30) + '%,' +
+            'rgba(209,155,64,' + (0.4 + v * 0.6) + ') ' + (100 - v * 10) + '%,' +
+            'rgba(184,100,20,' + (v * 0.7) + ') 100%)';
+          name.style.webkitBackgroundClip = 'text';
+          name.style.backgroundClip = 'text';
+          name.style.webkitTextFillColor = v > 0.05 ? 'transparent' : '';
+          name.style.color = v > 0.05 ? 'transparent' : '';
+        }
+      });
+    });
+
+    panel.addEventListener('mouseleave', function () {
+      gsap.to(proxy, {
+        t: 0, duration: 0.4, ease: 'power2.out',
+        onUpdate: function () {
+          var v = proxy.t;
+          if (v < 0.02) {
+            name.style.backgroundImage = '';
+            name.style.webkitBackgroundClip = '';
+            name.style.backgroundClip = '';
+            name.style.webkitTextFillColor = '';
+            name.style.color = '';
+          } else {
+            name.style.backgroundImage =
+              'linear-gradient(160deg,' +
+              'rgba(248,244,236,1) ' + (100 - v * 30) + '%,' +
+              'rgba(209,155,64,' + (0.4 + v * 0.6) + ') ' + (100 - v * 10) + '%,' +
+              'rgba(184,100,20,' + (v * 0.7) + ') 100%)';
+          }
+        }
+      });
+    });
+  });
+})();
