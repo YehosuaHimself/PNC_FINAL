@@ -24,25 +24,25 @@
   ].join(';');
   document.body.appendChild(overlay);
 
-  /* Build PNC monogram in the overlay */
+  /* Overlay wordmark: full name, Helvetica Neue, non-italic */
   var mono = document.createElement('div');
   mono.style.cssText = [
     'position:absolute',
     'top:50%','left:50%',
     'transform:translate(-50%,-50%)',
-    'font-family:"Helvetica Neue","Fraunces",Arial,sans-serif',
+    'font-family:"Helvetica Neue",Helvetica,Arial,sans-serif',
     'font-weight:900',
-    'font-variation-settings:"opsz" 144,"WONK" 1',
-    'font-style:italic!important',
-    'font-size:clamp(40px,7vw,96px)',
-    'letter-spacing:0.12em',
+    'font-style:normal',
+    'font-size:clamp(10px,1.2vw,18px)',
+    'letter-spacing:0.30em',
     'text-transform:uppercase',
-    'color:rgba(248,244,236,0.06)',
+    'white-space:nowrap',
+    'color:rgba(248,244,236,0.10)',
     'user-select:none',
     'opacity:0',
     'transition:opacity 0.2s'
-  ].join(';');
-  mono.textContent = 'PNC';
+  ].join(";");
+  mono.textContent = 'PANEM NOSTRUM COTIDIANUM';
   overlay.appendChild(mono);
 
   var EASE_IN  = 'cubic-bezier(0.76, 0, 0.24, 1)';
