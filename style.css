@@ -166,7 +166,8 @@ input,select,textarea{cursor:none!important;caret-color:var(--ink)}
   transition:background .18s,color .18s,border-color .18s;
   display:inline-block;opacity:1;visibility:visible;
 }
-#site-nav .nav-link:hover,.nav-link:hover{background:#2A1810 !important;color:#F8F4EC !important;border-color:transparent}
+#site-nav .nav-link:hover,.nav-link:hover,
+#site-nav .nav-link:focus-visible,.nav-link:focus-visible{background:#2A1810 !important;color:#F8F4EC !important;border-color:transparent;outline:2px solid rgba(92,61,46,0.5);outline-offset:2px;}
 #site-nav .nav-link.active,.nav-link.active{background:#2A1810 !important;color:#F8F4EC !important;border-color:transparent}
 #site-nav .nav-cta,
 .nav-cta{
@@ -572,6 +573,7 @@ input,select,textarea{cursor:none!important;caret-color:var(--ink)}
   transition:background .18s;display:inline-block;min-height:44px;line-height:2;
 }
 .btn-primary:hover{background:var(--cocoa)}
+.btn-primary:focus-visible{outline:2px solid var(--cocoa);outline-offset:3px;background:var(--cocoa)}
 .btn-ghost{
   font-family:'Courier New',monospace;font-size:13px;font-weight:600;
   letter-spacing:0.22em;text-transform:uppercase;
@@ -580,6 +582,7 @@ input,select,textarea{cursor:none!important;caret-color:var(--ink)}
   min-height:44px;line-height:2;display:inline-block;
 }
 .btn-ghost:hover{border-color:rgba(92,61,46,0.3);color:var(--ink)}
+.btn-ghost:focus-visible{outline:2px solid var(--cocoa);outline-offset:3px;border-color:rgba(92,61,46,0.3);color:var(--ink)}
 
 /* ── PHILOSOPHY ─────────────────────────────────────────────────── */
 .philosophy{background:var(--dark);color:rgba(248,244,236,0.85);position:relative;overflow:hidden}
