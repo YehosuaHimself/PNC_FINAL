@@ -1041,8 +1041,8 @@
     ease: 'none',
     scrollTrigger: {
       trigger: '.hero',
-      start: 'top top',
-      end: 'bottom top',
+      start: 'bottom 85%',   /* engage only once hero bottom nears the fold */
+      end: 'bottom -20%',
       scrub: 1.8    /* slower scrub than images — text is heavier */
     }
   });
