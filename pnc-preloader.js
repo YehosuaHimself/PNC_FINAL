@@ -122,6 +122,8 @@
     overlay.classList.add('pl-exit');
     /* Unlock scroll */
     document.documentElement.style.overflow = '';
+    /* Signal to page — CSS animations on subpages key off this class */
+    document.body.classList.add('pnc-revealed');
     /* Remove from DOM after exit */
     setTimeout(function () {
       overlay.parentNode && overlay.parentNode.removeChild(overlay);
@@ -131,6 +133,7 @@
   }
 
   if (REDUCED) {
+    document.body.classList.add('pnc-revealed');
     setTimeout(dismiss, 300);
     return;
   }

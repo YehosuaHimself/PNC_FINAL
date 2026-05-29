@@ -420,6 +420,10 @@ document.addEventListener('DOMContentLoaded',function(){
 /* Scroll-aware nav + mobile sticky CTA */
 document.addEventListener('DOMContentLoaded',function(){
   document.body.classList.add('ready');
+  /* On return visits (preloader skipped) — fire revealed immediately */
+  if (sessionStorage.getItem('pnc_visited')) {
+    document.body.classList.add('pnc-revealed');
+  }
   var nav=document.getElementById('site-nav');
   var mcta=document.getElementById('mobile-cta');
   var hero=document.getElementById('main');
