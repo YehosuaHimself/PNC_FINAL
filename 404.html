@@ -107,5 +107,29 @@ body::before{
 <div class="rule"></div>
 <p class="foot">Panem Nostrum Cotidianum · MMXXVI</p>
 <script src="/cursor-square.js"></script>
+<script>
+(function(){
+  if(window.matchMedia('(prefers-reduced-motion:reduce)').matches)return;
+  var c=document.createElement('div');
+  c.style.cssText='position:fixed;inset:0;background:#2A1810;z-index:99998;pointer-events:none;transform:translateY(-100%);transition:transform 0.52s cubic-bezier(0.76,0,0.24,1);will-change:transform';
+  document.body.appendChild(c);
+  if(sessionStorage.getItem('pnc-nav')){
+    sessionStorage.removeItem('pnc-nav');
+    c.style.transform='translateY(0)';c.style.transition='none';
+    requestAnimationFrame(function(){requestAnimationFrame(function(){
+      c.style.transition='transform 0.62s cubic-bezier(0.76,0,0.24,1)';
+      c.style.transform='translateY(-100%)';
+    });});
+  }
+  document.addEventListener('click',function(e){
+    var l=e.target.closest('a[href]');if(!l)return;
+    var h=l.getAttribute('href');
+    if(!h||h.startsWith('#')||h.startsWith('http')||l.target==='_blank')return;
+    e.preventDefault();sessionStorage.setItem('pnc-nav','1');
+    c.style.transform='translateY(0)';
+    setTimeout(function(){window.location.href=h;},480);
+  },true);
+})();
+</script>
 </body>
 </html>

@@ -723,3 +723,87 @@
     }, 480);
   }, true);
 })();
+
+
+/* ── SCROLL INDICATOR — fade out once user has scrolled ─────────────
+   The "SCROLL ↓" indicator fades away after the first meaningful
+   scroll — once its purpose is served, it vanishes cleanly.
+──────────────────────────────────────────────────────────────────── */
+(function scrollIndicatorFade() {
+  var indicator = document.querySelector('.hero-scroll');
+  if (!indicator) return;
+
+  var faded = false;
+  window.addEventListener('scroll', function() {
+    if (faded) return;
+    if (window.scrollY > 80) {
+      faded = true;
+      indicator.style.transition = 'opacity 0.6s ease';
+      indicator.style.opacity = '0';
+      indicator.style.pointerEvents = 'none';
+    }
+  }, { passive: true });
+})();
+
+
+/* ── RITUAL TIMER — click "Set a timer" to start a 55-min countdown ─
+   The bread bakes in 55 minutes. Click the hint and watch it count.
+   A genuine product delight moment — this is what the site is about.
+──────────────────────────────────────────────────────────────────── */
+(function ritualTimer() {
+  var hint = document.querySelector('.ritual-timer-hint');
+  if (!hint) return;
+
+  var BAKE_TIME = 55 * 60; /* 55 minutes in seconds */
+  var remaining = BAKE_TIME;
+  var interval = null;
+  var running = false;
+
+  hint.style.cursor = 'pointer';
+  hint.setAttribute('role', 'button');
+  hint.setAttribute('tabindex', '0');
+
+  function formatTime(s) {
+    var m = Math.floor(s / 60);
+    var sec = s % 60;
+    return (m < 10 ? '0' : '') + m + ':' + (sec < 10 ? '0' : '') + sec;
+  }
+
+  function startTimer() {
+    if (running) {
+      /* Second click: cancel */
+      clearInterval(interval);
+      running = false;
+      remaining = BAKE_TIME;
+      hint.textContent = 'Set a timer. Stay with us.';
+      hint.style.color = '';
+      hint.style.letterSpacing = '';
+      return;
+    }
+    running = true;
+    hint.style.color = 'rgba(184,134,11,0.70)';
+    hint.style.letterSpacing = '0.18em';
+
+    interval = setInterval(function() {
+      remaining--;
+      hint.textContent = '— ' + formatTime(remaining) + ' remaining —';
+      if (remaining <= 0) {
+        clearInterval(interval);
+        running = false;
+        hint.textContent = 'Your bread is ready.';
+        hint.style.color = 'rgba(184,134,11,0.90)';
+        setTimeout(function() {
+          hint.textContent = 'Set a timer. Stay with us.';
+          hint.style.color = '';
+          hint.style.letterSpacing = '';
+          remaining = BAKE_TIME;
+        }, 5000);
+      }
+    }, 1000);
+  }
+
+  hint.addEventListener('click', startTimer);
+  hint.addEventListener('keydown', function(e) {
+    if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); startTimer(); }
+  });
+})();
