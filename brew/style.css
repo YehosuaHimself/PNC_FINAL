@@ -1389,6 +1389,16 @@ a:focus-visible,button:focus-visible{
   outline-offset:3px;
 }
 
+/* Dark sections: cocoa outline is invisible — switch to cream */
+[data-dark] a:focus-visible,
+[data-dark] button:focus-visible,
+[data-dark] input:focus-visible,
+[data-dark] select:focus-visible,
+[data-dark] textarea:focus-visible {
+  outline: 2px solid rgba(248,244,236,0.7);
+  outline-offset: 3px;
+}
+
 /* Reduce motion */
 @media(prefers-reduced-motion:reduce){
   *,*::before,*::after{
