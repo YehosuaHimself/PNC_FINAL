@@ -509,13 +509,17 @@
   })();
   </script>
   <script>
-  /* Animate grain seed for living film effect */
+  /* Animate grain seed for living film effect — rAF-gated, not setInterval */
   (function(){
     if(window.matchMedia('(prefers-reduced-motion:reduce)').matches) return;
     var turb = document.querySelector('#grain-filter feTurbulence');
     if(!turb) return;
-    var s = 0;
-    setInterval(function(){ turb.setAttribute('seed', ++s % 99); }, 80);
+    var s = 0, last = 0, INTERVAL = 80; /* ~12fps flicker — feels like film grain */
+    function tick(now){
+      if(now - last >= INTERVAL){ turb.setAttribute('seed', ++s % 99); last = now; }
+      requestAnimationFrame(tick);
+    }
+    requestAnimationFrame(tick);
   })();
   </script>
 </body>
