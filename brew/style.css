@@ -1676,10 +1676,10 @@ body.cookie-visible #mobile-cta{bottom:var(--cookie-h,80px);}
   transition: border-color 0.25s ease;
 }
 
-/* ── Watermark text — decorative Fraunces accent (non-header) ─── */
+/* ── Watermark text — Helvetica Neue (tight, architectural) ─────── */
 .hero-wm-text {
-  font-family: 'Fraunces', 'Helvetica Neue', Helvetica, Arial, sans-serif !important;
-  font-variation-settings: 'opsz' 144, 'WONK' 0;
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif !important;
+  font-variation-settings: normal;
   letter-spacing: -0.06em;
 }
 .btn-order > span { position:relative; z-index:1; }
