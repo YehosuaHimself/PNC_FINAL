@@ -1224,7 +1224,8 @@
 }
 
 /* Focus-visible on principle items — gold outline on dark bg */
-.principle-item:focus-visible {
+.principle-item:focus-visible,
+.principle-item:focus-visible:hover {
   outline: 2px solid rgba(196,168,84,0.6);
   outline-offset: 6px;
   border-radius: 2px;
