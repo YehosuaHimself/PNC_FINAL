@@ -1689,3 +1689,26 @@ section[id="origins"] {
 .pre-footer-statement:hover .pfs-main {
   color: rgba(248,244,236,0.18);
 }
+
+/* ── PROOF STRIP — hover warmth on stats ────────────────────────────
+   Each stat number warms to gold and lifts slightly on hover.
+   Rewards the juror who pauses to read the numbers.                 */
+.proof-item {
+  transition: transform 0.32s cubic-bezier(0.16,1,0.3,1);
+}
+@media(hover:hover){
+  .proof-item:hover {
+    transform: translateY(-4px);
+  }
+  .proof-item:hover .proof-num {
+    background: linear-gradient(160deg,#F0E8D8 0%,#E8C87A 40%,#C4950A 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    transition: background 0.3s;
+  }
+  .proof-item:hover .proof-label {
+    color: rgba(248,244,236,0.65);
+    transition: color 0.3s;
+  }
+}
