@@ -59,7 +59,7 @@
 
 
 /* ── 5. PRODUCT CARD — warm cursor sweep on hover ───────────────────── */
-/* JS sets --sweep-y on mousemove. Overlaid above existing ::after grid  */
+/* JS sets --sweep-x/--sweep-y on mousemove. Overlaid above existing ::after grid  */
 
 .hero-panel--bread::before,
 .hero-panel--brew::before {
@@ -68,11 +68,12 @@
   pointer-events:none;
   background-image:
     radial-gradient(
-      ellipse 80% 40% at 50% calc(var(--sweep-y, 120%)),
-      rgba(184,134,11,0.09) 0%,
+      ellipse 70% 50% at calc(var(--sweep-x, 50%)) calc(var(--sweep-y, 120%)),
+      rgba(196,149,10,0.13) 0%,
+      rgba(184,134,11,0.04) 45%,
       transparent 70%
     );
-  transition: opacity 0.3s ease;
+  transition: opacity 0.4s ease;
   opacity: 0;
 }
 

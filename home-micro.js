@@ -8,16 +8,19 @@
   var REDUCED = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   /* ── 1. HERO PANEL WARM SWEEP — cursor tracks gold warmth ──────── */
-  /* Targets .hero-panel (current panel structure). --sweep-y drives  */
-  /* the radial-gradient ::before in home-micro.css                   */
+  /* Targets .hero-panel (current panel structure). --sweep-x/y drives */
+  /* the radial-gradient ::before in home-micro.css                    */
   if (!REDUCED && window.matchMedia('(hover: hover)').matches) {
     document.querySelectorAll('.hero-panel').forEach(function (panel) {
       panel.addEventListener('mousemove', function (e) {
         var rect = panel.getBoundingClientRect();
+        var px = ((e.clientX - rect.left) / rect.width) * 100;
         var py = ((e.clientY - rect.top) / rect.height) * 100;
+        panel.style.setProperty('--sweep-x', px + '%');
         panel.style.setProperty('--sweep-y', py + '%');
       });
       panel.addEventListener('mouseleave', function () {
+        panel.style.setProperty('--sweep-x', '50%');
         panel.style.setProperty('--sweep-y', '120%');
       });
     });
@@ -602,7 +605,7 @@
   /* Touch devices: no cursor, skip entirely */
   if (!window.matchMedia('(pointer:fine)').matches) return;
 
-  var DRIFT = 8; /* max px drift in each direction */
+  var DRIFT = 14; /* max px drift in each direction */
 
   var panels = document.querySelectorAll('.hero-panel');
   if (!panels.length) return;

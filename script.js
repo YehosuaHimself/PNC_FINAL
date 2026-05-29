@@ -153,10 +153,10 @@ document.addEventListener('DOMContentLoaded',function(){
   if(window.matchMedia('(prefers-reduced-motion:reduce)').matches) return;
 
   var lenis = new Lenis({
-    duration: 1.1,
+    duration: 1.3,
     easing: function(t){ return t===1?1:1-Math.pow(2,-10*t); },
     smoothWheel: true,
-    wheelMultiplier: 0.9,
+    wheelMultiplier: 0.85,
     touchMultiplier: 1.8,
   });
   window.PNC_LENIS = lenis;
