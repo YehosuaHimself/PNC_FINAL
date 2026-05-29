@@ -293,12 +293,17 @@ input,select,textarea{cursor:none!important;caret-color:var(--ink)}
 }
 @keyframes lineExpand { to { transform: scaleX(1); } }
 
+/* hl-lg: warm breathing accent on the fluid fill word */
 .hl-inner.hl-lg {
   font-size: clamp(5rem, 21vw, 28rem);
   color: var(--ink);
   letter-spacing: -0.04em;
   white-space: nowrap;
   animation-delay: .38s;
+  background: linear-gradient(135deg, var(--ink) 40%, rgba(122,80,44,0.85) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
 @keyframes slideUp {
@@ -1249,8 +1254,10 @@ section[id="origins"] {
 .manifesto-track {
   display: flex;
   width: 300vw; /* 3 panels × 100vw */
-  will-change: transform;
   overflow: hidden;
+}
+@media (min-width: 641px) {
+  .manifesto-track { will-change: transform; }
 }
 
 .manifesto-panel {
