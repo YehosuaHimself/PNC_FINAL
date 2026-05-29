@@ -526,3 +526,63 @@
   if (hero) hideObs.observe(hero);
 
 })();
+
+
+/* ── ORIGIN MAP SVG PATH TRACE — stroke-dashoffset on scroll entry ───
+   When origin cards enter the viewport, the country highlight path
+   draws itself like a border being traced by hand.
+   The continent silhouette draws in simultaneously but slower.
+   Feels like the map is being discovered, not displayed.
+────────────────────────────────────────────────────────────────────── */
+(function originPathTrace() {
+  'use strict';
+
+  if (window.matchMedia('(prefers-reduced-motion:reduce)').matches) return;
+  if (typeof IntersectionObserver === 'undefined') return;
+
+  var cards = document.querySelectorAll('.origin-card');
+  if (!cards.length) return;
+
+  cards.forEach(function(card) {
+    var continentPath = card.querySelector('.oc-continent');
+    var countryPath   = card.querySelector('.oc-country');
+
+    /* Set up dash arrays based on actual path lengths */
+    [continentPath, countryPath].forEach(function(path) {
+      if (!path) return;
+      try {
+        var len = path.getTotalLength();
+        path.style.strokeDasharray  = len;
+        path.style.strokeDashoffset = len;
+        path.style.transition = 'none';
+      } catch(e) {}
+    });
+
+    var done = false;
+    var io = new IntersectionObserver(function(entries) {
+      if (!entries[0].isIntersecting || done) return;
+      done = true;
+      io.disconnect();
+
+      /* Continent: draws in over 1.8s */
+      if (continentPath) {
+        var cLen = parseFloat(continentPath.style.strokeDasharray) || 0;
+        continentPath.style.transition = 'stroke-dashoffset 1.8s cubic-bezier(0.16,1,0.3,1) 0.1s';
+        requestAnimationFrame(function() {
+          continentPath.style.strokeDashoffset = '0';
+        });
+      }
+
+      /* Country highlight: draws in over 1.2s with delay */
+      if (countryPath) {
+        countryPath.style.transition = 'stroke-dashoffset 1.2s cubic-bezier(0.16,1,0.3,1) 0.55s, fill 0.4s ease 1.6s';
+        requestAnimationFrame(function() {
+          countryPath.style.strokeDashoffset = '0';
+        });
+      }
+    }, { threshold: 0.3 });
+
+    io.observe(card);
+  });
+
+})();
