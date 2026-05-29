@@ -1497,12 +1497,29 @@ section[id="origins"] {
   color: var(--cream);
   margin-bottom: clamp(28px,4vh,52px);
 }
+/* Desktop only — dormant panels (no state class) sit at 0.45 until activated */
+@media (min-width: 641px) {
+  .manifesto-panel:not(.mp-active):not(.mp-recede):not(.mp-ahead) .mp-claim {
+    opacity: 0.45;
+    letter-spacing: -0.03em;
+  }
+}
 
 .mp-detail {
   font-size: clamp(14px,1.4vw,18px);
   color: rgba(248,244,236,0.52);
   line-height: 1.8;
   max-width: 480px;
+  transition: opacity 0.9s cubic-bezier(.16,1,.3,1);
+}
+/* Desktop only — state-driven opacity */
+@media (min-width: 641px) {
+  .manifesto-panel:not(.mp-active):not(.mp-recede):not(.mp-ahead) .mp-detail {
+    opacity: 0.18;
+  }
+  .manifesto-panel.mp-active .mp-detail {
+    opacity: 1;
+  }
 }
 
 .mp-mid {
@@ -1703,10 +1720,12 @@ section[id="origins"] {
 
 /* ── MANIFESTO: mp-claim — settles into reading position on active ── */
 .mp-claim {
-  transition: letter-spacing 0.7s cubic-bezier(.16,1,.3,1);
+  transition: letter-spacing 0.9s cubic-bezier(.16,1,.3,1),
+              opacity 0.9s cubic-bezier(.16,1,.3,1);
 }
 .manifesto-panel.mp-active .mp-claim {
   letter-spacing: -0.022em;
+  opacity: 1;
 }
 
 /* ── MANIFESTO: mp-label — CSS var for JS-driven tracking ─────── */
@@ -1716,6 +1735,42 @@ section[id="origins"] {
 .manifesto-panel.mp-active .mp-label {
   letter-spacing: 0.52em;
   color: rgba(248,244,236,0.58);
+}
+
+/* ── MANIFESTO: mp-recede — panel that just became inactive ─────────
+   Like a candle being carried away. Dims, compresses, releases.
+   The effect is subtle: 600ms, not sudden. Panels don't fight.       */
+@media (min-width: 641px) {
+  .manifesto-panel.mp-recede .mp-claim {
+    letter-spacing: -0.035em;
+    opacity: 0.38;
+  }
+  .manifesto-panel.mp-recede .mp-label {
+    letter-spacing: 0.18em;
+    color: rgba(248,244,236,0.22);
+  }
+  .manifesto-panel.mp-recede .mp-num {
+    opacity: 0.02;
+    animation: none;
+  }
+  .manifesto-panel.mp-recede .mp-detail {
+    opacity: 0.25;
+  }
+
+  /* ── MANIFESTO: mp-ahead — panel about to become active ─────────────
+     A held breath. Slightly warmer than dormant but not yet alive.
+     Tells the eye: something is coming.                                 */
+  .manifesto-panel.mp-ahead .mp-claim {
+    opacity: 0.55;
+    letter-spacing: -0.028em;
+  }
+  .manifesto-panel.mp-ahead .mp-num {
+    opacity: 0.04;
+    animation: none;
+  }
+  .manifesto-panel.mp-ahead .mp-detail {
+    opacity: 0.35;
+  }
 }
 
 /* ── HOME PAGE — SAND-WARM ADJUSTMENTS ─────────────────────────────── */

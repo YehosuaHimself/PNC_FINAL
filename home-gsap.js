@@ -503,8 +503,16 @@
           totalPanels - 1
         );
         panels.forEach(function (panel, i) {
-          if (i === activeIdx) panel.classList.add('mp-active');
-          else panel.classList.remove('mp-active');
+          panel.classList.remove('mp-active', 'mp-recede', 'mp-ahead');
+          if (i === activeIdx) {
+            panel.classList.add('mp-active');
+          } else if (i === activeIdx - 1) {
+            /* Panel behind — recedes: dims, compresses, lets go */
+            panel.classList.add('mp-recede');
+          } else if (i === activeIdx + 1) {
+            /* Panel ahead — anticipates: slightly warmer than fully dormant */
+            panel.classList.add('mp-ahead');
+          }
         });
         /* Counter-scroll the subliminal Latin text layer */
         /* Moves opposite direction: right as panels scroll left */
@@ -548,6 +556,7 @@
         {
           opacity: 1, y: 0,
           duration: 1.0, ease: 'expo.out', delay: i === 0 ? 0 : 0.1,
+          clearProps: 'opacity,transform',
           scrollTrigger: {
             trigger: panel,
             start: 'top 80%',
@@ -563,6 +572,7 @@
         {
           opacity: 1, y: 0,
           duration: 1.0, ease: 'expo.out', delay: 0.2,
+          clearProps: 'opacity,transform',
           scrollTrigger: {
             trigger: panel,
             start: 'top 80%',
