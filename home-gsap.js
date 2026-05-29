@@ -456,6 +456,12 @@
         /* Counter-scroll the subliminal Latin text layer */
         /* Moves opposite direction: right as panels scroll left */
         section.style.setProperty('--mp-offset', (p * 180) + 'px');
+
+        /* Velocity-driven blur — fast scrub blurs the text; slowing to read
+           sharpens it into crystal clarity. Reading feels earned.           */
+        var vel = Math.abs(self.getVelocity ? self.getVelocity() : 0);
+        var blur = Math.min(vel * 0.0032, 5.5); /* cap at 5.5px */
+        track.style.filter = blur > 0.1 ? 'blur(' + blur.toFixed(2) + 'px)' : '';
       }
     }
   });
