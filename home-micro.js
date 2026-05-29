@@ -586,3 +586,59 @@
   });
 
 })();
+
+
+/* ── HERO PANEL CURSOR PARALLAX ─────────────────────────────────────
+   When the cursor moves inside a hero panel, the background image
+   drifts subtly in the opposite direction — creating genuine depth.
+   Clean layer separation: GSAP owns .hp2-img (scroll yPercent),
+   this code owns .hp2-img-inner (cursor translateX/Y).
+   No rAF loop — runs only on mousemove inside panels.
+──────────────────────────────────────────────────────────────────── */
+(function heroPanelCursorParallax() {
+  if (window.matchMedia('(prefers-reduced-motion:reduce)').matches) return;
+  /* Touch devices: no cursor, skip entirely */
+  if (!window.matchMedia('(pointer:fine)').matches) return;
+
+  var DRIFT = 8; /* max px drift in each direction */
+
+  var panels = document.querySelectorAll('.hero-panel');
+  if (!panels.length) return;
+
+  panels.forEach(function(panel) {
+    var inner = panel.querySelector('.hp2-img-inner');
+    if (!inner) return;
+
+    /* On enter: kill transition so drift is immediate/fluid */
+    panel.addEventListener('mouseenter', function() {
+      inner.style.transition = 'transform 0.1s linear';
+    });
+
+    /* On leave: restore smooth transition and centre the image */
+    panel.addEventListener('mouseleave', function() {
+      inner.style.transition = 'transform 0.9s cubic-bezier(.16,1,.3,1)';
+      inner.style.transform = '';
+    });
+
+    panel.addEventListener('mousemove', function(e) {
+      var rect = panel.getBoundingClientRect();
+      /* Normalise cursor to [-1, 1] within the panel */
+      var nx = ((e.clientX - rect.left) / rect.width  - 0.5) * 2;
+      var ny = ((e.clientY - rect.top)  / rect.height - 0.5) * 2;
+
+      /* Drift opposite to cursor direction (parallax feel) */
+      var tx = -nx * DRIFT;
+      var ty = -ny * DRIFT;
+
+      /* Compose with hover scale — scale stays on the element,
+         we just replace the translate. The CSS hover scale
+         only fires on :hover which conflicts here, so we bake
+         it into the JS transform and remove the CSS hover rule
+         via the data attribute trick below. */
+      inner.style.transform = 'translate(' + tx + 'px,' + ty + 'px) scale(1.06)';
+    });
+  });
+
+  /* Mark panels as JS-enhanced so CSS hover scale steps back */
+  panels.forEach(function(p) { p.setAttribute('data-cursor-parallax', ''); });
+})();

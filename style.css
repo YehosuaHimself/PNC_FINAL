@@ -348,21 +348,34 @@ input,select,textarea{cursor:none!important;caret-color:var(--ink)}
   text-decoration: none;
 }
 
+/* hp2-img: scroll parallax container — GSAP owns yPercent
+   hp2-img-inner: cursor drift layer — JS sets translate directly
+   Separation prevents GSAP inline transform from clobbering cursor drift */
 .hp2-img {
   position: absolute;
   inset: -8% 0;
+  overflow: hidden;
+  will-change: transform; /* GSAP scroll parallax */
+}
+
+.hp2-img-inner {
+  position: absolute;
+  inset: -4% -4%; /* 4% bleed on each side for cursor drift room */
   background-size: cover;
   background-position: center;
   transition: transform 0.9s cubic-bezier(.16,1,.3,1);
-  will-change: transform;
+  will-change: transform; /* cursor drift + hover scale */
 }
-.hero-panel:hover .hp2-img { transform: scale(1.04); }
+/* CSS hover scale only fires when JS cursor parallax is NOT active
+   (touch/reduced-motion fallback). When JS is active, scale is
+   baked into the JS transform at scale(1.06). */
+.hero-panel:not([data-cursor-parallax]):hover .hp2-img-inner { transform: scale(1.04); }
 
-.hero-panel--bread .hp2-img {
+.hero-panel--bread .hp2-img-inner {
   background-image: url('/img/bread-hero.webp');
   background-position: center 30%;
 }
-.hero-panel--brew .hp2-img {
+.hero-panel--brew .hp2-img-inner {
   background-image: url('/img/brew-hero.webp');
 }
 
