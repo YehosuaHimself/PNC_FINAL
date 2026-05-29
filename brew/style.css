@@ -2373,3 +2373,81 @@ body.cookie-visible #mobile-cta{bottom:var(--cookie-h,80px);}
   font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif !important;
   font-variation-settings: normal !important;
 }
+
+
+/* ── BREW HERO AMBIENT EFFECTS ───────────────────────────────────────
+   Three atmospheric layers that make 2,400 metres feel real.
+   All GPU-composited (opacity + transform only).
+──────────────────────────────────────────────────────────────────── */
+
+/* Light leak — warm gold bloom from top-right, like highland sun */
+.hero-light-leak {
+  position: absolute;
+  top: -10%;
+  right: -5%;
+  width: 55%;
+  height: 70%;
+  background: radial-gradient(
+    ellipse 80% 70% at 85% 15%,
+    rgba(196,149,10,0.06) 0%,
+    rgba(196,149,10,0.02) 45%,
+    transparent 70%
+  );
+  pointer-events: none;
+  z-index: 1;
+  animation: lightLeakPulse 8s ease-in-out infinite;
+  will-change: opacity;
+}
+@keyframes lightLeakPulse {
+  0%,100% { opacity: 0.7; }
+  50%      { opacity: 1.0; }
+}
+
+/* Altitude fog — cool blue-grey haze at bottom of hero, like cloud layer */
+.hero-altitude-fog {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 30%;
+  background: linear-gradient(
+    to top,
+    rgba(20,30,48,0.22) 0%,
+    rgba(20,30,48,0.08) 55%,
+    transparent 100%
+  );
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Edge marks — fine registration-mark corners, like a photographic print */
+.hero-edge-marks {
+  position: absolute;
+  inset: clamp(16px,2.5vw,32px);
+  pointer-events: none;
+  z-index: 3;
+}
+.hero-edge-marks::before,
+.hero-edge-marks::after {
+  content: '';
+  position: absolute;
+  width: 24px;
+  height: 24px;
+  border-color: rgba(248,244,236,0.12);
+  border-style: solid;
+  border-width: 0;
+}
+.hero-edge-marks::before {
+  top: 0; left: 0;
+  border-top-width: 1px;
+  border-left-width: 1px;
+}
+.hero-edge-marks::after {
+  bottom: 0; right: 0;
+  border-bottom-width: 1px;
+  border-right-width: 1px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-light-leak { animation: none; }
+}
