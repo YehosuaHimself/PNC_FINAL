@@ -812,3 +812,54 @@
     if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); startTimer(); }
   });
 })();
+
+
+/* ── PRINCIPLES KEYBOARD ACCESSIBILITY ────────────────────────────────
+   principle-item divs have role="button" + tabindex="0".
+   Enter/Space toggle .open class (mirrors hover expand).
+   Escape closes the focused item.
+   aria-expanded is kept in sync for screen readers.
+──────────────────────────────────────────────────────────────────── */
+(function () {
+  'use strict';
+
+  var items = document.querySelectorAll('.principle-item[role="button"]');
+  if (!items.length) return;
+
+  function open(item) {
+    item.classList.add('open');
+    item.setAttribute('aria-expanded', 'true');
+  }
+
+  function close(item) {
+    item.classList.remove('open');
+    item.setAttribute('aria-expanded', 'false');
+  }
+
+  function toggle(item) {
+    if (item.classList.contains('open')) {
+      close(item);
+    } else {
+      /* Close any sibling that's open */
+      items.forEach(function(other) { if (other !== item) close(other); });
+      open(item);
+    }
+  }
+
+  items.forEach(function (item) {
+    item.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        toggle(item);
+      }
+      if (e.key === 'Escape') {
+        close(item);
+      }
+    });
+
+    /* Click also toggles (touch parity — hover doesn't fire on tap) */
+    item.addEventListener('click', function () {
+      toggle(item);
+    });
+  });
+})();

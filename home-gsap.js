@@ -439,9 +439,18 @@
         countUp(el, target, prefix, suffix, 1200, delay);
       });
 
-      /* Fade labels */
+      /* Word-by-word label reveal — matches count-up energy */
       labels.forEach(function (el, i) {
-        setTimeout(function () { el.classList.add('visible'); }, i * 90 + 300);
+        var words = splitWords(el);
+        gsap.set(words, { yPercent: 110, opacity: 0 });
+        gsap.to(words, {
+          yPercent: 0,
+          opacity: 1,
+          duration: 0.7,
+          ease: 'expo.out',
+          stagger: 0.08,
+          delay: (i * 90 + 300) / 1000
+        });
       });
     }
   });

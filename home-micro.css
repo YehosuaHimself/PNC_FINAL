@@ -1182,3 +1182,40 @@
     border-color: rgba(248,244,236,0.36);
   }
 }
+
+
+/* ── PRINCIPLES KEYBOARD — .open state mirrors :hover ────────────────
+   Ensures keyboard users get identical expand behaviour to mouse users.
+   ──────────────────────────────────────────────────────────────────── */
+
+/* .open: expand is visible */
+.principle-item.open .pi-expand {
+  max-height: 200px;
+  opacity: 1;
+  clip-path: inset(0 0 0% 0);
+  margin-top: clamp(12px, 1.8vw, 20px);
+}
+
+/* .open: number warms like hover */
+.principle-item.open .pi-num {
+  color: rgba(184,134,11,0.55);
+  letter-spacing: 0.30em;
+}
+
+/* .open: rule text settles bright */
+.principle-item.open .pi-rule {
+  color: rgba(248,244,236,1);
+  letter-spacing: -0.008em;
+}
+
+/* Focus-visible on principle items — gold outline on dark bg */
+.principle-item:focus-visible {
+  outline: 2px solid rgba(196,168,84,0.6);
+  outline-offset: 6px;
+  border-radius: 2px;
+}
+
+/* Remove default outline on click (mouse users) */
+.principle-item:focus:not(:focus-visible) {
+  outline: none;
+}
