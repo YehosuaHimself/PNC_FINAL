@@ -275,9 +275,9 @@ input,select,textarea{cursor:none!important;caret-color:var(--ink)}
 }
 .hl-inner.hl-sm {
   font-size: clamp(2.8rem, 7vw, 11rem);
-  color: rgba(42,24,16,0.32);
-  font-weight: 100;
-  letter-spacing: 0.04em;
+  color: rgba(42,24,16,0.22);
+  font-weight: 200;
+  letter-spacing: 0.07em;
 }
 .hl-inner.hl-sm:first-child { animation-delay: .15s; }
 .hl-inner.hl-sm:nth-child(1) { animation-delay: .15s; }
@@ -1594,10 +1594,10 @@ section[id="origins"] {
   letter-spacing: -0.02em;
   line-height: 1;
   text-transform: uppercase;
-  color: rgba(248,244,236,0.08);
+  color: rgba(248,244,236,0.11);
   user-select: none;
   transition: color 1.4s ease;
 }
 .pre-footer-statement:hover .pfs-main {
-  color: rgba(248,244,236,0.13);
+  color: rgba(248,244,236,0.18);
 }
