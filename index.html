@@ -355,16 +355,21 @@ if (sessionStorage.getItem('pnc_gate_seen')) {
 } else {
   sessionStorage.setItem('pnc_gate_seen', '1');
 
+  function navigateToHome() {
+    sessionStorage.setItem('pnc-nav', '1');
+    sessionStorage.setItem('pnc_transitioning', '1');
+    sessionStorage.setItem('pnc_visited', '1'); /* gate IS the preloader — skip double ceremony */
+    window.location.replace('/home.html');
+  }
+
   // Skip animation button
   document.getElementById('gate-skip').addEventListener('click', function() {
-    sessionStorage.setItem('pnc-nav', '1');
-    window.location.replace('/home.html');
+    navigateToHome();
   });
   document.getElementById('gate-skip').addEventListener('keydown', function(e) {
     if (e.key === 'Enter' || e.key === ' ') {
       e.preventDefault();
-      sessionStorage.setItem('pnc-nav', '1');
-      window.location.replace('/home.html');
+      navigateToHome();
     }
   });
 
@@ -378,8 +383,7 @@ if (sessionStorage.getItem('pnc_gate_seen')) {
   }
 
   setTimeout(function() {
-    sessionStorage.setItem('pnc-nav', '1');
-    window.location.replace('/home.html');
+    navigateToHome();
   }, REDIRECT_DELAY);
 }
 </script>
