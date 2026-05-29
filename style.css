@@ -410,7 +410,11 @@ input,select,textarea{cursor:none!important;caret-color:var(--ink)}
   font-size: clamp(28px, 4vw, 62px);
   letter-spacing: -0.04em;
   line-height: 0.88;
-  color: var(--cream);
+  /* Warm gold gradient — like candlelight on the product names */
+  background: linear-gradient(160deg, #F0E8D8 0%, #E8C87A 38%, #C4950A 60%, #F0E8D8 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
   margin-bottom: clamp(10px, 1.5vw, 18px);
 }
 .hp2-meta {
@@ -434,7 +438,7 @@ input,select,textarea{cursor:none!important;caret-color:var(--ink)}
   font-weight: 900;
   font-size: clamp(16px, 1.8vw, 26px);
   letter-spacing: -0.03em;
-  color: var(--cream);
+  color: rgba(232,200,122,0.92);
 }
 
 .hp2-cta {
