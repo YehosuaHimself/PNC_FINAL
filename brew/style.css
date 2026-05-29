@@ -2327,7 +2327,14 @@ body.pnc-revealed .hero-headline .hl-sub {
   letter-spacing: -0.02em;
   line-height: 0.9;
   color: var(--ink);
-  transition: letter-spacing .32s cubic-bezier(.16,1,.3,1);
+  transition: letter-spacing .32s cubic-bezier(.16,1,.3,1),
+              font-variation-settings .4s cubic-bezier(.16,1,.3,1);
+}
+@media (hover:hover) {
+  .tl-row:hover .tl-name {
+    letter-spacing: -0.025em;
+    font-variation-settings: 'opsz' 144, 'WONK' 1;
+  }
 }
 .tl-meta {
   display: flex;
@@ -2438,6 +2445,17 @@ body.pnc-revealed .hero-headline .hl-sub {
   );
   pointer-events: none;
   z-index: 1;
+  will-change: transform;
+  animation: fogDrift 7s ease-in-out infinite;
+}
+
+@keyframes fogDrift {
+  0%, 100% { transform: translateY(0);    opacity: 1;    }
+  50%       { transform: translateY(-9px); opacity: 0.72; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-altitude-fog { animation: none; }
 }
 
 /* Edge marks — fine registration-mark corners, like a photographic print */
