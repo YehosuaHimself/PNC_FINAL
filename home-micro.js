@@ -7,16 +7,18 @@
 
   var REDUCED = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  /* ── 1. PRODUCT CARD WARM SWEEP — cursor tracks warmth ─────────── */
+  /* ── 1. HERO PANEL WARM SWEEP — cursor tracks gold warmth ──────── */
+  /* Targets .hero-panel (current panel structure). --sweep-y drives  */
+  /* the radial-gradient ::before in home-micro.css                   */
   if (!REDUCED && window.matchMedia('(hover: hover)').matches) {
-    document.querySelectorAll('.hero-product').forEach(function (card) {
-      card.addEventListener('mousemove', function (e) {
-        var rect = card.getBoundingClientRect();
+    document.querySelectorAll('.hero-panel').forEach(function (panel) {
+      panel.addEventListener('mousemove', function (e) {
+        var rect = panel.getBoundingClientRect();
         var py = ((e.clientY - rect.top) / rect.height) * 100;
-        card.style.setProperty('--sweep-y', py + '%');
+        panel.style.setProperty('--sweep-y', py + '%');
       });
-      card.addEventListener('mouseleave', function () {
-        card.style.setProperty('--sweep-y', '120%');
+      panel.addEventListener('mouseleave', function () {
+        panel.style.setProperty('--sweep-y', '120%');
       });
     });
   }
