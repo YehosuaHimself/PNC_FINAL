@@ -896,6 +896,12 @@ footer:hover .ft-statement-line{
   color:rgba(248,244,236,0.8)!important;
   border-color:rgba(248,244,236,0.35)!important;
 }
+.btn-ghost-pale:focus-visible{
+  outline: 2px solid rgba(248,244,236,0.55);
+  outline-offset: 3px;
+  color:rgba(248,244,236,0.8)!important;
+  border-color:rgba(248,244,236,0.35)!important;
+}
 
 /* ── REVEAL ─────────────────────────────────────────────────── */
 .reveal{
@@ -1482,12 +1488,12 @@ section[id="origins"] {
 }
 
 .mp-claim {
-  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-family: 'Fraunces', Georgia, serif;
   font-weight: 900;
-  font-style: normal;
-  font-variation-settings: normal;
+  font-style: italic;
+  font-variation-settings: 'WONK' 1, 'opsz' 72;
   font-size: clamp(52px,8vw,120px);
-  letter-spacing: -0.04em;
+  letter-spacing: -0.03em;
   line-height: 0.88;
   color: var(--cream);
   margin-bottom: clamp(28px,4vh,52px);
@@ -1744,7 +1750,7 @@ section[id="origins"] {
   50%       { opacity: 0.18; }
 }
 
-/* ── MANIFESTO: mp-claim — settles into reading position on active ── */
+/* ── MANIFESTO: mp-claim — transition grammar lives on the base ── */
 .mp-claim {
   transition: letter-spacing 0.9s cubic-bezier(.16,1,.3,1),
               opacity 0.9s cubic-bezier(.16,1,.3,1),

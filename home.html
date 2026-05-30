@@ -26,7 +26,8 @@
 <link rel="preload" as="image" href="/img/brew-hero.webp" type="image/webp" fetchpriority="high">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,100..900;1,9..144,100..900&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,100..900;1,9..144,100..900&display=swap" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,100..900;1,9..144,100..900&display=swap"></noscript>
 
 <noscript><style>
   html,body,*,*::before,*::after{cursor:auto!important}
@@ -492,11 +493,11 @@
 </div>
 
 <!-- COOKIE CONSENT SCRIPT -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" crossorigin="anonymous"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" crossorigin="anonymous"></script>
-  <script src="script.js"></script>
-  <script src="home-micro.js"></script>
-  <script src="home-gsap.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer crossorigin="anonymous"></script>
+  <script src="script.js" defer></script>
+  <script src="home-micro.js" defer></script>
+  <script src="home-gsap.js" defer></script>
 
   <script src="hero-canvas.js" defer></script>
   <script src="cursor-magnetic.js" defer></script>

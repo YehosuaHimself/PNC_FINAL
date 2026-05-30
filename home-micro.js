@@ -12,12 +12,20 @@
   /* the radial-gradient ::before in home-micro.css                    */
   if (!REDUCED && window.matchMedia('(hover: hover)').matches) {
     document.querySelectorAll('.hero-panel').forEach(function (panel) {
+      var sweepRaf = null;
+      var lastE = null;
       panel.addEventListener('mousemove', function (e) {
-        var rect = panel.getBoundingClientRect();
-        var px = ((e.clientX - rect.left) / rect.width) * 100;
-        var py = ((e.clientY - rect.top) / rect.height) * 100;
-        panel.style.setProperty('--sweep-x', px + '%');
-        panel.style.setProperty('--sweep-y', py + '%');
+        lastE = e;
+        if (sweepRaf) return;
+        sweepRaf = requestAnimationFrame(function () {
+          sweepRaf = null;
+          if (!lastE) return;
+          var rect = panel.getBoundingClientRect();
+          var px = ((lastE.clientX - rect.left) / rect.width) * 100;
+          var py = ((lastE.clientY - rect.top) / rect.height) * 100;
+          panel.style.setProperty('--sweep-x', px + '%');
+          panel.style.setProperty('--sweep-y', py + '%');
+        });
       });
       panel.addEventListener('mouseleave', function () {
         panel.style.setProperty('--sweep-x', '50%');
