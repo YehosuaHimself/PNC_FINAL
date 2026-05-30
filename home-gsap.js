@@ -4,6 +4,30 @@
    Char-split hero headline, section reveals, pinned philosophy.
    Loads after DOM. Requires GSAP 3 + ScrollTrigger from CDN.
 ───────────────────────────────────────────────────────────────────────── */
+
+/* ── MODULE-SCOPE UTILITIES — accessible by all IIFEs below ────────────── */
+function splitWords(el) {
+  var text = el.textContent;
+  el.innerHTML = '';
+  el.setAttribute('aria-label', text);
+  text.split(/(\s+)/).forEach(function (w) {
+    if (!w) return;
+    var s = document.createElement('span');
+    s.className = 'gsap-word';
+    s.setAttribute('aria-hidden', 'true');
+    s.style.display = 'inline-block';
+    s.style.overflow = 'hidden';
+    s.style.verticalAlign = 'bottom';
+    var inner = document.createElement('span');
+    inner.style.display = 'inline-block';
+    inner.style.willChange = 'transform';
+    inner.textContent = /^\s+$/.test(w) ? '\u00A0' : w;
+    s.appendChild(inner);
+    el.appendChild(s);
+  });
+  return el.querySelectorAll('.gsap-word > span');
+}
+
 (function () {
   'use strict';
 
@@ -49,29 +73,6 @@
       el.appendChild(s);
     });
     return el.querySelectorAll('.gsap-char');
-  }
-
-  /* ── UTIL: split text into word spans ──────────────────────────── */
-  function splitWords(el) {
-    var text = el.textContent;
-    el.innerHTML = '';
-    el.setAttribute('aria-label', text);
-    text.split(/(\s+)/).forEach(function (w) {
-      if (!w) return;
-      var s = document.createElement('span');
-      s.className = 'gsap-word';
-      s.setAttribute('aria-hidden', 'true');
-      s.style.display = 'inline-block';
-      s.style.overflow = 'hidden';
-      s.style.verticalAlign = 'bottom';
-      var inner = document.createElement('span');
-      inner.style.display = 'inline-block';
-      inner.style.willChange = 'transform';
-      inner.textContent = /^\s+$/.test(w) ? '\u00A0' : w;
-      s.appendChild(inner);
-      el.appendChild(s);
-    });
-    return el.querySelectorAll('.gsap-word > span');
   }
 
   /* ── PRELOADER TIMING ─────────────────────────────────────────────
