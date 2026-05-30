@@ -7,8 +7,8 @@ html,html.lenis,html.lenis body{height:auto}
 .lenis.lenis-smooth{scroll-behavior:auto!important}
 em,i,cite,address,b,strong{font-style:normal}
 /* Preserve Fraunces italic for selective swash accents; normalise everything else */
-*:not(.fraunces-italic):not(.tn-name):not(.hl-sub){font-style:normal!important}
-.g-mybread,.fraunces-italic,.tn-name{font-style:italic!important}
+*:not(.fraunces-italic):not(.tn-name):not(.hl-sub):not(.hl-lg):not(.mp-claim):not(.pfs-main):not(.pfs-word):not(.pi-rule):not(.phil-quote):not(.proof-num):not(.hero-decree):not(.mp-label){font-style:normal!important}
+.g-mybread,.fraunces-italic,.tn-name,.hl-inner.hl-lg,.mp-claim,.pfs-main,.pfs-word,.pi-rule,.phil-quote,.proof-num,.hero-decree{font-style:italic!important}
 
 /* ── TOKENS ─────────────────────────────────────────────────── */
 :root{
