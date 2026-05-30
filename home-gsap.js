@@ -120,11 +120,11 @@
     if (!decree) return;
 
     gsap.fromTo(decree,
-      { opacity: 0, y: 18, filter: 'blur(6px)' },
+      { opacity: 0, y: 18 },
       {
-        opacity: 1, y: 0, filter: 'blur(0px)',
+        opacity: 1, y: 0,
         duration: 1.4, ease: 'expo.out', delay: HERO_DELAY + 0.55,
-        clearProps: 'filter,transform,opacity'
+        clearProps: 'transform,opacity'
       }
     );
   })();
@@ -407,6 +407,14 @@
     }, delay || 0);
   }
 
+  /* Pre-split label words at load time — NEVER inside onEnter (causes GSAP refresh) */
+  var labelWordMap = [];
+  labels.forEach(function(el) {
+    var words = splitWords(el);
+    gsap.set(words, { yPercent: 110, opacity: 0 });
+    labelWordMap.push(words);
+  });
+
   var triggered = false;
   var strip = document.querySelector('.proof-strip');
   if (!strip) return;
@@ -429,20 +437,12 @@
         var prefix = el.dataset.prefix || '';
         var suffix = el.dataset.suffix || '';
         var delay = i * 90;
-
-        /* GSAP fade-up */
-        gsap.to(el, {
-          opacity: 1, y: 0, duration: 0.9, ease: 'expo.out', delay: delay / 1000
-        });
-
-        /* Count-up */
+        gsap.to(el, { opacity: 1, y: 0, duration: 0.9, ease: 'expo.out', delay: delay / 1000 });
         countUp(el, target, prefix, suffix, 1200, delay);
       });
 
-      /* Word-by-word label reveal — matches count-up energy */
-      labels.forEach(function (el, i) {
-        var words = splitWords(el);
-        gsap.set(words, { yPercent: 110, opacity: 0 });
+      /* Word-by-word label reveal using pre-split words */
+      labelWordMap.forEach(function(words, i) {
         gsap.to(words, {
           yPercent: 0,
           opacity: 1,
@@ -510,10 +510,9 @@
     scrollTrigger: {
       trigger: section,
       pin: true,
-      anticipatePin: 1,
       scrub: 1.0,
       start: 'top top',
-      end: () => '+=' + ((totalPanels - 1) * window.innerHeight * 1.5) + 'px',
+      end: () => '+=' + ((totalPanels - 1) * window.innerHeight * 1.6) + 'px',
       onUpdate: function (self) {
         var p = self.progress;
         if (bar) bar.style.transform = 'scaleX(' + p + ')';
@@ -541,12 +540,6 @@
         /* Counter-scroll the subliminal Latin text layer */
         /* Moves opposite direction: right as panels scroll left */
         section.style.setProperty('--mp-offset', (p * 180) + 'px');
-
-        /* Velocity-driven blur — fast scrub blurs the text; slowing to read
-           sharpens it into crystal clarity. Reading feels earned.           */
-        var vel = Math.abs(self.getVelocity ? self.getVelocity() : 0);
-        var blur = Math.min(vel * 0.0032, 5.5); /* cap at 5.5px */
-        track.style.filter = blur > 0.1 ? 'blur(' + blur.toFixed(2) + 'px)' : '';
       }
     }
   });
@@ -971,33 +964,6 @@
 })();
 
 
-/* ── HERO HEADLINE — scroll-out stone recession ──────────────────────
-   As the user scrolls past the hero, the headline drifts upward at
-   a rate slower than the page — as if carved into a wall you're
-   walking away from. The text doesn't chase; it stays where it was.
-   GPU-safe: yPercent only. Scope to desktop only (mobile scrolls
-   the hero off naturally without needing amplification).
-────────────────────────────────────────────────────────────────────── */
-(function heroHeadlineScrollOut() {
-  if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') return;
-  if (window.matchMedia('(prefers-reduced-motion:reduce)').matches) return;
-  if (!window.matchMedia('(min-width:640px)').matches) return;
-
-  var headline = document.querySelector('.hero-headline');
-  if (!headline) return;
-
-  gsap.to(headline, {
-    yPercent: -18,
-    ease: 'none',
-    scrollTrigger: {
-      trigger: '.hero',
-      start: 'bottom 85%',   /* engage only once hero bottom nears the fold */
-      end: 'bottom -20%',
-      scrub: 1.8    /* slower scrub than images — text is heavier */
-    }
-  });
-})();
-
 
 /* ── PRE-FOOTER STATEMENT — letter-space prayer unfold ───────────────
    "PANEM NOSTRUM COTIDIANUM DA NOBIS HODIE" expands its tracking
@@ -1042,15 +1008,11 @@
     /* Style each word to start invisible */
     gsap.set('.pfs-word', {
       opacity: 0,
-      filter: 'blur(6px)',
-      letterSpacing: '-0.06em',
-      y: 12
+      y: 14
     });
 
     gsap.to('.pfs-word', {
       opacity: 1,
-      filter: 'blur(0px)',
-      letterSpacing: '-0.02em',
       y: 0,
       duration: 1.4,
       ease: 'expo.out',
@@ -1058,7 +1020,7 @@
         each: 0.14,
         from: 'start'
       },
-      clearProps: 'transform,filter',
+      clearProps: 'transform',
       scrollTrigger: {
         trigger: section,
         start: 'top 72%',

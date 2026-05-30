@@ -1,32 +1,56 @@
+/* ─────────────────────────────────────────────────────────────────────────
+   PNC · cursor — hardened single-system cursor
+   One rAF loop. One color check. No conflicts with cursor-magnetic.js.
+   Color: cream on data-dark surfaces, brown on light surfaces.
+───────────────────────────────────────────────────────────────────────── */
 (function(){
+  'use strict';
+
+  /* Touch / no-cursor devices: bail immediately */
+  if (window.matchMedia('(pointer:coarse)').matches) return;
+
   var dot  = document.getElementById('cur-dot');
   var ring = document.getElementById('cur-ring');
-  if (!dot || !ring || window.matchMedia('(pointer:coarse)').matches) return;
+  if (!dot || !ring) return;
 
-  var C_DARK  = '#4A3018';
-  var C_LIGHT = '#F8F4EC';
-  var DOT_R   = 5;
-  var RING_RX = 48, RING_RY = 48;
-  var LERP    = 0.10;
-  var SQ_W    = '10px', SQ_H = '10px';
-  var SQ_BR   = '0';
-  var SQ_ROT  = '0deg';
+  /* ── Constants ──────────────────────────────────────────────────── */
+  var C_ON_DARK  = '#F8F4EC'; /* cream — used on dark backgrounds    */
+  var C_ON_LIGHT = '#4A3018'; /* brown — used on light backgrounds   */
+  var DOT_R      = 5;         /* half dot size for centring          */
+  var RING_HALF  = 48;        /* half ring size (96px / 2)           */
+  var LERP       = 0.10;
 
-  var mx = -9999, my = -9999;
-  var rx = -9999, ry = -9999;
-  var rafId = null, settled = 0;
-  var currentDark = false;
-  var inTextField = false;
+  /* ── State ──────────────────────────────────────────────────────── */
+  var mx = -9999, my = -9999;   /* raw mouse position                */
+  var rx = -9999, ry = -9999;   /* ring lerp position                */
+  var rafId    = null;
+  var settled  = 0;
+  var isDark   = false;         /* current surface type              */
+  var inField  = false;         /* inside text input                 */
+  var active   = false;         /* has mouse entered the window      */
 
-  dot.style.willChange  = 'transform, background';
-  ring.style.willChange = 'transform, border-color';
+  /* ── Apply color immediately, no transition ────────────────────── */
+  function applyColor(dark) {
+    var c = dark ? C_ON_DARK : C_ON_LIGHT;
+    dot.style.background   = c;
+    ring.style.borderColor = c;
+  }
 
-  function isDarkUnder(x, y) {
-    dot.style.display  = 'none';
-    ring.style.display = 'none';
+  /* ── Surface detection — walk DOM up from point ────────────────── */
+  function checkSurface(x, y) {
+    /* Temporarily move cursor elements off-screen so they don't
+       block elementFromPoint — store and restore without display:none
+       to avoid layout reflow */
+    var dotVis  = dot.style.visibility;
+    var ringVis = ring.style.visibility;
+    dot.style.visibility  = 'hidden';
+    ring.style.visibility = 'hidden';
+
     var el = document.elementFromPoint(x, y);
-    dot.style.display  = '';
-    ring.style.display = '';
+
+    dot.style.visibility  = dotVis  || '';
+    ring.style.visibility = ringVis || '';
+
     if (!el) return false;
     var node = el;
     while (node && node !== document.documentElement) {
@@ -36,240 +60,251 @@
     return false;
   }
 
-  function applyColor(dark) {
-    var c = dark ? C_LIGHT : C_DARK;
-    dot.style.transition   = 'background 0ms';
-    ring.style.transition  = 'border-color 0ms, width .22s cubic-bezier(.16,1,.3,1), height .22s cubic-bezier(.16,1,.3,1), opacity 160ms ease';
-    dot.style.background   = c;
-    ring.style.borderColor = c;
-    if (!inTextField) ring.style.opacity = dark ? '0.55' : '0.60';
-  }
-
+  /* ── Main rAF loop — position + settle ─────────────────────────── */
   function loop() {
-    var dx = (mx - RING_RX) - rx;
-    var dy = (my - RING_RY) - ry;
+    var dx = (mx - RING_HALF) - rx;
+    var dy = (my - RING_HALF) - ry;
     rx += dx * LERP;
     ry += dy * LERP;
-    dot.style.transform  = 'translate3d(' + (mx - DOT_R) + 'px,' + (my - DOT_R) + 'px,0) rotate(' + SQ_ROT + ')';
-    ring.style.transform = 'translate3d(' + Math.round(rx) + 'px,' + Math.round(ry) + 'px,0) rotate(' + (ring.dataset.rot || SQ_ROT) + ')';
+
+    dot.style.transform  = 'translate3d(' + (mx - DOT_R) + 'px,' + (my - DOT_R) + 'px,0)';
+    ring.style.transform = 'translate3d(' + Math.round(rx) + 'px,' + Math.round(ry) + 'px,0)';
+
     if (Math.abs(dx) < 0.3 && Math.abs(dy) < 0.3) {
       if (++settled > 4) { rafId = null; return; }
     } else { settled = 0; }
     rafId = requestAnimationFrame(loop);
   }
-  function startLoop() { settled = 0; if (rafId === null) rafId = requestAnimationFrame(loop); }
 
+  function startLoop() {
+    settled = 0;
+    if (rafId === null) rafId = requestAnimationFrame(loop);
+  }
+
+  /* ── mousemove — the single source of truth ─────────────────────── */
   document.addEventListener('mousemove', function(e) {
-    mx = e.clientX; my = e.clientY;
-    var dark = isDarkUnder(mx, my);
-    if (dark !== currentDark) { currentDark = dark; applyColor(dark); }
-    if (inTextField) {
-      dot.style.transform = 'translate3d(' + (mx - 1) + 'px,' + (my - 10) + 'px,0)';
-      return;
-    }
-    startLoop();
-  }, {passive:true});
+    mx = e.clientX;
+    my = e.clientY;
 
+    if (!active) {
+      active = true;
+      dot.style.opacity  = '1';
+      ring.style.opacity = '0.60';
+    }
+
+    /* Color check every move — visibility trick avoids layout reflow */
+    var dark = checkSurface(mx, my);
+    if (dark !== isDark) {
+      isDark = dark;
+      applyColor(dark);
+    }
+
+    if (!inField) startLoop();
+  }, { passive: true });
+
+  /* ── Window enter/leave ─────────────────────────────────────────── */
+  document.addEventListener('mouseenter', function() {
+    active = true;
+    dot.style.opacity  = '1';
+    ring.style.opacity = '0.60';
+  });
   document.addEventListener('mouseleave', function() {
-    mx = -9999; my = -9999;
+    active = false;
     dot.style.transform  = 'translate3d(-9999px,-9999px,0)';
     ring.style.transform = 'translate3d(-9999px,-9999px,0)';
+    mx = -9999; my = -9999;
   });
 
+  /* ── Click feedback ─────────────────────────────────────────────── */
   document.addEventListener('mousedown', function() {
-    if (inTextField) return;
-    dot.style.transform  = 'translate3d(' + (mx - DOT_R) + 'px,' + (my - DOT_R) + 'px,0) rotate(' + SQ_ROT + ') scale(0.8)';
-    ring.style.transform = 'translate3d(' + Math.round(rx) + 'px,' + Math.round(ry) + 'px,0) rotate(' + (ring.dataset.rot || SQ_ROT) + ') scale(0.85)';
-  }, {passive:true});
-
+    if (inField) return;
+    dot.style.transform  = 'translate3d(' + (mx - DOT_R) + 'px,' + (my - DOT_R) + 'px,0) scale(0.75)';
+    ring.style.transform = 'translate3d(' + Math.round(rx) + 'px,' + Math.round(ry) + 'px,0) scale(0.85)';
+  }, { passive: true });
   document.addEventListener('mouseup', function() {
-    if (inTextField) return;
-    dot.style.transform  = 'translate3d(' + (mx - DOT_R) + 'px,' + (my - DOT_R) + 'px,0) rotate(' + SQ_ROT + ')';
-    ring.style.transform = 'translate3d(' + Math.round(rx) + 'px,' + Math.round(ry) + 'px,0) rotate(' + (ring.dataset.rot || SQ_ROT) + ')';
-  }, {passive:true});
+    if (inField) return;
+    dot.style.transform  = 'translate3d(' + (mx - DOT_R) + 'px,' + (my - DOT_R) + 'px,0)';
+    ring.style.transform = 'translate3d(' + Math.round(rx) + 'px,' + Math.round(ry) + 'px,0)';
+  }, { passive: true });
 
-  document.querySelectorAll('a,button,[role=button],select').forEach(function(el) {
-    el.addEventListener('mouseenter', function() {
-      ring.style.width = '96px'; ring.style.height = '96px';
-      ring.style.opacity = currentDark ? '0.40' : '0.35';
-      startLoop();
-    });
-    el.addEventListener('mouseleave', function() {
-      ring.style.width = '96px'; ring.style.height = '96px';
-      ring.style.opacity = currentDark ? '0.55' : '0.60';
-      startLoop();
-    });
-  });
-
-  function enterTextField() {
-    if (inTextField) return;
-    inTextField = true;
+  /* ── Text field caret mode ──────────────────────────────────────── */
+  function enterField() {
+    if (inField) return;
+    inField = true;
     if (rafId !== null) { cancelAnimationFrame(rafId); rafId = null; }
-    dot.style.transition   = 'width 70ms ease, height 70ms ease, border-radius 70ms ease';
     dot.style.width        = '2px';
     dot.style.height       = '20px';
     dot.style.borderRadius = '1px';
-    dot.style.background   = currentDark ? C_LIGHT : C_DARK;
+    dot.style.background   = isDark ? C_ON_DARK : C_ON_LIGHT;
     dot.style.animation    = 'textCursorBlink 1.1s step-end infinite';
     ring.style.opacity     = '0';
-    ring.style.transform   = 'translate3d(-9999px,-9999px,0)';
   }
-
-  function leaveTextField() {
-    if (!inTextField) return;
-    inTextField = false;
+  function leaveField() {
+    if (!inField) return;
+    inField = false;
     dot.style.animation    = 'none';
-    dot.style.transition   = 'width 120ms ease, height 120ms ease, border-radius 180ms ease';
-    dot.style.width        = SQ_W;
-    dot.style.height       = SQ_H;
-    dot.style.borderRadius = SQ_BR;
-    dot.style.background   = currentDark ? C_LIGHT : C_DARK;
-    rx = mx - RING_RX; ry = my - RING_RY;
-    ring.style.transform   = 'translate3d(' + Math.round(rx) + 'px,' + Math.round(ry) + 'px,0) rotate(' + SQ_ROT + ')';
-    ring.style.opacity     = currentDark ? '0.55' : '0.60';
-    ring.style.width       = '96px';
-    ring.style.height      = '96px';
+    dot.style.width        = '10px';
+    dot.style.height       = '10px';
+    dot.style.borderRadius = '0';
+    dot.style.background   = isDark ? C_ON_DARK : C_ON_LIGHT;
+    ring.style.opacity     = '0.60';
+    rx = mx - RING_HALF;
+    ry = my - RING_HALF;
+    ring.style.transform   = 'translate3d(' + Math.round(rx) + 'px,' + Math.round(ry) + 'px,0)';
     startLoop();
   }
 
-  document.querySelectorAll('input[type="text"],input[type="email"],input:not([type]),textarea').forEach(function(el) {
-    el.addEventListener('focus', enterTextField);
-    el.addEventListener('blur',  leaveTextField);
+  document.addEventListener('focusin', function(e) {
+    var t = e.target ? e.target.tagName : '';
+    if (t === 'INPUT' || t === 'TEXTAREA' || t === 'SELECT') enterField();
+    else leaveField();
+  });
+  document.addEventListener('focusout', function() {
+    leaveField();
   });
 
-  document.addEventListener('focusin', function(e) {
-    var tag = e.target ? e.target.tagName : '';
-    if (tag !== 'INPUT' && tag !== 'TEXTAREA' && tag !== 'SELECT') {
-      if (inTextField) leaveTextField();
-    }
-  });
+  /* ── Expose so cursor-magnetic.js can read isDark ───────────────── */
+  window.PNC_CURSOR = {
+    getIsDark: function() { return isDark; },
+    startLoop: startLoop
+  };
 
 })();
 
-/* ========== */
+/* ========== LENIS SMOOTH SCROLL ========== */
 
-document.addEventListener('DOMContentLoaded',function(){
-  if(typeof Lenis==='undefined')return;
-  if(window.matchMedia('(prefers-reduced-motion:reduce)').matches) return;
+document.addEventListener('DOMContentLoaded', function(){
+  if (typeof Lenis === 'undefined') return;
+  if (window.matchMedia('(prefers-reduced-motion:reduce)').matches) return;
 
   var lenis = new Lenis({
     duration: 1.3,
-    easing: function(t){ return t===1?1:1-Math.pow(2,-10*t); },
+    easing: function(t){ return t === 1 ? 1 : 1 - Math.pow(2, -10 * t); },
     smoothWheel: true,
     wheelMultiplier: 0.85,
     touchMultiplier: 1.8,
   });
   window.PNC_LENIS = lenis;
 
-  var prog   = document.getElementById('prog');
-  var progR  = document.getElementById('prog-r');
+  var prog  = document.getElementById('prog');
+  var progR = document.getElementById('prog-r');
   var rafId2 = null;
-
-  function lenisRaf(time){ lenis.raf(time); rafId2 = requestAnimationFrame(lenisRaf); }
+  function lenisRaf(time) { lenis.raf(time); rafId2 = requestAnimationFrame(lenisRaf); }
   rafId2 = requestAnimationFrame(lenisRaf);
 
-  if(prog){
+  if (prog) {
     window.addEventListener('scroll', function(){
       var max = document.body.scrollHeight - window.innerHeight;
       var h = (max > 0 ? (window.scrollY / max) * 100 : 0) + '%';
       prog.style.height = h;
-      if(progR) progR.style.height = h;
-    }, {passive:true});
+      if (progR) progR.style.height = h;
+    }, { passive: true });
   }
 
   document.querySelectorAll('a[href^="#"]').forEach(function(a){
     a.addEventListener('click', function(e){
       var t = document.querySelector(this.getAttribute('href'));
-      if(t){ e.preventDefault(); lenis.scrollTo(t, {offset:-62, duration:1.4}); }
+      if (t) { e.preventDefault(); lenis.scrollTo(t, { offset: -62, duration: 1.4 }); }
     });
   });
 });
 
-/* ========== */
+/* ========== REVEAL OBSERVER ========== */
 
 (function(){
-  const obs=new IntersectionObserver(function(entries){
-    entries.forEach(function(e){if(e.isIntersecting){e.target.classList.add('visible');obs.unobserve(e.target);}});
-  },{threshold:0.05,rootMargin:'0px 0px -16px 0px'});
-  document.querySelectorAll('.reveal').forEach(function(el){obs.observe(el);});
+  var obs = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); }
+    });
+  }, { threshold: 0.05, rootMargin: '0px 0px -16px 0px' });
+  document.querySelectorAll('.reveal').forEach(function(el){ obs.observe(el); });
 })();
 
-/* ========== */
+/* ========== SCROLL-AWARE NAV ========== */
 
-/* Scroll-aware nav */
-document.addEventListener('DOMContentLoaded',function(){
+document.addEventListener('DOMContentLoaded', function(){
   document.body.classList.add('ready');
-  /* Return visits: no preloader — fire revealed immediately so CSS animations run */
   if (sessionStorage.getItem('pnc_visited')) {
     document.body.classList.add('pnc-revealed');
   }
-  var nav=document.getElementById('site-nav');
-  if(!nav)return;
-  window.addEventListener('scroll',function(){
-    var y=window.scrollY||window.pageYOffset;
-    if(y>40){nav.classList.add('scrolled')}else{nav.classList.remove('scrolled')}
-  },{passive:true});
+  var nav = document.getElementById('site-nav');
+  if (!nav) return;
+  window.addEventListener('scroll', function(){
+    nav.classList.toggle('scrolled', (window.scrollY || window.pageYOffset) > 40);
+  }, { passive: true });
 });
 
-/* ========== */
+/* ========== MOBILE NAV DRAWER ========== */
 
 (function(){
-  var btn=document.getElementById('nav-hamburger');
-  var drawer=document.getElementById('nav-drawer');
-  if(!btn||!drawer)return;
+  var btn    = document.getElementById('nav-hamburger');
+  var drawer = document.getElementById('nav-drawer');
+  if (!btn || !drawer) return;
 
-  /* ── US2 AC6: Focus trap ── */
-  var FOCUSABLE='a[href],button:not([disabled]),input:not([disabled]),select:not([disabled]),textarea:not([disabled]),[tabindex]:not([tabindex="-1"])';
+  var FOCUSABLE = 'a[href],button:not([disabled]),input:not([disabled]),select:not([disabled]),textarea:not([disabled]),[tabindex]:not([tabindex="-1"])';
 
   function getFocusable(){
     return Array.prototype.slice.call(drawer.querySelectorAll(FOCUSABLE)).filter(function(el){
-      return !el.closest('[hidden]') && el.offsetParent!==null;
+      return !el.closest('[hidden]') && el.offsetParent !== null;
     });
   }
-
   function trapTab(e){
-    if(e.key!=='Tab')return;
-    var nodes=getFocusable();
-    if(!nodes.length){e.preventDefault();return;}
-    var first=nodes[0], last=nodes[nodes.length-1];
-    if(e.shiftKey){
-      if(document.activeElement===first){e.preventDefault();last.focus();}
-    } else {
-      if(document.activeElement===last){e.preventDefault();first.focus();}
-    }
+    if (e.key !== 'Tab') return;
+    var nodes = getFocusable();
+    if (!nodes.length) { e.preventDefault(); return; }
+    var first = nodes[0], last = nodes[nodes.length - 1];
+    if (e.shiftKey) { if (document.activeElement === first) { e.preventDefault(); last.focus(); } }
+    else            { if (document.activeElement === last)  { e.preventDefault(); first.focus(); } }
   }
-
   function openDrawer(){
     drawer.classList.add('open');
     btn.classList.add('open');
-    btn.setAttribute('aria-expanded','true');
-    document.body.style.overflow='hidden';
-    if(window.PNC_LENIS){window.PNC_LENIS.stop();}
-    /* Move focus into drawer on next frame */
-    requestAnimationFrame(function(){
-      var nodes=getFocusable();
-      if(nodes.length)nodes[0].focus();
-    });
-    drawer.addEventListener('keydown',trapTab);
+    btn.setAttribute('aria-expanded', 'true');
+    document.body.style.overflow = 'hidden';
+    if (window.PNC_LENIS) window.PNC_LENIS.stop();
+    requestAnimationFrame(function(){ var n = getFocusable(); if (n.length) n[0].focus(); });
+    drawer.addEventListener('keydown', trapTab);
   }
-
   function closeDrawer(){
     drawer.classList.remove('open');
     btn.classList.remove('open');
-    btn.setAttribute('aria-expanded','false');
-    document.body.style.overflow='';
-    if(window.PNC_LENIS){window.PNC_LENIS.start();}
-    drawer.removeEventListener('keydown',trapTab);
-    /* Return focus to trigger */
+    btn.setAttribute('aria-expanded', 'false');
+    document.body.style.overflow = '';
+    if (window.PNC_LENIS) window.PNC_LENIS.start();
+    drawer.removeEventListener('keydown', trapTab);
     btn.focus();
   }
+  btn.addEventListener('click', function(){
+    drawer.classList.contains('open') ? closeDrawer() : openDrawer();
+  });
+  drawer.querySelectorAll('a').forEach(function(a){ a.addEventListener('click', closeDrawer); });
+  document.addEventListener('keydown', function(e){
+    if (e.key === 'Escape' && drawer.classList.contains('open')) closeDrawer();
+  });
+  document.addEventListener('pointerdown', function(e){
+    if (drawer.classList.contains('open') && !drawer.contains(e.target) && e.target !== btn && !btn.contains(e.target)) closeDrawer();
+  });
+})();
 
-  btn.addEventListener('click',function(){
-    if(drawer.classList.contains('open')){closeDrawer();}else{openDrawer();}
-  });
-  drawer.querySelectorAll('a').forEach(function(a){
-    a.addEventListener('click',closeDrawer);
-  });
+/* ========== COOKIE BAR ========== */
+
+(function(){
+  if (localStorage.getItem('pnc_cookie_consent')) return;
+  var bar = document.getElementById('cookie-bar');
+  if (!bar) return;
+  setTimeout(function(){ bar.classList.add('visible'); }, 800);
+  function dismiss(val){
+    localStorage.setItem('pnc_cookie_consent', val);
+    bar.classList.add('dismissing');
+    bar.classList.remove('visible');
+    setTimeout(function(){ bar.style.display = 'none'; }, 480);
+  }
+  var ess = document.getElementById('cookie-essential');
+  var acc = document.getElementById('cookie-accept');
+  if (ess) ess.addEventListener('click', function(){ dismiss('essential'); });
+  if (acc) acc.addEventListener('click', function(){ dismiss('all'); });
+})();
+
   document.addEventListener('keydown',function(e){
     if(e.key==='Escape'&&drawer.classList.contains('open'))closeDrawer();
   });

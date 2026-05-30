@@ -63,18 +63,17 @@ input,select,textarea{cursor:none!important;caret-color:var(--ink)}
   background:var(--cocoa);pointer-events:none;z-index:9998;
   border-radius:0;
   transform:translate(-9999px,-9999px);
-  transition:background 0ms, opacity 160ms ease;
+  opacity:0;
   will-change:transform;
 }
 #cur-ring{
   position:fixed;top:0;left:0;width:96px;height:96px;
   border:1.5px solid var(--cocoa);pointer-events:none;z-index:9997;
   border-radius:0;
-  transform:translate(-9999px,-9999px);opacity:0.6;
+  transform:translate(-9999px,-9999px);opacity:0;
   transition:width .22s cubic-bezier(.16,1,.3,1),
              height .22s cubic-bezier(.16,1,.3,1),
-             opacity 160ms ease,
-             border-color 0ms;
+             opacity 160ms ease;
   will-change:transform;
 }
 
@@ -857,9 +856,9 @@ footer:hover .ft-statement-line{
   font-family:'Courier New',monospace;
   font-size:10px;
   font-weight:600;
-  letter-spacing:0.22em;
+  letter-spacing:0.28em;
   text-transform:uppercase;
-  color:rgba(248,244,236,0.10);
+  color:rgba(248,244,236,0.22);
   text-align:center;
   margin-top:16px;
 }
@@ -1753,8 +1752,7 @@ section[id="origins"] {
 /* ── MANIFESTO: mp-claim — transition grammar lives on the base ── */
 .mp-claim {
   transition: letter-spacing 0.9s cubic-bezier(.16,1,.3,1),
-              opacity 0.9s cubic-bezier(.16,1,.3,1),
-              font-variation-settings 1.1s cubic-bezier(.16,1,.3,1);
+              opacity 0.9s cubic-bezier(.16,1,.3,1);
 }
 .manifesto-panel.mp-active .mp-claim {
   letter-spacing: -0.022em;
@@ -1778,7 +1776,6 @@ section[id="origins"] {
   .manifesto-panel.mp-recede .mp-claim {
     letter-spacing: -0.035em;
     opacity: 0.38;
-    font-variation-settings: 'WONK' 1, 'opsz' 48;
   }
   .manifesto-panel.mp-recede .mp-label {
     letter-spacing: -0.02em;
@@ -1798,7 +1795,6 @@ section[id="origins"] {
   .manifesto-panel.mp-ahead .mp-claim {
     opacity: 0.55;
     letter-spacing: -0.028em;
-    font-variation-settings: 'WONK' 1, 'opsz' 88;
   }
   .manifesto-panel.mp-ahead .mp-num {
     opacity: 0.04;
@@ -1885,8 +1881,7 @@ section[id="origins"] {
 .pfs-word {
   display: inline-block;
   white-space: pre;
-  will-change: opacity, filter, transform;
-  /* warm hover: entire prayer breathes on parent hover */
+  will-change: opacity, transform;
   transition: color 1.2s ease;
 }
 @media (hover: hover) {
